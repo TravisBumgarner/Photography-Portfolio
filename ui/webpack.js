@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     entry: {
@@ -25,5 +26,11 @@ module.exports = {
         contentBase: './dist',
         port: 3000,
         historyApiFallback: true
-    }
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './index.template.ejs',
+            inject: 'body'
+        })
+    ]
 }
