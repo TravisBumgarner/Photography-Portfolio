@@ -1,15 +1,21 @@
 import styled from 'styled-components'
 
-const LargeHeader = styled.h1`
-    color: bisque;
+import { FONT_FAMILY_HEADER } from '../../theme'
+
+const DefaultHeader = styled.p`
+    font-family: ${FONT_FAMILY_HEADER};
 `
 
-const MediumHeader = styled.h2`
-    color: red;
+const LargeHeader = DefaultHeader.extend`
+    font-weight: 700;
 `
 
-const SmallHeader = styled.h3`
-    color: pink;
+const MediumHeader = DefaultHeader.extend`
+    font-weight: 400;
+`
+
+const SmallHeader = DefaultHeader.extend`
+    font-weight: 100;
 `
 
 export { LargeHeader, MediumHeader, SmallHeader }
