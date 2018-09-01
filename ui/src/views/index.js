@@ -1,3 +1,4 @@
-import App from './App/app'
+import App from './App/App'
+import Home from './Home/Home'
 
-export { App }
+export { App, Home }
