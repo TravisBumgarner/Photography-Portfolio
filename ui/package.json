@@ -1,0 +1,30 @@
+{
+    "name": "ui",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start-dev": "webpack-dev-server --hot --inline --mode=development --config webpack.js",
+        "build": "webpack --mode production"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "react": "^16.4.2",
+        "react-dom": "^16.4.2",
+        "react-router-dom": "^4.3.1"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.0.0",
+        "@babel/preset-env": "^7.0.0",
+        "@babel/preset-react": "^7.0.0",
+        "@babel/preset-stage-2": "^7.0.0",
+        "babel-loader": "^8.0.0",
+        "eslint": "^5.5.0",
+        "html-webpack-plugin": "^3.2.0",
+        "prop-types": "^15.6.2",
+        "webpack": "^4.17.1",
+        "webpack-cli": "^3.1.0",
+        "webpack-dev-server": "^3.1.7"
+    }
+}
