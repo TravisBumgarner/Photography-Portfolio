@@ -26,4 +26,8 @@ const Category = sequelize.define('category', {
     title: Sequelize.STRING
 })
 
+// Foreign Keys
+Photo.belongsTo(Project)
+Project.belongsTo(Category)
+
 sequelize.sync()
