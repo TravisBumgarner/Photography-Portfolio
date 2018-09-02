@@ -2,6 +2,6 @@ dist/
 node_modules/
 db.sqlite
 .DS_STORE
-
+.vscode/
 config.py
-api_django/api_django/__pycache__/
+__pycache__/
