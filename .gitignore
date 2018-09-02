@@ -2,3 +2,6 @@ dist/
 node_modules/
 db.sqlite
 .DS_STORE
+
+config.py
+api_django/api_django/__pycache__/
