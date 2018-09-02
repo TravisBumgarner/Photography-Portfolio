@@ -4,6 +4,7 @@ import { FONT_FAMILY_HEADER } from '../../theme'
 
 const DefaultHeader = styled.p`
     font-family: ${FONT_FAMILY_HEADER};
+    text-transform: uppercase;
 `
 
 const LargeHeader = DefaultHeader.extend`

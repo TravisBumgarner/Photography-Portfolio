@@ -5,29 +5,42 @@ import { Header } from '../../components'
 
 import { NavigationWrapper } from './Navigation.styles.js'
 
-const mainSectionLinks = [
+const mainSectionContent = [
     { title: 'Home', route: '/' },
     { title: 'About', route: '/about' },
     { title: 'Contact', route: '/contact' }
 ]
 
+const projectsSectionContent = [
+    { title: '2x3x4', route: '/' },
+    { title: 'Black & White', route: '/' },
+    { title: 'Squares', route: '/' },
+    { title: 'Beetles of Mexico', route: '/' },
+    { title: '2x3x4', route: '/' }
+]
+
+const generateLinks = content => {
+    return content.map(item => {
+        return (
+            <NavLink key={item.title} to={item.route}>
+                <li>{item.title}</li>
+            </NavLink>
+        )
+    })
+}
+
 class Navigation extends Component {
     render() {
-        const mainSectionLinksElements = mainSectionLinks.map(item => {
-            return (
-                <NavLink key={item.title} to={item.route}>
-                    <li>{item.title}</li>
-                </NavLink>
-            )
-        })
+        const mainLinks = generateLinks(mainSectionContent)
+        const projectsLinks = generateLinks(projectsSectionContent)
 
         return (
             <NavigationWrapper>
                 <Header size="large">Main</Header>
-                <ul>{mainSectionLinksElements}</ul>
+                <ul>{mainLinks}</ul>
 
-                <Header size="large">Main</Header>
-                <ul>{mainSectionLinksElements}</ul>
+                <Header size="large">Projects</Header>
+                <ul>{projectsLinks}</ul>
             </NavigationWrapper>
         )
     }
