@@ -2,8 +2,9 @@ api_django/media
 test_images/
 dist/
 node_modules/
-db.sqlite
 .DS_STORE
 .vscode/
 config.py
+db.sqlite3
 __pycache__/
+api_django/db.sqlite3
