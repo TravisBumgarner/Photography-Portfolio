@@ -12,7 +12,7 @@ class Category(models.Model):
 
 
 class Project(models.Model):
-    name = models.CharField(max_length=200, unique=True)
+    title = models.CharField(max_length=200, unique=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
     description = models.TextField(blank=True, null=True)
     start_date = models.DateField(null=True)

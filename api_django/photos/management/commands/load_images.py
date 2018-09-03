@@ -203,7 +203,12 @@ class Command(BaseCommand):
                     name = output_file_name,
                     file = input_file_data
                 )
-                p = Photo(
+
+                project, _ = Project.objects.get_or_create(
+                    title               = input_project_directory
+                )
+
+                photo = Photo(
                     file_name           = output_file_name, 
                     src                 = f,
                     exif_data           = exif_data,
@@ -212,5 +217,6 @@ class Command(BaseCommand):
                     height              = exif_data['height'],
                     location            = location,
                     year                = year,
+                    project             = project
                 )
-                p.save()
+                photo.save()
