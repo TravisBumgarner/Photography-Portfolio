@@ -1,3 +1,4 @@
+test_images/
 dist/
 node_modules/
 db.sqlite
