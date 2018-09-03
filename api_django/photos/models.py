@@ -23,7 +23,8 @@ class Project(models.Model):
 
 
 class Photo(models.Model):
-    src = models.CharField(max_length=200)
+    src = models.ImageField(blank=True, null=True)
+    file_name = models.CharField(max_length=200)
     title = models.CharField(max_length=200)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
     location = models.CharField(max_length=200)

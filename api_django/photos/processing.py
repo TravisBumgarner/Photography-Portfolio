@@ -1,5 +1,6 @@
 # TODO: 
 #    - Add flash
+#    - Location Sub Location, Location (City, State) (State, Country)
 
 import os
 import shutil
