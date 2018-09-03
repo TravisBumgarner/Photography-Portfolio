@@ -6,18 +6,36 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ('id', 'name')
+        fields = (
+            'id',
+            'name'
+            )
 
 
 class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('id', 'name')
+        fields = (
+            'id',
+            'name'
+        )
 
 
 class PhotoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Photo
-        fields = ('id', 'name')
+        fields = (
+            'src',
+            'file_name',
+            'title',
+            'project',
+            'location',
+            'date_taken',
+            'year',
+            'width',
+            'height',
+            'exif_data'
+        )
+

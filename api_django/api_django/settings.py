@@ -6,10 +6,10 @@ from api_django import config
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-# STATIC_URL = 'http://eng40api.travisbumgarner.com/static/'
+STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-# MEDIA_URL = 'http://eng40api.travisbumgarner.com/media/'
+MEDIA_URL = '/media/'
 
 
 SECRET_KEY = config.SECRET_KEY
