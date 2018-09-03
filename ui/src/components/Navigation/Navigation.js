@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom'
 
 import { Header } from '../../components'
 
-import { NavigationWrapper } from './Navigation.styles.js'
+import {
+    NavigationWrapper,
+    SubNavigationWrapper,
+    SiteLink,
+    LinkListItem
+} from './Navigation.styles.js'
 
 const mainSectionContent = [
     { title: 'Home', route: '/' },
@@ -19,12 +23,23 @@ const projectsSectionContent = [
     { title: '2x3x4', route: '/' }
 ]
 
+const singlesSectionContent = [
+    { title: '2018', route: '/' },
+    { title: '2017', route: '/' },
+    { title: '2016', route: '/' },
+    { title: '2015', route: '/' },
+    { title: '2014', route: '/' },
+    { title: '2013', route: '/' }
+]
+
 const generateLinks = content => {
     return content.map(item => {
         return (
-            <NavLink key={item.title} to={item.route}>
-                <li>{item.title}</li>
-            </NavLink>
+            <LinkListItem>
+                <SiteLink key={item.title} to={item.route}>
+                    {item.title}
+                </SiteLink>
+            </LinkListItem>
         )
     })
 }
@@ -33,14 +48,34 @@ class Navigation extends Component {
     render() {
         const mainLinks = generateLinks(mainSectionContent)
         const projectsLinks = generateLinks(projectsSectionContent)
+        const singlesLinks = generateLinks(singlesSectionContent)
 
         return (
             <NavigationWrapper>
-                <Header size="large">Main</Header>
-                <ul>{mainLinks}</ul>
+                <SubNavigationWrapper>
+                    <Header size="large">
+                        Travis
+                        <br />
+                        Bumgarner
+                        <br />
+                        Photography
+                    </Header>
+                </SubNavigationWrapper>
 
-                <Header size="large">Projects</Header>
-                <ul>{projectsLinks}</ul>
+                <SubNavigationWrapper>
+                    <Header size="medium">Main</Header>
+                    <ul>{mainLinks}</ul>
+                </SubNavigationWrapper>
+
+                <SubNavigationWrapper>
+                    <Header size="medium">Projects</Header>
+                    <ul>{projectsLinks}</ul>
+                </SubNavigationWrapper>
+
+                <SubNavigationWrapper>
+                    <Header size="medium">Singles</Header>
+                    <ul>{singlesLinks}</ul>
+                </SubNavigationWrapper>
             </NavigationWrapper>
         )
     }
