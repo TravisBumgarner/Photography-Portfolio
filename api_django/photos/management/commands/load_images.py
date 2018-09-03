@@ -52,6 +52,20 @@ def process_nikon(raw_exif_data):
     
     return processed_exif_data
 
+def process_cannon(raw_exif_data):
+    processed_exif_data = {}
+    processed_exif_data['camera_type']      = "DSLR"
+    processed_exif_data['make']             = str(raw_exif_data['Image Make'])
+    processed_exif_data['model']            = str(raw_exif_data['Image Model'])
+    processed_exif_data['lens']             = str(raw_exif_data['EXIF LensModel'])
+    processed_exif_data['date_taken']       = compute_date(str(raw_exif_data['EXIF DateTimeOriginal']))
+    processed_exif_data['shooting_mode']    = str(raw_exif_data['EXIF ExposureProgram'])
+    processed_exif_data['aperature']        = compute_fractional_string(str(raw_exif_data['EXIF FNumber']))
+    processed_exif_data['shutter_speed']    = str(raw_exif_data['EXIF ExposureTime'])
+    processed_exif_data['iso']              = str(raw_exif_data['EXIF ISOSpeedRatings'])
+    
+    return processed_exif_data
+
 def process_noritsu_scanner(raw_exif_data):
     processed_exif_data = {}
 
@@ -123,11 +137,14 @@ def process_exif_data(full_path):
             raw_model = str(raw_exif_data['Image Model'])
         
         except KeyError:
-            print('{} has no make or model'.format(f.name))
+            print('{} has no make or model'.format(full_path))
             return None
             
         if raw_make in ['NIKON CORPORATION'] and raw_model in ['NIKON D5300', 'NIKON D3400']:
             processed_exif_data = process_nikon(raw_exif_data)
+        
+        elif raw_make in ['Canon'] and raw_model in ['Canon EOS DIGITAL REBEL XS']:
+            processed_exif_data = process_cannon(raw_exif_data)
         
         elif raw_make in ['NORITSU KOKI'] and raw_model in ['QSS-32_33', 'EZ Controller']:
             processed_exif_data = process_noritsu_scanner(raw_exif_data)
@@ -141,6 +158,9 @@ def process_exif_data(full_path):
         elif raw_make in ['motorola'] and raw_model in ['moto x4']:
             processed_exif_data = process_moto_x4(raw_exif_data)
         
+        else:
+            print('"{}"{}'.format(raw_make, raw_model))
+
         im = Image.open(full_path)
         processed_exif_data['width'], processed_exif_data['height'] = im.size
 
@@ -159,7 +179,7 @@ def make_required_year_and_location_directories(year, location):
 class Command(BaseCommand):
     def handle(self, *args, **options):
         for input_project_directory in os.listdir(INPUT_ROOT):
-            if input_project_directory == '.DS_Store':
+            if not os.path.isdir(os.path.join(INPUT_ROOT, input_project_directory)):
                 continue
                 
             for input_file_name in os.listdir(os.path.join(INPUT_ROOT, input_project_directory)):
@@ -167,13 +187,15 @@ class Command(BaseCommand):
                 input_file_root, file_extension = input_file_name.split('.')
                 
                 if file_extension not in ['jpg', 'jpeg']:
-                    pass
+                    continue
 
                 year, location, sequence = input_file_root.split('_')
 
                 make_required_year_and_location_directories(year, location)
 
                 exif_data = process_exif_data(input_full_path)
+                if not exif_data:
+                    continue
 
                 input_file_data = open(os.path.join(INPUT_ROOT, input_project_directory, input_file_name), 'rb')
                 output_file_name = os.path.join(year, location, '{}.{}'.format(sequence, file_extension))
