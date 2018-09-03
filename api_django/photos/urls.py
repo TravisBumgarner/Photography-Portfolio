@@ -11,4 +11,5 @@ router.register(r'photos', PhotoViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
+    url(r'^get_random_image$', GetRandomImage.as_view()),
 ]
