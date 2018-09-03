@@ -1,11 +1,12 @@
 # TODO: 
-#    - Add Width and height
 #    - Add flash
 
 import os
 import shutil
 from datetime import datetime
 
+
+from PIL import Image
 import exifread
 
 def compute_date(raw_str):
@@ -54,7 +55,7 @@ def process_noritsu_scanner(raw_exif_data):
     processed_exif_data['model']            = "N/A"
     processed_exif_data['lens']             = "N/A"
     processed_exif_data['date_taken']       = "N/A"
-    processed_exif_data['shooting_mode']     = "N/A"
+    processed_exif_data['shooting_mode']    = "N/A"
     processed_exif_data['aperature']        = "N/A"
     processed_exif_data['shutter_speed']    = "N/A"
     processed_exif_data['iso']              = "N/A"
@@ -107,9 +108,11 @@ def process_moto_x4(raw_exif_data):
     return processed_exif_data
 
 
-def process_exif_data(f):
+def process_exif_data(full_path):
+        file_contents = open(full_path,'rb')
+
         processed_exif_data = {}
-        raw_exif_data = exifread.process_file(f)
+        raw_exif_data = exifread.process_file(file_contents)
         
         try:
             raw_make = str(raw_exif_data['Image Make'])
@@ -136,25 +139,37 @@ def process_exif_data(f):
         
         return processed_exif_data
 
-if __name__ == "__main__":
-    input_directory = '/Users/travisbumgarner/Documents/programming/temp/exif_processing/test_images'
-    output_directory = '/Users/travisbumgarner/Documents/programming/temp/exif_processing/test_images_processed'
+def calculate_width_and_height(f):
+    im = Image.open(f)
+    width, height = im.size
+    return width, height
 
-    for f in os.listdir(input_directory):
-        _, extension = f.split('.')
+if __name__ == "__main__":
+    input_directory = './test_images'
+    output_directory = './test_images_processed'
+
+    for file_name in os.listdir(input_directory):
+        _, extension = file_name.split('.')
         if extension not in ['jpg', 'jpeg']:
-            print('[-] Skipping invalid file type {}'.format(f))
+            print('[-] Skipping invalid file type {}'.format(file_name))
             continue
 
         try:
-            exif_data = process_exif_data(open(os.path.join(input_directory, f),'rb'))
+            full_path = os.path.join(input_directory, file_name)
             
-            print(f)
-            for k in exif_data:
-                print('    {}: {}'.format(k, exif_data[k]))
+            exif_data = process_exif_data(full_path)
+            
+            image_data = {}
+            image_data['width'], image_data['height'] = calculate_width_and_height(full_path)
 
-            # shutil.move(os.path.join(input_directory, f), os.path.join(output_directory, f))
+            print(file_name)
+            print(image_data)
+            # for k in exif_data:
+            #     print('    {}: {}'.format(k, meta_data[k]))
+
+        # shutil.move(os.path.join(input_directory, f), os.path.join(output_directory, f))
+    
         except Exception as e:
             print(e)
-            print('[-] Error encountered with {}'.format(f))
+            print('[-] Error encountered with {}'.format(file_name))
             continue
