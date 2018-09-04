@@ -7,14 +7,6 @@ import { Gallery } from '../../containers'
 import { HomeWrapper } from './Home.styles.js'
 
 class Home extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            isLoading: true,
-            photos: []
-        }
-    }
-
     componentWillMount() {
         const { toggleNavigation } = this.props
 
@@ -37,21 +29,11 @@ class Home extends Component {
     }
 
     render() {
-        const { shouldDisplayImages } = this.props
-        const { isLoading, photos } = this.state
-
+        const { shouldDisplayPhotos, photos } = this.props
+        console.log(photos)
         return (
             <HomeWrapper>
-                {isLoading ? (
-                    <p>One sec...</p>
-                ) : (
-                    <Fragment>
-                        <Gallery
-                            photos={photos}
-                            shouldDisplayImages={shouldDisplayImages}
-                        />
-                    </Fragment>
-                )}
+                <Gallery photos={photos} shouldDisplayPhotos={true} />
             </HomeWrapper>
         )
     }
@@ -59,7 +41,8 @@ class Home extends Component {
 
 Home.propTypes = {
     toggleNavigation: PropTypes.func.isRequired,
-    shouldDisplayImages: PropTypes.bool.isRequired
+    shouldDisplayPhotos: PropTypes.bool.isRequired,
+    photos: PropTypes.array.isRequired
 }
 
 export default Home

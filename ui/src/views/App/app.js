@@ -13,7 +13,8 @@ class App extends Component {
         this.state = {
             src: '',
             isNavigationVisible: true,
-            photos: [],
+            allPhotos: [],
+            visiblePhotos: [],
             metadataYears: [],
             metadataProjects: []
         }
@@ -37,7 +38,8 @@ class App extends Component {
 
                 this.setState({
                     isLoading: false,
-                    photos: response.data,
+                    allPhotos: response.data,
+                    visiblePhotos: response.data,
                     metadataProjects: [...metadataProjects].sort(),
                     metadataYears: [...metadataYears].sort((a, b) => b > a)
                 })
@@ -52,7 +54,14 @@ class App extends Component {
     }
 
     toggleNavigation = () => {
-        this.setState({ isNavigationVisible: !this.state.isNavigationVisible })
+        // this.setState({ isNavigationVisible: !this.state.isNavigationVisible })
+        console.log('this should be renabled')
+    }
+
+    filterPhotosByYear = year => {
+        const { allPhotos } = this.state
+        const visiblePhotos = allPhotos.filter(photo => photo.year == year)
+        this.setState({ visiblePhotos })
     }
 
     render() {
@@ -60,7 +69,8 @@ class App extends Component {
             src,
             isNavigationVisible,
             metadataProjects,
-            metadataYears
+            metadataYears,
+            visiblePhotos
         } = this.state
 
         return (
@@ -71,6 +81,7 @@ class App extends Component {
                             toggleNavigation={this.toggleNavigation}
                             metadataProjects={metadataProjects}
                             metadataYears={metadataYears}
+                            filterPhotosByYear={this.filterPhotosByYear}
                         />
                     </NavigationWrapper>
                 )}
@@ -83,7 +94,8 @@ class App extends Component {
                         render={() => (
                             <Home
                                 toggleNavigation={this.toggleNavigation}
-                                shouldDisplayImages={!isNavigationVisible}
+                                shouldDisplayPhotos={!isNavigationVisible}
+                                photos={visiblePhotos}
                             />
                         )}
                     />

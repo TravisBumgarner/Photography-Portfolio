@@ -25,11 +25,11 @@ class Gallery extends Component {
     }
 
     render() {
-        const { shouldDisplayImages } = this.props
+        const { shouldDisplayPhotos } = this.props
         const grid = this.generateGrid()
-        console.log('shouldDisplayImages', shouldDisplayImages)
+        console.log('shouldDisplayPhotos', shouldDisplayPhotos)
         return (
-            <GalleryWrapper shouldDisplayImages={shouldDisplayImages}>
+            <GalleryWrapper shouldDisplayPhotos={shouldDisplayPhotos}>
                 {grid}
             </GalleryWrapper>
         )
@@ -38,7 +38,7 @@ class Gallery extends Component {
 
 Gallery.propTypes = {
     photos: PropTypes.array.isRequired,
-    shouldDisplayImages: PropTypes.bool.isRequired
+    shouldDisplayPhotos: PropTypes.bool.isRequired
 }
 
 export default Gallery

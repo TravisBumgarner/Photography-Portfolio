@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const GalleryWrapper = styled.div`
-    display: ${props => (props.shouldDisplayImages ? 'flex' : 'hidden')};
+    display: ${props => (props.shouldDisplayPhotos ? 'flex' : 'hidden')};
     padding: 0;
     margin: 0;
     list-style: none;

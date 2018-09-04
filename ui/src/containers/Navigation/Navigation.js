@@ -15,36 +15,44 @@ const mainSectionContent = [
     { title: 'Contact', route: '/contact' }
 ]
 
-const generateLinks = content => {
-    return content.map(item => {
-        return (
-            <LinkListItem>
-                <SiteLink key={item.title} to={item.route}>
-                    {item.title}
-                </SiteLink>
-            </LinkListItem>
-        )
-    })
-}
+// const generateLinks = content => {
+//     return content.map(item => {
+//         return (
+//             <LinkListItem>
+//                 <SiteLink key={item.title} to={item.route}>
+//                     {item.title}
+//                 </SiteLink>
+//             </LinkListItem>
+//         )
+//     })
+// }
 
 class Navigation extends Component {
     render() {
-        const { toggleNavigation, metadataProjects, metadataYears } = this.props
+        const {
+            toggleNavigation,
+            metadataProjects,
+            metadataYears,
+            filterPhotosByYear
+        } = this.props
 
         const projectsSectionContent = metadataProjects.map(project => ({
             title: project,
             route: `/projects/${project}`
         }))
-        const yearsSectionContent = metadataYears.map(year => ({
-            title: year,
-            route: `/singles/${year}`
-        }))
+        const yearsSectionContent = metadataYears.map(year => {
+            return (
+                <LinkListItem onClick={() => filterPhotosByYear(year)}>
+                    {year}
+                </LinkListItem>
+            )
+        })
 
         console.log(projectsSectionContent, yearsSectionContent)
 
-        const mainLinks = generateLinks(mainSectionContent)
-        const projectsLinks = generateLinks(projectsSectionContent)
-        const yearsLinks = generateLinks(yearsSectionContent)
+        const mainLinks = []
+        const projectsLinks = []
+        const yearsLinks = yearsSectionContent
 
         return (
             <NavigationWrapper>
@@ -77,7 +85,8 @@ class Navigation extends Component {
 Navigation.propTypes = {
     toggleNavigation: PropTypes.func.isRequired,
     metadataProjects: PropTypes.array.isRequired,
-    metadataYears: PropTypes.array.isRequired
+    metadataYears: PropTypes.array.isRequired,
+    filterPhotosByYear: PropTypes.func.isRequired
 }
 
 export default Navigation
