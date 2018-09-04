@@ -43,3 +43,14 @@ class PhotoSerializer(serializers.ModelSerializer):
             'exif_data'
         )
 
+
+class ContactSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Contact
+        fields = (
+            'name',
+            'email',
+            'website',
+            'message',
+        )

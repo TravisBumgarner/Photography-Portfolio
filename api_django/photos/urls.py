@@ -8,6 +8,7 @@ router = routers.DefaultRouter()
 router.register(r'categories', CategoryViewSet)
 router.register(r'projects', ProjectViewSet)
 router.register(r'photos', PhotoViewSet)
+router.register(r'contact', ContactViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
