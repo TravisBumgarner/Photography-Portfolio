@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import axios from 'axios'
 
-import { Home, Contact } from '../../views'
+import { Home, Contact, About } from '../../views'
 import { Navigation } from '../../containers'
 
 import { AppWrapper, NavigationWrapper } from './App.styles.js'
@@ -38,6 +38,7 @@ class App extends Component {
                 )}
                 <Switch>
                     <Route exact path="/contact" component={Contact} />
+                    <Route exact path="/about" component={About} />
                     <Route
                         exact
                         path="/"
