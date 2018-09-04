@@ -15,23 +15,6 @@ const mainSectionContent = [
     { title: 'Contact', route: '/contact' }
 ]
 
-const projectsSectionContent = [
-    { title: '2x3x4', route: '/' },
-    { title: 'Black & White', route: '/' },
-    { title: 'Squares', route: '/' },
-    { title: 'Beetles of Mexico', route: '/' },
-    { title: '2x3x4', route: '/' }
-]
-
-const singlesSectionContent = [
-    { title: '2018', route: '/' },
-    { title: '2017', route: '/' },
-    { title: '2016', route: '/' },
-    { title: '2015', route: '/' },
-    { title: '2014', route: '/' },
-    { title: '2013', route: '/' }
-]
-
 const generateLinks = content => {
     return content.map(item => {
         return (
@@ -46,11 +29,22 @@ const generateLinks = content => {
 
 class Navigation extends Component {
     render() {
-        const { toggleNavigation } = this.props
+        const { toggleNavigation, metadataProjects, metadataYears } = this.props
+
+        const projectsSectionContent = metadataProjects.map(project => ({
+            title: project,
+            route: `/projects/${project}`
+        }))
+        const yearsSectionContent = metadataYears.map(year => ({
+            title: year,
+            route: `/singles/${year}`
+        }))
+
+        console.log(projectsSectionContent, yearsSectionContent)
 
         const mainLinks = generateLinks(mainSectionContent)
         const projectsLinks = generateLinks(projectsSectionContent)
-        const singlesLinks = generateLinks(singlesSectionContent)
+        const yearsLinks = generateLinks(yearsSectionContent)
 
         return (
             <NavigationWrapper>
@@ -73,7 +67,7 @@ class Navigation extends Component {
 
                 <SubNavigationWrapper>
                     <Header size="medium">Singles</Header>
-                    <ul>{singlesLinks}</ul>
+                    <ul>{yearsLinks}</ul>
                 </SubNavigationWrapper>
             </NavigationWrapper>
         )
@@ -81,7 +75,9 @@ class Navigation extends Component {
 }
 
 Navigation.propTypes = {
-    toggleNavigation: PropTypes.func.isRequired
+    toggleNavigation: PropTypes.func.isRequired,
+    metadataProjects: PropTypes.array.isRequired,
+    metadataYears: PropTypes.array.isRequired
 }
 
 export default Navigation
