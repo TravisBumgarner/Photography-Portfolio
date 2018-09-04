@@ -4,17 +4,17 @@ const AppWrapper = styled.div`
     width: 100vw;
     height: 100vh;
     display: flex;
-    /* align-items: center; */
     justify-content: center;
 
     &:after {
         content: '';
-        background-image: url(${props => props.src});
+        background-image: ${props =>
+            props.isNavigationVisible ? `url(${props.src});` : ''};
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
         background-attachment: fixed;
-        opacity: 0.3;
+        opacity: 0.2;
         top: 0;
         left: 0;
         bottom: 0;
@@ -24,4 +24,11 @@ const AppWrapper = styled.div`
     }
 `
 
-export { AppWrapper }
+const NavigationWrapper = styled.div`
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    margin-left: 5vw;
+`
+
+export { AppWrapper, NavigationWrapper }

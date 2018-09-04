@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
 const GalleryWrapper = styled.div`
+    display: ${props => (props.shouldDisplayImages ? 'flex' : 'hidden')};
     padding: 0;
     margin: 0;
     list-style: none;
-    display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     line-height: 30px;

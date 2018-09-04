@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import { Header } from '../../components'
 
@@ -10,7 +11,6 @@ import {
 } from './Navigation.styles.js'
 
 const mainSectionContent = [
-    { title: 'Home', route: '/' },
     { title: 'About', route: '/about' },
     { title: 'Contact', route: '/contact' }
 ]
@@ -46,6 +46,8 @@ const generateLinks = content => {
 
 class Navigation extends Component {
     render() {
+        const { toggleNavigation } = this.props
+
         const mainLinks = generateLinks(mainSectionContent)
         const projectsLinks = generateLinks(projectsSectionContent)
         const singlesLinks = generateLinks(singlesSectionContent)
@@ -58,7 +60,10 @@ class Navigation extends Component {
 
                 <SubNavigationWrapper>
                     <Header size="medium">Main</Header>
-                    <ul>{mainLinks}</ul>
+                    <ul>
+                        <li onClick={toggleNavigation}>Home</li>
+                        {mainLinks}
+                    </ul>
                 </SubNavigationWrapper>
 
                 <SubNavigationWrapper>
@@ -75,6 +80,8 @@ class Navigation extends Component {
     }
 }
 
-Navigation.propTypes = {}
+Navigation.propTypes = {
+    toggleNavigation: PropTypes.func.isRequired
+}
 
 export default Navigation

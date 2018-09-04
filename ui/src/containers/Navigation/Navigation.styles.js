@@ -7,7 +7,7 @@ import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../theme'
 const NavigationWrapper = styled.div``
 
 const SubNavigationWrapper = styled.div`
-    margin: 30px 10px;
+    margin: 30px 0;
 `
 
 const LinkListItem = styled.li`

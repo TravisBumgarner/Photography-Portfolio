@@ -3,14 +3,16 @@ import { Switch, Route } from 'react-router-dom'
 import axios from 'axios'
 
 import { Home, Contact } from '../../views'
+import { Navigation } from '../../containers'
 
-import { AppWrapper } from './App.styles.js'
+import { AppWrapper, NavigationWrapper } from './App.styles.js'
 
 class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            src: ''
+            src: '',
+            isNavigationVisible: true
         }
     }
 
@@ -20,22 +22,30 @@ class App extends Component {
         })
     }
 
-    clearBackground = () => {
-        this.setState({ src: '' })
+    toggleNavigation = () => {
+        this.setState({ isNavigationVisible: !this.state.isNavigationVisible })
     }
 
     render() {
-        const { src } = this.state
+        const { src, isNavigationVisible } = this.state
         console.log(src)
         return (
-            <AppWrapper src={src}>
+            <AppWrapper src={src} isNavigationVisible={isNavigationVisible}>
+                {isNavigationVisible && (
+                    <NavigationWrapper>
+                        <Navigation toggleNavigation={this.toggleNavigation} />
+                    </NavigationWrapper>
+                )}
                 <Switch>
                     <Route exact path="/contact" component={Contact} />
                     <Route
                         exact
                         path="/"
                         render={() => (
-                            <Home clearBackground={this.clearBackground} />
+                            <Home
+                                toggleNavigation={this.toggleNavigation}
+                                shouldDisplayImages={!isNavigationVisible}
+                            />
                         )}
                     />
                 </Switch>

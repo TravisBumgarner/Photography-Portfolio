@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 
-import { Navigation, Gallery } from '../../containers'
+import { Gallery } from '../../containers'
 
 import { HomeWrapper } from './Home.styles.js'
 
@@ -16,7 +16,7 @@ class Home extends Component {
     }
 
     componentWillMount() {
-        const { clearBackground } = this.props
+        const { toggleNavigation } = this.props
 
         axios
             .get('http://localhost:8000/photos/')
@@ -26,7 +26,7 @@ class Home extends Component {
                     isLoading: false,
                     photos: response.data
                 })
-                clearBackground()
+                // toggleNavigation()
             })
             .catch(error => {
                 console.log(error)
@@ -37,16 +37,19 @@ class Home extends Component {
     }
 
     render() {
+        const { shouldDisplayImages } = this.props
         const { isLoading, photos } = this.state
 
         return (
             <HomeWrapper>
                 {isLoading ? (
-                    <p>Loading</p>
+                    <p>One sec...</p>
                 ) : (
                     <Fragment>
-                        <Navigation />
-                        <Gallery photos={photos} />
+                        <Gallery
+                            photos={photos}
+                            shouldDisplayImages={shouldDisplayImages}
+                        />
                     </Fragment>
                 )}
             </HomeWrapper>
@@ -55,7 +58,8 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-    clearBackground: PropTypes.func
+    toggleNavigation: PropTypes.func.isRequired,
+    shouldDisplayImages: PropTypes.bool.isRequired
 }
 
 export default Home
