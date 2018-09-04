@@ -8,25 +8,6 @@ import { GalleryWrapper, GalleryItem, GalleryRow } from './Gallery.styles'
 const ITEMS_PER_ROW = 3
 
 class Gallery extends Component {
-    constructor(props) {
-        super(props)
-        this.state = { width: 0, height: 0 }
-        this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
-    }
-
-    componentDidMount() {
-        this.updateWindowDimensions()
-        window.addEventListener('resize', this.updateWindowDimensions)
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.updateWindowDimensions)
-    }
-
-    updateWindowDimensions() {
-        this.setState({ width: window.innerWidth, height: window.innerHeight })
-    }
-
     generateGrid = () => {
         const { photos } = this.props
 
@@ -44,14 +25,20 @@ class Gallery extends Component {
     }
 
     render() {
+        const { shouldDisplayImages } = this.props
         const grid = this.generateGrid()
-
-        return <GalleryWrapper>{grid}</GalleryWrapper>
+        console.log('shouldDisplayImages', shouldDisplayImages)
+        return (
+            <GalleryWrapper shouldDisplayImages={shouldDisplayImages}>
+                {grid}
+            </GalleryWrapper>
+        )
     }
 }
 
 Gallery.propTypes = {
-    photos: PropTypes.array.isRequired
+    photos: PropTypes.array.isRequired,
+    shouldDisplayImages: PropTypes.bool.isRequired
 }
 
 export default Gallery
