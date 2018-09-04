@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
+import PropTypes from 'prop-types'
 import axios from 'axios'
 
-import { Navigation } from '../../containers'
+import { Navigation, Gallery } from '../../containers'
 
 import { HomeWrapper } from './Home.styles.js'
 
@@ -9,18 +10,23 @@ class Home extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            isLoading: true
+            isLoading: true,
+            photos: []
         }
     }
 
     componentWillMount() {
+        const { clearBackground } = this.props
+
         axios
-            .get('http://localhost:8000/')
+            .get('http://localhost:8000/photos/')
             .then(response => {
-                // console.log(response)
+                console.log(response)
                 this.setState({
-                    isLoading: false
+                    isLoading: false,
+                    photos: response.data
                 })
+                clearBackground()
             })
             .catch(error => {
                 console.log(error)
@@ -31,16 +37,25 @@ class Home extends Component {
     }
 
     render() {
-        const { isLoading } = this.state
+        const { isLoading, photos } = this.state
 
         return (
             <HomeWrapper>
-                {isLoading ? <p>Loading</p> : <Navigation />}
+                {isLoading ? (
+                    <p>Loading</p>
+                ) : (
+                    <Fragment>
+                        <Navigation />
+                        <Gallery photos={photos} />
+                    </Fragment>
+                )}
             </HomeWrapper>
         )
     }
 }
 
-Home.propTypes = {}
+Home.propTypes = {
+    clearBackground: PropTypes.func
+}
 
 export default Home

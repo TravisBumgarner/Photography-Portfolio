@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Switch, Route, withRouter } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import axios from 'axios'
 
-import { Home } from '../../views'
+import { Home, Contact } from '../../views'
 
 import { AppWrapper } from './App.styles.js'
 
@@ -20,14 +20,24 @@ class App extends Component {
         })
     }
 
+    clearBackground = () => {
+        this.setState({ src: '' })
+    }
+
     render() {
         const { src } = this.state
         console.log(src)
         return (
             <AppWrapper src={src}>
                 <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route component={Home} />
+                    <Route exact path="/contact" component={Contact} />
+                    <Route
+                        exact
+                        path="/"
+                        render={() => (
+                            <Home clearBackground={this.clearBackground} />
+                        )}
+                    />
                 </Switch>
             </AppWrapper>
         )
