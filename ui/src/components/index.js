@@ -1,4 +1,4 @@
-import Navigation from './Navigation/Navigation'
 import Header from './Header/Header'
+import Text from './Text/Text'
 
-export { Navigation, Header }
+export { Header, Text }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-import { Navigation } from '../../components'
+import { Navigation } from '../../containers'
 
 import { HomeWrapper } from './Home.styles.js'
 
