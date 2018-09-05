@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Photo } from '../../components'
+import { Photo } from 'Components'
 
 import { GalleryWrapper, GalleryItem, GalleryRow } from './Gallery.styles'
 

@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import axios from 'axios'
 
-import { Home, Contact, About } from '../../views'
-import { Navigation } from '../../containers'
+import { Home, Contact, About } from 'Views'
+import { Navigation } from 'Containers'
 
 import { AppWrapper, NavigationWrapper } from './App.styles.js'
 

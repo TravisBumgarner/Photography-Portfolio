@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { FONT_FAMILY_TEXT, PRIMARY_COLOR } from '../../theme'
+import { FONT_FAMILY_TEXT, PRIMARY_COLOR } from 'Theme'
 
 const DefaultText = styled.p`
     font-family: ${FONT_FAMILY_TEXT};

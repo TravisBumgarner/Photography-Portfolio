@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { AboutWrapper } from './About.styles'
 
-import { Text } from '../../components'
+import { Text } from 'Components'
 
 class About extends Component {
     render() {

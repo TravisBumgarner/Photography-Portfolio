@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import { ContactFormWrapper } from './ContactForm.styles'
 
-import { Input, Button } from '../../components'
+import { Input, Button } from 'Components'
 
 class ContactForm extends Component {
     constructor(props) {

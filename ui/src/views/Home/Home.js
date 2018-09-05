@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 
-import { Gallery } from '../../containers'
+import { Gallery } from 'Containers'
 
 import { HomeWrapper } from './Home.styles.js'
 

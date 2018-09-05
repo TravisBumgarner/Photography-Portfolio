@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { FONT_FAMILY_HEADER } from '../../theme'
+import { FONT_FAMILY_HEADER } from 'Theme'
 
 const LargeHeader = styled.h1`
     font-weight: 700;

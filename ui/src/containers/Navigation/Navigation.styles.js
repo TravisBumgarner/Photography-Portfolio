@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { NavLink } from 'react-router-dom'
 
-import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../theme'
+import { PRIMARY_COLOR, SECONDARY_COLOR } from 'Theme'
 
 const NavigationWrapper = styled.div``
 
