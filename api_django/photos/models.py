@@ -1,19 +1,8 @@
 from django.db import models
 
 
-class Category(models.Model):
-    name = models.CharField(max_length=200, unique=True)
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        verbose_name_plural = 'Categories'
-
-
 class Project(models.Model):
     title = models.CharField(max_length=200, unique=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
     description = models.TextField(blank=True, null=True)
     start_date = models.DateField(null=True)
     end_date = models.DateField(null=True)

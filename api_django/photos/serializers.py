@@ -2,16 +2,6 @@ from .models import *
 from rest_framework import serializers
 
 
-class CategorySerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Category
-        fields = (
-            'id',
-            'name'
-            )
-
-
 class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -19,7 +9,6 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'title',
-            'category',
             'description',
             'start_date',
             'end_date'
@@ -27,6 +16,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 
 class PhotoSerializer(serializers.ModelSerializer):
+    project = ProjectSerializer(read_only=True)
 
     class Meta:
         model = Photo

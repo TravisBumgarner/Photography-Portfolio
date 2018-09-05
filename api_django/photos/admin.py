@@ -6,11 +6,6 @@ from django.contrib import admin
 from photos.models import *
 
 
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    pass
-
-
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     pass

@@ -23,12 +23,6 @@ class GetRandomImage(APIView):
         return Response(serializer.data)
 
 
-class CategoryViewSet(ReadOnlyModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-    pagination_class = None
-
-
 class ProjectViewSet(ReadOnlyModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
