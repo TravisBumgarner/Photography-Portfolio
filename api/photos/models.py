@@ -22,10 +22,3 @@ class Photo(models.Model):
     width = models.IntegerField()
     height = models.IntegerField()
     exif_data = models.TextField()
-
-
-class Contact(models.Model):
-    name = models.CharField(max_length=200)
-    website = models.URLField(blank=True)
-    email = models.EmailField()
-    message = models.TextField(max_length=2500)

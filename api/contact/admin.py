@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 from django.contrib import admin
@@ -6,11 +5,6 @@ from django.contrib import admin
 from .models import *
 
 
-@admin.register(Project)
+@admin.register(Contact)
 class ProjectAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Photo)
-class PhotoAdmin(admin.ModelAdmin):
     pass
