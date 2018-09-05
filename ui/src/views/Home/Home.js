@@ -7,33 +7,15 @@ import { Gallery } from '../../containers'
 import { HomeWrapper } from './Home.styles.js'
 
 class Home extends Component {
-    componentWillMount() {
-        const { toggleNavigation } = this.props
-
-        // axios
-        //     .get('http://localhost:8000/photos/')
-        //     .then(response => {
-        //         console.log(response)
-        //         this.setState({
-        //             isLoading: false,
-        //             photos: response.data
-        //         })
-        //         // toggleNavigation()
-        //     })
-        //     .catch(error => {
-        //         console.log(error)
-        //         this.setState({
-        //             isLoading: false
-        //         })
-        //     })
-    }
-
     render() {
         const { shouldDisplayPhotos, photos } = this.props
         console.log(photos)
         return (
             <HomeWrapper>
-                <Gallery photos={photos} shouldDisplayPhotos={true} />
+                <Gallery
+                    photos={photos}
+                    shouldDisplayPhotos={shouldDisplayPhotos}
+                />
             </HomeWrapper>
         )
     }

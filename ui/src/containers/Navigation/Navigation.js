@@ -15,44 +15,31 @@ const mainSectionContent = [
     { title: 'Contact', route: '/contact' }
 ]
 
-// const generateLinks = content => {
-//     return content.map(item => {
-//         return (
-//             <LinkListItem>
-//                 <SiteLink key={item.title} to={item.route}>
-//                     {item.title}
-//                 </SiteLink>
-//             </LinkListItem>
-//         )
-//     })
-// }
-
 class Navigation extends Component {
     render() {
         const {
             toggleNavigation,
             metadataProjects,
             metadataYears,
-            filterPhotosByYear
+            filterPhotosByYear,
+            filterPhotosByProject
         } = this.props
 
-        const projectsSectionContent = metadataProjects.map(project => ({
-            title: project,
-            route: `/projects/${project}`
-        }))
-        const yearsSectionContent = metadataYears.map(year => {
+        const projectsLinks = metadataProjects.map(project => {
+            return (
+                <LinkListItem onClick={() => filterPhotosByProject(project)}>
+                    {project}
+                </LinkListItem>
+            )
+        })
+
+        const yearsLinks = metadataYears.map(year => {
             return (
                 <LinkListItem onClick={() => filterPhotosByYear(year)}>
                     {year}
                 </LinkListItem>
             )
         })
-
-        console.log(projectsSectionContent, yearsSectionContent)
-
-        const mainLinks = []
-        const projectsLinks = []
-        const yearsLinks = yearsSectionContent
 
         return (
             <NavigationWrapper>
@@ -63,8 +50,13 @@ class Navigation extends Component {
                 <SubNavigationWrapper>
                     <Header size="medium">Main</Header>
                     <ul>
-                        <li onClick={toggleNavigation}>Home</li>
-                        {mainLinks}
+                        <LinkListItem>
+                            <SiteLink to="/contact">Contact</SiteLink>
+                        </LinkListItem>
+
+                        <LinkListItem>
+                            <SiteLink to="/about">About</SiteLink>
+                        </LinkListItem>
                     </ul>
                 </SubNavigationWrapper>
 
@@ -86,7 +78,8 @@ Navigation.propTypes = {
     toggleNavigation: PropTypes.func.isRequired,
     metadataProjects: PropTypes.array.isRequired,
     metadataYears: PropTypes.array.isRequired,
-    filterPhotosByYear: PropTypes.func.isRequired
+    filterPhotosByYear: PropTypes.func.isRequired,
+    filterPhotosByProject: PropTypes.func.isRequired
 }
 
 export default Navigation

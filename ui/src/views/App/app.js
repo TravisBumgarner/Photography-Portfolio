@@ -32,7 +32,7 @@ class App extends Component {
                 const metadataProjects = new Set([])
 
                 response.data.map(photo => {
-                    metadataProjects.add(photo.project)
+                    metadataProjects.add(photo.project.title)
                     metadataYears.add(photo.year)
                 })
 
@@ -61,7 +61,15 @@ class App extends Component {
     filterPhotosByYear = year => {
         const { allPhotos } = this.state
         const visiblePhotos = allPhotos.filter(photo => photo.year == year)
-        this.setState({ visiblePhotos })
+        this.setState({ visiblePhotos, isNavigationVisible: false })
+    }
+
+    filterPhotosByProject = project => {
+        const { allPhotos } = this.state
+        const visiblePhotos = allPhotos.filter(
+            photo => photo.project.title == project
+        )
+        this.setState({ visiblePhotos, isNavigationVisible: false })
     }
 
     render() {
@@ -82,6 +90,7 @@ class App extends Component {
                             metadataProjects={metadataProjects}
                             metadataYears={metadataYears}
                             filterPhotosByYear={this.filterPhotosByYear}
+                            filterPhotosByProject={this.filterPhotosByProject}
                         />
                     </NavigationWrapper>
                 )}
