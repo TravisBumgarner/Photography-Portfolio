@@ -27,7 +27,7 @@ class ContactForm extends Component {
 
     handleSubmit = () => {
         const { name, website, message, email } = this.state
-        console.log('hi', !name.length || !message.length || !email.length)
+        
         const errors = []
         !name.length && errors.push('name')
         !message.length && errors.push('message')

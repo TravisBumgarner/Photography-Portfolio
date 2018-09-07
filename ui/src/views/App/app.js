@@ -23,7 +23,7 @@ class App extends Component {
                 years: [],
                 projects: []
             },
-            allPhotos: []
+            photos: []
         }
     }
 
@@ -55,7 +55,7 @@ class App extends Component {
 
                 this.setState({
                     isLoading: false,
-                    allPhotos: response.data,
+                    photos: response.data,
                     visiblePhotos: response.data,
                     metadata: {
                         projects: [...metadataProjects].sort(),
@@ -77,8 +77,7 @@ class App extends Component {
     }
 
     render() {
-        const { metadata, allPhotos, isLoading, theme } = this.state
-
+        const { metadata, photos, isLoading, theme } = this.state
         return isLoading ? null : (
             <AppWrapper backgroundSrc={theme.backgroundSrc}>
                 <NavigationWrapper>
@@ -90,9 +89,7 @@ class App extends Component {
                     <Route exact path="/about" component={About} />
                     <Route
                         path="/portfolio/:projectType/:projectTitle"
-                        render={rest => (
-                            <Portfolio allPhotos={allPhotos} {...rest} />
-                        )}
+                        render={rest => <Portfolio photos={photos} {...rest} />}
                     />
                 </Switch>
             </AppWrapper>

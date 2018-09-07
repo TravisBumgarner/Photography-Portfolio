@@ -4,7 +4,7 @@ import { HomeWrapper } from './Home.styles.js'
 
 class Home extends Component {
     render() {
-        return <HomeWrapper>Hi</HomeWrapper>
+        return <HomeWrapper />
     }
 }
 
