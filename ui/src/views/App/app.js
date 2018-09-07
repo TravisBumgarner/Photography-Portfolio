@@ -14,13 +14,16 @@ class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            backgroundSrc: '',
-            allPhotos: [],
-            visiblePhotos: [],
-            metadataYears: [],
-            metadataProjects: [],
-            primaryColor: 'rgb(0,0,0)',
-            secondaryColor: 'rgb(0,0,0)'
+            theme: {
+                backgroundSrc: '',
+                primaryColor: 'rgb(0,0,0)',
+                secondaryColor: 'rgb(0,0,0)'
+            },
+            metadata: {
+                years: [],
+                projects: []
+            },
+            allPhotos: []
         }
     }
 
@@ -29,9 +32,11 @@ class App extends Component {
             const { src, color_sample_1, color_sample_2 } = response.data
 
             this.setState({
-                backgroundSrc: src,
-                primaryColor: color_sample_1,
-                secondaryColor: color_sample_2
+                theme: {
+                    backgroundSrc: src,
+                    primaryColor: color_sample_1,
+                    secondaryColor: color_sample_2
+                }
             })
         })
     }
@@ -52,8 +57,10 @@ class App extends Component {
                     isLoading: false,
                     allPhotos: response.data,
                     visiblePhotos: response.data,
-                    metadataProjects: [...metadataProjects].sort(),
-                    metadataYears: [...metadataYears].sort((a, b) => b > a)
+                    metadata: {
+                        projects: [...metadataProjects].sort(),
+                        years: [...metadataYears].sort((a, b) => b > a)
+                    }
                 })
             })
             .catch(error => {
@@ -70,26 +77,12 @@ class App extends Component {
     }
 
     render() {
-        const {
-            metadataProjects,
-            metadataYears,
-            primaryColor,
-            secondaryColor,
-            backgroundSrc,
-            allPhotos,
-            visiblePhotos,
-            isLoading
-        } = this.state
+        const { metadata, allPhotos, isLoading, theme } = this.state
 
         return isLoading ? null : (
-            <AppWrapper backgroundSrc={backgroundSrc}>
+            <AppWrapper backgroundSrc={theme.backgroundSrc}>
                 <NavigationWrapper>
-                    <Navigation
-                        metadataProjects={metadataProjects}
-                        metadataYears={metadataYears}
-                        filterPhotosByYear={this.filterPhotosByYear}
-                        filterPhotosByProject={this.filterPhotosByProject}
-                    />
+                    <Navigation metadata={metadata} />
                 </NavigationWrapper>
                 <Switch>
                     <Route exact path="/" component={Home} />

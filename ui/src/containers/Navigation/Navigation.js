@@ -12,19 +12,13 @@ import {
     LinkListItem
 } from './Navigation.styles.js'
 
-const mainSectionContent = [
-    { title: 'Home', route: '/' },
-    { title: 'About', route: '/about' },
-    { title: 'Contact', route: '/contact' }
-]
-
 class Navigation extends Component {
     render() {
-        const { metadataProjects, metadataYears } = this.props
+        const { metadata } = this.props
 
-        const projectsLinks = metadataProjects.map(project => {
+        const projectsLinks = metadata.projects.map(project => {
             return (
-                <LinkListItem>
+                <LinkListItem key={project}>
                     <SiteLink to={`/portfolio/project/${project}`}>
                         {project}
                     </SiteLink>
@@ -32,9 +26,9 @@ class Navigation extends Component {
             )
         })
 
-        const yearsLinks = metadataYears.map(year => {
+        const yearsLinks = metadata.years.map(year => {
             return (
-                <LinkListItem>
+                <LinkListItem key={year}>
                     <SiteLink to={`/portfolio/singles/${year}`}>
                         {year}
                     </SiteLink>
@@ -42,12 +36,16 @@ class Navigation extends Component {
             )
         })
 
+        const mainSectionContent = [
+            { title: 'Home', route: '/' },
+            { title: 'About', route: '/about' },
+            { title: 'Contact', route: '/contact' }
+        ]
+
         const mainLinks = mainSectionContent.map(m => {
             return (
-                <LinkListItem>
-                    <SiteLink key={m.title} to={m.route}>
-                        {m.title}
-                    </SiteLink>
+                <LinkListItem key={m.title}>
+                    <SiteLink to={m.route}>{m.title}</SiteLink>
                 </LinkListItem>
             )
         })
@@ -78,8 +76,7 @@ class Navigation extends Component {
 }
 
 Navigation.propTypes = {
-    metadataProjects: PropTypes.array.isRequired,
-    metadataYears: PropTypes.array.isRequired
+    metadata: PropTypes.object.isRequired
 }
 
 export default Navigation
