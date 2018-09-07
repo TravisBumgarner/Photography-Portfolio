@@ -7,9 +7,9 @@ import { PhotoWrapper } from './Photo.styles'
 
 class Photo extends Component {
     render() {
-        const { src } = this.props
+        const { src, color1, color2 } = this.props
 
-        return <PhotoWrapper src={src} />
+        return <PhotoWrapper src={src} color1={color1} color2={color2} />
     }
 }
 

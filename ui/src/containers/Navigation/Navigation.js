@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import { Header } from 'Components'
 
+import { Theme } from '../../views/App/App'
+
 import {
     NavigationWrapper,
     SubNavigationWrapper,
@@ -11,32 +13,41 @@ import {
 } from './Navigation.styles.js'
 
 const mainSectionContent = [
+    { title: 'Home', route: '/' },
     { title: 'About', route: '/about' },
     { title: 'Contact', route: '/contact' }
 ]
 
 class Navigation extends Component {
     render() {
-        const {
-            toggleNavigation,
-            metadataProjects,
-            metadataYears,
-            filterPhotosByYear,
-            filterPhotosByProject
-        } = this.props
+        const { metadataProjects, metadataYears } = this.props
 
         const projectsLinks = metadataProjects.map(project => {
             return (
-                <LinkListItem onClick={() => filterPhotosByProject(project)}>
-                    {project}
+                <LinkListItem>
+                    <SiteLink to={`/portfolio/project/${project}`}>
+                        {project}
+                    </SiteLink>
                 </LinkListItem>
             )
         })
 
         const yearsLinks = metadataYears.map(year => {
             return (
-                <LinkListItem onClick={() => filterPhotosByYear(year)}>
-                    {year}
+                <LinkListItem>
+                    <SiteLink to={`/portfolio/singles/${year}`}>
+                        {year}
+                    </SiteLink>
+                </LinkListItem>
+            )
+        })
+
+        const mainLinks = mainSectionContent.map(m => {
+            return (
+                <LinkListItem>
+                    <SiteLink key={m.title} to={m.route}>
+                        {m.title}
+                    </SiteLink>
                 </LinkListItem>
             )
         })
@@ -49,15 +60,7 @@ class Navigation extends Component {
 
                 <SubNavigationWrapper>
                     <Header size="medium">Main</Header>
-                    <ul>
-                        <LinkListItem>
-                            <SiteLink to="/contact">Contact</SiteLink>
-                        </LinkListItem>
-
-                        <LinkListItem>
-                            <SiteLink to="/about">About</SiteLink>
-                        </LinkListItem>
-                    </ul>
+                    <ul>{mainLinks}</ul>
                 </SubNavigationWrapper>
 
                 <SubNavigationWrapper>
@@ -75,11 +78,8 @@ class Navigation extends Component {
 }
 
 Navigation.propTypes = {
-    toggleNavigation: PropTypes.func.isRequired,
     metadataProjects: PropTypes.array.isRequired,
-    metadataYears: PropTypes.array.isRequired,
-    filterPhotosByYear: PropTypes.func.isRequired,
-    filterPhotosByProject: PropTypes.func.isRequired
+    metadataYears: PropTypes.array.isRequired
 }
 
 export default Navigation

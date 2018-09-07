@@ -21,6 +21,7 @@ class PhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Photo
         fields = (
+            'id',
             'src',
             'file_name',
             'title',
@@ -30,5 +31,7 @@ class PhotoSerializer(serializers.ModelSerializer):
             'year',
             'width',
             'height',
-            'exif_data'
+            'exif_data',
+            'color_sample_1',
+            'color_sample_2',
         )

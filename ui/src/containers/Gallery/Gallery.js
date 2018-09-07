@@ -12,13 +12,19 @@ class Gallery extends Component {
         const { photos } = this.props
 
         const grid = photos.map(photo => (
-            <GalleryItem>
-                <Photo src={photo.src} />
+            <GalleryItem key={photo.id}>
+                <Photo
+                    src={photo.src}
+                    color1={photo.color_sample_1}
+                    color2={photo.color_sample_2}
+                />
             </GalleryItem>
         ))
 
+        // Add blank elements so last row of photos is spaced correctly.
         while (grid.length % ITEMS_PER_ROW !== 0) {
-            grid.push(<GalleryItem />)
+            const modulous = grid.length % ITEMS_PER_ROW
+            grid.push(<GalleryItem key={`blank${modulous}`} />)
         }
 
         return grid
@@ -27,18 +33,12 @@ class Gallery extends Component {
     render() {
         const { shouldDisplayPhotos } = this.props
         const grid = this.generateGrid()
-        console.log('shouldDisplayPhotos', shouldDisplayPhotos)
-        return (
-            <GalleryWrapper shouldDisplayPhotos={shouldDisplayPhotos}>
-                {grid}
-            </GalleryWrapper>
-        )
+        return <GalleryWrapper>{grid}</GalleryWrapper>
     }
 }
 
 Gallery.propTypes = {
-    photos: PropTypes.array.isRequired,
-    shouldDisplayPhotos: PropTypes.bool.isRequired
+    photos: PropTypes.array.isRequired
 }
 
 export default Gallery

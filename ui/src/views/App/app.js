@@ -2,29 +2,41 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import axios from 'axios'
 
-import { Home, Contact, About } from 'Views'
+import { Home, Contact, About, Portfolio } from 'Views'
 import { Navigation } from 'Containers'
 
 import { AppWrapper, NavigationWrapper } from './App.styles.js'
+import { generateTheme } from '../../theme.js'
+
+const Theme = React.createContext()
 
 class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            src: '',
-            isNavigationVisible: true,
+            backgroundSrc: '',
             allPhotos: [],
             visiblePhotos: [],
             metadataYears: [],
-            metadataProjects: []
+            metadataProjects: [],
+            primaryColor: 'rgb(0,0,0)',
+            secondaryColor: 'rgb(0,0,0)'
         }
     }
 
-    componentWillMount() {
-        axios.get('http://localhost:8000/random_photo').then(response => {
-            this.setState({ src: response.data.src })
-        })
+    getThemeDetails = () => {
+        axios.get('http://localhost:8000/get_random_photo').then(response => {
+            const { src, color_sample_1, color_sample_2 } = response.data
 
+            this.setState({
+                backgroundSrc: src,
+                primaryColor: color_sample_1,
+                secondaryColor: color_sample_2
+            })
+        })
+    }
+
+    getPhotos = () => {
         axios
             .get('http://localhost:8000/photos/')
             .then(response => {
@@ -43,7 +55,6 @@ class App extends Component {
                     metadataProjects: [...metadataProjects].sort(),
                     metadataYears: [...metadataYears].sort((a, b) => b > a)
                 })
-                // toggleNavigation()
             })
             .catch(error => {
                 console.log(error)
@@ -53,59 +64,41 @@ class App extends Component {
             })
     }
 
-    toggleNavigation = () => {
-        // this.setState({ isNavigationVisible: !this.state.isNavigationVisible })
-        console.log('this should be renabled')
-    }
-
-    filterPhotosByYear = year => {
-        const { allPhotos } = this.state
-        const visiblePhotos = allPhotos.filter(photo => photo.year == year)
-        this.setState({ visiblePhotos, isNavigationVisible: false })
-    }
-
-    filterPhotosByProject = project => {
-        const { allPhotos } = this.state
-        const visiblePhotos = allPhotos.filter(
-            photo => photo.project.title == project
-        )
-        this.setState({ visiblePhotos, isNavigationVisible: false })
+    componentWillMount() {
+        this.getThemeDetails()
+        this.getPhotos()
     }
 
     render() {
         const {
-            src,
-            isNavigationVisible,
             metadataProjects,
             metadataYears,
-            visiblePhotos
+            primaryColor,
+            secondaryColor,
+            backgroundSrc,
+            allPhotos,
+            visiblePhotos,
+            isLoading
         } = this.state
 
-        return (
-            <AppWrapper src={src} isNavigationVisible={isNavigationVisible}>
-                {isNavigationVisible && (
-                    <NavigationWrapper>
-                        <Navigation
-                            toggleNavigation={this.toggleNavigation}
-                            metadataProjects={metadataProjects}
-                            metadataYears={metadataYears}
-                            filterPhotosByYear={this.filterPhotosByYear}
-                            filterPhotosByProject={this.filterPhotosByProject}
-                        />
-                    </NavigationWrapper>
-                )}
+        return isLoading ? null : (
+            <AppWrapper backgroundSrc={backgroundSrc}>
+                <NavigationWrapper>
+                    <Navigation
+                        metadataProjects={metadataProjects}
+                        metadataYears={metadataYears}
+                        filterPhotosByYear={this.filterPhotosByYear}
+                        filterPhotosByProject={this.filterPhotosByProject}
+                    />
+                </NavigationWrapper>
                 <Switch>
+                    <Route exact path="/" component={Home} />
                     <Route exact path="/contact" component={Contact} />
                     <Route exact path="/about" component={About} />
                     <Route
-                        exact
-                        path="/"
-                        render={() => (
-                            <Home
-                                toggleNavigation={this.toggleNavigation}
-                                shouldDisplayPhotos={!isNavigationVisible}
-                                photos={visiblePhotos}
-                            />
+                        path="/portfolio/:projectType/:projectTitle"
+                        render={rest => (
+                            <Portfolio allPhotos={allPhotos} {...rest} />
                         )}
                     />
                 </Switch>
@@ -117,3 +110,4 @@ class App extends Component {
 App.propTypes = {}
 
 export default App
+export { Theme }

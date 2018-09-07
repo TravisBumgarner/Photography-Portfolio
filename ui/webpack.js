@@ -8,7 +8,8 @@ module.exports = {
     },
     output: {
         filename: '[name]-[hash].bundle.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/'
     },
     resolve: {
         alias: {
@@ -36,7 +37,8 @@ module.exports = {
     devServer: {
         contentBase: './dist',
         port: 3000,
-        historyApiFallback: true
+        historyApiFallback: true,
+        publicPath: '/'
     },
     plugins: [
         new HtmlWebpackPlugin({

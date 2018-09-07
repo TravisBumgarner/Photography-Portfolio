@@ -1,0 +1,1 @@
+`load_images.py` expects images to be exported from Lightroom in the format of 2018_London_0001.jpg (year_location_sequence)

@@ -2,9 +2,9 @@ import styled from 'styled-components'
 
 import { NavLink } from 'react-router-dom'
 
-import { PRIMARY_COLOR, SECONDARY_COLOR } from 'Theme'
-
-const NavigationWrapper = styled.div``
+const NavigationWrapper = styled.div`
+    color: ${props => props.theme.primaryColor} !important;
+`
 
 const SubNavigationWrapper = styled.div`
     margin: 30px 0;
@@ -16,14 +16,14 @@ const LinkListItem = styled.li`
 
 const SiteLink = styled(NavLink)`
     text-decoration: none;
-    color: ${PRIMARY_COLOR};
+    color: ${props => props.theme.primaryColor};
 
     &:visited {
-        color: ${PRIMARY_COLOR};
+        color: ${props => props.theme.primaryColor};
     }
 
     &:hover {
-        color: ${SECONDARY_COLOR};
+        color: ${props => props.themePrimaryColor};
     }
 `
 export { NavigationWrapper, SubNavigationWrapper, SiteLink, LinkListItem }

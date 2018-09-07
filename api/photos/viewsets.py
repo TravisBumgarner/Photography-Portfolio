@@ -11,7 +11,7 @@ from .serializers import *
 from .models import *
 
 
-class RandomImageViewSet(ReadOnlyModelViewSet):
+class GetRandomImage(APIView):
     queryset = Photo.objects.filter(width__gte=BACKGROUND_IMAGE_WIDTH)
     serializer_class = PhotoSerializer
 

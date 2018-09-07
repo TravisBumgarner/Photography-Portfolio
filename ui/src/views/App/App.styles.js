@@ -8,8 +8,7 @@ const AppWrapper = styled.div`
 
     &:after {
         content: '';
-        background-image: ${props =>
-            props.isNavigationVisible ? `url(${props.src});` : ''};
+        background-image: ${props => `url(${props.backgroundSrc});`};
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;

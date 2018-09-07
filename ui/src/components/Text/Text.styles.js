@@ -1,10 +1,9 @@
 import styled from 'styled-components'
 
-import { FONT_FAMILY_TEXT, PRIMARY_COLOR } from 'Theme'
+import { FONT_FAMILY_TEXT } from 'Theme'
 
 const DefaultText = styled.p`
     font-family: ${FONT_FAMILY_TEXT};
-    color: ${PRIMARY_COLOR};
     margin: 20px 0;
     line-height: 1.5;
 `

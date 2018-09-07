@@ -2,10 +2,14 @@ import os
 
 from django.core.files import File
 from django.core.management.base import BaseCommand
+import colorgram
+import os
+from PIL import Image, ImageDraw
+
 from photos.models import Project, Photo
 from api_django.settings import MEDIA_ROOT
 
-INPUT_ROOT = '/Users/travisbumgarner/Documents/programming/photo20/api_django/photos/test_images'
+INPUT_ROOT = '/Users/travisbumgarner/Documents/programming/photo20/api/photos/test_images'
 
 import os
 import shutil
@@ -167,6 +171,48 @@ def process_exif_data(full_path):
         return processed_exif_data
 
 
+def get_two_vibrant_color_samples(full_path, generate_preview_image=False):
+    basename = os.path.basename(full_path)
+    dirname = os.path.dirname(full_path)
+
+    samples = 6
+    colors = colorgram.extract(full_path, samples)
+    # Most vibrant colors exist
+    #   Hue: any
+    #   Saturation closest to 100
+    #   Luminace: closest to 50
+    sorted_colors = sorted(colors, key=lambda c: abs(100 - c.hsl.s) + abs(50 - c.hsl.l))
+
+    if generate_preview_image:
+        inputImage = Image.open(full_path)
+        inputImageWidth, inputImageHeight = inputImage.size
+        imageSideRatio = inputImageHeight / inputImageWidth
+
+        width = 100
+        height = 100
+        totalOutputWidth = width * samples
+
+        outputImageHeight = int(imageSideRatio * totalOutputWidth)
+        resizedInputImage = inputImage.resize((totalOutputWidth, outputImageHeight), Image.ANTIALIAS)
+
+        im = Image.new("RGB", (width * 6, height + outputImageHeight), "white")
+        draw = ImageDraw.Draw(im)
+        im.paste(resizedInputImage, (0, height))
+        
+        for index, color in enumerate(sorted_colors):
+            print(index, color)
+            draw.rectangle([index*100, 0, (index+1)*100, height], fill = color.rgb)
+
+        samples_directory = os.path.join(dirname, 'samples')
+        if not os.path.exists(samples_directory):
+            os.mkdir(samples_directory)
+        im.save(os.path.join(samples_directory, basename))
+
+    rgb_most_vibrant = 'rgb({},{},{})'.format(colors[0].rgb.r, colors[0].rgb.g, colors[0].rgb.b)
+    rgb_second_vibrant = 'rgb({},{},{})'.format(colors[1].rgb.r, colors[1].rgb.g, colors[1].rgb.b)
+    return [rgb_most_vibrant, rgb_second_vibrant]
+
+
 def make_required_year_and_location_directories(year, location):
     output_year_directory = os.path.join(MEDIA_ROOT, year)
     if not os.path.exists(output_year_directory):
@@ -176,18 +222,27 @@ def make_required_year_and_location_directories(year, location):
     if not os.path.exists(output_location_sub_directory):
         os.mkdir(output_location_sub_directory)
 
+
 class Command(BaseCommand):
     def handle(self, *args, **options):
         for input_project_directory in os.listdir(INPUT_ROOT):
+            
             if not os.path.isdir(os.path.join(INPUT_ROOT, input_project_directory)):
+                print('Skipping directory: {}'.format(input_project_directory))
                 continue
-                
+            else:
+                print('Processing directory: {}'.format(input_project_directory))
+
             for input_file_name in os.listdir(os.path.join(INPUT_ROOT, input_project_directory)):
                 input_full_path = os.path.join(INPUT_ROOT, input_project_directory, input_file_name)
                 input_file_root, file_extension = input_file_name.split('.')
                 
                 if file_extension not in ['jpg', 'jpeg']:
+                    print('    Skipping file: {}'.format(input_file_name))
                     continue
+                else: 
+                    print('    Processing file: {}'.format(input_file_name))
+
 
                 year, location, sequence = input_file_root.split('_')
 
@@ -196,6 +251,8 @@ class Command(BaseCommand):
                 exif_data = process_exif_data(input_full_path)
                 if not exif_data:
                     continue
+
+                color_sample_1, color_sample_2 = get_two_vibrant_color_samples(input_full_path)
 
                 input_file_data = open(os.path.join(INPUT_ROOT, input_project_directory, input_file_name), 'rb')
                 output_file_name = os.path.join(year, location, '{}.{}'.format(sequence, file_extension))
@@ -217,6 +274,8 @@ class Command(BaseCommand):
                     height              = exif_data['height'],
                     location            = location,
                     year                = year,
-                    project             = project
+                    project             = project,
+                    color_sample_1      = color_sample_1,
+                    color_sample_2      = color_sample_2
                 )
                 photo.save()
