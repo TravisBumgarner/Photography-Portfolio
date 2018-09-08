@@ -8,7 +8,8 @@ import { Theme } from '../../views/App/App'
 import {
     NavigationWrapper,
     SubNavigationWrapper,
-    SiteLink,
+    InternalLink,
+    ExternalLink,
     LinkListItem
 } from './Navigation.styles.js'
 
@@ -19,9 +20,9 @@ class Navigation extends Component {
         const projectsLinks = metadata.projects.map(project => {
             return (
                 <LinkListItem key={project}>
-                    <SiteLink to={`/portfolio/project/${project}`}>
+                    <InternalLink to={`/portfolio/project/${project}`}>
                         {project}
-                    </SiteLink>
+                    </InternalLink>
                 </LinkListItem>
             )
         })
@@ -29,9 +30,31 @@ class Navigation extends Component {
         const yearsLinks = metadata.years.map(year => {
             return (
                 <LinkListItem key={year}>
-                    <SiteLink to={`/portfolio/singles/${year}`}>
+                    <InternalLink to={`/portfolio/singles/${year}`}>
                         {year}
-                    </SiteLink>
+                    </InternalLink>
+                </LinkListItem>
+            )
+        })
+
+        const socialSectionContent = [
+            { title: 'Instagram', route: 'https://www.instagram.com/esafoto/' },
+            {
+                title: 'Flickr',
+                route: 'https://www.flickr.com/people/esa_foto/'
+            },
+            {
+                title: 'National Geographic',
+                route: 'https://yourshot.nationalgeographic.com/profile/778640/'
+            }
+        ]
+
+        const socialLinks = socialSectionContent.map(m => {
+            return (
+                <LinkListItem key={m.title}>
+                    <ExternalLink href={m.route} target="_blank">
+                        {m.title}
+                    </ExternalLink>
                 </LinkListItem>
             )
         })
@@ -44,7 +67,7 @@ class Navigation extends Component {
         const miscLinks = miscSectionContent.map(m => {
             return (
                 <LinkListItem key={m.title}>
-                    <SiteLink to={m.route}>{m.title}</SiteLink>
+                    <InternalLink to={m.route}>{m.title}</InternalLink>
                 </LinkListItem>
             )
         })
@@ -69,6 +92,11 @@ class Navigation extends Component {
                 <SubNavigationWrapper>
                     <Header size="medium">Singles</Header>
                     <ul>{yearsLinks}</ul>
+                </SubNavigationWrapper>
+
+                <SubNavigationWrapper>
+                    <Header size="medium">Social</Header>
+                    <ul>{socialLinks}</ul>
                 </SubNavigationWrapper>
 
                 <SubNavigationWrapper>

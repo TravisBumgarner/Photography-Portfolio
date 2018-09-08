@@ -16,7 +16,7 @@ const LinkListItem = styled.li`
     margin: 5px 0;
 `
 
-const SiteLink = styled(Link)`
+const InternalLink = styled(Link)`
     text-decoration: none;
     color: black;
     font-family: ${FONT_FAMILY_HEADER};
@@ -30,4 +30,26 @@ const SiteLink = styled(Link)`
         color: black;
     }
 `
-export { NavigationWrapper, SubNavigationWrapper, SiteLink, LinkListItem }
+
+const ExternalLink = styled.a`
+    text-decoration: none;
+    color: black;
+    font-family: ${FONT_FAMILY_HEADER};
+    font-weight: 100;
+
+    &:visited {
+        color: black;
+    }
+
+    &:hover {
+        color: black;
+    }
+`
+
+export {
+    NavigationWrapper,
+    SubNavigationWrapper,
+    InternalLink,
+    ExternalLink,
+    LinkListItem
+}
