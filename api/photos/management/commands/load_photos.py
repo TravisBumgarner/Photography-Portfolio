@@ -1,9 +1,11 @@
 import os
 
 from django.core.files import File
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.management.base import BaseCommand
 import colorgram
 import os
+from io import StringIO, BytesIO
 from PIL import Image, ImageDraw
 
 from photos.models import Project, Photo
@@ -213,14 +215,14 @@ def get_two_vibrant_color_samples(full_path, generate_preview_image=False):
     return [rgb_most_vibrant, rgb_second_vibrant]
 
 
-def make_required_year_and_location_directories(year, location):
-    output_year_directory = os.path.join(MEDIA_ROOT, year)
-    if not os.path.exists(output_year_directory):
-        os.mkdir(output_year_directory)
+# def make_required_year_and_location_directories(year, location):
+#     output_year_directory = os.path.join(MEDIA_ROOT, year)
+#     if not os.path.exists(output_year_directory):
+#         os.mkdir(output_year_directory)
 
-    output_location_sub_directory = os.path.join(MEDIA_ROOT, year, location)
-    if not os.path.exists(output_location_sub_directory):
-        os.mkdir(output_location_sub_directory)
+#     output_location_sub_directory = os.path.join(MEDIA_ROOT, year, location)
+#     if not os.path.exists(output_location_sub_directory):
+#         os.mkdir(output_location_sub_directory)
 
 
 class Command(BaseCommand):
@@ -246,36 +248,59 @@ class Command(BaseCommand):
 
                 year, location, sequence = input_file_root.split('_')
 
-                make_required_year_and_location_directories(year, location)
+                # make_required_year_and_location_directories(year, location)
 
                 exif_data = process_exif_data(input_full_path)
                 if not exif_data:
                     continue
 
-                color_sample_1, color_sample_2 = get_two_vibrant_color_samples(input_full_path)
+                # color_sample_1, color_sample_2 = get_two_vibrant_color_samples(input_full_path)
+                color_sample_1 = 'rgb(0,0,0)'
+                color_sample_2 = 'rgb(0,0,0)'
 
-                input_file_data = open(os.path.join(INPUT_ROOT, input_project_directory, input_file_name), 'rb')
-                output_file_name = os.path.join(year, location, '{}.{}'.format(sequence, file_extension))
-                f = File(
-                    name = output_file_name,
-                    file = input_file_data
+    
+                src = File(
+                    name = os.path.join('full', year, location, '{}.{}'.format(sequence, file_extension)),
+                    file = open(input_full_path, 'rb')
                 )
+
+                im_thumb_small = Image.open(input_full_path)
+                im_thumb_small.thumbnail((200,200))
+                thumb_io = BytesIO()
+                im_thumb_small.save(thumb_io, format='JPEG')
+                thumb_small_file = InMemoryUploadedFile(
+                    thumb_io,
+                    None,
+                    '{}.{}'.format(sequence, file_extension),
+                    'image/jpeg',
+                    None,
+                    None
+                )
+
+                src_thumbnail_small = File(
+                    name = os.path.join('small', year, location, '{}.{}'.format(sequence, file_extension)),
+                    file = thumb_small_file
+                )
+
 
                 project, _ = Project.objects.get_or_create(
                     title               = input_project_directory
                 )
 
                 photo = Photo(
-                    file_name           = output_file_name, 
-                    src                 = f,
-                    exif_data           = exif_data,
-                    date_taken          = exif_data['date_taken'],
-                    width               = exif_data['width'],
-                    height              = exif_data['height'],
-                    location            = location,
-                    year                = year,
-                    project             = project,
-                    color_sample_1      = color_sample_1,
-                    color_sample_2      = color_sample_2
+                    file_name            = os.path.join('full', year, location, '{}.{}'.format(sequence, file_extension)),
+                    src                  = src,
+                    exif_data            = exif_data,
+                    date_taken           = exif_data['date_taken'],
+                    width                = exif_data['width'],
+                    height               = exif_data['height'],
+                    location             = location,
+                    year                 = year,
+                    project              = project,
+                    color_sample_1       = color_sample_1,
+                    color_sample_2       = color_sample_2,
+                    src_thumbnail_small  = src_thumbnail_small,
+                    # src_thumbnail_medium = thumbnail_medium
+                    
                 )
                 photo.save()

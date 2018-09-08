@@ -13,6 +13,8 @@ class Project(models.Model):
 
 class Photo(models.Model):
     src = models.ImageField(blank=True, null=True)
+    src_thumbnail_small = models.ImageField(blank=True, null=True)
+    # src_thumbnail_medium = models.ImageField(blank=True, null=True)
     file_name = models.CharField(max_length=200)
     title = models.CharField(max_length=200, null=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
@@ -24,3 +26,4 @@ class Photo(models.Model):
     exif_data = models.TextField(null=True)
     color_sample_1 = models.TextField(null=True)
     color_sample_2 = models.TextField(null=True)
+    
