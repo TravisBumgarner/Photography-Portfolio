@@ -36,13 +36,12 @@ class Navigation extends Component {
             )
         })
 
-        const mainSectionContent = [
-            { title: 'Home', route: '/' },
+        const miscSectionContent = [
             { title: 'About', route: '/about' },
             { title: 'Contact', route: '/contact' }
         ]
 
-        const mainLinks = mainSectionContent.map(m => {
+        const miscLinks = miscSectionContent.map(m => {
             return (
                 <LinkListItem key={m.title}>
                     <SiteLink to={m.route}>{m.title}</SiteLink>
@@ -63,11 +62,6 @@ class Navigation extends Component {
                 </SubNavigationWrapper>
 
                 <SubNavigationWrapper>
-                    <Header size="medium">Main</Header>
-                    <ul>{mainLinks}</ul>
-                </SubNavigationWrapper>
-
-                <SubNavigationWrapper>
                     <Header size="medium">Projects</Header>
                     <ul>{projectsLinks}</ul>
                 </SubNavigationWrapper>
@@ -75,6 +69,11 @@ class Navigation extends Component {
                 <SubNavigationWrapper>
                     <Header size="medium">Singles</Header>
                     <ul>{yearsLinks}</ul>
+                </SubNavigationWrapper>
+
+                <SubNavigationWrapper>
+                    <Header size="medium">Misc</Header>
+                    <ul>{miscLinks}</ul>
                 </SubNavigationWrapper>
             </NavigationWrapper>
         )

@@ -31,7 +31,6 @@ class Gallery extends Component {
     }
 
     render() {
-        const { shouldDisplayPhotos } = this.props
         const grid = this.generateGrid()
         return <GalleryWrapper>{grid}</GalleryWrapper>
     }
