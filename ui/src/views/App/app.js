@@ -6,7 +6,6 @@ import { Home, Contact, About, Portfolio } from 'Views'
 import { Navigation } from 'Containers'
 
 import { AppWrapper, NavigationWrapper } from './App.styles.js'
-import { generateTheme } from '../../theme.js'
 
 const Theme = React.createContext()
 
@@ -81,7 +80,7 @@ class App extends Component {
         return isLoading ? null : (
             <AppWrapper backgroundSrc={theme.backgroundSrc}>
                 <NavigationWrapper>
-                    <Navigation metadata={metadata} />
+                    <Navigation metadata={metadata} theme={theme} />
                 </NavigationWrapper>
                 <Switch>
                     <Route exact path="/" component={Home} />

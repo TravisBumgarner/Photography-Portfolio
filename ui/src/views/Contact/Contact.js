@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
 
-import { ContactWrapper } from './Contact.styles'
+import { ContactWrapper, ContactFormWrapper } from './Contact.styles'
 
 import { ContactForm } from 'Containers'
-import { Input, Button } from 'Components'
 
 class Contact extends Component {
     render() {
         return (
             <ContactWrapper>
-                <ContactForm />
+                <ContactFormWrapper>
+                    <ContactForm />
+                </ContactFormWrapper>
             </ContactWrapper>
         )
     }

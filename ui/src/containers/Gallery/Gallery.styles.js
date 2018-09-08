@@ -10,21 +10,12 @@ const GalleryWrapper = styled.div`
     line-height: 30px;
 `
 
-const GalleryRow = styled.div`
-    /* padding: 0;
-    margin: 0;
-    list-style: none;
-    display: flex;
-    justify-content: space-around;
-    line-height: 30px; */
-`
-
 const GalleryItem = styled.div`
-    margin: 5px;
+    margin: 1vw;
     color: white;
     flex: 1 0 auto;
     height: auto;
-    flex-basis: 31%;
+    flex-basis: 29%;
 
     &:before {
         content: '';
@@ -33,4 +24,4 @@ const GalleryItem = styled.div`
     }
 `
 
-export { GalleryWrapper, GalleryItem, GalleryRow }
+export { GalleryWrapper, GalleryItem }

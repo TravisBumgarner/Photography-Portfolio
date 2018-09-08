@@ -8,7 +8,7 @@ const generateTheme = ({ primaryColor, secondaryColor, backgroundSrc }) => ({
 
 const MAX_IMAGE_SIDE_LENGTH = 1400 // TODO: - Set this later
 
-const FONT_FAMILY_HEADER = "'Montserrat', sans-serif"
+const FONT_FAMILY_HEADER = "'Raleway', sans-serif;"
 const FONT_FAMILY_TEXT = "'Montserrat', sans-serif"
 
 const FONT_SIZE_INPUTS_AND_BUTTONS = 20

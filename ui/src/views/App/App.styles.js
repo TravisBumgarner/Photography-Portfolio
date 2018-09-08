@@ -27,7 +27,8 @@ const NavigationWrapper = styled.div`
     height: 100vh;
     display: flex;
     align-items: center;
-    margin-left: 5vw;
+    margin-left: 2vw;
+    margin-right: 2vw;
 `
 
 export { AppWrapper, NavigationWrapper }

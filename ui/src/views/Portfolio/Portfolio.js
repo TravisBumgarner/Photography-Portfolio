@@ -11,6 +11,20 @@ class Portfolio extends Component {
         super(props)
         this.state = { filteredPhotos: [] }
     }
+    componentWillMount() {
+        const {
+            match: {
+                params: { projectType, projectTitle }
+            },
+            photos
+        } = this.props
+
+        if (projectType === 'singles') {
+            this.filterPhotosByYear(photos, projectTitle)
+        } else if (projectType === 'project') {
+            this.filterPhotosByProject(photos, projectTitle)
+        }
+    }
 
     componentWillReceiveProps(nextProps) {
         const {

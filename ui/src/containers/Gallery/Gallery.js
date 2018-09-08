@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Photo } from 'Components'
 
-import { GalleryWrapper, GalleryItem, GalleryRow } from './Gallery.styles'
+import { GalleryWrapper, GalleryItem } from './Gallery.styles'
 
 const ITEMS_PER_ROW = 3
 

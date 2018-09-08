@@ -53,7 +53,13 @@ class Navigation extends Component {
         return (
             <NavigationWrapper>
                 <SubNavigationWrapper>
-                    <Header size="large">Travis Bumgarner Photography</Header>
+                    <Header size="large">
+                        Travis
+                        <br />
+                        Bumgarner
+                        <br />
+                        Photography
+                    </Header>
                 </SubNavigationWrapper>
 
                 <SubNavigationWrapper>

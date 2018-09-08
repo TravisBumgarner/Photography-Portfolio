@@ -13,11 +13,11 @@ const LargeText = DefaultText.extend`
 `
 
 const MediumText = DefaultText.extend`
-    font-size: 14px;
+    font-size: 18px;
 `
 
 const SmallText = DefaultText.extend`
-    font-size: 10px;
+    font-size: 14px;
 `
 
 export { LargeText, MediumText, SmallText }

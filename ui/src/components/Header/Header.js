@@ -22,7 +22,7 @@ class Header extends Component {
 
 Header.propTypes = {
     size: propTypes.string,
-    children: propTypes.string.isRequired
+    children: propTypes.any.isRequired
 }
 
 export default Header
