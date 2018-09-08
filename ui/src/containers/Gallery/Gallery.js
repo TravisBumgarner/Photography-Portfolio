@@ -14,7 +14,7 @@ class Gallery extends Component {
         const grid = photos.map(photo => (
             <GalleryItem key={photo.id}>
                 <Photo
-                    src={photo.src}
+                    src={photo.src_thumbnail_medium}
                     color1={photo.color_sample_1}
                     color2={photo.color_sample_2}
                 />
