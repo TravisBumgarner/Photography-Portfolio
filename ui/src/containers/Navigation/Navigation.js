@@ -90,7 +90,7 @@ class Navigation extends Component {
                 </SubNavigationWrapper>
 
                 <SubNavigationWrapper>
-                    <Header size="medium">Singles</Header>
+                    <Header size="medium">Snapshots</Header>
                     <ul>{yearsLinks}</ul>
                 </SubNavigationWrapper>
 
