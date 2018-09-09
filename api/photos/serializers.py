@@ -34,4 +34,6 @@ class PhotoSerializer(serializers.ModelSerializer):
             'exif_data',
             'color_sample_1',
             'color_sample_2',
+            'src_thumbnail_medium',
+            'src_thumbnail_small'
         )

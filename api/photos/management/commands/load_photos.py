@@ -224,6 +224,26 @@ def get_two_vibrant_color_samples(full_path, generate_preview_image=False):
 #     if not os.path.exists(output_location_sub_directory):
 #         os.mkdir(output_location_sub_directory)
 
+def create_thumbnail(input_full_path, output_full_path, size):
+    im_thumb = Image.open(input_full_path)
+    im_thumb.thumbnail(size)
+    thumb_io = BytesIO()
+    im_thumb.save(thumb_io, format='JPEG')
+    thumb_file = InMemoryUploadedFile(
+        thumb_io,
+        None,
+        '_',
+        'image/jpeg',
+        None,
+        None
+    )
+
+    return File(
+        name = output_full_path,
+        file = thumb_file
+    )
+
+
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
@@ -264,24 +284,29 @@ class Command(BaseCommand):
                     file = open(input_full_path, 'rb')
                 )
 
-                im_thumb_small = Image.open(input_full_path)
-                im_thumb_small.thumbnail((200,200))
-                thumb_io = BytesIO()
-                im_thumb_small.save(thumb_io, format='JPEG')
-                thumb_small_file = InMemoryUploadedFile(
-                    thumb_io,
-                    None,
-                    '{}.{}'.format(sequence, file_extension),
-                    'image/jpeg',
-                    None,
-                    None
-                )
+                # im_thumb_small = Image.open(input_full_path)
+                # im_thumb_small.thumbnail((200,200))
+                # thumb_io = BytesIO()
+                # im_thumb_small.save(thumb_io, format='JPEG')
+                # thumb_small_file = InMemoryUploadedFile(
+                #     thumb_io,
+                #     None,
+                #     '{}.{}'.format(sequence, file_extension),
+                #     'image/jpeg',
+                #     None,
+                #     None
+                # )
 
-                src_thumbnail_small = File(
-                    name = os.path.join('small', year, location, '{}.{}'.format(sequence, file_extension)),
-                    file = thumb_small_file
-                )
+                # src_thumbnail_small = File(
+                #     name = os.path.join('small', year, location, '{}.{}'.format(sequence, file_extension)),
+                #     file = thumb_small_file
+                # )
 
+                small_output_path = os.path.join('small', year, location, '{}.{}'.format(sequence, file_extension))
+                src_thumbnail_small = create_thumbnail(input_full_path, small_output_path, size=(200,200))
+
+                medium_output_path = os.path.join('medium', year, location, '{}.{}'.format(sequence, file_extension))
+                src_thumbnail_medium = create_thumbnail(input_full_path, medium_output_path, size=(800,800))
 
                 project, _ = Project.objects.get_or_create(
                     title               = input_project_directory
@@ -300,7 +325,7 @@ class Command(BaseCommand):
                     color_sample_1       = color_sample_1,
                     color_sample_2       = color_sample_2,
                     src_thumbnail_small  = src_thumbnail_small,
-                    # src_thumbnail_medium = thumbnail_medium
+                    src_thumbnail_medium = src_thumbnail_medium
                     
                 )
                 photo.save()

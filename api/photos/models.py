@@ -14,7 +14,7 @@ class Project(models.Model):
 class Photo(models.Model):
     src = models.ImageField(blank=True, null=True)
     src_thumbnail_small = models.ImageField(blank=True, null=True)
-    # src_thumbnail_medium = models.ImageField(blank=True, null=True)
+    src_thumbnail_medium = models.ImageField(blank=True, null=True)
     file_name = models.CharField(max_length=200)
     title = models.CharField(max_length=200, null=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
