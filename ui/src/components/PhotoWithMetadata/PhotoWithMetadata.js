@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import { Text } from 'Components'
+
 import {
     StyledPhoto,
     MetadataWrapper,
@@ -11,10 +13,20 @@ import {
 class Photo extends Component {
     render() {
         const {
-            details: { src, width, height, location, metadata, exif_data }
+            details: {
+                src,
+                width,
+                height,
+                make,
+                model,
+                aperture,
+                shutter_speed,
+                iso,
+                lens,
+                focal_length,
+                location
+            }
         } = this.props
-
-        // const { make, model } = JSON.parse(exif_data)
 
         return (
             <PhotoWithMetadataWrapper>
@@ -24,9 +36,14 @@ class Photo extends Component {
                         src={src}
                         onClick={this.handleClick}
                     />
+                    <MetadataWrapper>
+                        <Text>{`${location}`}</Text>
+                        <Text>{`${make} ${model}  ${lens}`}</Text>
+                        <Text>
+                            {`F${aperture} ${shutter_speed}" ${iso}ISO ${focal_length}mm`}
+                        </Text>
+                    </MetadataWrapper>
                 </PhotoWrapper>
-
-                <MetadataWrapper>Location: {location}</MetadataWrapper>
             </PhotoWithMetadataWrapper>
         )
     }

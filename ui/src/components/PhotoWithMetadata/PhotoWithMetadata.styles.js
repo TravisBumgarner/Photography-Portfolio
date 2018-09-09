@@ -23,6 +23,8 @@ const MetadataWrapper = styled.div`
     width: 100%;
     height: 10%;
     text-align: center;
+    display: flex;
+    justify-content: space-around;
 `
 
 export { StyledPhoto, MetadataWrapper, PhotoWrapper, PhotoWithMetadataWrapper }
