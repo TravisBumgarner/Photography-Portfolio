@@ -5,8 +5,8 @@ import { ThumbnailWrapper } from './Thumbnail.styles'
 
 class Thumbnail extends Component {
     handleClick = () => {
-        const { id, setLargePhoto } = this.props
-        setLargePhoto(id)
+        const { index, setSelectedPhotoIndex } = this.props
+        setSelectedPhotoIndex(index)
     }
 
     render() {
@@ -18,7 +18,8 @@ class Thumbnail extends Component {
 
 Thumbnail.propTypes = {
     src: PropTypes.string.isRequired,
-    setLargePhoto: PropTypes.func.isRequired
+    setSelectedPhotoIndex: PropTypes.func.isRequired,
+    index: PropTypes.number.isRequired
 }
 
 export default Thumbnail

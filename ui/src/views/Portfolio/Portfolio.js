@@ -55,12 +55,13 @@ class Portfolio extends Component {
 
     render() {
         const { filteredPhotos } = this.state
-        return filteredPhotos ? (
+        const { photos } = this.props
+        return photos ? (
             <PortfolioWrapper>
                 <Gallery photos={filteredPhotos} />
             </PortfolioWrapper>
         ) : (
-            ''
+            <PortfolioWrapper />
         )
     }
 }

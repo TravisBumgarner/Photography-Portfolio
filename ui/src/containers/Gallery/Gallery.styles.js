@@ -10,6 +10,28 @@ const GalleryWrapper = styled.div`
     line-height: 30px;
 `
 
+const PreviousButton = styled.div`
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    cursor: w-resize;
+`
+
+const NextButton = styled.div`
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    cursor: e-resize;
+`
+
+const PhotoWithMetadataWrapper = styled.div`
+    position: relative;
+`
+
 const GalleryItem = styled.div`
     margin: 1vw;
     color: white;
@@ -24,4 +46,10 @@ const GalleryItem = styled.div`
     }
 `
 
-export { GalleryWrapper, GalleryItem }
+export {
+    GalleryWrapper,
+    GalleryItem,
+    PreviousButton,
+    NextButton,
+    PhotoWithMetadataWrapper
+}

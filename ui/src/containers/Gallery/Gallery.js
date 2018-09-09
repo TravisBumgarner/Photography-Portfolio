@@ -1,10 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Thumbnail, Photo } from 'Components'
+import { Thumbnail, PhotoWithMetadata } from 'Components'
 
-import { GalleryWrapper, GalleryItem } from './Gallery.styles'
-import { PhotoWithMetadata } from '../../components';
+import {
+    GalleryWrapper,
+    GalleryItem,
+    PreviousButton,
+    NextButton,
+    PhotoWithMetadataWrapper
+} from './Gallery.styles'
 
 const ITEMS_PER_ROW = 3
 
@@ -12,27 +17,57 @@ class Gallery extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            largePhoto: null
+            photos: props.photos,
+            selectedPhotoIndex: null,
+            maxPhotoIndex: 0
         }
     }
 
-    setLargePhoto = id => {
-        const { photos } = this.props
-        const largePhoto = photos.filter(p => p.id === id)[0]
-        this.setState({ largePhoto })
+    componentWillReceiveProps(nextProps) {
+        const { photos } = nextProps
+        this.setState({
+            photos,
+            selectedPhotoIndex: null,
+            maxPhotoIndex: photos.length - 1
+        })
+    }
+
+    setSelectedPhotoIndex = index => {
+        this.setState({ selectedPhotoIndex: index })
+    }
+
+    getPreviousPhotoIndex = e => {
+        console.log(e.target.value)
+        const { maxPhotoIndex, selectedPhotoIndex } = this.state
+        this.setState({
+            selectedPhotoIndex:
+                selectedPhotoIndex === 0
+                    ? maxPhotoIndex
+                    : selectedPhotoIndex - 1
+        })
+    }
+
+    getNextPhotoIndex = () => {
+        const { maxPhotoIndex, selectedPhotoIndex } = this.state
+        this.setState({
+            selectedPhotoIndex:
+                selectedPhotoIndex === maxPhotoIndex
+                    ? 0
+                    : selectedPhotoIndex + 1
+        })
     }
 
     generateGrid = () => {
-        const { photos } = this.props
+        const { photos } = this.state
 
-        const grid = photos.map(photo => (
+        const grid = photos.map((photo, index) => (
             <GalleryItem key={photo.id}>
                 <Thumbnail
                     src={photo.src_thumbnail_medium}
                     color1={photo.color_sample_1}
                     color2={photo.color_sample_2}
-                    id={photo.id}
-                    setLargePhoto={this.setLargePhoto}
+                    index={index}
+                    setSelectedPhotoIndex={this.setSelectedPhotoIndex}
                 />
             </GalleryItem>
         ))
@@ -47,11 +82,14 @@ class Gallery extends Component {
     }
 
     render() {
-        const { largePhoto } = this.state
+        const { selectedPhotoIndex, photos } = this.state
         const grid = this.generateGrid()
-
-        return largePhoto ? (
-            <PhotoWithMetadata details={largePhoto} />
+        return selectedPhotoIndex !== null ? (
+            <PhotoWithMetadataWrapper>
+                <PreviousButton onClick={this.getPreviousPhotoIndex} />
+                <NextButton onClick={this.getNextPhotoIndex} />
+                <PhotoWithMetadata details={photos[selectedPhotoIndex]} />
+            </PhotoWithMetadataWrapper>
         ) : (
             <GalleryWrapper>{grid}</GalleryWrapper>
         )
