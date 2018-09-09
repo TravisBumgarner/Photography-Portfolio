@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Photo } from 'Components'
+import { Thumbnail } from 'Components'
 
 import { GalleryWrapper, GalleryItem } from './Gallery.styles'
 
@@ -13,7 +13,7 @@ class Gallery extends Component {
 
         const grid = photos.map(photo => (
             <GalleryItem key={photo.id}>
-                <Photo
+                <Thumbnail
                     src={photo.src_thumbnail_medium}
                     color1={photo.color_sample_1}
                     color2={photo.color_sample_2}

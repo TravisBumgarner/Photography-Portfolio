@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const PhotoWrapper = styled.div`
+const ThumbnailWrapper = styled.div`
     background-image: url(${props => props.src});
     background-repeat: no-repeat;
     background-position: center;
@@ -10,4 +10,4 @@ const PhotoWrapper = styled.div`
     box-sizing: border-box;
 `
 
-export { PhotoWrapper }
+export { ThumbnailWrapper }
