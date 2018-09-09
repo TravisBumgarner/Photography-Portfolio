@@ -42,6 +42,7 @@ def compute_fractional_string(raw_str):
     return str(float(numerator) / float(denominatior))
 
 def process_nikon(raw_exif_data):
+    print_raw_keys_and_data(raw_exif_data)
     processed_exif_data = {}
     
     _, model = str(raw_exif_data['Image Model']).split(' ')
@@ -52,9 +53,10 @@ def process_nikon(raw_exif_data):
     processed_exif_data['lens']             = str(raw_exif_data['EXIF LensModel'])
     processed_exif_data['date_taken']       = compute_date(str(raw_exif_data['EXIF DateTimeOriginal']))
     processed_exif_data['shooting_mode']    = str(raw_exif_data['EXIF ExposureProgram'])
-    processed_exif_data['aperature']        = compute_fractional_string(str(raw_exif_data['EXIF FNumber']))
+    processed_exif_data['aperture']         = compute_fractional_string(str(raw_exif_data['EXIF FNumber']))
     processed_exif_data['shutter_speed']    = str(raw_exif_data['EXIF ExposureTime'])
     processed_exif_data['iso']              = str(raw_exif_data['EXIF ISOSpeedRatings'])
+    processed_exif_data['focal_length']     = str(raw_exif_data['EXIF FocalLength'])
     
     return processed_exif_data
 
@@ -66,70 +68,75 @@ def process_cannon(raw_exif_data):
     processed_exif_data['lens']             = str(raw_exif_data['EXIF LensModel'])
     processed_exif_data['date_taken']       = compute_date(str(raw_exif_data['EXIF DateTimeOriginal']))
     processed_exif_data['shooting_mode']    = str(raw_exif_data['EXIF ExposureProgram'])
-    processed_exif_data['aperature']        = compute_fractional_string(str(raw_exif_data['EXIF FNumber']))
+    processed_exif_data['aperture']        = compute_fractional_string(str(raw_exif_data['EXIF FNumber']))
     processed_exif_data['shutter_speed']    = str(raw_exif_data['EXIF ExposureTime'])
     processed_exif_data['iso']              = str(raw_exif_data['EXIF ISOSpeedRatings'])
-    
+    processed_exif_data['focal_length']     = str(raw_exif_data['EXIF FocalLength'])
+
     return processed_exif_data
 
 def process_noritsu_scanner(raw_exif_data):
     processed_exif_data = {}
 
-    processed_exif_data['camera_type']      = "Film"
-    processed_exif_data['make']             = "Film"
-    processed_exif_data['model']            = None
-    processed_exif_data['lens']             = None
-    processed_exif_data['date_taken']       = None
-    processed_exif_data['shooting_mode']    = None
-    processed_exif_data['aperature']        = None
-    processed_exif_data['shutter_speed']    = None
-    processed_exif_data['iso']              = None
-    
+    processed_exif_data["camera_type"]      = "Film"
+    processed_exif_data["make"]             = "Film"
+    processed_exif_data["model"]            = None
+    processed_exif_data["lens"]             = None
+    processed_exif_data["date_taken"]       = None
+    processed_exif_data["shooting_mode"]    = None
+    processed_exif_data["aperture"]         = None
+    processed_exif_data["shutter_speed"]    = None
+    processed_exif_data["iso"]              = None
+    processed_exif_data['focal_length']     = None
+
     return processed_exif_data
 
 def process_sony_rx100(raw_exif_data):
     processed_exif_data = {}
 
-    processed_exif_data['camera_type']      = "P&S"
-    processed_exif_data['make']             = "Sony"
-    processed_exif_data['model']            = "RX100 MKI"
-    processed_exif_data['lens']             = str(raw_exif_data['EXIF LensModel'])
-    processed_exif_data['date_taken']       = compute_date(str(raw_exif_data['EXIF DateTimeOriginal']))
-    processed_exif_data['shooting_mode']    = str(raw_exif_data['EXIF ExposureProgram'])
-    processed_exif_data['aperature']        = str(raw_exif_data['EXIF FNumber'])
-    processed_exif_data['shutter_speed']    = str(raw_exif_data['EXIF ExposureTime'])
-    processed_exif_data['iso']              = str(raw_exif_data['EXIF ISOSpeedRatings'])
-    
+    processed_exif_data["camera_type"]      = "P&S"
+    processed_exif_data["make"]             = "Sony"
+    processed_exif_data["model"]            = "RX100 MKI"
+    processed_exif_data["lens"]             = str(raw_exif_data["EXIF LensModel"])
+    processed_exif_data["date_taken"]       = compute_date(str(raw_exif_data["EXIF DateTimeOriginal"]))
+    processed_exif_data["shooting_mode"]    = str(raw_exif_data["EXIF ExposureProgram"])
+    processed_exif_data["aperture"]         = str(raw_exif_data["EXIF FNumber"])
+    processed_exif_data["shutter_speed"]    = str(raw_exif_data["EXIF ExposureTime"])
+    processed_exif_data["iso"]              = str(raw_exif_data["EXIF ISOSpeedRatings"])
+    processed_exif_data['focal_length']     = str(raw_exif_data['EXIF FocalLength'])
+
     return processed_exif_data
 
 def process_nexus_5x(raw_exif_data):
     processed_exif_data = {}
 
-    processed_exif_data['camera_type']      = "Phone"
-    processed_exif_data['make']             = "LG"
-    processed_exif_data['model']            = "Nexus"
-    processed_exif_data['lens']             = None
-    processed_exif_data['date_taken']       = compute_date(str(raw_exif_data['EXIF DateTimeOriginal']))
-    processed_exif_data['shooting_mode']    = str(raw_exif_data['EXIF ExposureMode'])
-    processed_exif_data['aperature']        = str(raw_exif_data['EXIF FNumber'])
-    processed_exif_data['shutter_speed']    = str(raw_exif_data['EXIF ExposureTime'])
-    processed_exif_data['iso']              = str(raw_exif_data['EXIF ISOSpeedRatings'])
-    
+    processed_exif_data["camera_type"]      = "Phone"
+    processed_exif_data["make"]             = "LG"
+    processed_exif_data["model"]            = "Nexus"
+    processed_exif_data["lens"]             = None
+    processed_exif_data["date_taken"]       = compute_date(str(raw_exif_data["EXIF DateTimeOriginal"]))
+    processed_exif_data["shooting_mode"]    = str(raw_exif_data["EXIF ExposureMode"])
+    processed_exif_data["aperture"]         = str(raw_exif_data["EXIF FNumber"])
+    processed_exif_data["shutter_speed"]    = str(raw_exif_data["EXIF ExposureTime"])
+    processed_exif_data["iso"]              = str(raw_exif_data["EXIF ISOSpeedRatings"])
+    processed_exif_data['focal_length']     = str(raw_exif_data['EXIF FocalLength'])
+
     return processed_exif_data
 
 def process_moto_x4(raw_exif_data):
     processed_exif_data = {}
 
-    processed_exif_data['camera_type']      = "Phone"
-    processed_exif_data['make']             = "Motorola"
-    processed_exif_data['model']            = "moto x4"
-    processed_exif_data['lens']             = None
-    processed_exif_data['date_taken']       = compute_date(str(raw_exif_data['EXIF DateTimeOriginal']))
-    processed_exif_data['shooting_mode']    = str(raw_exif_data['EXIF ExposureMode'])
-    processed_exif_data['aperature']        = str(raw_exif_data['EXIF FNumber'])
-    processed_exif_data['shutter_speed']    = str(raw_exif_data['EXIF ExposureTime'])
-    processed_exif_data['iso']              = str(raw_exif_data['EXIF ISOSpeedRatings'])
-    
+    processed_exif_data["camera_type"]      = "Phone"
+    processed_exif_data["make"]             = "Motorola"
+    processed_exif_data["model"]            = "moto x4"
+    processed_exif_data["lens"]             = None
+    processed_exif_data["date_taken"]       = compute_date(str(raw_exif_data["EXIF DateTimeOriginal"]))
+    processed_exif_data["shooting_mode"]    = str(raw_exif_data["EXIF ExposureMode"])
+    processed_exif_data["aperture"]         = str(raw_exif_data["EXIF FNumber"])
+    processed_exif_data["shutter_speed"]    = str(raw_exif_data["EXIF ExposureTime"])
+    processed_exif_data["iso"]              = str(raw_exif_data["EXIF ISOSpeedRatings"])
+    processed_exif_data['focal_length']     = str(raw_exif_data['EXIF FocalLength'])
+
     return processed_exif_data
 
 def process_exif_data(full_path):
@@ -215,15 +222,6 @@ def get_two_vibrant_color_samples(full_path, generate_preview_image=False):
     return [rgb_most_vibrant, rgb_second_vibrant]
 
 
-# def make_required_year_and_location_directories(year, location):
-#     output_year_directory = os.path.join(MEDIA_ROOT, year)
-#     if not os.path.exists(output_year_directory):
-#         os.mkdir(output_year_directory)
-
-#     output_location_sub_directory = os.path.join(MEDIA_ROOT, year, location)
-#     if not os.path.exists(output_location_sub_directory):
-#         os.mkdir(output_location_sub_directory)
-
 def create_thumbnail(input_full_path, output_full_path, size):
     im_thumb = Image.open(input_full_path)
     im_thumb.thumbnail(size)
@@ -242,7 +240,6 @@ def create_thumbnail(input_full_path, output_full_path, size):
         name = output_full_path,
         file = thumb_file
     )
-
 
 
 class Command(BaseCommand):
@@ -284,24 +281,6 @@ class Command(BaseCommand):
                     file = open(input_full_path, 'rb')
                 )
 
-                # im_thumb_small = Image.open(input_full_path)
-                # im_thumb_small.thumbnail((200,200))
-                # thumb_io = BytesIO()
-                # im_thumb_small.save(thumb_io, format='JPEG')
-                # thumb_small_file = InMemoryUploadedFile(
-                #     thumb_io,
-                #     None,
-                #     '{}.{}'.format(sequence, file_extension),
-                #     'image/jpeg',
-                #     None,
-                #     None
-                # )
-
-                # src_thumbnail_small = File(
-                #     name = os.path.join('small', year, location, '{}.{}'.format(sequence, file_extension)),
-                #     file = thumb_small_file
-                # )
-
                 small_output_path = os.path.join('small', year, location, '{}.{}'.format(sequence, file_extension))
                 src_thumbnail_small = create_thumbnail(input_full_path, small_output_path, size=(200,200))
 
@@ -315,8 +294,6 @@ class Command(BaseCommand):
                 photo = Photo(
                     file_name            = os.path.join('full', year, location, '{}.{}'.format(sequence, file_extension)),
                     src                  = src,
-                    exif_data            = exif_data,
-                    date_taken           = exif_data['date_taken'],
                     width                = exif_data['width'],
                     height               = exif_data['height'],
                     location             = location,
@@ -325,7 +302,16 @@ class Command(BaseCommand):
                     color_sample_1       = color_sample_1,
                     color_sample_2       = color_sample_2,
                     src_thumbnail_small  = src_thumbnail_small,
-                    src_thumbnail_medium = src_thumbnail_medium
-                    
+                    src_thumbnail_medium = src_thumbnail_medium,
+                    date_taken           = exif_data['date_taken'],
+                    camera_type          = exif_data['camera_type'],
+                    make                 = exif_data['make'],
+                    model                = exif_data['model'],
+                    lens                 = exif_data['lens'],
+                    shooting_mode        = exif_data['shooting_mode'],
+                    aperture             = exif_data['aperture'],
+                    shutter_speed        = exif_data['shutter_speed'],
+                    iso                  = exif_data['iso'],
+                    focal_length         = exif_data['focal_length'],
                 )
                 photo.save()

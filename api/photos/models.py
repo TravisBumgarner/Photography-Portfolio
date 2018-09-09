@@ -26,4 +26,13 @@ class Photo(models.Model):
     exif_data = models.TextField(null=True)
     color_sample_1 = models.TextField(null=True)
     color_sample_2 = models.TextField(null=True)
+    camera_type = models.CharField(max_length=200, null=True)
+    make = models.CharField(max_length=200, null=True)
+    model = models.CharField(max_length=200, null=True)
+    lens = models.CharField(max_length=200, null=True)
+    shooting_mode = models.CharField(max_length=200, null=True)
+    aperture = models.CharField(max_length=200, null=True)
+    shutter_speed = models.CharField(max_length=200, null=True)
+    iso = models.CharField(max_length=200, null=True)
+    focal_length = models.CharField(max_length=200, null=True)
     
