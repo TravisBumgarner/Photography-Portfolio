@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { Thumbnail, Photo } from 'Components'
 
 import { GalleryWrapper, GalleryItem } from './Gallery.styles'
+import { PhotoWithMetadata } from '../../components';
 
 const ITEMS_PER_ROW = 3
 
@@ -50,7 +51,7 @@ class Gallery extends Component {
         const grid = this.generateGrid()
 
         return largePhoto ? (
-            <Photo src={largePhoto.src} />
+            <PhotoWithMetadata details={largePhoto} />
         ) : (
             <GalleryWrapper>{grid}</GalleryWrapper>
         )
