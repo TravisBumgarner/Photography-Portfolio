@@ -4,15 +4,21 @@ import PropTypes from 'prop-types'
 import { ThumbnailWrapper } from './Thumbnail.styles'
 
 class Thumbnail extends Component {
-    render() {
-        const { src, color1, color2 } = this.props
+    handleClick = () => {
+        const { id, setLargePhoto } = this.props
+        setLargePhoto(id)
+    }
 
-        return <ThumbnailWrapper src={src} color1={color1} color2={color2} />
+    render() {
+        const { src } = this.props
+
+        return <ThumbnailWrapper src={src} onClick={this.handleClick} />
     }
 }
 
 Thumbnail.propTypes = {
-    src: PropTypes.string.isRequired
+    src: PropTypes.string.isRequired,
+    setLargePhoto: PropTypes.func.isRequired
 }
 
 export default Thumbnail

@@ -1,13 +1,26 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Thumbnail } from 'Components'
+import { Thumbnail, Photo } from 'Components'
 
 import { GalleryWrapper, GalleryItem } from './Gallery.styles'
 
 const ITEMS_PER_ROW = 3
 
 class Gallery extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            largePhoto: null
+        }
+    }
+
+    setLargePhoto = id => {
+        const { photos } = this.props
+        const largePhoto = photos.filter(p => p.id === id)[0]
+        this.setState({ largePhoto })
+    }
+
     generateGrid = () => {
         const { photos } = this.props
 
@@ -17,6 +30,8 @@ class Gallery extends Component {
                     src={photo.src_thumbnail_medium}
                     color1={photo.color_sample_1}
                     color2={photo.color_sample_2}
+                    id={photo.id}
+                    setLargePhoto={this.setLargePhoto}
                 />
             </GalleryItem>
         ))
@@ -31,8 +46,14 @@ class Gallery extends Component {
     }
 
     render() {
+        const { largePhoto } = this.state
         const grid = this.generateGrid()
-        return <GalleryWrapper>{grid}</GalleryWrapper>
+
+        return largePhoto ? (
+            <Photo src={largePhoto.src} />
+        ) : (
+            <GalleryWrapper>{grid}</GalleryWrapper>
+        )
     }
 }
 
