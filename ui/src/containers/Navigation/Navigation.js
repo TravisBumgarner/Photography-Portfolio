@@ -15,12 +15,15 @@ import {
 
 class Navigation extends Component {
     render() {
-        const { metadata } = this.props
+        const { metadata, theme } = this.props
 
         const projectsLinks = metadata.projects.map(project => {
             return (
                 <LinkListItem key={project}>
-                    <InternalLink to={`/portfolio/project/${project}`}>
+                    <InternalLink
+                        theme={theme}
+                        to={`/portfolio/project/${project}`}
+                    >
                         {project}
                     </InternalLink>
                 </LinkListItem>
@@ -30,7 +33,10 @@ class Navigation extends Component {
         const yearsLinks = metadata.years.map(year => {
             return (
                 <LinkListItem key={year}>
-                    <InternalLink to={`/portfolio/singles/${year}`}>
+                    <InternalLink
+                        theme={theme}
+                        to={`/portfolio/singles/${year}`}
+                    >
                         {year}
                     </InternalLink>
                 </LinkListItem>
@@ -52,7 +58,7 @@ class Navigation extends Component {
         const socialLinks = socialSectionContent.map(m => {
             return (
                 <LinkListItem key={m.title}>
-                    <ExternalLink href={m.route} target="_blank">
+                    <ExternalLink theme={theme} href={m.route} target="_blank">
                         {m.title}
                     </ExternalLink>
                 </LinkListItem>
@@ -67,13 +73,15 @@ class Navigation extends Component {
         const miscLinks = miscSectionContent.map(m => {
             return (
                 <LinkListItem key={m.title}>
-                    <InternalLink to={m.route}>{m.title}</InternalLink>
+                    <InternalLink theme={theme} to={m.route}>
+                        {m.title}
+                    </InternalLink>
                 </LinkListItem>
             )
         })
 
         return (
-            <NavigationWrapper>
+            <NavigationWrapper theme={theme}>
                 <SubNavigationWrapper>
                     <Header size="large">
                         Travis
@@ -109,7 +117,8 @@ class Navigation extends Component {
 }
 
 Navigation.propTypes = {
-    metadata: PropTypes.object.isRequired
+    metadata: PropTypes.object.isRequired,
+    theme: PropTypes.object.isRequired
 }
 
 export default Navigation

@@ -42,7 +42,6 @@ def compute_fractional_string(raw_str):
     return str(float(numerator) / float(denominatior))
 
 def process_nikon(raw_exif_data):
-    print_raw_keys_and_data(raw_exif_data)
     processed_exif_data = {}
     
     _, model = str(raw_exif_data['Image Model']).split(' ')
@@ -271,9 +270,9 @@ class Command(BaseCommand):
                 if not exif_data:
                     continue
 
-                # color_sample_1, color_sample_2 = get_two_vibrant_color_samples(input_full_path)
-                color_sample_1 = 'rgb(0,0,0)'
-                color_sample_2 = 'rgb(0,0,0)'
+                color_sample_1, color_sample_2 = get_two_vibrant_color_samples(input_full_path)
+                # color_sample_1 = 'rgb(0,0,0)'
+                # color_sample_2 = 'rgb(0,0,0)'
 
     
                 src = File(

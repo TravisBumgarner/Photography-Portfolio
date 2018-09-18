@@ -4,8 +4,13 @@ import { Link } from 'react-router-dom'
 
 import { FONT_FAMILY_HEADER } from 'Theme'
 
+// TODO: Jake T Feedback on passing around dynamic theme
 const NavigationWrapper = styled.div`
-    color: black;
+    /* color: ${props => props.theme.primaryColor}; */
+
+    & a: {
+        border-bottom: 1px solid green;
+    }
 `
 
 const SubNavigationWrapper = styled.div`
@@ -18,31 +23,31 @@ const LinkListItem = styled.li`
 
 const InternalLink = styled(Link)`
     text-decoration: none;
-    color: black;
     font-family: ${FONT_FAMILY_HEADER};
     font-weight: 100;
+    color: ${props => props.theme.primaryColor};
 
     &:visited {
-        color: black;
+        color: ${props => props.theme.primaryColor};
     }
 
     &:hover {
-        color: black;
+        color: ${props => props.theme.secondaryColor};
     }
 `
 
 const ExternalLink = styled.a`
     text-decoration: none;
-    color: black;
+    color: ${props => props.theme.primaryColor};
     font-family: ${FONT_FAMILY_HEADER};
     font-weight: 100;
 
     &:visited {
-        color: black;
+        color: ${props => props.theme.primaryColor};
     }
 
     &:hover {
-        color: black;
+        color: ${props => props.theme.secondaryColor};
     }
 `
 

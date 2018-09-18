@@ -29,7 +29,6 @@ class App extends Component {
     getThemeDetails = () => {
         axios.get('http://localhost:8000/get_random_photo').then(response => {
             const { src, color_sample_1, color_sample_2 } = response.data
-
             this.setState({
                 theme: {
                     backgroundSrc: src,
