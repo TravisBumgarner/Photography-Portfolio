@@ -11,7 +11,7 @@ const MAX_IMAGE_SIDE_LENGTH = 1400 // TODO: - Set this later
 const FONT_FAMILY_HEADER = "'Raleway', sans-serif;"
 const FONT_FAMILY_TEXT = "'Montserrat', sans-serif"
 
-const FONT_SIZE_INPUTS_AND_BUTTONS = 20
+const FONT_SIZE_INPUTS_AND_BUTTONS = 14
 
 const PAGE_THEME = styled.div`
     max-width: ${MAX_IMAGE_SIDE_LENGTH}px;
