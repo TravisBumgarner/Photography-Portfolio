@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import PropTypes from 'prop-types'
 
 import { ContactFormWrapper } from './ContactForm.styles'
 
@@ -27,7 +28,7 @@ class ContactForm extends Component {
 
     handleSubmit = () => {
         const { name, website, message, email } = this.state
-        
+
         const errors = []
         !name.length && errors.push('name')
         !message.length && errors.push('message')
@@ -46,38 +47,52 @@ class ContactForm extends Component {
     }
 
     render() {
+        const { theme } = this.props
         return (
             <ContactFormWrapper>
                 <Input
+                    theme={theme}
                     value={this.state.name}
                     onChange={this.handleChange}
                     hintText="Full Name"
                     name="name"
                 />
                 <Input
+                    theme={theme}
                     value={this.state.email}
                     onChange={this.handleChange}
                     hintText="Email Address"
                     name="email"
                 />
                 <Input
+                    theme={theme}
                     value={this.state.website}
                     onChange={this.handleChange}
                     hintText="Website (Optional)"
                     name="website"
                 />
                 <Input
+                    theme={theme}
                     value={this.state.message}
                     onChange={this.handleChange}
                     hintText="Message"
                     name="message"
                     multiLine
-                    rows={3}
+                    rows={5}
+                    textarea
                 />
-                <Button label="Submit" onClick={this.handleSubmit} />
+                <Button
+                    theme={theme}
+                    label="Submit"
+                    onClick={this.handleSubmit}
+                />
             </ContactFormWrapper>
         )
     }
+}
+
+ContactForm.propTypes = {
+    theme: PropTypes.object.isRequired
 }
 
 export default ContactForm

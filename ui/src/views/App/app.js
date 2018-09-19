@@ -77,14 +77,22 @@ class App extends Component {
     render() {
         const { metadata, photos, isLoading, theme } = this.state
         return isLoading ? null : (
-            <AppWrapper backgroundSrc={theme.backgroundSrc}>
+            <AppWrapper theme={theme}>
                 <NavigationWrapper>
                     <Navigation metadata={metadata} theme={theme} />
                 </NavigationWrapper>
                 <Switch>
                     <Route exact path="/" component={Home} />
-                    <Route exact path="/contact" component={Contact} />
-                    <Route exact path="/about" component={About} />
+                    <Route
+                        exact
+                        path="/contact"
+                        render={rest => <Contact theme={theme} {...rest} />}
+                    />
+                    <Route
+                        exact
+                        path="/about"
+                        render={rest => <About theme={theme} {...rest} />}
+                    />
                     <Route
                         path="/portfolio/:projectType/:projectTitle"
                         render={rest => <Portfolio photos={photos} {...rest} />}

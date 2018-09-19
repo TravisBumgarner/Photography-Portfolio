@@ -5,15 +5,20 @@ import { StyledButton } from './Button.styles.js'
 
 class Button extends Component {
     render() {
-        const { onClick, label } = this.props
+        const { onClick, label, theme } = this.props
 
-        return <StyledButton onClick={onClick}>{label}</StyledButton>
+        return (
+            <StyledButton theme={theme} onClick={onClick}>
+                {label}
+            </StyledButton>
+        )
     }
 }
 
 Button.propTypes = {
     onClick: PropTypes.func.isRequired,
-    label: PropTypes.string.isRequired
+    label: PropTypes.string.isRequired,
+    theme: PropTypes.object.isRequired
 }
 
 export default Button

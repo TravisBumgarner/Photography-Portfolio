@@ -11,7 +11,8 @@ const StyledButton = styled.button`
     margin: 10px 0;
     font-size: ${FONT_SIZE_INPUTS_AND_BUTTONS}px;
     text-transform: uppercase;
-    background-color: rgba(0, 0, 0, 0.5);
+    color: ${props => props.theme.primaryColor};
+    background-color: rgba(0, 0, 0, 0);
 `
 
 export { StyledButton }
