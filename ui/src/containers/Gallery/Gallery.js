@@ -8,7 +8,8 @@ import {
     GalleryItem,
     PreviousButton,
     NextButton,
-    PhotoWithMetadataWrapper
+    PhotoWithMetadataWrapper,
+    CloseIcon
 } from './Gallery.styles'
 
 const ITEMS_PER_ROW = 3
@@ -30,6 +31,10 @@ class Gallery extends Component {
             selectedPhotoIndex: null,
             maxPhotoIndex: photos.length - 1
         })
+    }
+
+    returnToGridView = () => {
+        this.setState({ selectedPhotoIndex: null })
     }
 
     setSelectedPhotoIndex = index => {
@@ -86,6 +91,7 @@ class Gallery extends Component {
         const grid = this.generateGrid()
         return selectedPhotoIndex !== null ? (
             <PhotoWithMetadataWrapper>
+                <CloseIcon size="2em" onClick={this.returnToGridView} />
                 <PreviousButton onClick={this.getPreviousPhotoIndex} />
                 <NextButton onClick={this.getNextPhotoIndex} />
                 <PhotoWithMetadata details={photos[selectedPhotoIndex]} />
