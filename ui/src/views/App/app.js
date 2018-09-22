@@ -49,10 +49,10 @@ class App extends Component {
             .get('http://localhost:8000/photos/')
             .then(response => {
                 const metadataYears = new Set([])
-                const metadataProjects = new Set([])
+                const metadataProjects = {}
 
                 response.data.map(photo => {
-                    metadataProjects.add(photo.project.title)
+                    metadataProjects[photo.project.id] = photo.project.title
                     metadataYears.add(photo.year)
                 })
 
@@ -61,7 +61,7 @@ class App extends Component {
                     photos: response.data,
                     visiblePhotos: response.data,
                     metadata: {
-                        projects: [...metadataProjects].sort(),
+                        projects: { ...metadataProjects },
                         years: [...metadataYears].sort((a, b) => b > a)
                     }
                 })
@@ -80,7 +80,7 @@ class App extends Component {
 
     render() {
         const { metadata, photos, isLoading, theme, isNavigationVisible, isBackgroundVisible } = this.state
-
+        console.log(metadata)
         return isLoading ? null : (
             <Fragment>
                 <GlobalStyle theme={theme} isBackgroundVisible={isBackgroundVisible} />

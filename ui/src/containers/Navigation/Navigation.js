@@ -5,19 +5,24 @@ import { Header } from 'Components'
 
 import { Theme } from '../../views/App/App'
 
-import { NavigationWrapper, SubNavigationWrapper, InternalLink, ExternalLink, LinkListItem } from './Navigation.styles.js'
+import {
+    NavigationWrapper,
+    SubNavigationWrapper,
+    InternalLink,
+    ExternalLink,
+    LinkListItem
+} from './Navigation.styles.js'
 
 class Navigation extends Component {
     render() {
         const { metadata, theme } = this.props
 
-        const projectsLinks = metadata.projects.map(project => {
+        const projectsLinks = Object.entries(metadata.projects).map(([id, title]) => {
             const { toggleNavigation } = this.props
-
             return (
-                <LinkListItem key={project} onClick={toggleNavigation}>
-                    <InternalLink theme={theme} to={`/portfolio/project/${project}`}>
-                        {project}
+                <LinkListItem key={id} onClick={toggleNavigation}>
+                    <InternalLink theme={theme} to={`/portfolio/project/${id}`}>
+                        {title}
                     </InternalLink>
                 </LinkListItem>
             )

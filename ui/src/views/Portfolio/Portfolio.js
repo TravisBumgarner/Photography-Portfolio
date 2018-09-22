@@ -14,16 +14,27 @@ class Portfolio extends Component {
     componentWillMount() {
         const {
             match: {
-                params: { projectType, projectTitle }
+                params: { projectType, project }
             },
             photos
         } = this.props
 
         if (projectType === 'singles') {
-            this.filterPhotosByYear(photos, projectTitle)
+            this.filterPhotosByYear(photos, project)
         } else if (projectType === 'project') {
-            this.filterPhotosByProject(photos, projectTitle)
+            this.filterPhotosByProject(photos, project)
         }
+    }
+
+    getProjectDescription = () => {
+        axios
+            .get('http://localhost:8000/projects/')
+            .then(response => {
+                console.log(response)
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -47,9 +58,7 @@ class Portfolio extends Component {
     }
 
     filterPhotosByProject = (photos, project) => {
-        const filteredPhotos = photos.filter(
-            photo => photo.project.title == project
-        )
+        const filteredPhotos = photos.filter(photo => photo.project.id == project)
         this.setState({ filteredPhotos })
     }
 
