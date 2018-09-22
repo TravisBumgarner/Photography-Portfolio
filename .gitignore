@@ -1,4 +1,5 @@
 api_django/media
+bin/
 test_images/
 dist/
 node_modules/
