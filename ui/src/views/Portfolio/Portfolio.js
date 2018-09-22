@@ -3,13 +3,14 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 
 import { Gallery } from 'Containers'
+import { parseContent } from 'Utilities'
 
 import { PortfolioWrapper } from './Portfolio.styles.js'
 
 class Portfolio extends Component {
     constructor(props) {
         super(props)
-        this.state = { filteredPhotos: [] }
+        this.state = { filteredPhotos: [], projectDetails: null }
     }
     componentWillMount() {
         const {
@@ -26,11 +27,12 @@ class Portfolio extends Component {
         }
     }
 
-    getProjectDescription = () => {
+    getProjectDescription = projectTitle => {
         axios
-            .get('http://localhost:8000/projects/')
+            .get(`http://localhost:8000/projects/${projectTitle}`)
             .then(response => {
-                console.log(response)
+                const { start_date: startDate, end_date: endDate, description, title } = response.data
+                this.setState({ projectDetails: { startDate, endDate, description, title } })
             })
             .catch(error => {
                 console.log(error)
@@ -48,25 +50,27 @@ class Portfolio extends Component {
         if (projectType === 'singles') {
             this.filterPhotosByYear(photos, projectTitle)
         } else if (projectType === 'project') {
+            this.getProjectDescription(projectTitle)
             this.filterPhotosByProject(photos, projectTitle)
         }
     }
 
     filterPhotosByYear = (photos, year) => {
         const filteredPhotos = photos.filter(photo => photo.year == year)
-        this.setState({ filteredPhotos })
+        this.setState({ filteredPhotos, projectType: 'project' })
     }
 
     filterPhotosByProject = (photos, project) => {
         const filteredPhotos = photos.filter(photo => photo.project.id == project)
-        this.setState({ filteredPhotos })
+        this.setState({ filteredPhotos, projectType: 'singles' })
     }
 
     render() {
-        const { filteredPhotos } = this.state
+        const { filteredPhotos, projectDetails } = this.state
         const { photos } = this.props
         return photos ? (
             <PortfolioWrapper>
+                {projectDetails && parseContent(projectDetails.description)}
                 <Gallery photos={filteredPhotos} />
             </PortfolioWrapper>
         ) : (

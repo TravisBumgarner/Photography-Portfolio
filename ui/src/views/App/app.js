@@ -80,7 +80,6 @@ class App extends Component {
 
     render() {
         const { metadata, photos, isLoading, theme, isNavigationVisible, isBackgroundVisible } = this.state
-        console.log(metadata)
         return isLoading ? null : (
             <Fragment>
                 <GlobalStyle theme={theme} isBackgroundVisible={isBackgroundVisible} />
