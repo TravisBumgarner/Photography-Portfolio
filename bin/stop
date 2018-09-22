@@ -1,2 +1,0 @@
-#!/bin/sh
-/usr/bin/pkill -f /home/tbumgarner/webapps/photo20/bin/node && rm -f /home/tbumgarner/webapps/photo20/run/node.pid

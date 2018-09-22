@@ -21,10 +21,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
+    'www.travisbumgarner.photography',
+    'travisbumgarner.photography',
+    'api.travisbumgarner.photography'
 ]
 
 CORS_ORIGIN_WHITELIST = (
     'localhost:3000',
+    'travisbumgarner.photography'
 )
 
 
