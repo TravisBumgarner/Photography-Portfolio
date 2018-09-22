@@ -25,6 +25,7 @@ const InternalLink = styled(Link)`
     text-decoration: none;
     font-family: ${FONT_FAMILY_HEADER};
     font-weight: 100;
+    font-size: 18px;
     color: ${props => props.theme.primaryColor};
 
     &:visited {
@@ -41,6 +42,7 @@ const ExternalLink = styled.a`
     color: ${props => props.theme.primaryColor};
     font-family: ${FONT_FAMILY_HEADER};
     font-weight: 100;
+    font-size: 18px;
 
     &:visited {
         color: ${props => props.theme.primaryColor};
@@ -51,10 +53,4 @@ const ExternalLink = styled.a`
     }
 `
 
-export {
-    NavigationWrapper,
-    SubNavigationWrapper,
-    InternalLink,
-    ExternalLink,
-    LinkListItem
-}
+export { NavigationWrapper, SubNavigationWrapper, InternalLink, ExternalLink, LinkListItem }

@@ -9,15 +9,15 @@ const DefaultText = styled.p`
 `
 
 const LargeText = styled(DefaultText)`
-    font-size: 20px;
+    font-size: 18px;
 `
 
 const MediumText = styled(DefaultText)`
-    font-size: 20px;
+    font-size: 18px;
 `
 
 const SmallText = styled(DefaultText)`
-    font-size: 20px;
+    font-size: 18px;
 `
 
 export { LargeText, MediumText, SmallText }

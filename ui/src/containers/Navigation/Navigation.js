@@ -86,9 +86,8 @@ class Navigation extends Component {
                             Travis
                             <br />
                             Bumgarner
-                            <br />
-                            Photography
                         </Header>
+                        <ul>{miscLinks}</ul>
                     </InternalLink>
                 </SubNavigationWrapper>
 
@@ -105,11 +104,6 @@ class Navigation extends Component {
                 <SubNavigationWrapper>
                     <Header size="medium">Social</Header>
                     <ul>{socialLinks}</ul>
-                </SubNavigationWrapper>
-
-                <SubNavigationWrapper>
-                    <Header size="medium">Misc</Header>
-                    <ul>{miscLinks}</ul>
                 </SubNavigationWrapper>
             </NavigationWrapper>
         )
