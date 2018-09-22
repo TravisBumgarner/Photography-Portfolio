@@ -28,7 +28,7 @@ class Portfolio extends Component {
 
     getProjectDescription = projectTitle => {
         axios
-            .get(`http://localhost:8000/projects/${projectTitle}`)
+            .get(__API__ + `projects/${projectTitle}`)
             .then(response => {
                 const { start_date: startDate, end_date: endDate, description, title } = response.data
                 this.setState({ projectDetails: { startDate, endDate, description, title } })

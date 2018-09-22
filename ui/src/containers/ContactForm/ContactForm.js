@@ -35,10 +35,8 @@ class ContactForm extends Component {
         !email.length && errors.push('email')
 
         errors.length
-            ? alert(
-                  `Please fill in these required fields ${errors.join(', ')}.`
-              )
-            : axios.post('http://localhost:8000/contact/', {
+            ? alert(`Please fill in these required fields ${errors.join(', ')}.`)
+            : axios.post(__API__ + '/contact/', {
                   name,
                   website,
                   message,
@@ -81,11 +79,7 @@ class ContactForm extends Component {
                     rows={5}
                     textarea
                 />
-                <Button
-                    theme={theme}
-                    label="Submit"
-                    onClick={this.handleSubmit}
-                />
+                <Button theme={theme} label="Submit" onClick={this.handleSubmit} />
             </ContactFormWrapper>
         )
     }
