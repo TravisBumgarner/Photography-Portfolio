@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 
 import { TRANSITION_SPEED } from 'Theme'
 
@@ -13,18 +13,13 @@ const NavigationToggle = styled(FaCaretRight)`
     z-index: 999;
 `
 
-const AppWrapper = styled.div`
-    width: 100vw;
-    height: 100vh;
-
-    &:after {
-        content: '';
-        background-image: ${props => `url(${props.theme.backgroundSrc});`};
+// background-image: ${props => `url(${props.isBackgroundVisible ? props.theme.backgroundSrc : ''});`};
+const GlobalStyle = createGlobalStyle`
+    body {
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
         background-attachment: fixed;
-        opacity: 0.2;
         top: 0;
         left: 0;
         bottom: 0;
@@ -33,6 +28,8 @@ const AppWrapper = styled.div`
         z-index: -1;
     }
 `
+
+const AppWrapper = styled.div``
 
 const ContentWrapper = styled.div`
     height: 100vh;
@@ -51,11 +48,11 @@ const NavigationWrapper = styled.div`
     align-items: center;
     margin-left: 2vw;
     width: 15vw;
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     transition: left ${TRANSITION_SPEED};
     left: ${props => (props.isNavigationVisible ? '0' : `-15vw`)};
 `
 
-export { AppWrapper, NavigationWrapper, ContentWrapper, NavigationToggle }
+export { AppWrapper, NavigationWrapper, ContentWrapper, NavigationToggle, GlobalStyle }
