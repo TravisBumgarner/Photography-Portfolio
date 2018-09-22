@@ -5,7 +5,12 @@ import axios from 'axios'
 import { Home, Contact, About, Portfolio } from 'Views'
 import { Navigation } from 'Containers'
 
-import { AppWrapper, NavigationWrapper } from './App.styles.js'
+import {
+    AppWrapper,
+    NavigationWrapper,
+    ContentWrapper,
+    NavigationToggle
+} from './App.styles.js'
 
 const Theme = React.createContext()
 
@@ -22,8 +27,14 @@ class App extends Component {
                 years: [],
                 projects: []
             },
-            photos: []
+            photos: [],
+            isNavigationVisible: true
         }
+    }
+
+    componentWillMount() {
+        this.getThemeDetails()
+        this.getPhotos()
     }
 
     getThemeDetails = () => {
@@ -69,35 +80,54 @@ class App extends Component {
             })
     }
 
-    componentWillMount() {
-        this.getThemeDetails()
-        this.getPhotos()
+    toggleNavigation = () => {
+        this.setState({ isNavigationVisible: !this.state.isNavigationVisible })
     }
 
     render() {
-        const { metadata, photos, isLoading, theme } = this.state
+        const {
+            metadata,
+            photos,
+            isLoading,
+            theme,
+            isNavigationVisible
+        } = this.state
+
         return isLoading ? null : (
             <AppWrapper theme={theme}>
-                <NavigationWrapper>
-                    <Navigation metadata={metadata} theme={theme} />
+                <NavigationWrapper isNavigationVisible={isNavigationVisible}>
+                    <Navigation
+                        metadata={metadata}
+                        theme={theme}
+                        toggleNavigation={this.toggleNavigation}
+                    />
+                    <NavigationToggle
+                        isNavigationVisible={isNavigationVisible}
+                        onClick={this.toggleNavigation}
+                        size="2em"
+                    />
                 </NavigationWrapper>
-                <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route
-                        exact
-                        path="/contact"
-                        render={rest => <Contact theme={theme} {...rest} />}
-                    />
-                    <Route
-                        exact
-                        path="/about"
-                        render={rest => <About theme={theme} {...rest} />}
-                    />
-                    <Route
-                        path="/portfolio/:projectType/:projectTitle"
-                        render={rest => <Portfolio photos={photos} {...rest} />}
-                    />
-                </Switch>
+                <ContentWrapper isNavigationVisible={isNavigationVisible}>
+                    <Switch>
+                        <Route exact path="/" component={Home} />
+                        <Route
+                            exact
+                            path="/contact"
+                            render={rest => <Contact theme={theme} {...rest} />}
+                        />
+                        <Route
+                            exact
+                            path="/about"
+                            render={rest => <About theme={theme} {...rest} />}
+                        />
+                        <Route
+                            path="/portfolio/:projectType/:projectTitle"
+                            render={rest => (
+                                <Portfolio photos={photos} {...rest} />
+                            )}
+                        />
+                    </Switch>
+                </ContentWrapper>
             </AppWrapper>
         )
     }

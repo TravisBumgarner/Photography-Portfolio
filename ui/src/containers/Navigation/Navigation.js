@@ -18,8 +18,10 @@ class Navigation extends Component {
         const { metadata, theme } = this.props
 
         const projectsLinks = metadata.projects.map(project => {
+            const { toggleNavigation } = this.props
+
             return (
-                <LinkListItem key={project}>
+                <LinkListItem key={project} onClick={toggleNavigation}>
                     <InternalLink
                         theme={theme}
                         to={`/portfolio/project/${project}`}
@@ -31,8 +33,10 @@ class Navigation extends Component {
         })
 
         const yearsLinks = metadata.years.map(year => {
+            const { toggleNavigation } = this.props
+
             return (
-                <LinkListItem key={year}>
+                <LinkListItem key={year} onClick={toggleNavigation}>
                     <InternalLink
                         theme={theme}
                         to={`/portfolio/singles/${year}`}
@@ -72,7 +76,7 @@ class Navigation extends Component {
 
         const miscLinks = miscSectionContent.map(m => {
             return (
-                <LinkListItem key={m.title}>
+                <LinkListItem key={m.title} onClick={this.toggleNavigation}>
                     <InternalLink theme={theme} to={m.route}>
                         {m.title}
                     </InternalLink>
@@ -118,7 +122,8 @@ class Navigation extends Component {
 
 Navigation.propTypes = {
     metadata: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired
+    theme: PropTypes.object.isRequired,
+    toggleNavigation: PropTypes.func.isRequired
 }
 
 export default Navigation

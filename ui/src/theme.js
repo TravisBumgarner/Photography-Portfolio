@@ -6,18 +6,20 @@ const generateTheme = ({ primaryColor, secondaryColor, backgroundSrc }) => ({
     backgroundSrc
 })
 
-const MAX_IMAGE_SIDE_LENGTH = 1400 // TODO: - Set this later
+const TRANSITION_SPEED = '0.5s'
+
+// const MAX_IMAGE_SIDE_LENGTH = 1400 // TODO: - Set this later
 
 const FONT_FAMILY_HEADER = "'Raleway', sans-serif;"
 const FONT_FAMILY_TEXT = "'Montserrat', sans-serif"
 
 const FONT_SIZE_INPUTS_AND_BUTTONS = 14
 
+/* max-width: ${MAX_IMAGE_SIDE_LENGTH}px;
+max-height: ${MAX_IMAGE_SIDE_LENGTH}px;
+width: 100%;
+height: 100%; */
 const PAGE_THEME = styled.div`
-    max-width: ${MAX_IMAGE_SIDE_LENGTH}px;
-    max-height: ${MAX_IMAGE_SIDE_LENGTH}px;
-    width: 100%;
-    height: 100%;
     overflow: scroll;
 `
 
@@ -28,5 +30,6 @@ export {
     FONT_FAMILY_HEADER,
     PRIMARY_COLOR,
     SECONDARY_COLOR,
-    FONT_SIZE_INPUTS_AND_BUTTONS
+    FONT_SIZE_INPUTS_AND_BUTTONS,
+    TRANSITION_SPEED
 }

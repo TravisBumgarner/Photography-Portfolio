@@ -7,7 +7,7 @@ import { FONT_FAMILY_HEADER } from 'Theme'
 // TODO: Jake T Feedback on passing around dynamic theme
 const NavigationWrapper = styled.div`
     /* color: ${props => props.theme.primaryColor}; */
-
+    
     & a: {
         border-bottom: 1px solid green;
     }
