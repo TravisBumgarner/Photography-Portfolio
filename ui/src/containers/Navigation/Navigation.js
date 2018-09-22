@@ -5,13 +5,7 @@ import { Header } from 'Components'
 
 import { Theme } from '../../views/App/App'
 
-import {
-    NavigationWrapper,
-    SubNavigationWrapper,
-    InternalLink,
-    ExternalLink,
-    LinkListItem
-} from './Navigation.styles.js'
+import { NavigationWrapper, SubNavigationWrapper, InternalLink, ExternalLink, LinkListItem } from './Navigation.styles.js'
 
 class Navigation extends Component {
     render() {
@@ -22,10 +16,7 @@ class Navigation extends Component {
 
             return (
                 <LinkListItem key={project} onClick={toggleNavigation}>
-                    <InternalLink
-                        theme={theme}
-                        to={`/portfolio/project/${project}`}
-                    >
+                    <InternalLink theme={theme} to={`/portfolio/project/${project}`}>
                         {project}
                     </InternalLink>
                 </LinkListItem>
@@ -37,10 +28,7 @@ class Navigation extends Component {
 
             return (
                 <LinkListItem key={year} onClick={toggleNavigation}>
-                    <InternalLink
-                        theme={theme}
-                        to={`/portfolio/singles/${year}`}
-                    >
+                    <InternalLink theme={theme} to={`/portfolio/singles/${year}`}>
                         {year}
                     </InternalLink>
                 </LinkListItem>
@@ -70,6 +58,7 @@ class Navigation extends Component {
         })
 
         const miscSectionContent = [
+            { title: 'Blog', route: '/blog' },
             { title: 'About', route: '/about' },
             { title: 'Contact', route: '/contact' }
         ]

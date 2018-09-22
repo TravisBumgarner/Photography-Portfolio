@@ -2,15 +2,10 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import axios from 'axios'
 
-import { Home, Contact, About, Portfolio } from 'Views'
+import { Home, Contact, About, Portfolio, Blog } from 'Views'
 import { Navigation } from 'Containers'
 
-import {
-    AppWrapper,
-    NavigationWrapper,
-    ContentWrapper,
-    NavigationToggle
-} from './App.styles.js'
+import { AppWrapper, NavigationWrapper, ContentWrapper, NavigationToggle } from './App.styles.js'
 
 const Theme = React.createContext()
 
@@ -85,47 +80,21 @@ class App extends Component {
     }
 
     render() {
-        const {
-            metadata,
-            photos,
-            isLoading,
-            theme,
-            isNavigationVisible
-        } = this.state
+        const { metadata, photos, isLoading, theme, isNavigationVisible } = this.state
 
         return isLoading ? null : (
             <AppWrapper theme={theme}>
                 <NavigationWrapper isNavigationVisible={isNavigationVisible}>
-                    <Navigation
-                        metadata={metadata}
-                        theme={theme}
-                        toggleNavigation={this.toggleNavigation}
-                    />
-                    <NavigationToggle
-                        isNavigationVisible={isNavigationVisible}
-                        onClick={this.toggleNavigation}
-                        size="2em"
-                    />
+                    <Navigation metadata={metadata} theme={theme} toggleNavigation={this.toggleNavigation} />
+                    <NavigationToggle isNavigationVisible={isNavigationVisible} onClick={this.toggleNavigation} size="2em" />
                 </NavigationWrapper>
                 <ContentWrapper isNavigationVisible={isNavigationVisible}>
                     <Switch>
                         <Route exact path="/" component={Home} />
-                        <Route
-                            exact
-                            path="/contact"
-                            render={rest => <Contact theme={theme} {...rest} />}
-                        />
-                        <Route
-                            exact
-                            path="/about"
-                            render={rest => <About theme={theme} {...rest} />}
-                        />
-                        <Route
-                            path="/portfolio/:projectType/:projectTitle"
-                            render={rest => (
-                                <Portfolio photos={photos} {...rest} />
-                            )}
-                        />
+                        <Route exact path="/blog" render={rest => <Blog theme={theme} {...rest} />} />
+                        <Route exact path="/contact" render={rest => <Contact theme={theme} {...rest} />} />
+                        <Route exact path="/about" render={rest => <About theme={theme} {...rest} />} />
+                        <Route path="/portfolio/:projectType/:projectTitle" render={rest => <Portfolio photos={photos} {...rest} />} />
                     </Switch>
                 </ContentWrapper>
             </AppWrapper>
