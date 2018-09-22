@@ -19,7 +19,7 @@ class Blog extends Component {
     }
 
     getPosts = () => {
-        axios.get('http://localhost:8000/posts').then(response => {
+        axios.get(__API__ + 'posts').then(response => {
             const { posts } = response.data
             this.setState({
                 posts: response.data

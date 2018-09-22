@@ -33,7 +33,8 @@ class App extends Component {
     }
 
     getThemeDetails = () => {
-        axios.get('http://localhost:8000/get_random_photo').then(response => {
+        console.log(__API__)
+        axios.get(__API__ + 'get_random_photo').then(response => {
             const { src, color_sample_1, color_sample_2 } = response.data
             this.setState({
                 theme: {
@@ -47,7 +48,7 @@ class App extends Component {
 
     getPhotos = () => {
         axios
-            .get('http://localhost:8000/photos/')
+            .get(__API__ + 'photos/')
             .then(response => {
                 const metadataYears = new Set([])
                 const metadataProjects = {}

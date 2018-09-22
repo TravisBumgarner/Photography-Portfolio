@@ -4,8 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "webpack-dev-server --hot --inline --mode=development --config webpack.js",
-        "bundle": "rm -rf ./dist; mkdir ./dist; NODE_ENV=production webpack --mode=production --config webpack.js",
+        "start": "NODE_ENV=development webpack-dev-server --hot --inline --mode=development --config webpack.js",
+        "bundle": "rm -rf ./dist; mkdir ./dist; NODE_ENV=production; webpack --mode=production --config webpack.js",
         "start-prod": "npm run bundle; node server.js"
     },
     "author": "",
