@@ -5,10 +5,8 @@ from .viewsets import *
 
 router = routers.DefaultRouter()
 
-router.register(r'projects', ProjectViewSet, base_name='Projects')
-router.register(r'photos', PhotoViewSet, base_name='Photos')
+router.register(r'posts', PostViewSet, base_name='Posts')
 
 urlpatterns = [
     url(r'^', include(router.urls)),
-    url(r'^get_random_photo$', GetRandomImage.as_view()),
 ]

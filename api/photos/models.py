@@ -8,7 +8,7 @@ class Project(models.Model):
     end_date = models.DateField(null=True)
 
     def __unicode__(self):
-        return self.name
+        return self.title
 
 
 class Photo(models.Model):
@@ -35,4 +35,3 @@ class Photo(models.Model):
     shutter_speed = models.CharField(max_length=200, null=True)
     iso = models.CharField(max_length=200, null=True)
     focal_length = models.CharField(max_length=200, null=True)
-    

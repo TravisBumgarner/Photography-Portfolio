@@ -79,14 +79,14 @@ def process_noritsu_scanner(raw_exif_data):
 
     processed_exif_data["camera_type"]      = "Film"
     processed_exif_data["make"]             = "Film"
-    processed_exif_data["model"]            = None
-    processed_exif_data["lens"]             = None
-    processed_exif_data["date_taken"]       = None
-    processed_exif_data["shooting_mode"]    = None
-    processed_exif_data["aperture"]         = None
-    processed_exif_data["shutter_speed"]    = None
-    processed_exif_data["iso"]              = None
-    processed_exif_data['focal_length']     = None
+    processed_exif_data["model"]            = ""
+    processed_exif_data["lens"]             = ""
+    processed_exif_data["date_taken"]       = ""
+    processed_exif_data["shooting_mode"]    = ""
+    processed_exif_data["aperture"]         = ""
+    processed_exif_data["shutter_speed"]    = ""
+    processed_exif_data["iso"]              = ""
+    processed_exif_data['focal_length']     = ""
 
     return processed_exif_data
 
@@ -112,7 +112,7 @@ def process_nexus_5x(raw_exif_data):
     processed_exif_data["camera_type"]      = "Phone"
     processed_exif_data["make"]             = "LG"
     processed_exif_data["model"]            = "Nexus"
-    processed_exif_data["lens"]             = None
+    processed_exif_data["lens"]             = ""
     processed_exif_data["date_taken"]       = compute_date(str(raw_exif_data["EXIF DateTimeOriginal"]))
     processed_exif_data["shooting_mode"]    = str(raw_exif_data["EXIF ExposureMode"])
     processed_exif_data["aperture"]         = str(raw_exif_data["EXIF FNumber"])
@@ -128,7 +128,7 @@ def process_moto_x4(raw_exif_data):
     processed_exif_data["camera_type"]      = "Phone"
     processed_exif_data["make"]             = "Motorola"
     processed_exif_data["model"]            = "moto x4"
-    processed_exif_data["lens"]             = None
+    processed_exif_data["lens"]             = ""
     processed_exif_data["date_taken"]       = compute_date(str(raw_exif_data["EXIF DateTimeOriginal"]))
     processed_exif_data["shooting_mode"]    = str(raw_exif_data["EXIF ExposureMode"])
     processed_exif_data["aperture"]         = str(raw_exif_data["EXIF FNumber"])
@@ -252,65 +252,68 @@ class Command(BaseCommand):
                 print('Processing directory: {}'.format(input_project_directory))
 
             for input_file_name in os.listdir(os.path.join(INPUT_ROOT, input_project_directory)):
-                input_full_path = os.path.join(INPUT_ROOT, input_project_directory, input_file_name)
-                input_file_root, file_extension = input_file_name.split('.')
-                
-                if file_extension not in ['jpg', 'jpeg']:
-                    print('    Skipping file: {}'.format(input_file_name))
-                    continue
-                else: 
-                    print('    Processing file: {}'.format(input_file_name))
+                try:
+                    input_full_path = os.path.join(INPUT_ROOT, input_project_directory, input_file_name)
+                    input_file_root, file_extension = input_file_name.split('.')
+                    
+                    if file_extension not in ['jpg', 'jpeg']:
+                        print('    Skipping file: {}'.format(input_file_name))
+                        continue
+                    else: 
+                        print('    Processing file: {}'.format(input_file_name))
 
 
-                year, location, sequence = input_file_root.split('_')
+                    year, location, sequence = input_file_root.split('_')
 
-                # make_required_year_and_location_directories(year, location)
+                    # make_required_year_and_location_directories(year, location)
 
-                exif_data = process_exif_data(input_full_path)
-                if not exif_data:
-                    continue
+                    exif_data = process_exif_data(input_full_path)
+                    if not exif_data:
+                        continue
 
-                color_sample_1, color_sample_2 = get_two_vibrant_color_samples(input_full_path)
-                # color_sample_1 = 'rgb(0,0,0)'
-                # color_sample_2 = 'rgb(0,0,0)'
+                    # color_sample_1, color_sample_2 = get_two_vibrant_color_samples(input_full_path)
+                    color_sample_1 = 'rgb(0,0,0)'
+                    color_sample_2 = 'rgb(0,0,0)'
 
-    
-                src = File(
-                    name = os.path.join('full', year, location, '{}.{}'.format(sequence, file_extension)),
-                    file = open(input_full_path, 'rb')
-                )
+        
+                    src = File(
+                        name = os.path.join('full', year, location, '{}.{}'.format(sequence, file_extension)),
+                        file = open(input_full_path, 'rb')
+                    )
 
-                small_output_path = os.path.join('small', year, location, '{}.{}'.format(sequence, file_extension))
-                src_thumbnail_small = create_thumbnail(input_full_path, small_output_path, size=(200,200))
+                    small_output_path = os.path.join('small', year, location, '{}.{}'.format(sequence, file_extension))
+                    src_thumbnail_small = create_thumbnail(input_full_path, small_output_path, size=(200,200))
 
-                medium_output_path = os.path.join('medium', year, location, '{}.{}'.format(sequence, file_extension))
-                src_thumbnail_medium = create_thumbnail(input_full_path, medium_output_path, size=(800,800))
+                    medium_output_path = os.path.join('medium', year, location, '{}.{}'.format(sequence, file_extension))
+                    src_thumbnail_medium = create_thumbnail(input_full_path, medium_output_path, size=(800,800))
 
-                project, _ = Project.objects.get_or_create(
-                    title               = input_project_directory
-                )
+                    project, _ = Project.objects.get_or_create(
+                        title               = input_project_directory
+                    )
 
-                photo = Photo(
-                    file_name            = os.path.join('full', year, location, '{}.{}'.format(sequence, file_extension)),
-                    src                  = src,
-                    width                = exif_data['width'],
-                    height               = exif_data['height'],
-                    location             = location,
-                    year                 = year,
-                    project              = project,
-                    color_sample_1       = color_sample_1,
-                    color_sample_2       = color_sample_2,
-                    src_thumbnail_small  = src_thumbnail_small,
-                    src_thumbnail_medium = src_thumbnail_medium,
-                    date_taken           = exif_data['date_taken'],
-                    camera_type          = exif_data['camera_type'],
-                    make                 = exif_data['make'],
-                    model                = exif_data['model'],
-                    lens                 = exif_data['lens'],
-                    shooting_mode        = exif_data['shooting_mode'],
-                    aperture             = exif_data['aperture'],
-                    shutter_speed        = exif_data['shutter_speed'],
-                    iso                  = exif_data['iso'],
-                    focal_length         = exif_data['focal_length'],
-                )
-                photo.save()
+                    photo = Photo(
+                        file_name            = os.path.join('full', year, location, '{}.{}'.format(sequence, file_extension)),
+                        src                  = src,
+                        width                = exif_data['width'],
+                        height               = exif_data['height'],
+                        location             = location,
+                        year                 = year,
+                        project              = project,
+                        color_sample_1       = color_sample_1,
+                        color_sample_2       = color_sample_2,
+                        src_thumbnail_small  = src_thumbnail_small,
+                        src_thumbnail_medium = src_thumbnail_medium,
+                        date_taken           = exif_data['date_taken'],
+                        camera_type          = exif_data['camera_type'],
+                        make                 = exif_data['make'],
+                        model                = exif_data['model'],
+                        lens                 = exif_data['lens'],
+                        shooting_mode        = exif_data['shooting_mode'],
+                        aperture             = exif_data['aperture'],
+                        shutter_speed        = exif_data['shutter_speed'],
+                        iso                  = exif_data['iso'],
+                        focal_length         = exif_data['focal_length'],
+                    )
+                    photo.save()
+                except:
+                    print("lol you shouldn't see this, check the load_photos script")

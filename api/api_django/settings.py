@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'photos',
     'contact',
+    'posts'
 ]
 
 MIDDLEWARE = [
@@ -106,7 +107,7 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.ScopedRateThrottle',
     ),
     'DEFAULT_THROTTLE_RATES': {
-        'contact.create': '100/day', # TODO: Change this back.
+        'contact.create': '100/day',  # TODO: Change this back.
     }
 }
 
