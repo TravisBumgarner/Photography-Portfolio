@@ -22,7 +22,7 @@ class Text extends Component {
 
 Text.propTypes = {
     size: propTypes.string,
-    children: propTypes.string.isRequired
+    children: propTypes.any.isRequired
 }
 
 export default Text
