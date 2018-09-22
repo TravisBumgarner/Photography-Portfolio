@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 
-// import { Posts } from 'Containers'
+import { Post } from 'Containers'
 
 import { BlogWrapper } from './Blog.styles.js'
 
@@ -21,16 +21,19 @@ class Blog extends Component {
     getPosts = () => {
         axios.get('http://localhost:8000/posts').then(response => {
             const { posts } = response.data
-            console.log(response.data)
             this.setState({
-                posts
+                posts: response.data
             })
         })
     }
 
     render() {
+        console.log(this.state)
         const { posts } = this.state
-        return photos ? <BlogWrapper>{posts}</BlogWrapper> : <BlogWrapper />
+
+        const Posts = posts.map(post => <Post key={post.id} {...post} />)
+
+        return <BlogWrapper>{Posts}</BlogWrapper>
     }
 }
 
