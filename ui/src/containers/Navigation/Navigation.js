@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 import { Header } from 'Components'
 
-import { Theme } from '../../views/App/App'
 
 import {
     NavigationWrapper,
