@@ -87,13 +87,15 @@ class Navigation extends Component {
         return (
             <NavigationWrapper theme={theme}>
                 <SubNavigationWrapper>
-                    <Header size="large">
-                        Travis
-                        <br />
-                        Bumgarner
-                        <br />
-                        Photography
-                    </Header>
+                    <InternalLink theme={theme} to={`/`}>
+                        <Header size="large">
+                            Travis
+                            <br />
+                            Bumgarner
+                            <br />
+                            Photography
+                        </Header>
+                    </InternalLink>
                 </SubNavigationWrapper>
 
                 <SubNavigationWrapper>
