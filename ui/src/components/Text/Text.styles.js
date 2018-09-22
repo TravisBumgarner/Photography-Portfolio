@@ -13,11 +13,11 @@ const LargeText = styled(DefaultText)`
 `
 
 const MediumText = styled(DefaultText)`
-    font-size: 18px;
+    font-size: 20px;
 `
 
 const SmallText = styled(DefaultText)`
-    font-size: 14px;
+    font-size: 20px;
 `
 
 export { LargeText, MediumText, SmallText }

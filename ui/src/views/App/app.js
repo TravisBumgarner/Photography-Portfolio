@@ -4,8 +4,9 @@ import axios from 'axios'
 
 import { Home, Contact, About, Portfolio, Blog } from 'Views'
 import { Navigation } from 'Containers'
+import { GlobalStyle } from 'Theme'
 
-import { AppWrapper, NavigationWrapper, ContentWrapper, NavigationToggle, GlobalStyle } from './App.styles.js'
+import { AppWrapper, NavigationWrapper, ContentWrapper, NavigationToggle } from './App.styles.js'
 
 class App extends Component {
     constructor(props) {

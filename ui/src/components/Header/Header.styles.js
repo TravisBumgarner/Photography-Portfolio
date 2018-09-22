@@ -7,7 +7,7 @@ const LargeHeader = styled.h1`
     font-family: ${FONT_FAMILY_HEADER};
     text-transform: uppercase;
     margin-bottom: 10px;
-    font-size: 24px;
+    font-size: 30px;
 `
 
 const InlineHeader = styled.span`
@@ -19,12 +19,13 @@ const MediumHeader = styled.h2`
     font-weight: 400;
     text-transform: uppercase;
     margin-bottom: 10px;
-    font-size: 16px;
+    font-size: 30px;
 `
 
 const SmallHeader = styled.h3`
     font-family: ${FONT_FAMILY_HEADER};
     font-weight: 200;
+    font-size: 30px;
     margin-bottom: 10px;
 `
 
