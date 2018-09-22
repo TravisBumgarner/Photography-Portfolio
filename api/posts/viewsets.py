@@ -9,6 +9,6 @@ from .models import *
 
 
 class PostViewSet(ReadOnlyModelViewSet):
-    queryset = Post.objects.all()
+    queryset = Post.objects.all().order_by('-date')
     serializer_class = PostSerializer
     pagination_class = None
