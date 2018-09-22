@@ -2,6 +2,6 @@ import styled from 'styled-components'
 
 import { PAGE_THEME } from 'Theme'
 
-const HomeWrapper = PAGE_THEME.extend``
+const HomeWrapper = styled(PAGE_THEME)``
 
 export { HomeWrapper }

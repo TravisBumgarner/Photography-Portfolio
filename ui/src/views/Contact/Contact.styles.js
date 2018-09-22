@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { PAGE_THEME } from 'Theme'
 
-const ContactWrapper = PAGE_THEME.extend`
+const ContactWrapper = styled(PAGE_THEME)`
     display: flex;
     align-items: center;
     justify-content: center;

@@ -8,15 +8,15 @@ const DefaultText = styled.p`
     line-height: 1.5;
 `
 
-const LargeText = DefaultText.extend`
+const LargeText = styled(DefaultText)`
     font-size: 20px;
 `
 
-const MediumText = DefaultText.extend`
+const MediumText = styled(DefaultText)`
     font-size: 18px;
 `
 
-const SmallText = DefaultText.extend`
+const SmallText = styled(DefaultText)`
     font-size: 14px;
 `
 
