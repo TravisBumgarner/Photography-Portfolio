@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Thumbnail, PhotoWithMetadata } from 'Components'
+import { Thumbnail, PhotoWithMetadata, Header, Text } from 'Components'
+import { parseContent } from 'Utilities'
 
 import {
     GalleryWrapper,
@@ -9,7 +10,8 @@ import {
     PreviousButton,
     NextButton,
     PhotoWithMetadataWrapper,
-    CloseIcon
+    CloseIcon,
+    ProjectDescriptionWrapper
 } from './Gallery.styles'
 
 const ITEMS_PER_ROW = 3
@@ -58,20 +60,14 @@ class Gallery extends Component {
     getPreviousPhotoIndex = () => {
         const { maxPhotoIndex, selectedPhotoIndex } = this.state
         this.setState({
-            selectedPhotoIndex:
-                selectedPhotoIndex === 0
-                    ? maxPhotoIndex
-                    : selectedPhotoIndex - 1
+            selectedPhotoIndex: selectedPhotoIndex === 0 ? maxPhotoIndex : selectedPhotoIndex - 1
         })
     }
 
     getNextPhotoIndex = () => {
         const { maxPhotoIndex, selectedPhotoIndex } = this.state
         this.setState({
-            selectedPhotoIndex:
-                selectedPhotoIndex === maxPhotoIndex
-                    ? 0
-                    : selectedPhotoIndex + 1
+            selectedPhotoIndex: selectedPhotoIndex === maxPhotoIndex ? 0 : selectedPhotoIndex + 1
         })
     }
 
@@ -101,7 +97,10 @@ class Gallery extends Component {
 
     render() {
         const { selectedPhotoIndex, photos } = this.state
+        const { projectDetails } = this.props
+
         const grid = this.generateGrid()
+
         return selectedPhotoIndex !== null ? (
             <PhotoWithMetadataWrapper>
                 <CloseIcon size="2em" onClick={this.returnToGridView} />
@@ -110,12 +109,21 @@ class Gallery extends Component {
                 <PhotoWithMetadata details={photos[selectedPhotoIndex]} />
             </PhotoWithMetadataWrapper>
         ) : (
-            <GalleryWrapper>{grid}</GalleryWrapper>
+            <GalleryWrapper>
+                {projectDetails && (
+                    <ProjectDescriptionWrapper>
+                        <Header size="large">{projectDetails.title}</Header>
+                        {parseContent(projectDetails.description)}
+                    </ProjectDescriptionWrapper>
+                )}
+                {grid}
+            </GalleryWrapper>
         )
     }
 }
 
 Gallery.propTypes = {
+    projectDetails: PropTypes.object,
     photos: PropTypes.array.isRequired
 }
 

@@ -10,6 +10,9 @@ const CloseIcon = styled(FaTimes)`
     margin-top: 15px;
     z-index: 999;
 `
+const ProjectDescriptionWrapper = styled.div`
+    margin: 1vw;
+`
 
 const GalleryWrapper = styled.div`
     display: flex;
@@ -57,4 +60,12 @@ const GalleryItem = styled.div`
     }
 `
 
-export { CloseIcon, GalleryWrapper, GalleryItem, PreviousButton, NextButton, PhotoWithMetadataWrapper }
+export {
+    CloseIcon,
+    GalleryWrapper,
+    GalleryItem,
+    PreviousButton,
+    NextButton,
+    PhotoWithMetadataWrapper,
+    ProjectDescriptionWrapper
+}

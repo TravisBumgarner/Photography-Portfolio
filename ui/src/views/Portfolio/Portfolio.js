@@ -3,9 +3,8 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 
 import { Gallery } from 'Containers'
-import { parseContent } from 'Utilities'
 
-import { PortfolioWrapper } from './Portfolio.styles.js'
+import { PortfolioWrapper, ProjectDescriptionWrapper } from './Portfolio.styles.js'
 
 class Portfolio extends Component {
     constructor(props) {
@@ -70,8 +69,7 @@ class Portfolio extends Component {
         const { photos } = this.props
         return photos ? (
             <PortfolioWrapper>
-                {projectDetails && parseContent(projectDetails.description)}
-                <Gallery photos={filteredPhotos} />
+                <Gallery photos={filteredPhotos} projectDetails={projectDetails} />
             </PortfolioWrapper>
         ) : (
             <PortfolioWrapper />
