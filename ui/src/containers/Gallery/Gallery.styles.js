@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { FaTimes } from 'react-icons/fa'
 
 const CloseIcon = styled(FaTimes)`
-    position: absolute;
+    position: fixed;
     right: 0;
     top: 0;
     margin-right: 15px;
@@ -57,11 +57,4 @@ const GalleryItem = styled.div`
     }
 `
 
-export {
-    CloseIcon,
-    GalleryWrapper,
-    GalleryItem,
-    PreviousButton,
-    NextButton,
-    PhotoWithMetadataWrapper
-}
+export { CloseIcon, GalleryWrapper, GalleryItem, PreviousButton, NextButton, PhotoWithMetadataWrapper }

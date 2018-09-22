@@ -10,7 +10,7 @@ const PhotoWithMetadataWrapper = styled.div`
     display: flex;
     flex-direction: column;
     text-align: center;
-    padding: 2vw 0;
+    padding: 0;
     height: 100vh;
     box-sizing: border-box;
 `

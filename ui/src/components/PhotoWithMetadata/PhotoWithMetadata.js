@@ -5,7 +5,7 @@ import { Text, Header } from 'Components'
 
 import { StyledPhoto, MetadataWrapper, PhotoWrapper, PhotoWithMetadataWrapper, Spacer } from './PhotoWithMetadata.styles'
 
-class Photo extends Component {
+class PhotoWithMetadata extends Component {
     render() {
         const {
             details: { src, width, height, make, model, aperture, shutter_speed, iso, lens, focal_length, location }
@@ -37,8 +37,8 @@ class Photo extends Component {
     }
 }
 
-Photo.propTypes = {
+PhotoWithMetadata.propTypes = {
     details: PropTypes.object.isRequired
 }
 
-export default Photo
+export default PhotoWithMetadata
