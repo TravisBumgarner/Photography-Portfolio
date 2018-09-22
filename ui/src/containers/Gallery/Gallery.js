@@ -17,10 +17,22 @@ const ITEMS_PER_ROW = 3
 class Gallery extends Component {
     constructor(props) {
         super(props)
+        this.handleKeyPress = this.handleKeyPress.bind(this)
         this.state = {
             photos: props.photos,
             selectedPhotoIndex: null,
             maxPhotoIndex: 0
+        }
+    }
+
+    handleKeyPress(e) {
+        console.log(e.key)
+        if (e.key === 'ArrowLeft') {
+            this.getPreviousPhotoIndex()
+        } else if (e.key === 'ArrowRight') {
+            this.getNextPhotoIndex()
+        } else if (e.key === 'Escape') {
+            this.returnToGridView()
         }
     }
 
@@ -35,14 +47,15 @@ class Gallery extends Component {
 
     returnToGridView = () => {
         this.setState({ selectedPhotoIndex: null })
+        window.removeEventListener('keydown', this.handleKeyPress)
     }
 
     setSelectedPhotoIndex = index => {
         this.setState({ selectedPhotoIndex: index })
+        window.addEventListener('keydown', this.handleKeyPress)
     }
 
-    getPreviousPhotoIndex = e => {
-        console.log(e.target.value)
+    getPreviousPhotoIndex = () => {
         const { maxPhotoIndex, selectedPhotoIndex } = this.state
         this.setState({
             selectedPhotoIndex:
