@@ -33,7 +33,7 @@ class App extends Component {
             location: { pathname }
         } = this.props
 
-        this.setState({ pathname, isNavigationVisible: pathname !== '/' ? false : true })
+        this.setState({ pathname, isNavigationVisible: pathname === '/' })
 
         this.getThemeDetails()
         this.getPhotos()
