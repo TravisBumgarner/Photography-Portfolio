@@ -6,7 +6,7 @@ const generateTheme = ({ primaryColor, secondaryColor, backgroundSrc }) => ({
     backgroundSrc
 })
 
-const TRANSITION_SPEED = '0.5s'
+const TRANSITION_SPEED = 1
 
 const FONT_FAMILY_HEADER = "'Raleway', sans-serif;"
 const FONT_FAMILY_TEXT = "'Montserrat', sans-serif"

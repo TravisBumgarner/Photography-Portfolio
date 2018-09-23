@@ -2,14 +2,23 @@ import styled from 'styled-components'
 
 import { TRANSITION_SPEED } from 'Theme'
 
-import { FaCaretRight } from 'react-icons/fa'
+import { FaCaretRight, FaCaretLeft } from 'react-icons/fa'
 
-const NavigationToggle = styled(FaCaretRight)`
+const NavigationOpen = styled(FaCaretRight)`
     position: fixed;
     left: 0;
     top: 50vh;
-    transition: opacity ${TRANSITION_SPEED};
+    transition: opacity ${TRANSITION_SPEED / 2}s;
     opacity: ${props => (props.isNavigationVisible ? 0 : 1)};
+    z-index: 999;
+`
+
+const NavigationClose = styled(FaCaretLeft)`
+    position: fixed;
+    left: 0;
+    top: 50vh;
+    transition: opacity ${TRANSITION_SPEED / 2}s;
+    opacity: ${props => (props.isNavigationVisible ? 1 : 0)};
     z-index: 999;
 `
 
@@ -17,7 +26,7 @@ const AppWrapper = styled.div``
 
 const ContentWrapper = styled.div`
     height: 100vh;
-    transition: left ${TRANSITION_SPEED}, width ${TRANSITION_SPEED};
+    transition: left ${TRANSITION_SPEED}s, width ${TRANSITION_SPEED}s;
     position: absolute;
     box-sizing: border-box;
     right: 0;
@@ -35,8 +44,8 @@ const NavigationWrapper = styled.div`
     position: fixed;
     left: 0;
     top: 0;
-    transition: left ${TRANSITION_SPEED};
+    transition: left ${TRANSITION_SPEED}s;
     left: ${props => (props.isNavigationVisible ? '0' : `-15vw`)};
 `
 
-export { AppWrapper, NavigationWrapper, ContentWrapper, NavigationToggle }
+export { AppWrapper, NavigationWrapper, ContentWrapper, NavigationOpen, NavigationClose }
