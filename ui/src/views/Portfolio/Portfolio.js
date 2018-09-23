@@ -14,28 +14,16 @@ class Portfolio extends Component {
     componentWillMount() {
         const {
             match: {
-                params: { projectType, project }
+                params: { projectType, projectTitle }
             },
             photos
         } = this.props
 
         if (projectType === 'singles') {
-            this.filterPhotosByYear(photos, project)
+            this.filterPhotosByYear(photos, projectTitle)
         } else if (projectType === 'project') {
-            this.filterPhotosByProject(photos, project)
+            this.filterPhotosByProject(photos, projectTitle)
         }
-    }
-
-    getProjectDescription = projectTitle => {
-        axios
-            .get(__API__ + `projects/${projectTitle}`)
-            .then(response => {
-                const { start_date: startDate, end_date: endDate, description, title } = response.data
-                this.setState({ projectDetails: { startDate, endDate, description, title } })
-            })
-            .catch(error => {
-                console.log(error)
-            })
     }
 
     componentWillReceiveProps(nextProps) {
@@ -52,6 +40,18 @@ class Portfolio extends Component {
             this.getProjectDescription(projectTitle)
             this.filterPhotosByProject(photos, projectTitle)
         }
+    }
+
+    getProjectDescription = projectTitle => {
+        axios
+            .get(__API__ + `projects/${projectTitle}`)
+            .then(response => {
+                const { start_date: startDate, end_date: endDate, description, title } = response.data
+                this.setState({ projectDetails: { startDate, endDate, description, title } })
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
     filterPhotosByYear = (photos, year) => {
