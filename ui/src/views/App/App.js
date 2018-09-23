@@ -135,7 +135,7 @@ class App extends Component {
                             <Route exact path="/contact" render={rest => <Contact theme={theme} {...rest} />} />
                             <Route exact path="/about" render={rest => <About theme={theme} {...rest} />} />
                             <Route
-                                path="/portfolio/:projectType/:projectTitle"
+                                path="/portfolio/:contentType/:galleryId"
                                 render={rest => <Portfolio photos={photos} {...rest} />}
                             />
                         </Switch>

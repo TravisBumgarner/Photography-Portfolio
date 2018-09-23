@@ -9,68 +9,55 @@ import { PortfolioWrapper, ProjectDescriptionWrapper } from './Portfolio.styles.
 class Portfolio extends Component {
     constructor(props) {
         super(props)
-        this.state = { filteredPhotos: [], projectDetails: null }
+        this.state = { filteredPhotos: [] }
     }
     componentWillMount() {
         const {
             match: {
-                params: { projectType, projectTitle }
+                params: { contentType, galleryTitle }
             },
             photos
         } = this.props
-        if (projectType === 'singles') {
-            this.filterPhotosByYear(photos, projectTitle)
-        } else if (projectType === 'project') {
-            this.filterPhotosByProject(photos, projectTitle)
+        if (contentType === 'snapshots') {
+            this.filterPhotosByYear(photos, galleryTitle)
+        } else if (contentType === 'project') {
+            this.filterPhotosByProject(photos, galleryTitle)
         }
     }
 
     componentWillReceiveProps(nextProps) {
         const {
             match: {
-                params: { projectType, projectTitle }
+                params: { contentType, galleryId }
             },
             photos
         } = nextProps
 
-        if (projectType === 'singles') {
-            this.filterPhotosByYear(photos, projectTitle)
-        } else if (projectType === 'project') {
-            this.getProjectDescription(projectTitle)
-            this.filterPhotosByProject(photos, projectTitle)
+        if (contentType === 'snapshots') {
+            this.filterPhotosByYear(photos, galleryId)
+        } else if (contentType === 'project') {
+            this.filterPhotosByProject(photos, galleryId)
         }
     }
 
-    getProjectDescription = projectTitle => {
-        axios
-            .get(__API__ + `projects/${projectTitle}`)
-            .then(response => {
-                const { start_date: startDate, end_date: endDate, description, title } = response.data
-                this.setState({ projectDetails: { startDate, endDate, description, title } })
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }
-
-    filterPhotosByYear = (photos, year) => {
-        if (year === 'all') {
-            console.log('hi')
+    filterPhotosByYear = (photos, snapshotsId) => {
+        if (snapshotsId === 'all') {
             this.setState({ filteredPhotos: photos })
         } else {
-            const filteredPhotos = photos.filter(photo => photo.year == year)
+            const filteredPhotos = photos.filter(photo => photo.gallery.id == snapshotsId)
             this.setState({ filteredPhotos })
         }
     }
 
-    filterPhotosByProject = (photos, project) => {
-        const filteredPhotos = photos.filter(photo => photo.project.id == project)
+    filterPhotosByProject = (photos, projectId) => {
+        const filteredPhotos = photos.filter(photo => photo.gallery.id == projectId)
         this.setState({ filteredPhotos })
     }
 
     render() {
-        const { filteredPhotos, projectDetails } = this.state
+        const { filteredPhotos } = this.state
         const { photos } = this.props
+        const projectDetails = { title: 'Foo', description: 'Bar' }
         return photos ? (
             <PortfolioWrapper>
                 <Gallery photos={filteredPhotos} projectDetails={projectDetails} />
