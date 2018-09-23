@@ -32,9 +32,11 @@ class App extends Component {
 
         this.setState({ pathname, isNavigationVisible: pathname === '/' })
 
-        this.getThemeDetails()
-        this.getPhotos()
-        this.getGalleries()
+        Promise.all([this.getPhotos(), this.getGalleries()]).then(responses => {
+            this.setState({ photos: responses[0], galleries: responses[1] })
+        })
+
+        // this.getThemeDetails()
     }
 
     componentWillReceiveProps(nextProps) {
@@ -53,53 +55,32 @@ class App extends Component {
         this.setState({ ...statePatch })
     }
 
-    getThemeDetails = () => {
-        console.log(__API__)
-        axios.get(__API__ + 'get_random_photo').then(response => {
-            const { src, color_sample_1, color_sample_2 } = response.data
-            this.setState({
-                theme: {
-                    backgroundSrc: src,
-                    primaryColor: color_sample_1,
-                    secondaryColor: color_sample_2
-                }
-            })
-        })
-    }
+    // getThemeDetails = () => {
+    //     console.log(__API__)
+    //     axios.get(__API__ + 'get_random_photo').then(response => {
+    //         const { src, color_sample_1, color_sample_2 } = response.data
+    //         this.setState({
+    //             theme: {
+    //                 backgroundSrc: src,
+    //                 primaryColor: color_sample_1,
+    //                 secondaryColor: color_sample_2
+    //             }
+    //         })
+    //     })
+    // }
 
     getGalleries = () => {
-        axios
+        return axios
             .get(__API__ + 'galleries/')
-            .then(({ data }) => {
-                this.setState({
-                    isLoading: false,
-                    galleries: data
-                })
-            })
-            .catch(error => {
-                console.log(error)
-                this.setState({
-                    isLoading: false
-                })
-            })
+            .then(({ data: galleries }) => galleries)
+            .catch(error => console.log(error))
     }
 
     getPhotos = () => {
-        axios
+        return axios
             .get(__API__ + 'photos/')
-            .then(response => {
-                this.setState({
-                    isLoading: false,
-                    photos: response.data,
-                    visiblePhotos: response.data
-                })
-            })
-            .catch(error => {
-                console.log(error)
-                this.setState({
-                    isLoading: false
-                })
-            })
+            .then(({ data: photos }) => photos)
+            .catch(error => console.log(error))
     }
 
     toggleNavigation = () => {

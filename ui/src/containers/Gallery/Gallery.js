@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 import { Thumbnail, PhotoWithMetadata, Header, Text } from 'Components'
@@ -115,12 +115,16 @@ class Gallery extends Component {
                 <PhotoWithMetadata details={photos[selectedPhotoIndex]} />
             </PhotoWithMetadataWrapper>
         ) : (
-            <GalleryWrapper>
+            <Fragment>
                 <ProjectDescriptionWrapper>
                     <Header size="large">{galleryDetails.title}</Header>
+                    <Text>{galleryDetails.description}</Text>
+                    <Text>
+                        {galleryDetails.start_date} - {galleryDetails.end_date}
+                    </Text>
                 </ProjectDescriptionWrapper>
-                {grid}
-            </GalleryWrapper>
+                <GalleryWrapper>{grid}</GalleryWrapper>
+            </Fragment>
         )
     }
 }

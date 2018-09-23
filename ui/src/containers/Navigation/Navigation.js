@@ -17,7 +17,7 @@ class Navigation extends Component {
 
         const projectLinks = []
         const snapshotLinks = []
-
+        console.log(galleries)
         galleries.map(({ id, title, content_type }) => {
             const link = (
                 <LinkListItem key={id} onClick={toggleNavigation}>
