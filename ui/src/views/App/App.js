@@ -136,7 +136,7 @@ class App extends Component {
                             <Route exact path="/about" render={rest => <About theme={theme} {...rest} />} />
                             <Route
                                 path="/portfolio/:contentType/:galleryId"
-                                render={rest => <Portfolio photos={photos} {...rest} />}
+                                render={rest => <Portfolio photos={photos} galleries={galleries} {...rest} />}
                             />
                         </Switch>
                     </ContentWrapper>

@@ -99,8 +99,8 @@ class Gallery extends Component {
 
     render() {
         const { selectedPhotoIndex, photos } = this.state
-        const { projectDetails } = this.props
-        console.log(projectDetails)
+        const { galleryDetails } = this.props
+        console.log(galleryDetails)
         const grid = this.generateGrid()
 
         return selectedPhotoIndex !== null ? (
@@ -116,12 +116,9 @@ class Gallery extends Component {
             </PhotoWithMetadataWrapper>
         ) : (
             <GalleryWrapper>
-                {projectDetails && (
-                    <ProjectDescriptionWrapper>
-                        <Header size="large">{projectDetails.title}</Header>
-                        {parseContent(projectDetails.description)}
-                    </ProjectDescriptionWrapper>
-                )}
+                <ProjectDescriptionWrapper>
+                    <Header size="large">{galleryDetails.title}</Header>
+                </ProjectDescriptionWrapper>
                 {grid}
             </GalleryWrapper>
         )
@@ -129,7 +126,7 @@ class Gallery extends Component {
 }
 
 Gallery.propTypes = {
-    projectDetails: PropTypes.object,
+    galleryDetails: PropTypes.object,
     photos: PropTypes.array.isRequired
 }
 

@@ -42,12 +42,20 @@ class Portfolio extends Component {
     }
 
     render() {
+        const {
+            match: {
+                params: { contentType, galleryId }
+            },
+            photos,
+            galleries
+        } = this.props
+
         const { filteredPhotos } = this.state
-        const { photos } = this.props
-        const projectDetails = { title: 'Foo', description: 'Bar' }
+        const galleryDetails = galleries[0]
+        console.log('gallerydetails in portfoli', galleryDetails)
         return photos ? (
             <PortfolioWrapper>
-                <Gallery photos={filteredPhotos} projectDetails={projectDetails} />
+                <Gallery photos={filteredPhotos} galleryDetails={galleryDetails} />
             </PortfolioWrapper>
         ) : (
             <PortfolioWrapper />
