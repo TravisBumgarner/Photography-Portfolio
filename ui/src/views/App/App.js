@@ -23,13 +23,30 @@ class App extends Component {
             },
             photos: [],
             isNavigationVisible: true,
-            isBackgroundVisible: true
+            isBackgroundVisible: true,
+            pathname: null
         }
     }
 
     componentWillMount() {
+        const {
+            location: { pathname }
+        } = this.props
+
+        this.setState({ pathname, isNavigationVisible: pathname !== '/' ? false : true })
+
         this.getThemeDetails()
         this.getPhotos()
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const { pathname } = this.state
+        const {
+            location: { pathname: nextPathname }
+        } = nextProps
+        if (pathname !== nextPathname) {
+            this.setState({ pathname: nextPathname })
+        }
     }
 
     getThemeDetails = () => {
@@ -81,23 +98,26 @@ class App extends Component {
     }
 
     render() {
-        const { metadata, photos, isLoading, theme, isNavigationVisible, isBackgroundVisible } = this.state
+        const { metadata, photos, isLoading, theme, isNavigationVisible, isBackgroundVisible, pathname } = this.state
         return isLoading ? null : (
             <Fragment>
                 <GlobalStyle theme={theme} isBackgroundVisible={isBackgroundVisible} />
                 <AppWrapper>
                     <NavigationWrapper isNavigationVisible={isNavigationVisible}>
                         <Navigation metadata={metadata} theme={theme} toggleNavigation={this.toggleNavigation} />
+
                         <NavigationOpen
                             isNavigationVisible={isNavigationVisible}
                             onClick={this.toggleNavigation}
                             size="2em"
                         />
-                        <NavigationClose
-                            isNavigationVisible={isNavigationVisible}
-                            onClick={this.toggleNavigation}
-                            size="2em"
-                        />
+                        {pathname !== '/' && (
+                            <NavigationClose
+                                isNavigationVisible={isNavigationVisible}
+                                onClick={this.toggleNavigation}
+                                size="2em"
+                            />
+                        )}
                     </NavigationWrapper>
                     <ContentWrapper isNavigationVisible={isNavigationVisible}>
                         <Switch>

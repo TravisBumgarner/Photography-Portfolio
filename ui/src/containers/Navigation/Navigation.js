@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 import { Header } from 'Components'
 
-
 import {
     NavigationWrapper,
     SubNavigationWrapper,
@@ -68,8 +67,9 @@ class Navigation extends Component {
         ]
 
         const miscLinks = miscSectionContent.map(m => {
+            const { toggleNavigation } = this.props
             return (
-                <LinkListItem key={m.title} onClick={this.toggleNavigation}>
+                <LinkListItem key={m.title} onClick={toggleNavigation}>
                     <InternalLink theme={theme} to={m.route}>
                         {m.title}
                     </InternalLink>

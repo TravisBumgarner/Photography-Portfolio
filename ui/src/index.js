@@ -1,12 +1,14 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import ReactDOM from 'react-dom'
 
 import { App } from './views'
 
 ReactDOM.render(
     <BrowserRouter>
-        <App />
+        <Switch>
+            <Route path="/" component={App} />
+        </Switch>
     </BrowserRouter>,
     document.getElementById('root')
 )
