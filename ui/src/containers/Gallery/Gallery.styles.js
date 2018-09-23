@@ -1,14 +1,17 @@
 import styled from 'styled-components'
 
-import { FaTimes } from 'react-icons/fa'
+import { FaTimes, FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa'
 
 const CloseIcon = styled(FaTimes)`
     position: fixed;
-    right: 0;
-    top: 0;
-    margin-right: 15px;
-    margin-top: 15px;
+    right: 20px;
+    top: 20px;
     z-index: 999;
+    fill: #ccc;
+
+    &:hover {
+        fill: #000;
+    }
 `
 const ProjectDescriptionWrapper = styled.div`
     margin: 1vw;
@@ -24,8 +27,30 @@ const GalleryWrapper = styled.div`
     line-height: 30px;
 `
 
-const PreviousButton = styled.div`
+const PreviousButton = styled(FaArrowCircleLeft)`
+    position: fixed;
+    top: calc(50vh - 1.5em);
+    left: 20px;
+    fill: #ccc;
+
+    &:hover {
+        fill: #000;
+    }
+`
+const NextButton = styled(FaArrowCircleRight)`
+    position: fixed;
+    top: calc(50vh - 1.5em);
+    right: 20px;
+    fill: #ccc;
+
+    &:hover {
+        fill: #000;
+    }
+`
+
+const PreviousContainer = styled.div`
     position: absolute;
+    display: flex;
     left: 0;
     top: 0;
     width: 50%;
@@ -33,8 +58,9 @@ const PreviousButton = styled.div`
     cursor: w-resize;
 `
 
-const NextButton = styled.div`
+const NextContainer = styled.div`
     position: absolute;
+    display: flex;
     right: 0;
     top: 0;
     width: 50%;
@@ -64,8 +90,10 @@ export {
     CloseIcon,
     GalleryWrapper,
     GalleryItem,
-    PreviousButton,
-    NextButton,
+    PreviousContainer,
+    NextContainer,
     PhotoWithMetadataWrapper,
-    ProjectDescriptionWrapper
+    ProjectDescriptionWrapper,
+    PreviousButton,
+    NextButton
 }

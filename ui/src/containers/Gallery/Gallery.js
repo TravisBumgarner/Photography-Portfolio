@@ -11,7 +11,9 @@ import {
     NextButton,
     PhotoWithMetadataWrapper,
     CloseIcon,
-    ProjectDescriptionWrapper
+    ProjectDescriptionWrapper,
+    NextContainer,
+    PreviousContainer
 } from './Gallery.styles'
 
 const ITEMS_PER_ROW = 3
@@ -103,9 +105,13 @@ class Gallery extends Component {
 
         return selectedPhotoIndex !== null ? (
             <PhotoWithMetadataWrapper>
-                <CloseIcon size="2em" onClick={this.returnToGridView} />
-                <PreviousButton onClick={this.getPreviousPhotoIndex} />
-                <NextButton onClick={this.getNextPhotoIndex} />
+                <CloseIcon size="3em" onClick={this.returnToGridView} />
+                <PreviousContainer onClick={this.getPreviousPhotoIndex}>
+                    <PreviousButton size="3em" />
+                </PreviousContainer>
+                <NextContainer onClick={this.getNextPhotoIndex}>
+                    <NextButton size="3em" />
+                </NextContainer>
                 <PhotoWithMetadata details={photos[selectedPhotoIndex]} />
             </PhotoWithMetadataWrapper>
         ) : (
