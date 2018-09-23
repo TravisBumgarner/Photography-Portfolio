@@ -17,14 +17,11 @@ class App extends Component {
                 primaryColor: 'rgb(0,0,0)',
                 secondaryColor: 'rgb(0,0,0)'
             },
-            metadata: {
-                years: [],
-                projects: []
-            },
             photos: [],
             isNavigationVisible: true,
             isBackgroundVisible: true,
-            pathname: null
+            pathname: null,
+            galleries: []
         }
     }
 
@@ -37,6 +34,7 @@ class App extends Component {
 
         this.getThemeDetails()
         this.getPhotos()
+        this.getGalleries()
     }
 
     componentWillReceiveProps(nextProps) {
@@ -69,26 +67,13 @@ class App extends Component {
         })
     }
 
-    getPhotos = () => {
+    getGalleries = () => {
         axios
-            .get(__API__ + 'photos/')
-            .then(response => {
-                const metadataYears = new Set([])
-                const metadataProjects = {}
-
-                response.data.map(photo => {
-                    metadataProjects[photo.project.id] = photo.project.title
-                    metadataYears.add(photo.year)
-                })
-
+            .get(__API__ + 'galleries/')
+            .then(({ data }) => {
                 this.setState({
                     isLoading: false,
-                    photos: response.data,
-                    visiblePhotos: response.data,
-                    metadata: {
-                        projects: { ...metadataProjects },
-                        years: [...metadataYears].sort((a, b) => b > a)
-                    }
+                    galleries: data
                 })
             })
             .catch(error => {
@@ -99,18 +84,48 @@ class App extends Component {
             })
     }
 
+    getPhotos = () => {}
+    //     axios
+    //         .get(__API__ + 'photos/')
+    //         .then(response => {
+    //             const metadataYears = new Set([])
+    //             const metadataProjects = {}
+
+    //             response.data.map(photo => {
+    //                 metadataProjects[photo.gallery.id] = photo.gallery.title
+    //                 metadataYears.add(photo.year)
+    //             })
+
+    //             this.setState({
+    //                 isLoading: false,
+    //                 photos: response.data,
+    //                 visiblePhotos: response.data,
+    //                 metadata: {
+    //                     projects: { ...metadataProjects },
+    //                     years: [...metadataYears].sort((a, b) => b > a)
+    //                 }
+    //             })
+    //         })
+    //         .catch(error => {
+    //             console.log(error)
+    //             this.setState({
+    //                 isLoading: false
+    //             })
+    //         })
+    // }
+
     toggleNavigation = () => {
         this.setState({ isNavigationVisible: !this.state.isNavigationVisible })
     }
 
     render() {
-        const { metadata, photos, isLoading, theme, isNavigationVisible, isBackgroundVisible, pathname } = this.state
+        const { galleries, photos, isLoading, theme, isNavigationVisible, isBackgroundVisible, pathname } = this.state
         return isLoading ? null : (
             <Fragment>
                 <GlobalStyle theme={theme} isBackgroundVisible={isBackgroundVisible} />
                 <AppWrapper>
                     <NavigationWrapper isNavigationVisible={isNavigationVisible}>
-                        <Navigation metadata={metadata} theme={theme} toggleNavigation={this.toggleNavigation} />
+                        <Navigation galleries={galleries} theme={theme} toggleNavigation={this.toggleNavigation} />
 
                         <NavigationOpen
                             isNavigationVisible={isNavigationVisible}

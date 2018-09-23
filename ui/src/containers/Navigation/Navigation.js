@@ -13,26 +13,26 @@ import {
 
 class Navigation extends Component {
     render() {
-        const { metadata, theme, toggleNavigation } = this.props
+        const { galleries, theme, toggleNavigation } = this.props
 
-        const projectsLinks = Object.entries(metadata.projects).map(([id, title]) => {
-            return (
+        const projectLinks = []
+        const snapshotLinks = []
+        console.log(galleries)
+        galleries.map(({ id, title, content_type }) => {
+            const link = (
                 <LinkListItem key={id} onClick={toggleNavigation}>
-                    <InternalLink theme={theme} to={`/portfolio/project/${id}`}>
+                    <InternalLink theme={theme} to={`/portfolio/${content_type}/${id}`}>
                         {title}
                     </InternalLink>
                 </LinkListItem>
             )
-        })
-
-        const yearsLinks = metadata.years.map(year => {
-            return (
-                <LinkListItem key={year} onClick={toggleNavigation}>
-                    <InternalLink theme={theme} to={`/portfolio/singles/${year}`}>
-                        {year}
-                    </InternalLink>
-                </LinkListItem>
-            )
+            if (content_type === 'project') {
+                projectLinks.push(link)
+            } else if (content_type === 'snapshots') {
+                snapshotLinks.push(link)
+            } else {
+                throw new Error('Invalid gallery type')
+            }
         })
 
         const socialSectionContent = [
@@ -88,7 +88,7 @@ class Navigation extends Component {
 
                 <SubNavigationWrapper>
                     <Header size="medium">Projects</Header>
-                    <ul>{projectsLinks}</ul>
+                    <ul>{projectLinks}</ul>
                 </SubNavigationWrapper>
 
                 <SubNavigationWrapper>
@@ -99,7 +99,7 @@ class Navigation extends Component {
                                 All
                             </InternalLink>
                         </LinkListItem>
-                        {yearsLinks}
+                        {snapshotLinks}
                     </ul>
                 </SubNavigationWrapper>
 
@@ -113,7 +113,7 @@ class Navigation extends Component {
 }
 
 Navigation.propTypes = {
-    metadata: PropTypes.object.isRequired,
+    galleries: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
     toggleNavigation: PropTypes.func.isRequired
 }
