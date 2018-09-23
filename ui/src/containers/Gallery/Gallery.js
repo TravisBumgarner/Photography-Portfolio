@@ -26,7 +26,7 @@ class Gallery extends Component {
             photos: props.photos,
             selectedPhotoIndex: null,
             maxPhotoIndex: 0,
-            infiniteScrollImageCount: 12
+            infiniteScrollImageCount: 15
         }
     }
 
@@ -47,13 +47,11 @@ class Gallery extends Component {
             infiniteScrollImageCount < maxPhotoIndex &&
             window.innerHeight + window.scrollY >= node.clientHeight - 250
         ) {
-            console.log('hi')
             this.setState({ infiniteScrollImageCount: (this.state.infiniteScrollImageCount += 12) })
         }
     }
 
     handleKeyPress(e) {
-        console.log(e.key)
         if (e.key === 'ArrowLeft') {
             this.getPreviousPhotoIndex()
         } else if (e.key === 'ArrowRight') {
@@ -98,7 +96,6 @@ class Gallery extends Component {
 
     generateGrid = () => {
         const { photos, infiniteScrollImageCount } = this.state
-        console.log(photos.slice(0, infiniteScrollImageCount))
         const grid = photos.slice(0, infiniteScrollImageCount).map((photo, index) => (
             <GalleryItem key={photo.id}>
                 <Thumbnail
@@ -123,7 +120,6 @@ class Gallery extends Component {
     render() {
         const { selectedPhotoIndex, photos } = this.state
         const { galleryDetails } = this.props
-        this.elemHeight && console.log(this.elemHeight)
         const grid = this.generateGrid()
 
         return selectedPhotoIndex !== null ? (

@@ -51,8 +51,8 @@ class Portfolio extends Component {
         } = this.props
 
         const { filteredPhotos } = this.state
-        const galleryDetails = galleries.length && galleries.filter(gallery => gallery.id == galleryId)[0]
-        console.log(galleryDetails)
+        let galleryDetails = galleries.length && galleries.filter(gallery => gallery.id == galleryId)[0]
+        galleryDetails = galleryDetails || { title: 'All', description: 'All Snapshots' }
         return photos ? (
             <PortfolioWrapper>
                 <Gallery photos={filteredPhotos} galleryDetails={galleryDetails} />
