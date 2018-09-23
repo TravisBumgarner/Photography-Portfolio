@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 import { Thumbnail, PhotoWithMetadata, Header, Text } from 'Components'
-import { parseContent } from 'Utilities'
 
 import {
     GalleryWrapper,
@@ -21,11 +20,35 @@ const ITEMS_PER_ROW = 3
 class Gallery extends Component {
     constructor(props) {
         super(props)
+        this.myRef = React.createRef()
         this.handleKeyPress = this.handleKeyPress.bind(this)
         this.state = {
             photos: props.photos,
             selectedPhotoIndex: null,
-            maxPhotoIndex: 0
+            maxPhotoIndex: 0,
+            infiniteScrollImageCount: 12
+        }
+    }
+
+    componentDidMount() {
+        window.addEventListener('scroll', this.onScroll, false)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.onScroll, false)
+    }
+
+    onScroll = () => {
+        const { infiniteScrollImageCount, maxPhotoIndex } = this.state
+        const node = this.myRef.current
+
+        if (
+            node.clientHeight !== 0 &&
+            infiniteScrollImageCount < maxPhotoIndex &&
+            window.innerHeight + window.scrollY >= node.clientHeight - 250
+        ) {
+            console.log('hi')
+            this.setState({ infiniteScrollImageCount: (this.state.infiniteScrollImageCount += 12) })
         }
     }
 
@@ -74,9 +97,9 @@ class Gallery extends Component {
     }
 
     generateGrid = () => {
-        const { photos } = this.state
-
-        const grid = photos.map((photo, index) => (
+        const { photos, infiniteScrollImageCount } = this.state
+        console.log(photos.slice(0, infiniteScrollImageCount))
+        const grid = photos.slice(0, infiniteScrollImageCount).map((photo, index) => (
             <GalleryItem key={photo.id}>
                 <Thumbnail
                     src={photo.src_thumbnail_medium}
@@ -100,7 +123,7 @@ class Gallery extends Component {
     render() {
         const { selectedPhotoIndex, photos } = this.state
         const { galleryDetails } = this.props
-        console.log(galleryDetails)
+        this.elemHeight && console.log(this.elemHeight)
         const grid = this.generateGrid()
 
         return selectedPhotoIndex !== null ? (
@@ -123,7 +146,7 @@ class Gallery extends Component {
                         {galleryDetails.start_date} - {galleryDetails.end_date}
                     </Text>
                 </ProjectDescriptionWrapper>
-                <GalleryWrapper>{grid}</GalleryWrapper>
+                <GalleryWrapper ref={this.myRef}>{grid}</GalleryWrapper>
             </Fragment>
         )
     }
