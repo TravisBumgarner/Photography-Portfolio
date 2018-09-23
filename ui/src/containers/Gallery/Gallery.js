@@ -100,7 +100,7 @@ class Gallery extends Component {
     render() {
         const { selectedPhotoIndex, photos } = this.state
         const { projectDetails } = this.props
-
+        console.log(projectDetails)
         const grid = this.generateGrid()
 
         return selectedPhotoIndex !== null ? (
