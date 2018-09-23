@@ -14,15 +14,11 @@ class Portfolio extends Component {
     componentWillMount() {
         const {
             match: {
-                params: { contentType, galleryTitle }
+                params: { contentType, galleryId }
             },
             photos
         } = this.props
-        if (contentType === 'snapshots') {
-            this.filterPhotosByYear(photos, galleryTitle)
-        } else if (contentType === 'project') {
-            this.filterPhotosByProject(photos, galleryTitle)
-        }
+        this.filterPhotos(photos, contentType, galleryId)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -32,26 +28,17 @@ class Portfolio extends Component {
             },
             photos
         } = nextProps
-
-        if (contentType === 'snapshots') {
-            this.filterPhotosByYear(photos, galleryId)
-        } else if (contentType === 'project') {
-            this.filterPhotosByProject(photos, galleryId)
-        }
+        this.filterPhotos(photos, contentType, galleryId)
     }
 
-    filterPhotosByYear = (photos, snapshotsId) => {
-        if (snapshotsId === 'all') {
-            this.setState({ filteredPhotos: photos })
+    filterPhotos = (photos, contentType, galleryId) => {
+        if (contentType === 'snapshots' && galleryId === 'all') {
+            const filteredPhotos = photos.filter(photo => photo.gallery.content_type == 'snapshots')
+            this.setState({ filteredPhotos })
         } else {
-            const filteredPhotos = photos.filter(photo => photo.gallery.id == snapshotsId)
+            const filteredPhotos = photos.filter(photo => photo.gallery.id == galleryId)
             this.setState({ filteredPhotos })
         }
-    }
-
-    filterPhotosByProject = (photos, projectId) => {
-        const filteredPhotos = photos.filter(photo => photo.gallery.id == projectId)
-        this.setState({ filteredPhotos })
     }
 
     render() {
