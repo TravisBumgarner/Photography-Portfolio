@@ -13,10 +13,9 @@ import {
 
 class Navigation extends Component {
     render() {
-        const { metadata, theme } = this.props
+        const { metadata, theme, toggleNavigation } = this.props
 
         const projectsLinks = Object.entries(metadata.projects).map(([id, title]) => {
-            const { toggleNavigation } = this.props
             return (
                 <LinkListItem key={id} onClick={toggleNavigation}>
                     <InternalLink theme={theme} to={`/portfolio/project/${id}`}>
@@ -27,8 +26,6 @@ class Navigation extends Component {
         })
 
         const yearsLinks = metadata.years.map(year => {
-            const { toggleNavigation } = this.props
-
             return (
                 <LinkListItem key={year} onClick={toggleNavigation}>
                     <InternalLink theme={theme} to={`/portfolio/singles/${year}`}>
@@ -67,7 +64,6 @@ class Navigation extends Component {
         ]
 
         const miscLinks = miscSectionContent.map(m => {
-            const { toggleNavigation } = this.props
             return (
                 <LinkListItem key={m.title} onClick={toggleNavigation}>
                     <InternalLink theme={theme} to={m.route}>
@@ -97,7 +93,14 @@ class Navigation extends Component {
 
                 <SubNavigationWrapper>
                     <Header size="medium">Snapshots</Header>
-                    <ul>{yearsLinks}</ul>
+                    <ul>
+                        <LinkListItem key={'all'} onClick={toggleNavigation}>
+                            <InternalLink theme={theme} to={`/portfolio/singles/all`}>
+                                All
+                            </InternalLink>
+                        </LinkListItem>
+                        {yearsLinks}
+                    </ul>
                 </SubNavigationWrapper>
 
                 <SubNavigationWrapper>

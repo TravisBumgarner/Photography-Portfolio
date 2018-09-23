@@ -115,13 +115,13 @@ class App extends Component {
                         <NavigationOpen
                             isNavigationVisible={isNavigationVisible}
                             onClick={this.toggleNavigation}
-                            size="2em"
+                            size="3em"
                         />
                         {pathname !== '/' && (
                             <NavigationClose
                                 isNavigationVisible={isNavigationVisible}
                                 onClick={this.toggleNavigation}
-                                size="2em"
+                                size="3em"
                             />
                         )}
                     </NavigationWrapper>

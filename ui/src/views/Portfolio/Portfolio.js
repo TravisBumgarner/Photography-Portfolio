@@ -18,7 +18,6 @@ class Portfolio extends Component {
             },
             photos
         } = this.props
-
         if (projectType === 'singles') {
             this.filterPhotosByYear(photos, projectTitle)
         } else if (projectType === 'project') {
@@ -55,13 +54,18 @@ class Portfolio extends Component {
     }
 
     filterPhotosByYear = (photos, year) => {
-        const filteredPhotos = photos.filter(photo => photo.year == year)
-        this.setState({ filteredPhotos, projectType: 'project' })
+        if (year === 'all') {
+            console.log('hi')
+            this.setState({ filteredPhotos: photos })
+        } else {
+            const filteredPhotos = photos.filter(photo => photo.year == year)
+            this.setState({ filteredPhotos })
+        }
     }
 
     filterPhotosByProject = (photos, project) => {
         const filteredPhotos = photos.filter(photo => photo.project.id == project)
-        this.setState({ filteredPhotos, projectType: 'singles' })
+        this.setState({ filteredPhotos })
     }
 
     render() {
