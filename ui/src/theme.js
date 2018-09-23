@@ -16,6 +16,23 @@ const FONT_SIZE_INPUTS_AND_BUTTONS = 14
 const PAGE_THEME = styled.div`
     overflow: scroll;
 `
+
+const sizes = {
+    desktop: 992,
+    tablet: 768,
+    phone: 576
+}
+
+// Iterate through the sizes and create a media template
+const MEDIA = Object.keys(sizes).reduce((acc, label) => {
+    acc[label] = (...args) => css`
+        @media (max-width: ${sizes[label] / 16}em) {
+            ${css(...args)};
+        }
+    `
+    return acc
+}, {})
+
 // background-image: ${props => `url(${props.isBackgroundVisible ? props.theme.backgroundSrc : ''});`};
 const GlobalStyle = createGlobalStyle`
     body {
@@ -33,6 +50,7 @@ const GlobalStyle = createGlobalStyle`
 `
 
 export {
+    MEDIA,
     GlobalStyle,
     generateTheme,
     PAGE_THEME,

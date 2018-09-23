@@ -87,7 +87,7 @@ class App extends Component {
                 <GlobalStyle theme={theme} isBackgroundVisible={isBackgroundVisible} />
                 <AppWrapper>
                     <NavigationWrapper isNavigationVisible={isNavigationVisible}>
-                        <Navigation metadata={metadata} theme={theme} toggleNavigation={console.log} />
+                        <Navigation metadata={metadata} theme={theme} toggleNavigation={this.toggleNavigation} />
                         <NavigationOpen
                             isNavigationVisible={isNavigationVisible}
                             onClick={this.toggleNavigation}
