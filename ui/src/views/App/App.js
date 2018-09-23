@@ -84,35 +84,23 @@ class App extends Component {
             })
     }
 
-    getPhotos = () => {}
-    //     axios
-    //         .get(__API__ + 'photos/')
-    //         .then(response => {
-    //             const metadataYears = new Set([])
-    //             const metadataProjects = {}
-
-    //             response.data.map(photo => {
-    //                 metadataProjects[photo.gallery.id] = photo.gallery.title
-    //                 metadataYears.add(photo.year)
-    //             })
-
-    //             this.setState({
-    //                 isLoading: false,
-    //                 photos: response.data,
-    //                 visiblePhotos: response.data,
-    //                 metadata: {
-    //                     projects: { ...metadataProjects },
-    //                     years: [...metadataYears].sort((a, b) => b > a)
-    //                 }
-    //             })
-    //         })
-    //         .catch(error => {
-    //             console.log(error)
-    //             this.setState({
-    //                 isLoading: false
-    //             })
-    //         })
-    // }
+    getPhotos = () => {
+        axios
+            .get(__API__ + 'photos/')
+            .then(response => {
+                this.setState({
+                    isLoading: false,
+                    photos: response.data,
+                    visiblePhotos: response.data
+                })
+            })
+            .catch(error => {
+                console.log(error)
+                this.setState({
+                    isLoading: false
+                })
+            })
+    }
 
     toggleNavigation = () => {
         this.setState({ isNavigationVisible: !this.state.isNavigationVisible })
