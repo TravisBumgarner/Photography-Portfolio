@@ -44,9 +44,15 @@ class App extends Component {
         const {
             location: { pathname: nextPathname }
         } = nextProps
+
+        let statePatch = {}
         if (pathname !== nextPathname) {
-            this.setState({ pathname: nextPathname })
+            statePatch.pathname = nextPathname
         }
+        if (nextPathname === '/') {
+            statePatch.isNavigationVisible = true
+        }
+        this.setState({ ...statePatch })
     }
 
     getThemeDetails = () => {
