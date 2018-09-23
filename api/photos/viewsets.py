@@ -17,13 +17,14 @@ class GetRandomImage(APIView):
 
     def get(self, request, format=None):
         random_object = self.queryset.order_by('?')[0]
-        serializer = PhotoSerializer(random_object, context={"request": request})
+        serializer = PhotoSerializer(
+            random_object, context={"request": request})
         return Response(serializer.data)
 
 
-class ProjectViewSet(ReadOnlyModelViewSet):
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
+class GalleryViewSet(ReadOnlyModelViewSet):
+    queryset = Gallery.objects.all()
+    serializer_class = GallerySerializer
     pagination_class = None
 
 
@@ -31,4 +32,3 @@ class PhotoViewSet(ReadOnlyModelViewSet):
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
     pagination_class = None
-

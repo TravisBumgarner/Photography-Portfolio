@@ -6,8 +6,8 @@ from django.contrib import admin
 from .models import *
 
 
-@admin.register(Project)
-class ProjectAdmin(admin.ModelAdmin):
+@admin.register(Gallery)
+class GalleryAdmin(admin.ModelAdmin):
     list_display = (
         'title',
     )

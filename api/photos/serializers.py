@@ -2,13 +2,14 @@ from .models import *
 from rest_framework import serializers
 
 
-class ProjectSerializer(serializers.ModelSerializer):
+class GallerySerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Project
+        model = Gallery
         fields = (
             'id',
             'title',
+            'content_type',
             'description',
             'start_date',
             'end_date'
@@ -16,7 +17,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 
 class PhotoSerializer(serializers.ModelSerializer):
-    project = ProjectSerializer(read_only=True)
+    gallery = GallerySerializer(read_only=True)
 
     class Meta:
         model = Photo
@@ -25,7 +26,7 @@ class PhotoSerializer(serializers.ModelSerializer):
             'src',
             'file_name',
             'title',
-            'project',
+            'gallery',
             'location',
             'date_taken',
             'year',
