@@ -1,9 +1,7 @@
 import styled from 'styled-components'
 
-import { PAGE_THEME } from 'Theme'
+import { PAGE_THEME, CONTENT_SPACING } from 'Theme'
 
-const PortfolioWrapper = styled(PAGE_THEME)`
-    padding: 2vw 3vw;
-`
+const PortfolioWrapper = styled(PAGE_THEME)``
 
 export { PortfolioWrapper, ProjectDescriptionWrapper }

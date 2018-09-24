@@ -2,6 +2,8 @@ import styled from 'styled-components'
 
 import { FaTimes, FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa'
 
+import { CONTENT_SPACING } from 'Theme'
+
 const CloseIcon = styled(FaTimes)`
     position: fixed;
     right: 20px;
@@ -14,13 +16,13 @@ const CloseIcon = styled(FaTimes)`
     }
 `
 const ProjectDescriptionWrapper = styled.div`
-    margin: 1vw;
+    margin: ${CONTENT_SPACING / 2}vw;
 `
 
 const GalleryWrapper = styled.div`
     display: flex;
     padding: 0;
-    margin: 2vw 0;
+    margin: ${CONTENT_SPACING}vw 0;
     list-style: none;
     justify-content: space-around;
     flex-wrap: wrap;

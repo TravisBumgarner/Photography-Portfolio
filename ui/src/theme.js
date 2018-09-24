@@ -7,6 +7,7 @@ const generateTheme = ({ primaryColor, secondaryColor, backgroundSrc }) => ({
 })
 
 const TRANSITION_SPEED = 1
+const CONTENT_SPACING = 2
 
 const FONT_FAMILY_HEADER = "'Raleway', sans-serif;"
 const FONT_FAMILY_TEXT = "'Montserrat', sans-serif"
@@ -14,7 +15,7 @@ const FONT_FAMILY_TEXT = "'Montserrat', sans-serif"
 const FONT_SIZE_INPUTS_AND_BUTTONS = 14
 
 const PAGE_THEME = styled.div`
-    padding: 2vw 4vw;
+    padding: ${CONTENT_SPACING}vw ${CONTENT_SPACING * 2}vw;
     overflow: scroll;
 `
 
@@ -37,6 +38,7 @@ const MEDIA = Object.keys(sizes).reduce((acc, label) => {
 // background-image: ${props => `url(${props.isBackgroundVisible ? props.theme.backgroundSrc : ''});`};
 const GlobalStyle = createGlobalStyle`
     body {
+        /* background-image: url('http://localhost:8000/media/full/2015/2015-05/124.jpg'); */
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
@@ -60,5 +62,6 @@ export {
     PRIMARY_COLOR,
     SECONDARY_COLOR,
     FONT_SIZE_INPUTS_AND_BUTTONS,
-    TRANSITION_SPEED
+    TRANSITION_SPEED,
+    CONTENT_SPACING
 }

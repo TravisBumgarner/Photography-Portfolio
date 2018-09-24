@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { TRANSITION_SPEED, MEDIA } from 'Theme'
+import { TRANSITION_SPEED, CONTENT_SPACING } from 'Theme'
 
 import { FaCaretRight, FaCaretLeft } from 'react-icons/fa'
 
@@ -38,7 +38,7 @@ const NavigationWrapper = styled.div`
     height: 100vh;
     display: flex;
     align-items: center;
-    margin-left: 2vw;
+    margin-left: ${CONTENT_SPACING}vw;
     width: 220px;
     position: fixed;
     left: 0;
