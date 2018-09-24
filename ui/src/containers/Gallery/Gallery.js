@@ -25,7 +25,7 @@ class Gallery extends Component {
         this.state = {
             photos: props.photos,
             selectedPhotoIndex: null,
-            maxPhotoIndex: 0,
+            maxPhotoIndex: props.photos.length - 1,
             infiniteScrollImageCount: 15
         }
     }
