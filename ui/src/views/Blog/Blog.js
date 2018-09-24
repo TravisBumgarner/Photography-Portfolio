@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 
 import { Post } from 'Containers'
+import { Header } from 'Components'
 
 import { BlogWrapper } from './Blog.styles.js'
 
@@ -33,7 +34,12 @@ class Blog extends Component {
 
         const Posts = posts.map(post => <Post key={post.id} {...post} />)
 
-        return <BlogWrapper>{Posts}</BlogWrapper>
+        return (
+            <BlogWrapper>
+                <Header size="large">Blog</Header>
+                {Posts}
+            </BlogWrapper>
+        )
     }
 }
 
