@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import { Gallery } from 'Containers'
 
-import { PortfolioWrapper, ProjectDescriptionWrapper } from './Portfolio.styles.js'
+import { PortfolioWrapper, ContentWrapper } from './Portfolio.styles.js'
 
 class Portfolio extends Component {
     constructor(props) {

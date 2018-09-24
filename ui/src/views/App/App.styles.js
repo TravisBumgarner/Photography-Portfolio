@@ -28,14 +28,8 @@ const AppWrapper = styled.div`
 
 const ContentWrapper = styled.div`
     height: 100vh;
-    /* transition: left ${TRANSITION_SPEED}s, width ${TRANSITION_SPEED}s; */
-    /* position: absolute; */
     box-sizing: border-box;
-    /* right: 0; */
-    /* top: 0; */
-    margin: 0 2vw;
     flex: 1;
-    /* width: ${props => (props.isNavigationVisible ? `79vw` : `96vw`)}; */
     width: 96vw;
 `
 

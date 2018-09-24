@@ -14,6 +14,7 @@ const FONT_FAMILY_TEXT = "'Montserrat', sans-serif"
 const FONT_SIZE_INPUTS_AND_BUTTONS = 14
 
 const PAGE_THEME = styled.div`
+    padding: 2vw 4vw;
     overflow: scroll;
 `
 
