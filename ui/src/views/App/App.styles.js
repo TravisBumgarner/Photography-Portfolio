@@ -7,7 +7,7 @@ import { FaCaretRight, FaCaretLeft } from 'react-icons/fa'
 const NavigationOpen = styled(FaCaretRight)`
     position: absolute;
     right: 0;
-    top: 5vh;
+    top: 50vh;
     transition: opacity ${TRANSITION_SPEED / 2}s;
     opacity: ${props => (props.isNavigationVisible ? 0 : 1)};
     z-index: 999;
@@ -16,7 +16,7 @@ const NavigationOpen = styled(FaCaretRight)`
 const NavigationClose = styled(FaCaretLeft)`
     position: absolute;
     right: 0;
-    top: 5vh;
+    top: 50vh;
     transition: opacity ${TRANSITION_SPEED / 2}s;
     opacity: ${props => (props.isNavigationVisible ? 1 : 0)};
     z-index: 999;
