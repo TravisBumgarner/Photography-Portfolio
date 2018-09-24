@@ -1,4 +1,5 @@
 import os
+import sys
 
 from django.core.files import File
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -20,13 +21,20 @@ from datetime import datetime
 from PIL import Image
 import exifread
 
+PS = "Point & Shoot Camera"
+DSLR = "DSLR Camera"
+PHONE = "Phone"
+FILM = "Film Camera"
+
 
 def compute_date(raw_str):
+    if raw_str is None:
+        return None
+    raw_str = str(raw_str)
+
     date, _ = raw_str.split(' ')
     year, month, day = date.split(':')
     return datetime(int(year), int(month), int(day))
-
-    dt = datetime.strftime
 
 
 def print_raw_keys_and_data(raw_exif_data):
@@ -46,125 +54,79 @@ def compute_fractional_string(raw_str):
 
 def process_nikon(raw_exif_data):
     processed_exif_data = {}
-
     _, model = str(raw_exif_data['Image Model']).split(' ')
-
-    processed_exif_data['camera_type'] = "DSLR"
+    processed_exif_data['camera_type'] = DSLR
     processed_exif_data['make'] = 'Nikon'
-    processed_exif_data['model'] = str(model)
-    processed_exif_data['lens'] = str(raw_exif_data['EXIF LensModel'])
-    processed_exif_data['date_taken'] = compute_date(
-        str(raw_exif_data['EXIF DateTimeOriginal']))
-    processed_exif_data['shooting_mode'] = str(
-        raw_exif_data['EXIF ExposureProgram'])
-    processed_exif_data['aperture'] = compute_fractional_string(
-        str(raw_exif_data['EXIF FNumber']))
-    processed_exif_data['shutter_speed'] = str(
-        raw_exif_data['EXIF ExposureTime'])
-    processed_exif_data['iso'] = str(raw_exif_data['EXIF ISOSpeedRatings'])
-    processed_exif_data['focal_length'] = str(
-        raw_exif_data['EXIF FocalLength'])
-
+    processed_exif_data['model'] = raw_exif_data['Image Model']
     return processed_exif_data
 
 
 def process_cannon(raw_exif_data):
     processed_exif_data = {}
-    processed_exif_data['camera_type'] = "DSLR"
+    processed_exif_data['camera_type'] = DSLR
     processed_exif_data['make'] = str(raw_exif_data['Image Make'])
     processed_exif_data['model'] = str(raw_exif_data['Image Model'])
-    processed_exif_data['lens'] = str(raw_exif_data['EXIF LensModel'])
-    processed_exif_data['date_taken'] = compute_date(
-        str(raw_exif_data['EXIF DateTimeOriginal']))
-    processed_exif_data['shooting_mode'] = str(
-        raw_exif_data['EXIF ExposureProgram'])
-    processed_exif_data['aperture'] = compute_fractional_string(
-        str(raw_exif_data['EXIF FNumber']))
-    processed_exif_data['shutter_speed'] = str(
-        raw_exif_data['EXIF ExposureTime'])
-    processed_exif_data['iso'] = str(raw_exif_data['EXIF ISOSpeedRatings'])
-    processed_exif_data['focal_length'] = str(
-        raw_exif_data['EXIF FocalLength'])
-
     return processed_exif_data
 
 
 def process_noritsu_scanner(raw_exif_data):
     processed_exif_data = {}
-
-    processed_exif_data["camera_type"] = "Film"
+    processed_exif_data["camera_type"] = FILM
     processed_exif_data["make"] = "Film"
     processed_exif_data["model"] = ""
-    processed_exif_data["lens"] = ""
-    processed_exif_data["date_taken"] = ""
-    processed_exif_data["shooting_mode"] = ""
-    processed_exif_data["aperture"] = ""
-    processed_exif_data["shutter_speed"] = ""
-    processed_exif_data["iso"] = ""
-    processed_exif_data['focal_length'] = ""
-
     return processed_exif_data
 
 
-def process_sony_rx100(raw_exif_data):
+def process_sony(raw_exif_data):
+    model = raw_exif_data['Image Model']
+    if model == "SLT-A55V":
+        model = 'A55'
+    elif model == "DSC-RX100":
+        model = "RX100 MKI"
+    elif model == "DSLR-A290":
+        model = "A290"
+
     processed_exif_data = {}
-
-    processed_exif_data["camera_type"] = "P&S"
+    processed_exif_data["camera_type"] = PS
     processed_exif_data["make"] = "Sony"
-    processed_exif_data["model"] = "RX100 MKI"
-    processed_exif_data["lens"] = str(raw_exif_data["EXIF LensModel"])
-    processed_exif_data["date_taken"] = compute_date(
-        str(raw_exif_data["EXIF DateTimeOriginal"]))
-    processed_exif_data["shooting_mode"] = str(
-        raw_exif_data["EXIF ExposureProgram"])
-    processed_exif_data["aperture"] = str(raw_exif_data["EXIF FNumber"])
-    processed_exif_data["shutter_speed"] = str(
-        raw_exif_data["EXIF ExposureTime"])
-    processed_exif_data["iso"] = str(raw_exif_data["EXIF ISOSpeedRatings"])
-    processed_exif_data['focal_length'] = str(
-        raw_exif_data['EXIF FocalLength'])
-
+    processed_exif_data["model"] = model
     return processed_exif_data
 
 
 def process_nexus_5x(raw_exif_data):
     processed_exif_data = {}
-
-    processed_exif_data["camera_type"] = "Phone"
+    processed_exif_data["camera_type"] = PHONE
     processed_exif_data["make"] = "LG"
     processed_exif_data["model"] = "Nexus"
-    processed_exif_data["lens"] = ""
-    processed_exif_data["date_taken"] = compute_date(
-        str(raw_exif_data["EXIF DateTimeOriginal"]))
-    processed_exif_data["shooting_mode"] = str(
-        raw_exif_data["EXIF ExposureMode"])
-    processed_exif_data["aperture"] = str(raw_exif_data["EXIF FNumber"])
-    processed_exif_data["shutter_speed"] = str(
-        raw_exif_data["EXIF ExposureTime"])
-    processed_exif_data["iso"] = str(raw_exif_data["EXIF ISOSpeedRatings"])
-    processed_exif_data['focal_length'] = str(
-        raw_exif_data['EXIF FocalLength'])
-
     return processed_exif_data
 
 
 def process_moto_x4(raw_exif_data):
     processed_exif_data = {}
-
-    processed_exif_data["camera_type"] = "Phone"
+    processed_exif_data["camera_type"] = PHONE
     processed_exif_data["make"] = "Motorola"
     processed_exif_data["model"] = "moto x4"
+    return processed_exif_data
+
+
+def process_garbage_metadata(raw_exif_data):
+    processed_exif_data = {}
+    processed_exif_data["camera_type"] = PHONE
+    processed_exif_data["make"] = ""
+    processed_exif_data["model"] = ""
+    return processed_exif_data
+
+
+def process_general_raw(raw_exif_data):
+    processed_exif_data = {}
+
     processed_exif_data["lens"] = ""
-    processed_exif_data["date_taken"] = compute_date(
-        str(raw_exif_data["EXIF DateTimeOriginal"]))
-    processed_exif_data["shooting_mode"] = str(
-        raw_exif_data["EXIF ExposureMode"])
-    processed_exif_data["aperture"] = str(raw_exif_data["EXIF FNumber"])
-    processed_exif_data["shutter_speed"] = str(
-        raw_exif_data["EXIF ExposureTime"])
-    processed_exif_data["iso"] = str(raw_exif_data["EXIF ISOSpeedRatings"])
-    processed_exif_data['focal_length'] = str(
-        raw_exif_data['EXIF FocalLength'])
+    processed_exif_data["shooting_mode"] = str(raw_exif_data.get("EXIF ExposureMode", ""))
+    processed_exif_data["aperture"] = str(raw_exif_data.get("EXIF FNumber", ""))
+    processed_exif_data["shutter_speed"] = str(raw_exif_data.get("EXIF ExposureTime", ""))
+    processed_exif_data["iso"] = str(raw_exif_data.get("EXIF ISOSpeedRatings", ""))
+    processed_exif_data['focal_length'] = str(raw_exif_data.get('EXIF FocalLength', ""))
+    processed_exif_data["date_taken"] = compute_date(raw_exif_data.get("EXIF DateTimeOriginal", None))
 
     return processed_exif_data
 
@@ -172,37 +134,37 @@ def process_moto_x4(raw_exif_data):
 def process_exif_data(full_path):
     file_contents = open(full_path, 'rb')
 
-    processed_exif_data = {}
     raw_exif_data = exifread.process_file(file_contents)
+    general_processed_exif_data = process_general_raw(raw_exif_data)
 
-    try:
-        raw_make = str(raw_exif_data['Image Make'])
-        raw_model = str(raw_exif_data['Image Model'])
-
-    except KeyError:
-        print('{} has no make or model'.format(full_path))
-        return None
+    raw_make = str(raw_exif_data.get('Image Make', ''))
+    raw_model = str(raw_exif_data.get('Image Model', ''))
 
     if raw_make in ['NIKON CORPORATION'] and raw_model in ['NIKON D5300', 'NIKON D3400']:
-        processed_exif_data = process_nikon(raw_exif_data)
+        model_specific_processed_exif_data = process_nikon(raw_exif_data)
 
     elif raw_make in ['Canon'] and raw_model in ['Canon EOS DIGITAL REBEL XS']:
-        processed_exif_data = process_cannon(raw_exif_data)
+        model_specific_processed_exif_data = process_cannon(raw_exif_data)
 
     elif raw_make in ['NORITSU KOKI'] and raw_model in ['QSS-32_33', 'EZ Controller']:
-        processed_exif_data = process_noritsu_scanner(raw_exif_data)
+        model_specific_processed_exif_data = process_noritsu_scanner(raw_exif_data)
 
-    elif raw_make in ['SONY'] and raw_model in ['DSC-RX100']:
-        processed_exif_data = process_sony_rx100(raw_exif_data)
+    elif raw_make in ['SONY'] and raw_model in ['DSC-RX100', 'SLT-A55V', 'DSLR-A290']:
+        model_specific_processed_exif_data = process_sony(raw_exif_data)
 
     elif raw_make in ['LGE'] and raw_model in ['Nexus 5X']:
-        processed_exif_data = process_nexus_5x(raw_exif_data)
+        model_specific_processed_exif_data = process_nexus_5x(raw_exif_data)
 
     elif raw_make in ['motorola'] and raw_model in ['moto x4']:
-        processed_exif_data = process_moto_x4(raw_exif_data)
+        model_specific_processed_exif_data = process_moto_x4(raw_exif_data)
+
+    elif raw_make == '' and raw_model == '':
+        model_specific_processed_exif_data = process_garbage_metadata(raw_exif_data)
 
     else:
-        print('"{}"{}'.format(raw_make, raw_model))
+        print('MISSING "{}"{}'.format(raw_make, raw_model))
+
+    processed_exif_data = {**general_processed_exif_data, **model_specific_processed_exif_data}
 
     im = Image.open(full_path)
     processed_exif_data['width'], processed_exif_data['height'] = im.size
@@ -303,8 +265,6 @@ class Command(BaseCommand):
 
                     year, location, sequence = input_file_root.split('_')
 
-                    # make_required_year_and_location_directories(year, location)
-
                     exif_data = process_exif_data(input_full_path)
                     if not exif_data:
                         continue
@@ -358,5 +318,5 @@ class Command(BaseCommand):
                         focal_length=exif_data['focal_length'],
                     )
                     photo.save()
-                except:
-                    print("lol you shouldn't see this, check the load_photos script")
+                except KeyboardInterrupt:
+                    sys.exit()
