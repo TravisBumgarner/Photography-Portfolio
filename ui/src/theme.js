@@ -38,7 +38,7 @@ const MEDIA = Object.keys(sizes).reduce((acc, label) => {
 // background-image: ${props => `url(${props.isBackgroundVisible ? props.theme.backgroundSrc : ''});`};
 const GlobalStyle = createGlobalStyle`
     body {
-        /* background-image: url('http://localhost:8000/media/full/2015/2015-05/124.jpg'); */
+        background-image: url('http://localhost:8000/media/full/2017/Alaska/270.jpg');
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;

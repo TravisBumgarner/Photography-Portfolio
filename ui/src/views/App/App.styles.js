@@ -2,12 +2,12 @@ import styled from 'styled-components'
 
 import { TRANSITION_SPEED, CONTENT_SPACING } from 'Theme'
 
-import { FaBars, FaCaretLeft } from 'react-icons/fa'
+import { FaBars, FaCaretRight } from 'react-icons/fa'
 
-const NavigationClose = styled(FaCaretLeft)`
+const NavigationClose = styled(FaCaretRight)`
     position: absolute;
-    right: 20px;
     top: 20px;
+    left: 7px;
     transition: opacity ${TRANSITION_SPEED / 2}s;
     opacity: ${props => (props.isNavigationVisible ? 1 : 0)};
     z-index: 999;
@@ -28,13 +28,14 @@ const NavigationWrapper = styled.div`
     display: flex;
     align-items: center;
     margin-left: ${CONTENT_SPACING}vw;
+    padding-left: ${CONTENT_SPACING}vw;
     width: 250px;
     position: fixed;
-    left: 0;
+    right: 0;
     top: 0;
-    transition: left ${TRANSITION_SPEED}s;
-    left: ${props => (props.isNavigationVisible ? '0' : `-230px`)};
-    background-color: white;
+    transition: right ${TRANSITION_SPEED}s;
+    right: ${props => (props.isNavigationVisible ? '0' : `-250px`)};
+    /* background-color: black; */
 `
 
 export { AppWrapper, NavigationWrapper, NavigationClose }

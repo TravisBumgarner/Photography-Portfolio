@@ -10,8 +10,15 @@ class TitleBar extends Component {
         const { toggleNavigation } = this.props
         return (
             <TitleBarWrapper>
+                <Header size="large">
+                    Travis
+                    <br />
+                    Bumgarner
+                    <br />
+                    Photography
+                    <br />
+                </Header>
                 <NavigationOpen onClick={toggleNavigation} size="2.6em" />
-                <Header size="large">Travis Bumgarner</Header>
             </TitleBarWrapper>
         )
     }

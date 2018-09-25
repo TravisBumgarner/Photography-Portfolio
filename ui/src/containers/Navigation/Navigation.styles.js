@@ -6,11 +6,8 @@ import { FONT_FAMILY_HEADER } from 'Theme'
 
 // TODO: Jake T Feedback on passing around dynamic theme
 const NavigationWrapper = styled.div`
-    /* color: ${props => props.theme.primaryColor}; */
-    
-    & a: {
-        border-bottom: 1px solid green;
-    }
+    text-align: right;
+    color: white !important;
 `
 
 const SubNavigationWrapper = styled.div`
@@ -26,6 +23,7 @@ const InternalLink = styled(Link)`
     font-family: ${FONT_FAMILY_HEADER};
     font-weight: 100;
     font-size: 18px;
+    color: white !important;
     color: ${props => props.theme.primaryColor};
 
     &:visited {
@@ -43,6 +41,7 @@ const ExternalLink = styled.a`
     font-family: ${FONT_FAMILY_HEADER};
     font-weight: 100;
     font-size: 18px;
+    color: white !important;
 
     &:visited {
         color: ${props => props.theme.primaryColor};
