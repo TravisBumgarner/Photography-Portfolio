@@ -1,7 +1,15 @@
 import styled from 'styled-components'
 
-import { PAGE_THEME } from 'Theme'
+import { PAGE_THEME, CONTENT_SPACING } from 'Theme'
+
+const ContentSection = styled.div`
+    flex: 1;
+`
+
+const ContentWrapper = styled.div`
+    display: flex;
+`
 
 const AboutWrapper = styled(PAGE_THEME)``
 
-export { AboutWrapper }
+export { AboutWrapper, ContentSection, ContentWrapper }

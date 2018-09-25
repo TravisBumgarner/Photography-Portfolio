@@ -39,12 +39,12 @@ const NavigationWrapper = styled.div`
     display: flex;
     align-items: center;
     margin-left: ${CONTENT_SPACING}vw;
-    width: 220px;
+    width: 250px;
     position: fixed;
     left: 0;
     top: 0;
     transition: left ${TRANSITION_SPEED}s;
-    left: ${props => (props.isNavigationVisible ? '0' : `-210px`)};
+    left: ${props => (props.isNavigationVisible ? '0' : `-230px`)};
     background-color: white;
 `
 
