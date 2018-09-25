@@ -1,26 +1,20 @@
 import os
 import sys
+from datetime import datetime
+import shutil
+from io import StringIO, BytesIO
 
+import exifread
+from PIL import Image, ImageDraw
+import colorgram
 from django.core.files import File
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.management.base import BaseCommand
-import colorgram
-import os
-from io import StringIO, BytesIO
-from PIL import Image, ImageDraw
 
 from photos.models import Gallery, Photo
 from api_django.settings import MEDIA_ROOT
 
 INPUT_ROOT = '/Users/travisbumgarner/Documents/programming/photo20/api/photos/test_images'
-
-import os
-import shutil
-from datetime import datetime
-
-from PIL import Image
-import exifread
-
 PS = "Point & Shoot Camera"
 DSLR = "DSLR Camera"
 PHONE = "Phone"
@@ -118,6 +112,7 @@ def process_garbage_metadata(raw_exif_data):
 
 
 def process_general_raw(raw_exif_data):
+    print_raw_keys_and_data(raw_exif_data)
     processed_exif_data = {}
 
     processed_exif_data["lens"] = ""

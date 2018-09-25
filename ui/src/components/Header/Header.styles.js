@@ -30,6 +30,8 @@ const SmallHeader = styled.h3`
 
 const InlineHeader = styled.span`
     font-weight: 700;
+    padding: 0 5px;
+    text-transform: uppercase;
 `
 
 export { LargeHeader, MediumHeader, SmallHeader, InlineHeader }

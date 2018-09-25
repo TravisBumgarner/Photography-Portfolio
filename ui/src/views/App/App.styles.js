@@ -2,24 +2,34 @@ import styled from 'styled-components'
 
 import { TRANSITION_SPEED, CONTENT_SPACING } from 'Theme'
 
-import { FaCaretRight, FaCaretLeft } from 'react-icons/fa'
+import { FaBars, FaCaretLeft } from 'react-icons/fa'
 
-const NavigationOpen = styled(FaCaretRight)`
-    position: absolute;
-    right: 0;
-    top: 50vh;
+const NavigationOpen = styled(FaBars)`
+    position: fixed;
+    left: 20px;
+    top: 20px;
     transition: opacity ${TRANSITION_SPEED / 2}s;
     opacity: ${props => (props.isNavigationVisible ? 0 : 1)};
     z-index: 999;
+    fill: #ccc;
+
+    &:hover {
+        fill: #000;
+    }
 `
 
 const NavigationClose = styled(FaCaretLeft)`
     position: absolute;
-    right: 0;
-    top: 50vh;
+    right: 20px;
+    top: 20px;
     transition: opacity ${TRANSITION_SPEED / 2}s;
     opacity: ${props => (props.isNavigationVisible ? 1 : 0)};
     z-index: 999;
+    fill: #ccc;
+
+    &:hover {
+        fill: #000;
+    }
 `
 
 const AppWrapper = styled.div`

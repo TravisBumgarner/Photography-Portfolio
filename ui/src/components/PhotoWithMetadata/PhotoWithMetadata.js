@@ -1,34 +1,64 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 import { Text, Header } from 'Components'
 
-import { StyledPhoto, MetadataWrapper, PhotoWrapper, PhotoWithMetadataWrapper, Spacer } from './PhotoWithMetadata.styles'
+import {
+    StyledPhoto,
+    MetadataWrapper,
+    PhotoWrapper,
+    PhotoWithMetadataWrapper,
+    Spacer
+} from './PhotoWithMetadata.styles'
+
+const PS = 'Point & Shoot Camera'
+const DSLR = 'DSLR Camera'
+const PHONE = 'Phone'
+const FILM = 'Film Camera'
 
 class PhotoWithMetadata extends Component {
     render() {
         const {
-            details: { src, width, height, make, model, aperture, shutter_speed, iso, lens, focal_length, location }
+            details: {
+                src,
+                width,
+                height,
+                make,
+                model,
+                aperture,
+                shutter_speed,
+                iso,
+                lens,
+                focal_length,
+                location,
+                camera_type
+            }
         } = this.props
 
         const locationString = `${location}`
         const gearString = `${make} ${model}  ${lens}`
         const statsString = `F${aperture} ${shutter_speed}" ${iso}ISO ${focal_length}mm`
-
+        console.log(this.props)
         return (
             <PhotoWithMetadataWrapper>
                 <PhotoWrapper>
                     <StyledPhoto isLandscape={width > height} src={src} onClick={this.handleClick} />
                     <MetadataWrapper>
                         <Text>
-                            <Header size="inline">Location: </Header>
-                            {locationString}
-                            <Spacer />
-                            <Header size="inline">Gear: </Header>
-                            {gearString}
-                            <Spacer />
-                            <Header size="inline">Conditions: </Header>
-                            {statsString}
+                            {camera_type === FILM ? (
+                                'Film Camera, N/A'
+                            ) : (
+                                <Fragment>
+                                    <Header size="inline">Location </Header>
+                                    {locationString}
+                                    <Spacer />
+                                    <Header size="inline">Gear </Header>
+                                    {gearString}
+                                    <Spacer />
+                                    <Header size="inline">Conditions </Header>
+                                    {statsString}
+                                </Fragment>
+                            )}
                         </Text>
                     </MetadataWrapper>
                 </PhotoWrapper>

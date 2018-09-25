@@ -44,7 +44,7 @@ class Portfolio extends Component {
     render() {
         const {
             match: {
-                params: { contentType, galleryId }
+                params: { galleryId }
             },
             photos,
             galleries

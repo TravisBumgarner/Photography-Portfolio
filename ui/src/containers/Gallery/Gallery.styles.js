@@ -22,7 +22,7 @@ const ProjectDescriptionWrapper = styled.div`
 const GalleryWrapper = styled.div`
     display: flex;
     padding: 0;
-    list-style: none;gs
+    list-style: none;
     justify-content: space-around;
     flex-wrap: wrap;
     line-height: 30px;
