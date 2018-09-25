@@ -16,7 +16,7 @@ const CloseIcon = styled(FaTimes)`
     }
 `
 const ProjectDescriptionWrapper = styled.div`
-    margin: ${CONTENT_SPACING / 2}vw;
+    margin: ${CONTENT_SPACING / 2}vw 0;
 `
 
 const GalleryWrapper = styled.div`
@@ -84,6 +84,16 @@ const GalleryItem = styled.div`
     flex: 1 0 auto;
     height: auto;
     flex-basis: 29%;
+
+    &:nth-child(3n + 1) {
+        margin: ${CONTENT_SPACING};
+        margin-left: 0;
+    }
+    
+    &:nth-child(3n + 3) {
+        margin: ${CONTENT_SPACING};
+        margin-right: 0;
+    }
 
     &:before {
         content: '';

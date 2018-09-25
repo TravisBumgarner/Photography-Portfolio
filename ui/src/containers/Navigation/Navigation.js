@@ -77,11 +77,7 @@ class Navigation extends Component {
             <NavigationWrapper theme={theme}>
                 <SubNavigationWrapper>
                     <InternalLink theme={theme} to={`/`}>
-                        <Header size="large">
-                            Travis
-                            <br />
-                            Bumgarner
-                        </Header>
+                        <Header size="medium">Main</Header>
                         <ul>{miscLinks}</ul>
                     </InternalLink>
                 </SubNavigationWrapper>
@@ -113,7 +109,7 @@ class Navigation extends Component {
 }
 
 Navigation.propTypes = {
-    galleries: PropTypes.object.isRequired,
+    // galleries: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
     toggleNavigation: PropTypes.func.isRequired
 }

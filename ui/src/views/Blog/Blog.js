@@ -36,7 +36,7 @@ class Blog extends Component {
 
         return (
             <BlogWrapper>
-                <Header size="large">Blog</Header>
+                <Header size="medium">Blog</Header>
                 {Posts}
             </BlogWrapper>
         )

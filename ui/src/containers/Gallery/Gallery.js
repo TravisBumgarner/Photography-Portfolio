@@ -136,7 +136,7 @@ class Gallery extends Component {
         ) : (
             <Fragment>
                 <ProjectDescriptionWrapper>
-                    <Header size="large">{galleryDetails.title}</Header>
+                    <Header size="medium">{galleryDetails.title}</Header>
                     <Text>{galleryDetails.description}</Text>
                     <Text>
                         {galleryDetails.title !== 'All' && `${galleryDetails.start_date} - ${galleryDetails.end_date}`}

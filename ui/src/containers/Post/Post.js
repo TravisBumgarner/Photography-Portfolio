@@ -13,8 +13,8 @@ class Post extends Component {
         const parsedContent = parseContent(content)
         return (
             <PostWrapper>
-                <Header size="medium">{title}</Header>
-                <Header size="small">{date}</Header>
+                <Header size="small">{title}</Header>
+                {date}
                 {parsedContent}
             </PostWrapper>
         )

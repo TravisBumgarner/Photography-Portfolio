@@ -8,7 +8,7 @@ const LargeHeader = styled.h1`
     text-transform: uppercase;
     padding-bottom: ${CONTENT_SPACING / 2}vw;
     padding-top: ${CONTENT_SPACING}vw;
-    font-size: 30px;
+    font-size: 2.6em;
 `
 
 const MediumHeader = styled.h2`
@@ -17,13 +17,13 @@ const MediumHeader = styled.h2`
     text-transform: uppercase;
     padding-bottom: ${CONTENT_SPACING / 2}vw;
     padding-top: ${CONTENT_SPACING}vw;
-    font-size: 20px;
+    font-size: 1.9em;
 `
 
 const SmallHeader = styled.h3`
     font-family: ${FONT_FAMILY_HEADER};
-    font-weight: 400;
-    font-size: 16px;
+    font-weight: 700;
+    font-size: 1.5em;
     padding-bottom: ${CONTENT_SPACING / 2}vw;
     padding-top: ${CONTENT_SPACING / 2}vw;
 `

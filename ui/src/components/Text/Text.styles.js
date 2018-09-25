@@ -7,6 +7,14 @@ const DefaultText = styled.p`
     line-height: 1.5;
     padding-bottom: ${CONTENT_SPACING / 2}vw;
     padding-top: ${CONTENT_SPACING / 2}vw;
+
+    &:first-child {
+        margin: 0;
+    }
+
+    &:last-child {
+        margin: 0;
+    }
 `
 
 const LargeText = styled(DefaultText)`

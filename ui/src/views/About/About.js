@@ -8,13 +8,13 @@ class About extends Component {
     render() {
         return (
             <AboutWrapper>
-                <Header size="large">About</Header>
+                <Header size="medium">About</Header>
                 <ContentWrapper>
                     <ContentSection>
-                        <Header size="medium">Location</Header>
+                        <Header size="small">Location</Header>
                         <Text size="medium">Boston, MA</Text>
 
-                        <Header size="medium">Summary</Header>
+                        <Header size="small">Summary</Header>
                         <Text size="medium">
                             Software Engineer
                             <br />
@@ -25,7 +25,7 @@ class About extends Component {
                             Designer
                         </Text>
 
-                        <Header size="medium">AWARDS & RECOGNITIONS</Header>
+                        <Header size="small">AWARDS & RECOGNITIONS</Header>
                         <Text size="medium">
                             2018 Noyes Museum of Art of Stockton University's RAW Exhibition
                             <br />

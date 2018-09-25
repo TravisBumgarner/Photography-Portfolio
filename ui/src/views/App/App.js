@@ -3,10 +3,10 @@ import { Switch, Route } from 'react-router-dom'
 import axios from 'axios'
 
 import { Home, Contact, About, Portfolio, Blog } from 'Views'
-import { Navigation } from 'Containers'
+import { Navigation, TitleBar } from 'Containers'
 import { GlobalStyle } from 'Theme'
 
-import { AppWrapper, NavigationWrapper, ContentWrapper, NavigationOpen, NavigationClose } from './App.styles.js'
+import { AppWrapper, NavigationWrapper, ContentWrapper, NavigationClose } from './App.styles.js'
 
 class App extends Component {
     constructor(props) {
@@ -93,14 +93,9 @@ class App extends Component {
             <Fragment>
                 <GlobalStyle theme={theme} isBackgroundVisible={isBackgroundVisible} />
                 <AppWrapper>
+                    <TitleBar toggleNavigation={this.toggleNavigation} />
                     <NavigationWrapper isNavigationVisible={isNavigationVisible}>
                         <Navigation galleries={galleries} theme={theme} toggleNavigation={this.toggleNavigation} />
-
-                        <NavigationOpen
-                            isNavigationVisible={isNavigationVisible}
-                            onClick={this.toggleNavigation}
-                            size="3em"
-                        />
                         {pathname !== '/' && (
                             <NavigationClose
                                 isNavigationVisible={isNavigationVisible}
@@ -109,18 +104,16 @@ class App extends Component {
                             />
                         )}
                     </NavigationWrapper>
-                    <ContentWrapper isNavigationVisible={isNavigationVisible}>
-                        <Switch>
-                            <Route exact path="/" component={Home} />
-                            <Route exact path="/blog" render={rest => <Blog theme={theme} {...rest} />} />
-                            <Route exact path="/contact" render={rest => <Contact theme={theme} {...rest} />} />
-                            <Route exact path="/about" render={rest => <About theme={theme} {...rest} />} />
-                            <Route
-                                path="/portfolio/:contentType/:galleryId"
-                                render={rest => <Portfolio photos={photos} galleries={galleries} {...rest} />}
-                            />
-                        </Switch>
-                    </ContentWrapper>
+                    <Switch>
+                        <Route exact path="/" component={Home} />
+                        <Route exact path="/blog" render={rest => <Blog theme={theme} {...rest} />} />
+                        <Route exact path="/contact" render={rest => <Contact theme={theme} {...rest} />} />
+                        <Route exact path="/about" render={rest => <About theme={theme} {...rest} />} />
+                        <Route
+                            path="/portfolio/:contentType/:galleryId"
+                            render={rest => <Portfolio photos={photos} galleries={galleries} {...rest} />}
+                        />
+                    </Switch>
                 </AppWrapper>
             </Fragment>
         )

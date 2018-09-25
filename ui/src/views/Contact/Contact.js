@@ -11,7 +11,7 @@ class Contact extends Component {
         const { theme } = this.props
         return (
             <ContactWrapper>
-                <Header size="large">Contact</Header>
+                <Header size="medium">Contact</Header>
                 <Text>Let's grab a beer (or coffee), work, or volunteer together!</Text>
                 <ContactForm theme={theme} />
             </ContactWrapper>
