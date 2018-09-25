@@ -5,7 +5,7 @@ from .viewsets import *
 
 router = routers.DefaultRouter()
 
-router.register(r'gallery', GalleryViewSet, base_name='Gallery')
+router.register(r'galleries', GalleryViewSet, base_name='Galleries')
 router.register(r'photos', PhotoViewSet, base_name='Photos')
 
 urlpatterns = [
