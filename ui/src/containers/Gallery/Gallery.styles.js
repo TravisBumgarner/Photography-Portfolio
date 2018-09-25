@@ -70,7 +70,12 @@ const NextContainer = styled.div`
 `
 
 const PhotoWithMetadataWrapper = styled.div`
-    position: relative;
+    background-color: white;
+    width: 100vw;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
 `
 
 const GalleryItem = styled.div`
