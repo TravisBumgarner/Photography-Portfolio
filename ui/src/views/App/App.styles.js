@@ -27,7 +27,6 @@ const NavigationWrapper = styled.div`
     height: 100vh;
     display: flex;
     align-items: center;
-    margin-left: ${CONTENT_SPACING}vw;
     padding-left: ${CONTENT_SPACING}vw;
     width: 250px;
     position: fixed;
@@ -35,7 +34,7 @@ const NavigationWrapper = styled.div`
     top: 0;
     transition: right ${TRANSITION_SPEED}s;
     right: ${props => (props.isNavigationVisible ? '0' : `-250px`)};
-    /* background-color: black; */
+    background-color: white;
 `
 
 export { AppWrapper, NavigationWrapper, NavigationClose }

@@ -93,7 +93,7 @@ class App extends Component {
             <Fragment>
                 <GlobalStyle theme={theme} isBackgroundVisible={isBackgroundVisible} />
                 <AppWrapper>
-                    <TitleBar toggleNavigation={this.toggleNavigation} />
+                    <TitleBar isNavigationVisible={isNavigationVisible} toggleNavigation={this.toggleNavigation} />
                     <NavigationWrapper isNavigationVisible={isNavigationVisible}>
                         <Navigation galleries={galleries} theme={theme} toggleNavigation={this.toggleNavigation} />
                         {pathname !== '/' && (

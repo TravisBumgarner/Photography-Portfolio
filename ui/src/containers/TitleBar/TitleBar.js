@@ -7,7 +7,7 @@ import { TitleBarWrapper, NavigationOpen } from './TitleBar.styles'
 
 class TitleBar extends Component {
     render() {
-        const { toggleNavigation } = this.props
+        const { toggleNavigation, isNavigationVisible } = this.props
         return (
             <TitleBarWrapper>
                 <Header size="large">
@@ -18,12 +18,15 @@ class TitleBar extends Component {
                     Photography
                     <br />
                 </Header>
-                <NavigationOpen onClick={toggleNavigation} size="2.6em" />
+                {isNavigationVisible ? null : <NavigationOpen onClick={toggleNavigation} size="2.6em" />}
             </TitleBarWrapper>
         )
     }
 }
 
-TitleBar.propTypes = {}
+TitleBar.propTypes = {
+    isNavigationVisible: PropTypes.bool.isRequired,
+    toggleNavigation: PropTypes.func.isRequired
+}
 
 export default TitleBar
