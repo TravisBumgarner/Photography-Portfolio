@@ -2,15 +2,15 @@ import styled from 'styled-components'
 
 import { Link } from 'react-router-dom'
 
-import { FONT_FAMILY_HEADER } from 'Theme'
+import { FONT_FAMILY_HEADER, CONTENT_SPACING } from 'Theme'
 
-// TODO: Jake T Feedback on passing around dynamic theme
 const NavigationWrapper = styled.div`
     text-align: right;
+padding-right: ${CONTENT_SPACING * 2}vw;
 `
 
 const SubNavigationWrapper = styled.div`
-    margin: 2vw 0;
+    margin: ${CONTENT_SPACING}vw 0;
 `
 
 const LinkListItem = styled.li`

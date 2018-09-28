@@ -28,12 +28,11 @@ const NavigationWrapper = styled.div`
     display: flex;
     align-items: center;
     padding-left: ${CONTENT_SPACING}vw;
-    width: 250px;
     position: fixed;
     right: 0;
     top: 0;
     transition: right ${TRANSITION_SPEED}s;
-    right: ${props => (props.isNavigationVisible ? '0' : `-250px`)};
+    right: ${props => (props.isNavigationVisible ? '0' : `-50vw`)};
     background-color: white;
 `
 

@@ -10,14 +10,7 @@ class TitleBar extends Component {
         const { toggleNavigation, isNavigationVisible } = this.props
         return (
             <TitleBarWrapper>
-                <Header size="large">
-                    Travis
-                    <br />
-                    Bumgarner
-                    <br />
-                    Photography
-                    <br />
-                </Header>
+                <Header size="large">Travis Bumgarner Photography</Header>
                 {isNavigationVisible ? null : <NavigationOpen onClick={toggleNavigation} size="2.6em" />}
             </TitleBarWrapper>
         )

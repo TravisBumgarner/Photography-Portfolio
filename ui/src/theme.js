@@ -17,6 +17,7 @@ const FONT_SIZE_INPUTS_AND_BUTTONS = 14
 const PAGE_THEME = styled.div`
     padding: ${CONTENT_SPACING}vw ${CONTENT_SPACING * 2}vw;
     overflow: scroll;
+    margin-top: ${CONTENT_SPACING * 2}vw;
 `
 
 const sizes = {

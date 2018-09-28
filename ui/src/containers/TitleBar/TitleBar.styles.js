@@ -9,6 +9,10 @@ const TitleBarWrapper = styled.div`
     padding: 0 ${CONTENT_SPACING * 2}vw;
     display: flex;
     justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
 `
 
 const NavigationOpen = styled(FaBars)`

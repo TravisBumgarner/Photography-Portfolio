@@ -83,7 +83,7 @@ class Navigation extends Component {
                 </SubNavigationWrapper>
 
                 <SubNavigationWrapper>
-                    <Header size="medium">Projects</Header>
+                    <Header size="medium">Photo Essays</Header>
                     <ul>{projectLinks}</ul>
                 </SubNavigationWrapper>
 
