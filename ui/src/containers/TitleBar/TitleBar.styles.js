@@ -3,18 +3,19 @@ import styled from 'styled-components'
 import { FaBars } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
-import { CONTENT_SPACING, TRANSITION_SPEED } from 'Theme'
+import { CONTENT_SPACING, TRANSITION_SPEED, TITLE_BAR_HEIGHT } from 'Theme'
 
 const TitleBarWrapper = styled.div`
     width: 100vw;
     box-sizing: border-box;
-    padding: 0 ${CONTENT_SPACING.m};
+    padding: 0 ${CONTENT_SPACING.l};
     display: flex;
     justify-content: space-between;
     position: fixed;
     top: 0;
     left: 0;
     background-color: white;
+    height: ${TITLE_BAR_HEIGHT};
 `
 
 const InternalLink = styled(Link)`

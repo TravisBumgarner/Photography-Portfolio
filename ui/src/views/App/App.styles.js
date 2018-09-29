@@ -25,17 +25,14 @@ const AppWrapper = styled.div`
 
 const NavigationWrapper = styled.div`
     box-sizing: border-box;
-    height: 100vh;
+
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     /* padding-left: ${CONTENT_SPACING}vw; */
     position: fixed;
-    right: 0;
-    top: 0;
+    bottom: 0;
     transition: right ${TRANSITION_SPEED}s;
     right: ${props => (props.isNavigationVisible ? '0' : `-50vw`)};
-    background-color: white;
-    border-left: 5px solid black;
 `
 
 export { AppWrapper, NavigationWrapper, NavigationClose }

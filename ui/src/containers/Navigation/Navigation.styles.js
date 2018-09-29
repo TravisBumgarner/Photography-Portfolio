@@ -7,6 +7,13 @@ import { FONT_FAMILY_HEADER, CONTENT_SPACING } from 'Theme'
 const NavigationWrapper = styled.div`
     text-align: right;
     z-index: 999;
+    padding: ${CONTENT_SPACING.l};
+    border-left: 5px solid black;
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 `
 
 const EmptySpaceCloseNavigation = styled.div`

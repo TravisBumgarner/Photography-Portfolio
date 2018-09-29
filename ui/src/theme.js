@@ -6,7 +6,7 @@ const generateTheme = ({ primaryColor, secondaryColor, backgroundSrc }) => ({
     backgroundSrc
 })
 
-// const TITLE_BAR_HEIGHT =
+const TITLE_BAR_HEIGHT = '6vw'
 const TRANSITION_SPEED = 1
 const CONTENT_SPACING = {
     s: '0.5vw',
@@ -21,9 +21,9 @@ const FONT_FAMILY_TEXT = "'Montserrat', sans-serif"
 const FONT_SIZE_INPUTS_AND_BUTTONS = 14
 
 const PAGE_THEME = styled.div`
-    padding: ${CONTENT_SPACING.m};
+    padding: ${CONTENT_SPACING.l};
     overflow: scroll;
-    margin-top: ${CONTENT_SPACING * 2}vw;
+    margin-top: ${TITLE_BAR_HEIGHT};
 `
 
 const sizes = {
@@ -69,5 +69,6 @@ export {
     SECONDARY_COLOR,
     FONT_SIZE_INPUTS_AND_BUTTONS,
     TRANSITION_SPEED,
-    CONTENT_SPACING
+    CONTENT_SPACING,
+    TITLE_BAR_HEIGHT
 }
