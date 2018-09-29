@@ -1,3 +1,10 @@
+# Add Content
+
+## Lightroom:
+
+Export photos into a directory with the title of the Year for snapshots or name of project.
+Photos are of format Year_Place_Sequence.jpg (2015_Granada_001.jpg)
+
 # Django
 
 `source ../lib/venv/bin/activate`
