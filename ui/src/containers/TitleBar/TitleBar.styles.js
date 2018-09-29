@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FaBars } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 
 import { CONTENT_SPACING, TRANSITION_SPEED } from 'Theme'
 
@@ -16,6 +17,14 @@ const TitleBarWrapper = styled.div`
     background-color: white;
 `
 
+const InternalLink = styled(Link)`
+    text-decoration: none;
+
+    &:visited {
+        color: black;
+    }
+`
+
 const NavigationOpen = styled(({ isNavigationVisible, ...rest }) => <FaBars {...rest} />)`
     fill: #ccc;
     padding-bottom: 1vw;
@@ -28,4 +37,4 @@ const NavigationOpen = styled(({ isNavigationVisible, ...rest }) => <FaBars {...
     }
 `
 
-export { TitleBarWrapper, NavigationOpen }
+export { TitleBarWrapper, NavigationOpen, InternalLink }

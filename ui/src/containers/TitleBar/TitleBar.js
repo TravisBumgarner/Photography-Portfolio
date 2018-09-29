@@ -3,14 +3,16 @@ import PropTypes from 'prop-types'
 
 import { Header } from 'Components'
 
-import { TitleBarWrapper, NavigationOpen } from './TitleBar.styles'
+import { TitleBarWrapper, NavigationOpen, InternalLink } from './TitleBar.styles'
 
 class TitleBar extends Component {
     render() {
         const { toggleNavigation, isNavigationVisible } = this.props
         return (
             <TitleBarWrapper>
-                <Header size="large">Travis Bumgarner Photography</Header>
+                <InternalLink to="/">
+                    <Header size="large">Travis Bumgarner Photography</Header>
+                </InternalLink>
                 <NavigationOpen isNavigationVisible={isNavigationVisible} onClick={toggleNavigation} size="2.6em" />
             </TitleBarWrapper>
         )

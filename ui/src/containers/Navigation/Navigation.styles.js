@@ -43,7 +43,6 @@ const sharedStyles = props => css`
     &:visited {
         color: ${props.theme.primaryColor};
     }
-    }
 `
 
 const InternalLink = styled(Link)`
