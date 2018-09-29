@@ -6,5 +6,5 @@ from .models import *
 
 
 @admin.register(Contact)
-class ProjectAdmin(admin.ModelAdmin):
+class ContactAdmin(admin.ModelAdmin):
     pass

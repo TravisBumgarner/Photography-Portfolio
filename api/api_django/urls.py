@@ -10,6 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^', include('posts.urls')),
     url(r'^', include('photos.urls')),
+    url(r'^', include('contact.urls')),
 ]
 
 from django.conf import settings

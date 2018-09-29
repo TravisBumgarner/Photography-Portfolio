@@ -9,6 +9,6 @@ class ContactSerializer(serializers.ModelSerializer):
         fields = (
             'name',
             'email',
-            'website',
+            'subject',
             'message',
         )

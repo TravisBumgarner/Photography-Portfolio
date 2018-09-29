@@ -6,15 +6,19 @@ import { ContactFormWrapper } from './ContactForm.styles'
 
 import { Input, Button } from 'Components'
 
+const DEFAULT_FORM_INPUTS = {
+    name: '',
+    subject: '',
+    message: '',
+    email: ''
+}
+
 class ContactForm extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            name: '',
-            website: '',
-            message: '',
-            email: '',
+            ...DEFAULT_FORM_INPUTS,
             isNotification: false,
             notificationMessage: ''
         }
@@ -27,21 +31,34 @@ class ContactForm extends Component {
     }
 
     handleSubmit = () => {
-        const { name, website, message, email } = this.state
+        const { name, subject, message, email } = this.state
 
         const errors = []
         !name.length && errors.push('name')
+        !subject.length && errors.push('subject')
         !message.length && errors.push('message')
         !email.length && errors.push('email')
 
         errors.length
             ? alert(`Please fill in these required fields ${errors.join(', ')}.`)
-            : axios.post(__API__ + '/contact/', {
-                  name,
-                  website,
-                  message,
-                  email
-              })
+            : axios
+                  .post(__API__ + 'contact/', {
+                      name,
+                      subject,
+                      message,
+                      email
+                  })
+                  .then(({ data }) => {
+                      alert(data.detail)
+                      this.clearForm()
+                  })
+                  .catch(error => {
+                      alert('Sorry, something went wrong, please try again later!')
+                  })
+    }
+
+    clearForm = () => {
+        this.setState({ ...DEFAULT_FORM_INPUTS })
     }
 
     render() {
@@ -57,17 +74,17 @@ class ContactForm extends Component {
                 />
                 <Input
                     theme={theme}
+                    value={this.state.subject}
+                    onChange={this.handleChange}
+                    hintText="Subject"
+                    name="subject"
+                />
+                <Input
+                    theme={theme}
                     value={this.state.email}
                     onChange={this.handleChange}
                     hintText="Email Address"
                     name="email"
-                />
-                <Input
-                    theme={theme}
-                    value={this.state.website}
-                    onChange={this.handleChange}
-                    hintText="Website (Optional)"
-                    name="website"
                 />
                 <Input
                     theme={theme}
