@@ -15,4 +15,9 @@ class GalleryAdmin(admin.ModelAdmin):
 
 @admin.register(Photo)
 class PhotoAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        'title',
+        'make',
+        'model',
+        'year',
+    )
