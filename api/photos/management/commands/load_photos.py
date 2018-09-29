@@ -14,7 +14,7 @@ from django.core.management.base import BaseCommand
 from photos.models import Gallery, Photo
 from api_django.settings import MEDIA_ROOT
 
-INPUT_ROOT = '/Users/travisbumgarner/Documents/programming/photo20/api/photos/test_images'
+INPUT_ROOT = './test_images'
 PS = "Point & Shoot Camera"
 DSLR = "DSLR Camera"
 PHONE = "Phone"
