@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { FaInstagram, FaFlickr, FaCameraRetro } from 'react-icons/fa'
 
+import { NatGeoIcon } from 'Resources'
 import { Header } from 'Components'
 
 import {
@@ -36,24 +38,28 @@ class Navigation extends Component {
         })
 
         const socialSectionContent = [
-            { title: 'Instagram', route: 'https://www.instagram.com/esafoto/' },
+            {
+                title: 'Instagram',
+                route: 'https://www.instagram.com/esafoto/',
+                icon: <FaInstagram size="2em" />
+            },
             {
                 title: 'Flickr',
-                route: 'https://www.flickr.com/people/esa_foto/'
+                route: 'https://www.flickr.com/people/esa_foto/',
+                icon: <FaFlickr size="2em" />
             },
             {
                 title: 'National Geographic',
-                route: 'https://yourshot.nationalgeographic.com/profile/778640/'
+                route: 'https://yourshot.nationalgeographic.com/profile/778640/',
+                icon: <NatGeoIcon size="2em" />
             }
         ]
 
         const socialLinks = socialSectionContent.map(m => {
             return (
-                <LinkListItem key={m.title}>
-                    <ExternalLink theme={theme} href={m.route} target="_blank">
-                        {m.title}
-                    </ExternalLink>
-                </LinkListItem>
+                <ExternalLink theme={theme} href={m.route} target="_blank">
+                    {m.icon}
+                </ExternalLink>
             )
         })
 
@@ -97,10 +103,7 @@ class Navigation extends Component {
                     </ul>
                 </SubNavigationWrapper>
 
-                <SubNavigationWrapper>
-                    <Header size="medium">Social</Header>
-                    <ul>{socialLinks}</ul>
-                </SubNavigationWrapper>
+                <SubNavigationWrapper>{socialLinks}</SubNavigationWrapper>
             </NavigationWrapper>
         )
     }
