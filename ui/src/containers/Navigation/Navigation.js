@@ -10,7 +10,8 @@ import {
     SubNavigationWrapper,
     InternalLink,
     ExternalLink,
-    LinkListItem
+    LinkListItem,
+    IconWrapper
 } from './Navigation.styles.js'
 
 class Navigation extends Component {
@@ -39,27 +40,29 @@ class Navigation extends Component {
 
         const socialSectionContent = [
             {
-                title: 'Instagram',
+                tooltip: 'Instagram',
                 route: 'https://www.instagram.com/esafoto/',
                 icon: <FaInstagram size="2em" />
             },
             {
-                title: 'Flickr',
-                route: 'https://www.flickr.com/people/esa_foto/',
-                icon: <FaFlickr size="2em" />
-            },
-            {
-                title: 'National Geographic',
+                tooltip: 'Your Shot National Geographic',
                 route: 'https://yourshot.nationalgeographic.com/profile/778640/',
                 icon: <NatGeoIcon size="2em" />
+            },
+            {
+                tooltip: 'Flickr',
+                route: 'https://www.flickr.com/people/esa_foto/',
+                icon: <FaFlickr size="2em" />
             }
         ]
 
         const socialLinks = socialSectionContent.map(m => {
             return (
-                <ExternalLink theme={theme} href={m.route} target="_blank">
-                    {m.icon}
-                </ExternalLink>
+                <IconWrapper title={m.tooltip}>
+                    <ExternalLink theme={theme} href={m.route} target="_blank">
+                        {m.icon}
+                    </ExternalLink>
+                </IconWrapper>
             )
         })
 
