@@ -34,6 +34,7 @@ const NavigationWrapper = styled.div`
     transition: right ${TRANSITION_SPEED}s;
     right: ${props => (props.isNavigationVisible ? '0' : `-50vw`)};
     background-color: white;
+    border-left: 5px solid black;
 `
 
 export { AppWrapper, NavigationWrapper, NavigationClose }
