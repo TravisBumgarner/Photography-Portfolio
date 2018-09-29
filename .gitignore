@@ -1,4 +1,5 @@
 api_django/media
+api/photos/load_photos_dir
 bin/
 test_images/
 dist/
