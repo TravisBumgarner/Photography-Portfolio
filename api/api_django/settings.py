@@ -14,7 +14,7 @@ if IS_PRODUCTION:
 	STATIC_ROOT = '/home/tbumgarner/webapps/photo20_api_static/'
 	STATIC_URL = 'http:/api.travisbumgarner.photography/static/'
 
-	MEDIA_ROOT = '/home/tbumgarner/webapps/photo20__api_media/'
+	MEDIA_ROOT = '/home/tbumgarner/webapps/photo20_api_media/'
 	MEDIA_URL = 'http://api.travisbumgarner.photography/media/'
 
 elif not IS_PRODUCTION:

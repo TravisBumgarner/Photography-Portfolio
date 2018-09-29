@@ -290,6 +290,7 @@ class Command(BaseCommand):
 
                     gallery, _ = Gallery.objects.get_or_create(
                         title=input_gallery_directory,
+			content_type='project'
                     )
 
                     photo = Photo(
