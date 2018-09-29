@@ -17,7 +17,7 @@ import {
 
 class Navigation extends Component {
     render() {
-        const { galleries, theme, toggleNavigation } = this.props
+        const { galleries, theme, toggleNavigation, isNavigationVisible } = this.props
 
         const projectLinks = []
         const snapshotLinks = []
@@ -85,7 +85,7 @@ class Navigation extends Component {
 
         return (
             <Fragment>
-                <EmptySpaceCloseNavigation onClick={toggleNavigation} />
+                {isNavigationVisible && <EmptySpaceCloseNavigation onClick={toggleNavigation} />}
                 <NavigationWrapper theme={theme}>
                     <SubNavigationWrapper>
                         <Header size="medium">Main</Header>

@@ -95,7 +95,12 @@ class App extends Component {
                 <AppWrapper>
                     <TitleBar isNavigationVisible={isNavigationVisible} toggleNavigation={this.toggleNavigation} />
                     <NavigationWrapper isNavigationVisible={isNavigationVisible}>
-                        <Navigation galleries={galleries} theme={theme} toggleNavigation={this.toggleNavigation} />
+                        <Navigation
+                            isNavigationVisible={isNavigationVisible}
+                            galleries={galleries}
+                            theme={theme}
+                            toggleNavigation={this.toggleNavigation}
+                        />
                         {pathname !== '/' && (
                             <NavigationClose
                                 isNavigationVisible={isNavigationVisible}
