@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { FaInstagram, FaFlickr, FaCameraRetro } from 'react-icons/fa'
+import { FaInstagram, FaFlickr } from 'react-icons/fa'
 
 import { NatGeoIcon } from 'Resources'
 import { Header } from 'Components'
@@ -11,7 +11,8 @@ import {
     InternalLink,
     ExternalLink,
     LinkListItem,
-    IconWrapper
+    IconWrapper,
+    EmptySpaceCloseNavigation
 } from './Navigation.styles.js'
 
 class Navigation extends Component {
@@ -83,31 +84,34 @@ class Navigation extends Component {
         })
 
         return (
-            <NavigationWrapper theme={theme}>
-                <SubNavigationWrapper>
-                    <Header size="medium">Main</Header>
-                    <ul>{miscLinks}</ul>
-                </SubNavigationWrapper>
+            <Fragment>
+                <EmptySpaceCloseNavigation onClick={toggleNavigation} />
+                <NavigationWrapper theme={theme}>
+                    <SubNavigationWrapper>
+                        <Header size="medium">Main</Header>
+                        <ul>{miscLinks}</ul>
+                    </SubNavigationWrapper>
 
-                <SubNavigationWrapper>
-                    <Header size="medium">Photo Essays</Header>
-                    <ul>{projectLinks}</ul>
-                </SubNavigationWrapper>
+                    <SubNavigationWrapper>
+                        <Header size="medium">Photo Essays</Header>
+                        <ul>{projectLinks}</ul>
+                    </SubNavigationWrapper>
 
-                <SubNavigationWrapper>
-                    <Header size="medium">Snapshots</Header>
-                    <ul>
-                        <LinkListItem key={'all'} onClick={toggleNavigation}>
-                            <InternalLink theme={theme} to={`/portfolio/snapshots/all`}>
-                                All
-                            </InternalLink>
-                        </LinkListItem>
-                        {snapshotLinks}
-                    </ul>
-                </SubNavigationWrapper>
+                    <SubNavigationWrapper>
+                        <Header size="medium">Snapshots</Header>
+                        <ul>
+                            <LinkListItem key={'all'} onClick={toggleNavigation}>
+                                <InternalLink theme={theme} to={`/portfolio/snapshots/all`}>
+                                    All
+                                </InternalLink>
+                            </LinkListItem>
+                            {snapshotLinks}
+                        </ul>
+                    </SubNavigationWrapper>
 
-                <SubNavigationWrapper>{socialLinks}</SubNavigationWrapper>
-            </NavigationWrapper>
+                    <SubNavigationWrapper>{socialLinks}</SubNavigationWrapper>
+                </NavigationWrapper>
+            </Fragment>
         )
     }
 }

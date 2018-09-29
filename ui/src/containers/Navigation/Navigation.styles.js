@@ -7,6 +7,16 @@ import { FONT_FAMILY_HEADER, CONTENT_SPACING } from 'Theme'
 const NavigationWrapper = styled.div`
     text-align: right;
     padding-right: ${CONTENT_SPACING * 2}vw;
+    z-index: 999;
+`
+
+const EmptySpaceCloseNavigation = styled.div`
+    position: fixed;
+    left: 0;
+    top: 0;
+    width 100vw;
+    height 100vh;
+    z-index: 998;
 `
 
 const SubNavigationWrapper = styled.div`
@@ -50,4 +60,12 @@ const IconWrapper = styled.div`
     fill: green;
 `
 
-export { NavigationWrapper, SubNavigationWrapper, InternalLink, ExternalLink, LinkListItem, IconWrapper }
+export {
+    NavigationWrapper,
+    SubNavigationWrapper,
+    InternalLink,
+    ExternalLink,
+    LinkListItem,
+    IconWrapper,
+    EmptySpaceCloseNavigation
+}
