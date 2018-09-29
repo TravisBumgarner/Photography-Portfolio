@@ -1,10 +1,14 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { FONT_FAMILY_HEADER, CONTENT_SPACING } from 'Theme'
 
-const LargeHeader = styled.h1`
+const sharedStyles = props => css`
     font-weight: 700;
     font-family: ${FONT_FAMILY_HEADER};
+`
+
+const LargeHeader = styled.h1`
+    ${props => sharedStyles(props)};
     text-transform: uppercase;
     padding-bottom: ${CONTENT_SPACING / 2}vw;
     padding-top: ${CONTENT_SPACING}vw;
@@ -12,8 +16,7 @@ const LargeHeader = styled.h1`
 `
 
 const MediumHeader = styled.h2`
-    font-family: ${FONT_FAMILY_HEADER};
-    font-weight: 700;
+    ${props => sharedStyles(props)};
     text-transform: uppercase;
     padding-bottom: ${CONTENT_SPACING / 2}vw;
     padding-top: ${CONTENT_SPACING}vw;
@@ -21,15 +24,13 @@ const MediumHeader = styled.h2`
 `
 
 const SmallHeader = styled.h3`
-    font-family: ${FONT_FAMILY_HEADER};
-    font-weight: 700;
+    ${props => sharedStyles(props)};
     font-size: 1.5em;
     padding-bottom: ${CONTENT_SPACING / 2}vw;
     padding-top: ${CONTENT_SPACING / 2}vw;
 `
 
 const InlineHeader = styled.span`
-    font-weight: 700;
     padding: 0 5px;
     text-transform: uppercase;
 `
