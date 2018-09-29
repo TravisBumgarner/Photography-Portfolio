@@ -13,8 +13,12 @@ from django.core.management.base import BaseCommand
 
 from photos.models import Gallery, Photo
 from api_django.settings import MEDIA_ROOT
+from api_django.settings import BASE_DIR
 
-INPUT_ROOT = './test_images'
+INPUT_ROOT = os.path.join(BASE_DIR, 'photos', 'load_photos_dir')
+if not os.path.isdir(INPUT_ROOT):
+	os.makedirs(INPUT_ROOT)
+
 PS = "Point & Shoot Camera"
 DSLR = "DSLR Camera"
 PHONE = "Phone"
