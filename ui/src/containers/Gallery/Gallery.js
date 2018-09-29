@@ -135,13 +135,13 @@ class Gallery extends Component {
             </PhotoWithMetadataWrapper>
         ) : (
             <Fragment>
-                <ProjectDescriptionWrapper>
-                    <Header size="medium">{galleryDetails.title}</Header>
-                    <Text>{galleryDetails.description}</Text>
-                    <Text>
-                        {galleryDetails.title !== 'All' && `${galleryDetails.start_date} - ${galleryDetails.end_date}`}
-                    </Text>
-                </ProjectDescriptionWrapper>
+                {galleryDetails.title !== 'All' && (
+                    <ProjectDescriptionWrapper>
+                        <Header size="medium">{galleryDetails.title}</Header>
+                        <Text>{galleryDetails.description}</Text>
+                        <Text>{`${galleryDetails.start_date} - ${galleryDetails.end_date}`}</Text>
+                    </ProjectDescriptionWrapper>
+                )}
                 <GalleryWrapper ref={this.myRef}>{grid}</GalleryWrapper>
             </Fragment>
         )

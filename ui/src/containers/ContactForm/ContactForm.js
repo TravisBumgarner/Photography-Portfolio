@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
 
-import { ContactFormWrapper } from './ContactForm.styles'
+import { ContactFormWrapper, AlertWrapper } from './ContactForm.styles'
 
-import { Input, Button } from 'Components'
+import { Input, Button, Text } from 'Components'
 
 const DEFAULT_FORM_INPUTS = {
     name: '',
@@ -13,14 +13,18 @@ const DEFAULT_FORM_INPUTS = {
     email: ''
 }
 
+const DEFAULT_ALERT = {
+    isNotification: false,
+    notificationMessage: ''
+}
+
 class ContactForm extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
             ...DEFAULT_FORM_INPUTS,
-            isNotification: false,
-            notificationMessage: ''
+            ...DEFAULT_ALERT
         }
     }
 
@@ -49,8 +53,12 @@ class ContactForm extends Component {
                       email
                   })
                   .then(({ data }) => {
-                      alert(data.detail)
+                      this.setState({
+                          isNotification: true,
+                          notificationMessage: data.detail
+                      })
                       this.clearForm()
+                      setTimeout(this.clearNotification, 10000)
                   })
                   .catch(error => {
                       alert('Sorry, something went wrong, please try again later!')
@@ -61,43 +69,55 @@ class ContactForm extends Component {
         this.setState({ ...DEFAULT_FORM_INPUTS })
     }
 
+    clearNotification = () => {
+        this.setState({
+            ...DEFAULT_ALERT
+        })
+    }
+
     render() {
         const { theme } = this.props
+        const { notificationMessage, isNotification } = this.state
         return (
-            <ContactFormWrapper>
-                <Input
-                    theme={theme}
-                    value={this.state.name}
-                    onChange={this.handleChange}
-                    hintText="Full Name"
-                    name="name"
-                />
-                <Input
-                    theme={theme}
-                    value={this.state.subject}
-                    onChange={this.handleChange}
-                    hintText="Subject"
-                    name="subject"
-                />
-                <Input
-                    theme={theme}
-                    value={this.state.email}
-                    onChange={this.handleChange}
-                    hintText="Email Address"
-                    name="email"
-                />
-                <Input
-                    theme={theme}
-                    value={this.state.message}
-                    onChange={this.handleChange}
-                    hintText="Message"
-                    name="message"
-                    multiLine
-                    rows={5}
-                    textarea
-                />
-                <Button theme={theme} label="Submit" onClick={this.handleSubmit} />
-            </ContactFormWrapper>
+            <Fragment>
+                <ContactFormWrapper>
+                    <Input
+                        theme={theme}
+                        value={this.state.name}
+                        onChange={this.handleChange}
+                        hintText="Full Name"
+                        name="name"
+                    />
+                    <Input
+                        theme={theme}
+                        value={this.state.subject}
+                        onChange={this.handleChange}
+                        hintText="Subject"
+                        name="subject"
+                    />
+                    <Input
+                        theme={theme}
+                        value={this.state.email}
+                        onChange={this.handleChange}
+                        hintText="Email Address"
+                        name="email"
+                    />
+                    <Input
+                        theme={theme}
+                        value={this.state.message}
+                        onChange={this.handleChange}
+                        hintText="Message"
+                        name="message"
+                        multiLine
+                        rows={5}
+                        textarea
+                    />
+                    <Button theme={theme} label="Submit" onClick={this.handleSubmit} />
+                </ContactFormWrapper>
+                <AlertWrapper isNotification={isNotification}>
+                    <Text inverted>{notificationMessage}</Text>
+                </AlertWrapper>
+            </Fragment>
         )
     }
 }

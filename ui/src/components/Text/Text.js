@@ -5,17 +5,17 @@ import { LargeText, MediumText, SmallText } from './Text.styles.js'
 
 class Text extends Component {
     render() {
-        const { size, children } = this.props
+        const { size, children, inverted } = this.props
 
         switch (size) {
             case 'large':
-                return <LargeText>{children}</LargeText>
+                return <LargeText inverted={inverted}>{children}</LargeText>
             case 'medium':
-                return <MediumText>{children}</MediumText>
+                return <MediumText inverted={inverted}>{children}</MediumText>
             case 'small':
-                return <SmallText>{children}</SmallText>
+                return <SmallText inverted={inverted}>{children}</SmallText>
             default:
-                return <SmallText>{children}</SmallText>
+                return <SmallText inverted={inverted}>{children}</SmallText>
         }
     }
 }
