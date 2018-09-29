@@ -8,7 +8,7 @@ import { CONTENT_SPACING, TRANSITION_SPEED } from 'Theme'
 const TitleBarWrapper = styled.div`
     width: 100vw;
     box-sizing: border-box;
-    padding: 0 ${CONTENT_SPACING * 2}vw;
+    padding: 0 ${CONTENT_SPACING.m};
     display: flex;
     justify-content: space-between;
     position: fixed;

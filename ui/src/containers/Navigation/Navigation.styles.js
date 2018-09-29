@@ -6,7 +6,6 @@ import { FONT_FAMILY_HEADER, CONTENT_SPACING } from 'Theme'
 
 const NavigationWrapper = styled.div`
     text-align: right;
-    padding-right: ${CONTENT_SPACING * 2}vw;
     z-index: 999;
 `
 
@@ -20,7 +19,7 @@ const EmptySpaceCloseNavigation = styled.div`
 `
 
 const SubNavigationWrapper = styled.div`
-    margin: ${CONTENT_SPACING}vw 0;
+    margin: ${CONTENT_SPACING.m} 0;
 `
 
 const LinkListItem = styled.li`
@@ -56,7 +55,7 @@ const ExternalLink = styled.a`
 
 const IconWrapper = styled.div`
     display: inline-block;
-    padding-left: ${CONTENT_SPACING}vw;
+    padding-left: ${CONTENT_SPACING.m};
     fill: green;
 `
 

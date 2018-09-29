@@ -12,10 +12,10 @@ class About extends Component {
                 <ContentWrapper>
                     <ContentSection>
                         <Header size="small">Location</Header>
-                        <Text size="medium">Boston, MA</Text>
+                        <Text>Boston, MA</Text>
 
                         <Header size="small">Summary</Header>
-                        <Text size="medium">
+                        <Text>
                             Software Engineer
                             <br />
                             Photographer
@@ -26,7 +26,7 @@ class About extends Component {
                         </Text>
 
                         <Header size="small">AWARDS & RECOGNITIONS</Header>
-                        <Text size="medium">
+                        <Text>
                             2018 Noyes Museum of Art of Stockton University's RAW Exhibition
                             <br />
                             2017 1st Place BARPCV Photography Competition

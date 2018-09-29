@@ -6,8 +6,14 @@ const generateTheme = ({ primaryColor, secondaryColor, backgroundSrc }) => ({
     backgroundSrc
 })
 
+// const TITLE_BAR_HEIGHT =
 const TRANSITION_SPEED = 1
-const CONTENT_SPACING = 2
+const CONTENT_SPACING = {
+    s: '0.5vw',
+    m: '1vw',
+    l: '2vw',
+    xl: '4vw'
+}
 
 const FONT_FAMILY_HEADER = "'Raleway', sans-serif;"
 const FONT_FAMILY_TEXT = "'Montserrat', sans-serif"
@@ -15,7 +21,7 @@ const FONT_FAMILY_TEXT = "'Montserrat', sans-serif"
 const FONT_SIZE_INPUTS_AND_BUTTONS = 14
 
 const PAGE_THEME = styled.div`
-    padding: ${CONTENT_SPACING}vw ${CONTENT_SPACING * 2}vw;
+    padding: ${CONTENT_SPACING.m};
     overflow: scroll;
     margin-top: ${CONTENT_SPACING * 2}vw;
 `
@@ -38,7 +44,7 @@ const MEDIA = Object.keys(sizes).reduce((acc, label) => {
 
 const GlobalStyle = createGlobalStyle`
     body {
-        /* background-image: url('http://localhost:8000/media/full/2017/Alaska/270.jpg'); */
+        background-image: url('http://localhost:8000/media/full/2017/Alaska/270.jpg');
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;

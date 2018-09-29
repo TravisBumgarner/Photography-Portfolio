@@ -28,7 +28,7 @@ const NavigationWrapper = styled.div`
     height: 100vh;
     display: flex;
     align-items: center;
-    padding-left: ${CONTENT_SPACING}vw;
+    /* padding-left: ${CONTENT_SPACING}vw; */
     position: fixed;
     right: 0;
     top: 0;

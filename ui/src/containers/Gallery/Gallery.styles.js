@@ -86,12 +86,12 @@ const GalleryItem = styled.div`
     flex-basis: 29%;
 
     &:nth-child(3n + 1) {
-        margin: ${CONTENT_SPACING};
+        margin: ${CONTENT_SPACING.m};
         margin-left: 0;
     }
-    
+
     &:nth-child(3n + 3) {
-        margin: ${CONTENT_SPACING};
+        margin: ${CONTENT_SPACING.m};
         margin-right: 0;
     }
 

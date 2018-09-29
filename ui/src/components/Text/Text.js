@@ -7,14 +7,8 @@ class Text extends Component {
         const { size, children, inverted } = this.props
 
         switch (size) {
-            case 'large':
-                return <LargeText inverted={inverted}>{children}</LargeText>
-            case 'medium':
-                return <MediumText inverted={inverted}>{children}</MediumText>
-            case 'small':
-                return <SmallText inverted={inverted}>{children}</SmallText>
             default:
-                return <SmallText inverted={inverted}>{children}</SmallText>
+                return <MediumText inverted={inverted}>{children}</MediumText>
         }
     }
 }
