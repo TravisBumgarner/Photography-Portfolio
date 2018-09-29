@@ -1,10 +1,11 @@
 import styled from 'styled-components'
+import React from 'react'
 
 import { TRANSITION_SPEED, CONTENT_SPACING } from 'Theme'
 
-import { FaBars, FaCaretRight } from 'react-icons/fa'
+import { FaCaretRight, FaCar } from 'react-icons/fa'
 
-const NavigationClose = styled(FaCaretRight)`
+const NavigationClose = styled(({ isNavigationVisible, ...rest }) => <FaCaretRight {...rest} />)`
     position: absolute;
     top: 20px;
     left: 7px;

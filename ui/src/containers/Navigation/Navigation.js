@@ -21,7 +21,6 @@ class Navigation extends Component {
 
         const projectLinks = []
         const snapshotLinks = []
-        console.log(galleries)
         galleries.map(({ id, title, content_type }) => {
             const link = (
                 <LinkListItem key={id} onClick={toggleNavigation}>
@@ -41,17 +40,17 @@ class Navigation extends Component {
 
         const socialSectionContent = [
             {
-                tooltip: 'Instagram',
+                title: 'Instagram',
                 route: 'https://www.instagram.com/esafoto/',
                 icon: <FaInstagram size="2em" />
             },
             {
-                tooltip: 'Your Shot National Geographic',
+                title: 'Your Shot National Geographic',
                 route: 'https://yourshot.nationalgeographic.com/profile/778640/',
                 icon: <NatGeoIcon size="2em" />
             },
             {
-                tooltip: 'Flickr',
+                title: 'Flickr',
                 route: 'https://www.flickr.com/people/esa_foto/',
                 icon: <FaFlickr size="2em" />
             }
@@ -59,7 +58,7 @@ class Navigation extends Component {
 
         const socialLinks = socialSectionContent.map(m => {
             return (
-                <IconWrapper title={m.tooltip}>
+                <IconWrapper key={m.title} title={m.title}>
                     <ExternalLink theme={theme} href={m.route} target="_blank">
                         {m.icon}
                     </ExternalLink>

@@ -1,3 +1,4 @@
+import React from 'react'
 import styled from 'styled-components'
 import { FaBars } from 'react-icons/fa'
 
@@ -15,7 +16,7 @@ const TitleBarWrapper = styled.div`
     background-color: white;
 `
 
-const NavigationOpen = styled(FaBars)`
+const NavigationOpen = styled(({ isNavigationVisible, ...rest }) => <FaBars {...rest} />)`
     fill: #ccc;
     padding-bottom: 1vw;
     padding-top: 2vw;
