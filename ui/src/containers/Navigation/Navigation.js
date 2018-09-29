@@ -76,10 +76,8 @@ class Navigation extends Component {
         return (
             <NavigationWrapper theme={theme}>
                 <SubNavigationWrapper>
-                    <InternalLink theme={theme} to={`/`}>
-                        <Header size="medium">Main</Header>
-                        <ul>{miscLinks}</ul>
-                    </InternalLink>
+                    <Header size="medium">Main</Header>
+                    <ul>{miscLinks}</ul>
                 </SubNavigationWrapper>
 
                 <SubNavigationWrapper>
