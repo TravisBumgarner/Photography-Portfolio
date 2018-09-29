@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
 
 import { LargeHeader, MediumHeader, SmallHeader, InlineHeader } from './Header.styles.js'
 
@@ -20,11 +19,6 @@ class Header extends Component {
                 return <SmallHeader>{children}</SmallHeader>
         }
     }
-}
-
-Header.propTypes = {
-    size: propTypes.string,
-    children: propTypes.any.isRequired
 }
 
 export default Header

@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
 import axios from 'axios'
 
 import { Post } from 'Containers'
@@ -42,7 +41,5 @@ class Blog extends Component {
         )
     }
 }
-
-Blog.propTypes = {}
 
 export default Blog

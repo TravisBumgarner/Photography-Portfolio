@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 
-import { Header, Text, Photo } from 'Components'
+import { Header } from 'Components'
 import { parseContent } from 'Utilities'
 
 import { PostWrapper } from './Post.styles'
@@ -19,12 +18,6 @@ class Post extends Component {
             </PostWrapper>
         )
     }
-}
-
-Post.propTypes = {
-    title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired
 }
 
 export default Post

@@ -1,6 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
-import axios from 'axios'
 
 import { Gallery } from 'Containers'
 
@@ -61,10 +59,6 @@ class Portfolio extends Component {
             <PortfolioWrapper />
         )
     }
-}
-
-Portfolio.propTypes = {
-    photos: PropTypes.array.isRequired
 }
 
 export default Portfolio

@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import axios from 'axios'
-import PropTypes from 'prop-types'
 
 import { ContactFormWrapper, AlertWrapper } from './ContactForm.styles'
 
@@ -120,10 +119,6 @@ class ContactForm extends Component {
             </Fragment>
         )
     }
-}
-
-ContactForm.propTypes = {
-    theme: PropTypes.object.isRequired
 }
 
 export default ContactForm

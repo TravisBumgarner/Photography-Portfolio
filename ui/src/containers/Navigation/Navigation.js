@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
 import { FaInstagram, FaFlickr } from 'react-icons/fa'
 
 import { NatGeoIcon } from 'Resources'
@@ -113,12 +112,6 @@ class Navigation extends Component {
             </Fragment>
         )
     }
-}
-
-Navigation.propTypes = {
-    // galleries: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
-    toggleNavigation: PropTypes.func.isRequired
 }
 
 export default Navigation

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
 
 import { LargeText, MediumText, SmallText } from './Text.styles.js'
 
@@ -18,11 +17,6 @@ class Text extends Component {
                 return <SmallText inverted={inverted}>{children}</SmallText>
         }
     }
-}
-
-Text.propTypes = {
-    size: propTypes.string,
-    children: propTypes.any.isRequired
 }
 
 export default Text
