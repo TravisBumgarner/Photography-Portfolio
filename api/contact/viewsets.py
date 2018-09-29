@@ -24,12 +24,12 @@ class ContactViewSet(GenericViewSet):
         r = request.data
         form = ContactForm(r)
 
-        if not (len(r['name']) and len(r['subject'] and len(r['email']) and len(r['message'])):
-            is_submit_error=True
-            detail="Sorry, there was an error with your message, please check your inputs and try again."
+        if not (len(r['name']) and len(r['subject']) and len(r['email']) and len(r['message'])):
+            is_submit_error = True
+            detail = "Sorry, there was an error with your message, please check your inputs and try again."
 
         else:
-            c=Contact(
+            c = Contact(
                 name=r['name'],
                 email=r['email'],
                 subject=r['subject'],
@@ -39,8 +39,8 @@ class ContactViewSet(GenericViewSet):
 
             send(f"Name: {r['name']}\nEmail: {r['email']}\Subject: {r['subject']}\nMessage: {r['message']}")
 
-            is_submit_error=False
-            detail="Thank you for your message, I'll get back to you shortly!"
+            is_submit_error = False
+            detail = "Thank you for your message, I'll get back to you shortly!"
 
         return Response({
             'is_submit_error': is_submit_error,
