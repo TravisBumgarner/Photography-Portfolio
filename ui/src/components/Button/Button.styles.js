@@ -13,6 +13,8 @@ const StyledButton = styled.button`
     text-transform: uppercase;
     color: ${props => props.theme.primaryColor};
     background-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    font-weight: 700;
 `
 
 export { StyledButton }

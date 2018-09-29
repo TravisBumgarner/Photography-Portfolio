@@ -36,7 +36,6 @@ const MEDIA = Object.keys(sizes).reduce((acc, label) => {
     return acc
 }, {})
 
-// background-image: ${props => `url(${props.isBackgroundVisible ? props.theme.backgroundSrc : ''});`};
 const GlobalStyle = createGlobalStyle`
     body {
         /* background-image: url('http://localhost:8000/media/full/2017/Alaska/270.jpg'); */
