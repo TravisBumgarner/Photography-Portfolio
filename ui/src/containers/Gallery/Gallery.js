@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
 
 import { Thumbnail, PhotoWithMetadata, Header, Text } from 'Components'
 
@@ -146,11 +145,6 @@ class Gallery extends Component {
             </Fragment>
         )
     }
-}
-
-Gallery.propTypes = {
-    galleryDetails: PropTypes.object,
-    photos: PropTypes.array.isRequired
 }
 
 export default Gallery

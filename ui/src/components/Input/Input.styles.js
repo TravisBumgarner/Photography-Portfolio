@@ -11,7 +11,7 @@ const sharedStyles = props => css`
     margin: 10px 0;
     border: 0px;
     border-bottom: 2px solid ${props.theme.secondaryColor};
-    font-size: ${props.FONT_SIZE_INPUTS_AND_BUTTONS}px;
+    font-size: ${FONT_SIZE_INPUTS_AND_BUTTONS}px;
 
     &::placeholder {
         color: ${props.theme.primaryColor};

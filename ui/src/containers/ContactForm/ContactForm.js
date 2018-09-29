@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import axios from 'axios'
-import PropTypes from 'prop-types'
 
 import { ContactFormWrapper, AlertWrapper } from './ContactForm.styles'
 
@@ -34,6 +33,14 @@ class ContactForm extends Component {
         })
     }
 
+    createAlert = message => {
+        this.setState({
+            isNotification: true,
+            notificationMessage: message
+        })
+        setTimeout(this.clearNotification, 10000)
+    }
+
     handleSubmit = () => {
         const { name, subject, message, email } = this.state
 
@@ -44,7 +51,7 @@ class ContactForm extends Component {
         !email.length && errors.push('email')
 
         errors.length
-            ? alert(`Please fill in these required fields ${errors.join(', ')}.`)
+            ? this.createAlert(`Please fill in these required fields: ${errors.join(', ')}.`)
             : axios
                   .post(__API__ + 'contact/', {
                       name,
@@ -53,15 +60,11 @@ class ContactForm extends Component {
                       email
                   })
                   .then(({ data }) => {
-                      this.setState({
-                          isNotification: true,
-                          notificationMessage: data.detail
-                      })
+                      this.createAlert(data.detail)
                       this.clearForm()
-                      setTimeout(this.clearNotification, 10000)
                   })
                   .catch(error => {
-                      alert('Sorry, something went wrong, please try again later!')
+                      this.createAlert('Sorry, something went wrong, please try again later!')
                   })
     }
 
@@ -120,10 +123,6 @@ class ContactForm extends Component {
             </Fragment>
         )
     }
-}
-
-ContactForm.propTypes = {
-    theme: PropTypes.object.isRequired
 }
 
 export default ContactForm

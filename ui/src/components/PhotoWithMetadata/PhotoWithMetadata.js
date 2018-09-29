@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
 
 import { Text, Header } from 'Components'
 
@@ -65,10 +64,6 @@ class PhotoWithMetadata extends Component {
             </PhotoWithMetadataWrapper>
         )
     }
-}
-
-PhotoWithMetadata.propTypes = {
-    details: PropTypes.object.isRequired
 }
 
 export default PhotoWithMetadata

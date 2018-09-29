@@ -30,6 +30,7 @@ const LinkListItem = styled.li`
         color: ${props => props.theme.secondaryColor};
         /* text-decoration: underline; */
         border-left: 5px solid black;
+    }
 `
 
 const sharedStyles = props => css`

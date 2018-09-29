@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 
 import { Header } from 'Components'
 
@@ -17,11 +16,6 @@ class TitleBar extends Component {
             </TitleBarWrapper>
         )
     }
-}
-
-TitleBar.propTypes = {
-    isNavigationVisible: PropTypes.bool.isRequired,
-    toggleNavigation: PropTypes.func.isRequired
 }
 
 export default TitleBar
