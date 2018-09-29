@@ -19,6 +19,8 @@ const NavigationOpen = styled(FaBars)`
     fill: #ccc;
     padding-bottom: 1vw;
     padding-top: 2vw;
+    transition: opacity ${TRANSITION_SPEED}s;
+    opacity: ${props => (props.isNavigationVisible ? 0 : 1)};
 
     &:hover {
         fill: #000;

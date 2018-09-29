@@ -11,7 +11,7 @@ class TitleBar extends Component {
         return (
             <TitleBarWrapper>
                 <Header size="large">Travis Bumgarner Photography</Header>
-                {isNavigationVisible ? null : <NavigationOpen onClick={toggleNavigation} size="2.6em" />}
+                <NavigationOpen isNavigationVisible={isNavigationVisible} onClick={toggleNavigation} size="2.6em" />
             </TitleBarWrapper>
         )
     }

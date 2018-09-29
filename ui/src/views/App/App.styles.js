@@ -8,7 +8,7 @@ const NavigationClose = styled(FaCaretRight)`
     position: absolute;
     top: 20px;
     left: 7px;
-    transition: opacity ${TRANSITION_SPEED / 2}s;
+    transition: opacity ${TRANSITION_SPEED}s;
     opacity: ${props => (props.isNavigationVisible ? 1 : 0)};
     z-index: 999;
     fill: #ccc;
