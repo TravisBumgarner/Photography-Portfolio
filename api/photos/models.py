@@ -26,7 +26,6 @@ class Photo(models.Model):
     gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE, null=True)
 
     # Hardware Details
-    camera_type = models.CharField(max_length=200, null=True)
     make = models.CharField(max_length=200, null=True)
     model = models.CharField(max_length=200, null=True)
     lens = models.CharField(max_length=200, null=True)
@@ -42,3 +41,5 @@ class Photo(models.Model):
     # Lightroom Metadata
     location = models.CharField(null=True, max_length=200)
     categories = models.CharField(null=True, max_length=500)
+    camera_type = models.CharField(max_length=200, null=True)
+    

@@ -28,12 +28,6 @@ if not os.path.isdir(INPUT_ROOT):
     os.makedirs(INPUT_ROOT)
 
 
-PS = "Point & Shoot Camera"
-DSLR = "DSLR Camera"
-PHONE = "Phone"
-FILM = "Film Camera"
-
-
 def compute_date(raw_str):
     if raw_str is None:
         return None
@@ -62,7 +56,6 @@ def compute_fractional_string(raw_str):
 def process_nikon(raw_exif_data):
     processed_exif_data = {}
     _, model = str(raw_exif_data['Image Model']).split(' ')
-    processed_exif_data['camera_type'] = DSLR
     processed_exif_data['make'] = 'Nikon'
     processed_exif_data['model'] = raw_exif_data['Image Model']
     return processed_exif_data
@@ -70,7 +63,6 @@ def process_nikon(raw_exif_data):
 
 def process_cannon(raw_exif_data):
     processed_exif_data = {}
-    processed_exif_data['camera_type'] = DSLR
     processed_exif_data['make'] = str(raw_exif_data['Image Make'])
     processed_exif_data['model'] = str(raw_exif_data['Image Model'])
     return processed_exif_data
@@ -78,7 +70,6 @@ def process_cannon(raw_exif_data):
 
 def process_noritsu_scanner(raw_exif_data):
     processed_exif_data = {}
-    processed_exif_data["camera_type"] = FILM
     processed_exif_data["make"] = "Film"
     processed_exif_data["model"] = ""
     return processed_exif_data
@@ -94,7 +85,6 @@ def process_sony(raw_exif_data):
         model = "A290"
 
     processed_exif_data = {}
-    processed_exif_data["camera_type"] = PS
     processed_exif_data["make"] = "Sony"
     processed_exif_data["model"] = model
     return processed_exif_data
@@ -102,7 +92,6 @@ def process_sony(raw_exif_data):
 
 def process_nexus_5x(raw_exif_data):
     processed_exif_data = {}
-    processed_exif_data["camera_type"] = PHONE
     processed_exif_data["make"] = "LG"
     processed_exif_data["model"] = "Nexus"
     return processed_exif_data
@@ -110,7 +99,6 @@ def process_nexus_5x(raw_exif_data):
 
 def process_moto_x4(raw_exif_data):
     processed_exif_data = {}
-    processed_exif_data["camera_type"] = PHONE
     processed_exif_data["make"] = "Motorola"
     processed_exif_data["model"] = "moto x4"
     return processed_exif_data
@@ -118,7 +106,6 @@ def process_moto_x4(raw_exif_data):
 
 def process_garbage_metadata(raw_exif_data):
     processed_exif_data = {}
-    processed_exif_data["camera_type"] = PHONE
     processed_exif_data["make"] = ""
     processed_exif_data["model"] = ""
     return processed_exif_data
@@ -213,6 +200,7 @@ def get_lightroom_keywords(full_path):
         'Location': '',
         'Gallery': '',
         'ContentType': '',
+        'CameraType': '',
     }
 
     # The first entry is always noise so skip it.
@@ -283,8 +271,7 @@ class Command(BaseCommand):
                     height=exif_data['height'],
                     gallery=gallery,
 
-                    # Hardware DEtails
-                    camera_type=exif_data['camera_type'],
+                    # Hardware Details
                     make=exif_data['make'],
                     model=exif_data['model'],
                     lens=exif_data['lens'],
@@ -300,6 +287,7 @@ class Command(BaseCommand):
                     # Lightroom Metadata
                     location=lightroom_keywords['Location'],
                     categories=', '.join(lightroom_keywords['Category']),
+                    camera_type=lightroom_keywords['CameraType']
                 )
                 photo.save()
             except KeyboardInterrupt:
