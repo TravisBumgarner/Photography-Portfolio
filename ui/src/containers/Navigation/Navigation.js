@@ -83,7 +83,7 @@ class Navigation extends Component {
 
         return (
             <Fragment>
-                {isNavigationVisible && <EmptySpaceCloseNavigation onClick={toggleNavigation} />}
+                
                 <NavigationWrapper theme={theme}>
                     <SubNavigationWrapper>
                         <Header size="medium">Main</Header>

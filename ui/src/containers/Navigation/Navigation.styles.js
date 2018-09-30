@@ -16,15 +16,6 @@ const NavigationWrapper = styled.div`
     justify-content: flex-end;
 `
 
-const EmptySpaceCloseNavigation = styled.div`
-    position: fixed;
-    left: 0;
-    top: 0;
-    width 100vw;
-    height 100vh;
-    z-index: 998;
-`
-
 const SubNavigationWrapper = styled.div`
     margin: ${CONTENT_SPACING.m} 0;
 `
@@ -72,6 +63,5 @@ export {
     InternalLink,
     ExternalLink,
     LinkListItem,
-    IconWrapper,
-    EmptySpaceCloseNavigation
+    IconWrapper
 }

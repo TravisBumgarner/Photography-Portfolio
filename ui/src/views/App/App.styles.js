@@ -19,6 +19,15 @@ const NavigationClose = styled(({ isNavigationVisible, ...rest }) => <FaCaretRig
     }
 `
 
+const NavigationGutter = styled.div`
+    position: fixed;
+    left: 0;
+    top: 0;
+    width 100vw;
+    height 100vh;
+    z-index: 998;
+`
+
 const AppWrapper = styled.div`
     /* display: flex; */
 `
@@ -35,4 +44,4 @@ const NavigationWrapper = styled.div`
     right: ${props => (props.isNavigationVisible ? '0' : `-50vw`)};
 `
 
-export { AppWrapper, NavigationWrapper, NavigationClose }
+export { AppWrapper, NavigationWrapper, NavigationClose, NavigationGutter }

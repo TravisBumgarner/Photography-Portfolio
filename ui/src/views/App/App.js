@@ -6,7 +6,7 @@ import { Home, Contact, About, Portfolio, Blog } from 'Views'
 import { Navigation, TitleBar } from 'Containers'
 import { GlobalStyle } from 'Theme'
 
-import { AppWrapper, NavigationWrapper, ContentWrapper, NavigationClose } from './App.styles.js'
+import { AppWrapper, NavigationWrapper, ContentWrapper, NavigationClose, NavigationGutter } from './App.styles.js'
 
 class App extends Component {
     constructor(props) {
@@ -95,6 +95,8 @@ class App extends Component {
                 <AppWrapper>
                     <TitleBar isNavigationVisible={isNavigationVisible} toggleNavigation={this.toggleNavigation} />
                     <NavigationWrapper isNavigationVisible={isNavigationVisible}>
+                        {isNavigationVisible &&
+                            pathname !== '/' && <NavigationGutter onClick={this.toggleNavigation} />}
                         <Navigation
                             isNavigationVisible={isNavigationVisible}
                             galleries={galleries}
