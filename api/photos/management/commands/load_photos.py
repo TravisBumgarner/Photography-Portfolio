@@ -4,21 +4,29 @@ from datetime import datetime
 import shutil
 from io import StringIO, BytesIO
 
+from libxmp.utils import file_to_dict
 import exifread
-from PIL import Image, ImageDraw
-import colorgram
+
 from django.core.files import File
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.management.base import BaseCommand
+
 from libxmp.utils import file_to_dict
+import colorgram
+import os
+from io import StringIO, BytesIO
+from PIL import Image, ImageDraw
+
 
 from photos.models import Gallery, Photo
-from api_django.settings import MEDIA_ROOT
-from api_django.settings import BASE_DIR
+from api_django.settings import MEDIA_ROOT, BASE_DIR
+
 
 INPUT_ROOT = os.path.join(BASE_DIR, 'photos', 'load_photos_dir')
+print(INPUT_ROOT + '\n\n\n')
 if not os.path.isdir(INPUT_ROOT):
-	os.makedirs(INPUT_ROOT)
+    os.makedirs(INPUT_ROOT)
+
 
 PS = "Point & Shoot Camera"
 DSLR = "DSLR Camera"
@@ -117,7 +125,7 @@ def process_garbage_metadata(raw_exif_data):
 
 
 def process_general_raw(raw_exif_data):
-    print_raw_keys_and_data(raw_exif_data)
+    # print_raw_keys_and_data(raw_exif_data)
     processed_exif_data = {}
 
     processed_exif_data["lens"] = ""
@@ -208,6 +216,7 @@ def get_two_vibrant_color_samples(full_path, generate_preview_image=False):
                 [index*100, 0, (index+1)*100, height], fill=color.rgb)
 
         samples_directory = os.path.join(dirname, 'samples')
+        print('samples', samples_directory)
         if not os.path.exists(samples_directory):
             os.mkdir(samples_directory)
         im.save(os.path.join(samples_directory, basename))
@@ -255,7 +264,7 @@ def get_lightroom_keywords(full_path):
 
     # The first entry is always noise so skip it.
     for entry in raw_xmp_data[1:]:
-        
+
         # Each keyword gets it's own entry in the list along with a bunch of noise, it is the 2nd element
         keyword = entry[1]
         try:
@@ -284,8 +293,8 @@ class Command(BaseCommand):
                 try:
                     input_full_path = os.path.join(
                         INPUT_ROOT, input_gallery_directory, input_file_name)
-                    input_file_root, file_extension = input_file_name.split(
-                        '.')
+                    print(input_file_name)
+                    input_file_root, file_extension = input_file_name.split('.')
 
                     if file_extension not in ['jpg', 'jpeg']:
                         print('    Skipping file: {}'.format(input_file_name))
@@ -293,7 +302,9 @@ class Command(BaseCommand):
                     else:
                         print('    Processing file: {}'.format(input_file_name))
 
-                    year, location, sequence = input_file_root.split('_')
+                    year, location, sequence = input_file_root.split('_')  # TODO refactor file naming
+
+                    lightroom_keywords = get_lightroom_keywords(input_full_path)
 
                     exif_data = process_exif_data(input_full_path)
                     if not exif_data:
@@ -321,32 +332,44 @@ class Command(BaseCommand):
 
                     gallery, _ = Gallery.objects.get_or_create(
                         title=input_gallery_directory,
-			content_type='project'
+                        content_type='project'
                     )
 
                     photo = Photo(
-                        file_name=os.path.join(
-                            'full', year, location, '{}.{}'.format(sequence, file_extension)),
+                        # src
                         src=src,
-                        width=exif_data['width'],
-                        height=exif_data['height'],
-                        location=location,
-                        year=year,
-                        gallery=gallery,
-                        color_sample_1=color_sample_1,
-                        color_sample_2=color_sample_2,
                         src_thumbnail_small=src_thumbnail_small,
                         src_thumbnail_medium=src_thumbnail_medium,
-                        date_taken=exif_data['date_taken'],
+
+                        # File Details
+                        file_name=os.path.join(
+                            'full', year, location, '{}.{}'.format(sequence, file_extension)),
+                        width=exif_data['width'],
+                        height=exif_data['height'],
+                        gallery=gallery,
+
+                        # Hardware DEtails
                         camera_type=exif_data['camera_type'],
                         make=exif_data['make'],
                         model=exif_data['model'],
                         lens=exif_data['lens'],
+
+                        # Photo Details
+                        date_taken=exif_data['date_taken'],
                         shooting_mode=exif_data['shooting_mode'],
                         aperture=exif_data['aperture'],
                         shutter_speed=exif_data['shutter_speed'],
                         iso=exif_data['iso'],
                         focal_length=exif_data['focal_length'],
+
+                        # Lightroom Metadata
+                        location=lightroom_keywords['Location'][0],
+                        year=lightroom_keywords['Year'][0],
+                        categories=', '.join(lightroom_keywords['Category']),
+
+                        # Misc
+                        color_sample_1=color_sample_1,
+                        color_sample_2=color_sample_2,
                     )
                     photo.save()
                 except KeyboardInterrupt:
