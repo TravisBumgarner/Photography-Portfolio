@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import { Home, Contact, About, Portfolio, Blog } from 'Views'
 import { Navigation, TitleBar } from 'Containers'
-import { GlobalStyle } from 'Theme'
+import { GlobalStyle, ICON_FONT_SIZES } from 'Theme'
 
 import { AppWrapper, NavigationWrapper, NavigationClose, NavigationGutter } from './App.styles.js'
 
@@ -107,7 +107,7 @@ class App extends Component {
                             <NavigationClose
                                 isNavigationVisible={isNavigationVisible}
                                 onClick={this.toggleNavigation}
-                                size="3em"
+                                size={ICON_FONT_SIZES.l}
                             />
                         )}
                     </NavigationWrapper>

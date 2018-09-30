@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 
 import { Thumbnail, PhotoWithMetadata, Header, Text } from 'Components'
+import { ICON_FONT_SIZES } from 'Theme'
 
 import {
     GalleryWrapper,
@@ -123,12 +124,12 @@ class Gallery extends Component {
 
         return selectedPhotoIndex !== null ? (
             <PhotoWithMetadataWrapper>
-                <CloseIcon size="3em" onClick={this.returnToGridView} />
+                <CloseIcon size={ICON_FONT_SIZES.l} onClick={this.returnToGridView} />
                 <PreviousContainer onClick={this.getPreviousPhotoIndex}>
-                    <PreviousButton size="3em" />
+                    <PreviousButton size={ICON_FONT_SIZES.l} />
                 </PreviousContainer>
                 <NextContainer onClick={this.getNextPhotoIndex}>
-                    <NextButton size="3em" />
+                    <NextButton size={ICON_FONT_SIZES.l} />
                 </NextContainer>
                 <PhotoWithMetadata details={photos[selectedPhotoIndex]} />
             </PhotoWithMetadataWrapper>

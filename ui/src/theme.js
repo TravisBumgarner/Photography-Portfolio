@@ -23,6 +23,10 @@ const TEXT_FONT_SIZES = {
     m: '1.0rem'
 }
 
+const ICON_FONT_SIZES = {
+    ...HEADER_FONT_SIZES
+}
+
 const FONT_FAMILY_HEADER = "'Raleway', sans-serif;"
 const FONT_FAMILY_TEXT = "'Montserrat', sans-serif"
 
@@ -79,5 +83,6 @@ export {
     TRANSITION_SPEED,
     CONTENT_SPACING,
     HEADER_FONT_SIZES,
-    TEXT_FONT_SIZES
+    TEXT_FONT_SIZES,
+    ICON_FONT_SIZES
 }

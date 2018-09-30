@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 
 import { Link } from 'react-router-dom'
 
-import { FONT_FAMILY_HEADER, CONTENT_SPACING } from 'Theme'
+import { FONT_FAMILY_HEADER, CONTENT_SPACING, TEXT_FONT_SIZES } from 'Theme'
 
 const NavigationWrapper = styled.div`
     text-align: right;
@@ -22,11 +22,10 @@ const SubNavigationWrapper = styled.div`
 `
 
 const LinkListItem = styled.li`
-    margin: 5px 0;
+    margin: ${CONTENT_SPACING.s} 0;
 
     &:hover {
         color: ${props => props.theme.secondaryColor};
-        /* text-decoration: underline; */
         border-left: 5px solid black;
     }
 `
@@ -35,7 +34,7 @@ const sharedStyles = props => css`
     text-decoration: none;
     font-family: ${FONT_FAMILY_HEADER};
     font-weight: 100;
-    font-size: 18px;
+    font-size: ${TEXT_FONT_SIZES.m};
     color: ${props.theme.primaryColor};
     width: 100%;
 
@@ -55,7 +54,6 @@ const ExternalLink = styled.a`
 const IconWrapper = styled.div`
     display: inline-block;
     padding-left: ${CONTENT_SPACING.m};
-    fill: green;
 `
 
 export { NavigationWrapper, SubNavigationWrapper, InternalLink, ExternalLink, LinkListItem, IconWrapper }
