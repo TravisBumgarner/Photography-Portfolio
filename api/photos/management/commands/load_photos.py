@@ -18,7 +18,7 @@ from io import StringIO, BytesIO
 from PIL import Image, ImageDraw
 
 
-from photos.models import Gallery, Photo
+from photos.models import Gallery, Photo, Category
 from api_django.settings import MEDIA_ROOT, BASE_DIR
 
 
@@ -256,7 +256,7 @@ class Command(BaseCommand):
 
                 gallery, _ = Gallery.objects.get_or_create(
                     title=lightroom_keywords['Gallery'],
-                    content_type='project'
+                    content_type=lightroom_keywords['ContentType']
                 )
 
                 photo = Photo(
@@ -286,9 +286,16 @@ class Command(BaseCommand):
 
                     # Lightroom Metadata
                     location=lightroom_keywords['Location'],
-                    categories=', '.join(lightroom_keywords['Category']),
                     camera_type=lightroom_keywords['CameraType']
                 )
+
+                categories = []
                 photo.save()
+                for c in lightroom_keywords['Category']:
+                    print(c)
+                    category, _ = Category.objects.get_or_create(
+                        title=c,
+                    )
+                    photo.category.add(category)
             except KeyboardInterrupt:
                 sys.exit()

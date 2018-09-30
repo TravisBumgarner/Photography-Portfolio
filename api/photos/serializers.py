@@ -2,6 +2,16 @@ from .models import *
 from rest_framework import serializers
 
 
+class CategorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Category
+        fields = (
+            'id',
+            'title',
+        )
+
+
 class GallerySerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -18,6 +28,7 @@ class GallerySerializer(serializers.ModelSerializer):
 
 class PhotoSerializer(serializers.ModelSerializer):
     gallery = GallerySerializer(read_only=True)
+    category = CategorySerializer(read_only=True, many=True)
 
     class Meta:
         model = Photo
@@ -29,7 +40,7 @@ class PhotoSerializer(serializers.ModelSerializer):
             'gallery',
             'location',
             'date_taken',
-            'categories',
+            'category',
             'width',
             'height',
             'src_thumbnail_medium',

@@ -12,6 +12,13 @@ class Gallery(models.Model):
         return self.title
 
 
+class Category(models.Model):
+    title = models.CharField(max_length=200, unique=True)
+
+    def __unicode__(self):
+        return self.title
+
+
 class Photo(models.Model):
     # src
     src = models.ImageField(blank=True, null=True)
@@ -40,6 +47,5 @@ class Photo(models.Model):
 
     # Lightroom Metadata
     location = models.CharField(null=True, max_length=200)
-    categories = models.CharField(null=True, max_length=500)
     camera_type = models.CharField(max_length=200, null=True)
-    
+    category = models.ManyToManyField(Category)
