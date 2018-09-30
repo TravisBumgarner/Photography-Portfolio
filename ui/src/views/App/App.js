@@ -27,9 +27,16 @@ class App extends Component {
 
         this.setState({ pathname, isNavigationVisible: pathname === '/' })
 
-        Promise.all([this.getPhotos(), this.getGalleries()]).then(responses => {
-            this.setState({ photos: responses[0], galleries: responses[1] })
-        })
+        Promise.all([this.getPhotos(), this.getGalleries(), this.getLocations(), this.getCategories()]).then(
+            responses => {
+                this.setState({
+                    photos: responses[0],
+                    galleries: responses[1],
+                    locations: responses[2],
+                    categories: responses[3]
+                })
+            }
+        )
     }
 
     componentWillReceiveProps(nextProps) {
@@ -52,6 +59,20 @@ class App extends Component {
         return axios
             .get(__API__ + 'galleries/')
             .then(({ data: galleries }) => galleries)
+            .catch(error => console.log(error))
+    }
+
+    getLocations = () => {
+        return axios
+            .get(__API__ + 'locations/')
+            .then(({ data: locations }) => locations)
+            .catch(error => console.log(error))
+    }
+
+    getCategories = () => {
+        return axios
+            .get(__API__ + 'categories/')
+            .then(({ data: categories }) => categories)
             .catch(error => console.log(error))
     }
 
