@@ -16,7 +16,9 @@ class App extends Component {
             isNavigationVisible: true,
             isBackgroundVisible: true,
             pathname: null,
-            galleries: []
+            galleries: [],
+            locations: [],
+            categories: []
         }
     }
 
@@ -88,7 +90,16 @@ class App extends Component {
     }
 
     render() {
-        const { galleries, photos, isLoading, isNavigationVisible, isBackgroundVisible, pathname } = this.state
+        const {
+            galleries,
+            photos,
+            isLoading,
+            isNavigationVisible,
+            isBackgroundVisible,
+            pathname,
+            locations,
+            categories
+        } = this.state
         return isLoading ? null : (
             <Fragment>
                 <GlobalStyle isBackgroundVisible={isBackgroundVisible} />
@@ -100,6 +111,8 @@ class App extends Component {
                         <Navigation
                             isNavigationVisible={isNavigationVisible}
                             galleries={galleries}
+                            locations={locations}
+                            categories={categories}
                             toggleNavigation={this.toggleNavigation}
                         />
                         {pathname !== '/' && (

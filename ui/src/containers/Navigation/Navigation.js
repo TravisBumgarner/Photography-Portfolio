@@ -16,16 +16,14 @@ import {
 
 class Navigation extends Component {
     render() {
-        const { galleries, theme, toggleNavigation, isNavigationVisible } = this.props
+        const { galleries, toggleNavigation, locations, categories } = this.props
 
         const projectLinks = []
         const snapshotLinks = []
         galleries.map(({ id, title, content_type }) => {
             const link = (
                 <LinkListItem key={id} onClick={toggleNavigation}>
-                    <InternalLink theme={theme} to={`/portfolio/${content_type}/${id}`}>
-                        {title}
-                    </InternalLink>
+                    <InternalLink to={`/portfolio/${content_type}/${id}`}>{title}</InternalLink>
                 </LinkListItem>
             )
             if (content_type === 'Project') {
@@ -35,6 +33,26 @@ class Navigation extends Component {
             } else {
                 throw new Error('Invalid gallery type')
             }
+        })
+
+        const locationLinks = []
+        locations.map(({ id, title }) => {
+            const link = (
+                <LinkListItem key={id} onClick={toggleNavigation}>
+                    <InternalLink to={`/portfolio/locations/${title}`}>{title}</InternalLink>
+                </LinkListItem>
+            )
+            locationLinks.push(link)
+        })
+
+        const categoriesLinks = []
+        categories.map(({ id, title }) => {
+            const link = (
+                <LinkListItem key={id} onClick={toggleNavigation}>
+                    <InternalLink to={`/portfolio/categories/${title}`}>{title}</InternalLink>
+                </LinkListItem>
+            )
+            categoriesLinks.push(link)
         })
 
         const socialSectionContent = [
@@ -58,7 +76,7 @@ class Navigation extends Component {
         const socialLinks = socialSectionContent.map(m => {
             return (
                 <IconWrapper key={m.title} title={m.title}>
-                    <ExternalLink theme={theme} href={m.route} target="_blank">
+                    <ExternalLink href={m.route} target="_blank">
                         {m.icon}
                     </ExternalLink>
                 </IconWrapper>
@@ -74,16 +92,14 @@ class Navigation extends Component {
         const miscLinks = miscSectionContent.map(m => {
             return (
                 <LinkListItem key={m.title} onClick={toggleNavigation}>
-                    <InternalLink theme={theme} to={m.route}>
-                        {m.title}
-                    </InternalLink>
+                    <InternalLink to={m.route}>{m.title}</InternalLink>
                 </LinkListItem>
             )
         })
 
         return (
             <Fragment>
-                <NavigationWrapper theme={theme}>
+                <NavigationWrapper>
                     <SubNavigationWrapper>
                         <Header size="medium">Main</Header>
                         <ul>{miscLinks}</ul>
@@ -98,12 +114,20 @@ class Navigation extends Component {
                         <Header size="medium">Snapshots</Header>
                         <ul>
                             <LinkListItem key={'all'} onClick={toggleNavigation}>
-                                <InternalLink theme={theme} to={`/portfolio/snapshots/all`}>
-                                    All
-                                </InternalLink>
+                                <InternalLink to={`/portfolio/snapshots/all`}>All</InternalLink>
                             </LinkListItem>
                             {snapshotLinks}
                         </ul>
+                    </SubNavigationWrapper>
+
+                    <SubNavigationWrapper>
+                        <Header size="medium">Categories</Header>
+                        <ul>{categoriesLinks}</ul>
+                    </SubNavigationWrapper>
+
+                    <SubNavigationWrapper>
+                        <Header size="medium">Locations</Header>
+                        <ul>{locationLinks}</ul>
                     </SubNavigationWrapper>
 
                     <SubNavigationWrapper>{socialLinks}</SubNavigationWrapper>
