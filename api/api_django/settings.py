@@ -2,7 +2,7 @@ import os
 
 from api_django import config
 
-IS_PRODUCTION = os.getenv('SITE','production') == 'production'
+IS_PRODUCTION = os.getenv('SITE', 'production') == 'production'
 
 # Custom Settings
 BACKGROUND_IMAGE_WIDTH = 1400
@@ -11,18 +11,18 @@ BACKGROUND_IMAGE_WIDTH = 1400
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 if IS_PRODUCTION:
-	STATIC_ROOT = '/home/tbumgarner/webapps/photo20_api_static/'
-	STATIC_URL = 'http:/api.travisbumgarner.photography/static/'
+    STATIC_ROOT = '/home/tbumgarner/webapps/photo20_api_static/'
+    STATIC_URL = 'http:/api.travisbumgarner.photography/static/'
 
-	MEDIA_ROOT = '/home/tbumgarner/webapps/photo20_api_media/'
-	MEDIA_URL = 'http://api.travisbumgarner.photography/media/'
+    MEDIA_ROOT = '/home/tbumgarner/webapps/photo20_api_media/'
+    MEDIA_URL = 'http://api.travisbumgarner.photography/media/'
 
-elif not IS_PRODUCTION:
-	STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-	STATIC_URL = '/static/'
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    STATIC_URL = '/static/'
 
-	MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-	MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    MEDIA_URL = '/media/'
 
 
 SECRET_KEY = config.SECRET_KEY
