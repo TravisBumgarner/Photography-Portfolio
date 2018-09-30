@@ -6,13 +6,21 @@ const generateTheme = ({ primaryColor, secondaryColor, backgroundSrc }) => ({
     backgroundSrc
 })
 
-const TITLE_BAR_HEIGHT = '6vw'
 const TRANSITION_SPEED = 1
 const CONTENT_SPACING = {
-    s: '0.5vw',
-    m: '1vw',
-    l: '2vw',
-    xl: '4vw'
+    s: '0.25rem',
+    m: '0.5rem',
+    l: '1rem',
+    xl: '2rem'
+}
+const HEADER_FONT_SIZES = {
+    s: '1.4rem',
+    m: '1.7rem',
+    l: '2rem'
+}
+
+const TEXT_FONT_SIZES = {
+    m: '1.0rem'
 }
 
 const FONT_FAMILY_HEADER = "'Raleway', sans-serif;"
@@ -23,7 +31,6 @@ const FONT_SIZE_INPUTS_AND_BUTTONS = 14
 const PAGE_THEME = styled.div`
     padding: ${CONTENT_SPACING.l};
     overflow: scroll;
-    margin-top: ${TITLE_BAR_HEIGHT};
 `
 
 const sizes = {
@@ -55,6 +62,7 @@ const GlobalStyle = createGlobalStyle`
         right: 0;
         position: absolute;
         z-index: -1;
+        font-size: 20px;
     }
 `
 
@@ -70,5 +78,6 @@ export {
     FONT_SIZE_INPUTS_AND_BUTTONS,
     TRANSITION_SPEED,
     CONTENT_SPACING,
-    TITLE_BAR_HEIGHT
+    HEADER_FONT_SIZES,
+    TEXT_FONT_SIZES
 }

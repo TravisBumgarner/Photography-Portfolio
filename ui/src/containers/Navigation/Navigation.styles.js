@@ -11,6 +11,7 @@ const NavigationWrapper = styled.div`
     border-left: 5px solid black;
     height: 100vh;
     background-color: white;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -57,11 +58,4 @@ const IconWrapper = styled.div`
     fill: green;
 `
 
-export {
-    NavigationWrapper,
-    SubNavigationWrapper,
-    InternalLink,
-    ExternalLink,
-    LinkListItem,
-    IconWrapper
-}
+export { NavigationWrapper, SubNavigationWrapper, InternalLink, ExternalLink, LinkListItem, IconWrapper }

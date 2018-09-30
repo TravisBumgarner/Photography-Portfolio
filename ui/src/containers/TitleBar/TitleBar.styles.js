@@ -11,11 +11,11 @@ const TitleBarWrapper = styled.div`
     padding: 0 ${CONTENT_SPACING.l};
     display: flex;
     justify-content: space-between;
-    position: fixed;
-    top: 0;
-    left: 0;
+    /* position: absolute; */
+    /* top: 0; */
+    /* left: 0; */
     background-color: white;
-    height: ${TITLE_BAR_HEIGHT};
+    /* height: ${TITLE_BAR_HEIGHT}; */
 `
 
 const InternalLink = styled(Link)`
@@ -28,8 +28,8 @@ const InternalLink = styled(Link)`
 
 const NavigationOpen = styled(({ isNavigationVisible, ...rest }) => <FaBars {...rest} />)`
     fill: #ccc;
-    padding-bottom: 1vw;
-    padding-top: 2vw;
+    padding-bottom: ${CONTENT_SPACING.l};
+    padding-top: ${CONTENT_SPACING.l};
     transition: opacity ${TRANSITION_SPEED}s;
     opacity: ${props => (props.isNavigationVisible ? 0 : 1)};
 

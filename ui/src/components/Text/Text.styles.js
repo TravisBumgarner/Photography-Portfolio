@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { FONT_FAMILY_TEXT, CONTENT_SPACING } from 'Theme'
+import { FONT_FAMILY_TEXT, CONTENT_SPACING, TEXT_FONT_SIZES } from 'Theme'
 
 const DefaultText = styled.p`
     color: ${props => (props.inverted ? 'white' : 'black')};
@@ -19,7 +19,7 @@ const DefaultText = styled.p`
 `
 
 const MediumText = styled(DefaultText)`
-    font-size: 18px;
+    font-size: ${TEXT_FONT_SIZES.m};
 `
 
-export { LargeText, MediumText, SmallText }
+export { MediumText }

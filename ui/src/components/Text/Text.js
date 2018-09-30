@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { LargeText, MediumText, SmallText } from './Text.styles.js'
+import { MediumText } from './Text.styles.js'
 
 class Text extends Component {
     render() {
