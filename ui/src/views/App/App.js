@@ -6,7 +6,7 @@ import { Home, Contact, About, Portfolio, Blog } from 'Views'
 import { Navigation, TitleBar } from 'Containers'
 import { GlobalStyle } from 'Theme'
 
-import { AppWrapper, NavigationWrapper, ContentWrapper, NavigationClose, NavigationGutter } from './App.styles.js'
+import { AppWrapper, NavigationWrapper, NavigationClose, NavigationGutter } from './App.styles.js'
 
 class App extends Component {
     constructor(props) {

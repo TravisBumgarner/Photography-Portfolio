@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 import React from 'react'
 
-import { TRANSITION_SPEED, CONTENT_SPACING } from 'Theme'
+import { TRANSITION_SPEED } from 'Theme'
 
-import { FaCaretRight, FaCar } from 'react-icons/fa'
+import { FaCaretRight } from 'react-icons/fa'
 
 const NavigationClose = styled(({ isNavigationVisible, ...rest }) => <FaCaretRight {...rest} />)`
     position: absolute;
@@ -28,16 +28,11 @@ const NavigationGutter = styled.div`
     z-index: 998;
 `
 
-const AppWrapper = styled.div`
-    /* display: flex; */
-`
+const AppWrapper = styled.div``
 
 const NavigationWrapper = styled.div`
     box-sizing: border-box;
-
     display: flex;
-    /* align-items: center; */
-    /* padding-left: ${CONTENT_SPACING}vw; */
     position: fixed;
     bottom: 0;
     transition: right ${TRANSITION_SPEED}s;
