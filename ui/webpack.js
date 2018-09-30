@@ -18,7 +18,6 @@ setupApi = () => {
 setupApi()
 
 module.exports = env => {
-    console.log(env)
     return {
         entry: {
             app: './src/index.js'

@@ -40,9 +40,9 @@ class Photo(models.Model):
     focal_length = models.CharField(max_length=200, null=True)
 
     # Lightroom Metadata
-    location = models.CharField(max_length=200)
+    location = models.CharField(null=True, max_length=200)
     year = models.IntegerField(null=True)
-    categories = models.CharField(max_length=500)
+    categories = models.CharField(null=True, max_length=500)
 
     # Misc
     color_sample_1 = models.TextField(null=True)

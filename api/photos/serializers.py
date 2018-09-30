@@ -32,7 +32,6 @@ class PhotoSerializer(serializers.ModelSerializer):
             'year',
             'width',
             'height',
-            'exif_data',
             'color_sample_1',
             'color_sample_2',
             'src_thumbnail_medium',
