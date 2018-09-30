@@ -28,9 +28,9 @@ class Navigation extends Component {
                     </InternalLink>
                 </LinkListItem>
             )
-            if (content_type === 'project') {
+            if (content_type === 'Project') {
                 projectLinks.push(link)
-            } else if (content_type === 'snapshots') {
+            } else if (content_type === 'Snapshot') {
                 snapshotLinks.push(link)
             } else {
                 throw new Error('Invalid gallery type')
@@ -83,7 +83,6 @@ class Navigation extends Component {
 
         return (
             <Fragment>
-                
                 <NavigationWrapper theme={theme}>
                     <SubNavigationWrapper>
                         <Header size="medium">Main</Header>
