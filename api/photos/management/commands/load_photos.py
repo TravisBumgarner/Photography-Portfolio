@@ -10,6 +10,7 @@ import colorgram
 from django.core.files import File
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.management.base import BaseCommand
+from libxmp.utils import file_to_dict
 
 from photos.models import Gallery, Photo
 from api_django.settings import MEDIA_ROOT
@@ -236,6 +237,36 @@ def create_thumbnail(input_full_path, output_full_path, size):
         name=output_full_path,
         file=thumb_file
     )
+
+
+def get_lightroom_keywords(full_path):
+    # FYI: This was annoying to figure out.
+
+    xmp = file_to_dict(full_path)
+    # The metadata we want is from http://ns.adobe.com/lightroom/1.0/'
+    # There are a bunch of other keys in xmp.keys()
+    raw_xmp_data = xmp['http://ns.adobe.com/lightroom/1.0/']
+
+    metadata = {
+        'Category': [],
+        'Year': [],
+        'Location': []
+    }
+
+    # The first entry is always noise so skip it.
+    for entry in raw_xmp_data[1:]:
+        
+        # Each keyword gets it's own entry in the list along with a bunch of noise, it is the 2nd element
+        keyword = entry[1]
+        try:
+            key, value = keyword.split('|')
+            metadata[key].append(value)
+        except Exception as e:
+            print('Metadata Issue: {}'.format(full_path))
+            print(e)
+            continue
+
+    return(metadata)
 
 
 class Command(BaseCommand):
