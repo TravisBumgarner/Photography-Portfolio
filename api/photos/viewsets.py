@@ -28,6 +28,18 @@ class GalleryViewSet(ReadOnlyModelViewSet):
     pagination_class = None
 
 
+class LocationViewSet(ReadOnlyModelViewSet):
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
+    pagination_class = None
+
+
+class CategoryViewSet(ReadOnlyModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    pagination_class = None
+
+
 class PhotoViewSet(ReadOnlyModelViewSet):
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
