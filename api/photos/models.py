@@ -19,6 +19,13 @@ class Category(models.Model):
         return self.title
 
 
+class Location(models.Model):
+    title = models.CharField(max_length=200, unique=True)
+
+    def __unicode__(self):
+        return self.title
+
+
 class Photo(models.Model):
     # src
     src = models.ImageField(blank=True, null=True)
@@ -46,6 +53,6 @@ class Photo(models.Model):
     focal_length = models.CharField(max_length=200, null=True)
 
     # Lightroom Metadata
-    location = models.CharField(null=True, max_length=200)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
     camera_type = models.CharField(max_length=200, null=True)
     category = models.ManyToManyField(Category)

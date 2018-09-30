@@ -18,7 +18,7 @@ from io import StringIO, BytesIO
 from PIL import Image, ImageDraw
 
 
-from photos.models import Gallery, Photo, Category
+from photos.models import *
 from api_django.settings import MEDIA_ROOT, BASE_DIR
 
 
@@ -259,6 +259,10 @@ class Command(BaseCommand):
                     content_type=lightroom_keywords['ContentType']
                 )
 
+                location, _ = Location.objects.get_or_create(
+                    title=lightroom_keywords['Location'],
+                )
+
                 photo = Photo(
                     # src
                     src=src,
@@ -285,14 +289,13 @@ class Command(BaseCommand):
                     focal_length=exif_data['focal_length'],
 
                     # Lightroom Metadata
-                    location=lightroom_keywords['Location'],
-                    camera_type=lightroom_keywords['CameraType']
+                    location=location,
+                    camera_type=lightroom_keywords['CameraType'],
                 )
 
                 categories = []
                 photo.save()
                 for c in lightroom_keywords['Category']:
-                    print(c)
                     category, _ = Category.objects.get_or_create(
                         title=c,
                     )
