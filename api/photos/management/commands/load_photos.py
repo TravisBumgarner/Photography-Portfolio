@@ -258,8 +258,9 @@ def get_lightroom_keywords(full_path):
 
     metadata = {
         'Category': [],
-        'Year': [],
-        'Location': []
+        'Location': '',
+        'Gallery': '',
+        'ContentType': '',
     }
 
     # The first entry is always noise so skip it.
@@ -269,7 +270,10 @@ def get_lightroom_keywords(full_path):
         keyword = entry[1]
         try:
             key, value = keyword.split('|')
-            metadata[key].append(value)
+            if key == 'Category':
+                metadata['Category'].append(value)
+            else:
+                metadata[key] = value
         except Exception as e:
             print('Metadata Issue: {}'.format(full_path))
             print(e)
@@ -280,97 +284,79 @@ def get_lightroom_keywords(full_path):
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        for input_gallery_directory in os.listdir(INPUT_ROOT):
+        for input_file_name in os.listdir(INPUT_ROOT):
+            try:
+                input_full_path = os.path.join(INPUT_ROOT, input_file_name)
+                input_file_root, file_extension = input_file_name.split('.')
 
-            if not os.path.isdir(os.path.join(INPUT_ROOT, input_gallery_directory)):
-                print('Skipping directory: {}'.format(input_gallery_directory))
-                continue
-            else:
-                print('Processing directory: {}'.format(
-                    input_gallery_directory))
+                if file_extension not in ['jpg', 'jpeg']:
+                    print('    Skipping file: {}'.format(input_file_name))
+                    continue
+                else:
+                    print('    Processing file: {}'.format(input_file_name))
 
-            for input_file_name in os.listdir(os.path.join(INPUT_ROOT, input_gallery_directory)):
-                try:
-                    input_full_path = os.path.join(
-                        INPUT_ROOT, input_gallery_directory, input_file_name)
-                    print(input_file_name)
-                    input_file_root, file_extension = input_file_name.split('.')
+                lightroom_keywords = get_lightroom_keywords(input_full_path)
 
-                    if file_extension not in ['jpg', 'jpeg']:
-                        print('    Skipping file: {}'.format(input_file_name))
-                        continue
-                    else:
-                        print('    Processing file: {}'.format(input_file_name))
+                exif_data = process_exif_data(input_full_path)
+                if not exif_data:
+                    continue
 
-                    year, location, sequence = input_file_root.split('_')  # TODO refactor file naming
+                # color_sample_1, color_sample_2 = get_two_vibrant_color_samples(input_full_path)
+                color_sample_1 = 'rgb(0,0,0)'
+                color_sample_2 = 'rgb(0,0,0)'
 
-                    lightroom_keywords = get_lightroom_keywords(input_full_path)
+                src = File(
+                    name=os.path.join('full', lightroom_keywords['Gallery'], input_file_root),
+                    file=open(input_full_path, 'rb')
+                )
 
-                    exif_data = process_exif_data(input_full_path)
-                    if not exif_data:
-                        continue
+                small_output_path = os.path.join('small', lightroom_keywords['Gallery'], input_file_root)
+                src_thumbnail_small = create_thumbnail(
+                    input_full_path, small_output_path, size=(200, 200))
 
-                    # color_sample_1, color_sample_2 = get_two_vibrant_color_samples(input_full_path)
-                    color_sample_1 = 'rgb(0,0,0)'
-                    color_sample_2 = 'rgb(0,0,0)'
+                medium_output_path = os.path.join('medium', lightroom_keywords['Gallery'], input_file_root)
+                src_thumbnail_medium = create_thumbnail(
+                    input_full_path, medium_output_path, size=(800, 800))
 
-                    src = File(
-                        name=os.path.join('full', year, location, '{}.{}'.format(
-                            sequence, file_extension)),
-                        file=open(input_full_path, 'rb')
-                    )
+                gallery, _ = Gallery.objects.get_or_create(
+                    title=lightroom_keywords['Gallery'],
+                    content_type='project'
+                )
 
-                    small_output_path = os.path.join(
-                        'small', year, location, '{}.{}'.format(sequence, file_extension))
-                    src_thumbnail_small = create_thumbnail(
-                        input_full_path, small_output_path, size=(200, 200))
+                photo = Photo(
+                    # src
+                    src=src,
+                    src_thumbnail_small=src_thumbnail_small,
+                    src_thumbnail_medium=src_thumbnail_medium,
 
-                    medium_output_path = os.path.join(
-                        'medium', year, location, '{}.{}'.format(sequence, file_extension))
-                    src_thumbnail_medium = create_thumbnail(
-                        input_full_path, medium_output_path, size=(800, 800))
+                    # File Details
+                    file_name=os.path.join('full', lightroom_keywords['Gallery'], input_file_root),
+                    width=exif_data['width'],
+                    height=exif_data['height'],
+                    gallery=gallery,
 
-                    gallery, _ = Gallery.objects.get_or_create(
-                        title=input_gallery_directory,
-                        content_type='project'
-                    )
+                    # Hardware DEtails
+                    camera_type=exif_data['camera_type'],
+                    make=exif_data['make'],
+                    model=exif_data['model'],
+                    lens=exif_data['lens'],
 
-                    photo = Photo(
-                        # src
-                        src=src,
-                        src_thumbnail_small=src_thumbnail_small,
-                        src_thumbnail_medium=src_thumbnail_medium,
+                    # Photo Details
+                    date_taken=exif_data['date_taken'],
+                    shooting_mode=exif_data['shooting_mode'],
+                    aperture=exif_data['aperture'],
+                    shutter_speed=exif_data['shutter_speed'],
+                    iso=exif_data['iso'],
+                    focal_length=exif_data['focal_length'],
 
-                        # File Details
-                        file_name=os.path.join(
-                            'full', year, location, '{}.{}'.format(sequence, file_extension)),
-                        width=exif_data['width'],
-                        height=exif_data['height'],
-                        gallery=gallery,
+                    # Lightroom Metadata
+                    location=lightroom_keywords['Location'],
+                    categories=', '.join(lightroom_keywords['Category']),
 
-                        # Hardware DEtails
-                        camera_type=exif_data['camera_type'],
-                        make=exif_data['make'],
-                        model=exif_data['model'],
-                        lens=exif_data['lens'],
-
-                        # Photo Details
-                        date_taken=exif_data['date_taken'],
-                        shooting_mode=exif_data['shooting_mode'],
-                        aperture=exif_data['aperture'],
-                        shutter_speed=exif_data['shutter_speed'],
-                        iso=exif_data['iso'],
-                        focal_length=exif_data['focal_length'],
-
-                        # Lightroom Metadata
-                        location=lightroom_keywords['Location'][0],
-                        year=lightroom_keywords['Year'][0],
-                        categories=', '.join(lightroom_keywords['Category']),
-
-                        # Misc
-                        color_sample_1=color_sample_1,
-                        color_sample_2=color_sample_2,
-                    )
-                    photo.save()
-                except KeyboardInterrupt:
-                    sys.exit()
+                    # Misc
+                    color_sample_1=color_sample_1,
+                    color_sample_2=color_sample_2,
+                )
+                photo.save()
+            except KeyboardInterrupt:
+                sys.exit()
