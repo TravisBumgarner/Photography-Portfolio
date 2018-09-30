@@ -35,11 +35,11 @@ const sharedStyles = props => css`
     font-family: ${FONT_FAMILY_HEADER};
     font-weight: 100;
     font-size: ${TEXT_FONT_SIZES.m};
-    color: ${props.theme.primaryColor};
+    color: black;
     width: 100%;
 
     &:visited {
-        color: ${props.theme.primaryColor};
+        color: black;
     }
 `
 

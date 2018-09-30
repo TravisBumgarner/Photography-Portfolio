@@ -19,5 +19,4 @@ class PhotoAdmin(admin.ModelAdmin):
         'title',
         'make',
         'model',
-        'year',
     )

@@ -180,54 +180,6 @@ def process_exif_data(full_path):
     return processed_exif_data
 
 
-def get_two_vibrant_color_samples(full_path, generate_preview_image=False):
-    basename = os.path.basename(full_path)
-    dirname = os.path.dirname(full_path)
-
-    samples = 6
-    colors = colorgram.extract(full_path, samples)
-    # Most vibrant colors exist
-    #   Hue: any
-    #   Saturation closest to 100
-    #   Luminace: closest to 50
-    sorted_colors = sorted(colors, key=lambda c: abs(
-        100 - c.hsl.s) + abs(50 - c.hsl.l))
-
-    if generate_preview_image:
-        inputImage = Image.open(full_path)
-        inputImageWidth, inputImageHeight = inputImage.size
-        imageSideRatio = inputImageHeight / inputImageWidth
-
-        width = 100
-        height = 100
-        totalOutputWidth = width * samples
-
-        outputImageHeight = int(imageSideRatio * totalOutputWidth)
-        resizedInputImage = inputImage.resize(
-            (totalOutputWidth, outputImageHeight), Image.ANTIALIAS)
-
-        im = Image.new("RGB", (width * 6, height + outputImageHeight), "white")
-        draw = ImageDraw.Draw(im)
-        im.paste(resizedInputImage, (0, height))
-
-        for index, color in enumerate(sorted_colors):
-            print(index, color)
-            draw.rectangle(
-                [index*100, 0, (index+1)*100, height], fill=color.rgb)
-
-        samples_directory = os.path.join(dirname, 'samples')
-        print('samples', samples_directory)
-        if not os.path.exists(samples_directory):
-            os.mkdir(samples_directory)
-        im.save(os.path.join(samples_directory, basename))
-
-    rgb_most_vibrant = 'rgb({},{},{})'.format(
-        colors[0].rgb.r, colors[0].rgb.g, colors[0].rgb.b)
-    rgb_second_vibrant = 'rgb({},{},{})'.format(
-        colors[1].rgb.r, colors[1].rgb.g, colors[1].rgb.b)
-    return [rgb_most_vibrant, rgb_second_vibrant]
-
-
 def create_thumbnail(input_full_path, output_full_path, size):
     im_thumb = Image.open(input_full_path)
     im_thumb.thumbnail(size)
@@ -301,10 +253,6 @@ class Command(BaseCommand):
                 if not exif_data:
                     continue
 
-                # color_sample_1, color_sample_2 = get_two_vibrant_color_samples(input_full_path)
-                color_sample_1 = 'rgb(0,0,0)'
-                color_sample_2 = 'rgb(0,0,0)'
-
                 src = File(
                     name=os.path.join('full', lightroom_keywords['Gallery'], input_file_root),
                     file=open(input_full_path, 'rb')
@@ -352,10 +300,6 @@ class Command(BaseCommand):
                     # Lightroom Metadata
                     location=lightroom_keywords['Location'],
                     categories=', '.join(lightroom_keywords['Category']),
-
-                    # Misc
-                    color_sample_1=color_sample_1,
-                    color_sample_2=color_sample_2,
                 )
                 photo.save()
             except KeyboardInterrupt:

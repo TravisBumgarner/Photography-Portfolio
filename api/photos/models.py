@@ -41,9 +41,4 @@ class Photo(models.Model):
 
     # Lightroom Metadata
     location = models.CharField(null=True, max_length=200)
-    year = models.IntegerField(null=True)
     categories = models.CharField(null=True, max_length=500)
-
-    # Misc
-    color_sample_1 = models.TextField(null=True)
-    color_sample_2 = models.TextField(null=True)

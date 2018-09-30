@@ -11,7 +11,7 @@ const StyledButton = styled.button`
     margin: 10px 0;
     font-size: ${FONT_SIZE_INPUTS_AND_BUTTONS}px;
     text-transform: uppercase;
-    color: ${props => props.theme.primaryColor};
+    color: black;
     background-color: rgba(0, 0, 0, 0);
     cursor: pointer;
     font-weight: 700;

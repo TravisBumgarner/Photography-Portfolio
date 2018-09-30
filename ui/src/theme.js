@@ -1,11 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components'
 
-const generateTheme = ({ primaryColor, secondaryColor, backgroundSrc }) => ({
-    primaryColor,
-    secondaryColor,
-    backgroundSrc
-})
-
 const TRANSITION_SPEED = 1
 const CONTENT_SPACING = {
     s: '0.25rem',
@@ -77,8 +71,6 @@ export {
     PAGE_THEME,
     FONT_FAMILY_TEXT,
     FONT_FAMILY_HEADER,
-    PRIMARY_COLOR,
-    SECONDARY_COLOR,
     FONT_SIZE_INPUTS_AND_BUTTONS,
     TRANSITION_SPEED,
     CONTENT_SPACING,

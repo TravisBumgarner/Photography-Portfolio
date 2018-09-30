@@ -12,11 +12,6 @@ class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            theme: {
-                backgroundSrc: '',
-                primaryColor: 'rgb(0,0,0)',
-                secondaryColor: 'rgb(0,0,0)'
-            },
             photos: [],
             isNavigationVisible: true,
             isBackgroundVisible: true,
@@ -35,8 +30,6 @@ class App extends Component {
         Promise.all([this.getPhotos(), this.getGalleries()]).then(responses => {
             this.setState({ photos: responses[0], galleries: responses[1] })
         })
-
-        // this.getThemeDetails()
     }
 
     componentWillReceiveProps(nextProps) {
@@ -54,20 +47,6 @@ class App extends Component {
         }
         this.setState({ ...statePatch })
     }
-
-    // getThemeDetails = () => {
-    //     console.log(__API__)
-    //     axios.get(__API__ + 'get_random_photo').then(response => {
-    //         const { src, color_sample_1, color_sample_2 } = response.data
-    //         this.setState({
-    //             theme: {
-    //                 backgroundSrc: src,
-    //                 primaryColor: color_sample_1,
-    //                 secondaryColor: color_sample_2
-    //             }
-    //         })
-    //     })
-    // }
 
     getGalleries = () => {
         return axios
@@ -88,10 +67,10 @@ class App extends Component {
     }
 
     render() {
-        const { galleries, photos, isLoading, theme, isNavigationVisible, isBackgroundVisible, pathname } = this.state
+        const { galleries, photos, isLoading, isNavigationVisible, isBackgroundVisible, pathname } = this.state
         return isLoading ? null : (
             <Fragment>
-                <GlobalStyle theme={theme} isBackgroundVisible={isBackgroundVisible} />
+                <GlobalStyle isBackgroundVisible={isBackgroundVisible} />
                 <AppWrapper>
                     <TitleBar isNavigationVisible={isNavigationVisible} toggleNavigation={this.toggleNavigation} />
                     <NavigationWrapper isNavigationVisible={isNavigationVisible}>
@@ -100,7 +79,6 @@ class App extends Component {
                         <Navigation
                             isNavigationVisible={isNavigationVisible}
                             galleries={galleries}
-                            theme={theme}
                             toggleNavigation={this.toggleNavigation}
                         />
                         {pathname !== '/' && (
@@ -113,9 +91,9 @@ class App extends Component {
                     </NavigationWrapper>
                     <Switch>
                         <Route exact path="/" component={Home} />
-                        <Route exact path="/blog" render={rest => <Blog theme={theme} {...rest} />} />
-                        <Route exact path="/contact" render={rest => <Contact theme={theme} {...rest} />} />
-                        <Route exact path="/about" render={rest => <About theme={theme} {...rest} />} />
+                        <Route exact path="/blog" render={rest => <Blog {...rest} />} />
+                        <Route exact path="/contact" render={rest => <Contact {...rest} />} />
+                        <Route exact path="/about" render={rest => <About {...rest} />} />
                         <Route
                             path="/portfolio/:contentType/:galleryId"
                             render={rest => <Portfolio photos={photos} galleries={galleries} {...rest} />}

@@ -10,11 +10,11 @@ const sharedStyles = props => css`
     box-sizing: border-box;
     margin: 10px 0;
     border: 0px;
-    border-bottom: 2px solid ${props.theme.secondaryColor};
+    border-bottom: 2px solid black;
     font-size: ${FONT_SIZE_INPUTS_AND_BUTTONS}px;
 
     &::placeholder {
-        color: ${props.theme.primaryColor};
+        color: black;
         text-transform: uppercase;
     }
 `
