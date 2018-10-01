@@ -254,9 +254,13 @@ class Command(BaseCommand):
                 src_thumbnail_medium = create_thumbnail(
                     input_full_path, medium_output_path, size=(800, 800))
 
-                gallery, _ = Gallery.objects.get_or_create(
-                    title=lightroom_keywords['Gallery'],
-                )
+                try:
+                    gallery = Gallery.objects.get(title=lightroom_keywords['Gallery'])
+                except Gallery.DoesNotExist:
+                    gallery = Gallery.objects.create(
+                        title=lightroom_keywords['Gallery'],
+                        content_type=lightroom_keywords['ContentType']
+                    )
 
                 location, _ = Location.objects.get_or_create(
                     title=lightroom_keywords['Location'],
