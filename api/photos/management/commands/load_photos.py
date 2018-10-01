@@ -256,7 +256,6 @@ class Command(BaseCommand):
 
                 gallery, _ = Gallery.objects.get_or_create(
                     title=lightroom_keywords['Gallery'],
-                    content_type=lightroom_keywords['ContentType']
                 )
 
                 location, _ = Location.objects.get_or_create(
