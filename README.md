@@ -3,7 +3,9 @@
 ## Lightroom:
 
 1. Add Metadata to Photos:
-```Categories
+
+```
+Categories
 - Nature
 - Street
 - Architecture
@@ -19,17 +21,21 @@ Location
 - CountryNameHere
 CameraType
 - Digital
-- Analog 
+- Analog
 ContentType
 - Snapshot
-- Project```
-2. Export to directory to load photos. 
+- Project
+```
+
+2. Export to directory with file naming options `Date (YYYY)_Folder Name_Sequence # (001)`
+3. Zip directory
+4. Upload via Cyberduck
 
 # Django
 
 `source ../lib/venv/bin/activate`
-Login to admin panel and create Project if it doesn't already exist. Update metadata as needed. 
-`python manage.py load_photos`
+Login to admin panel and create Project if it doesn't already exist. Update metadata as needed.
+`SITE=production python manage.py load_photos`
 
 # Updating UI
 
@@ -46,3 +52,32 @@ git pull
 Make changes
 `./apache2/bin/stop`
 `./apache2/bin/start`
+
+# GAHHH 🤷🤷🤷🤷🤷🤷🤷
+
+To use xmp library on Webfaction:
+
+1. Follow these instructions: https://docs.webfaction.com/software/home-install.html
+2. With a `wget` of the tar.bz2 here: https://libopenraw.freedesktop.org/wiki/Exempi/
+3. Then modify virtualenv `site-packages/libxmp/exempi.py` with the following:
+
+```
+def _load_exempi():
+"""
+Loads exempi library.
+"""
+path = '/home/tbumgarner/lib/libexempi.so'
+#path = ctypes.util.find_library('exempi')
+#if path is None: # if platform.system().startswith('Darwin'): # if os.path.exists('/opt/local/lib/libexempi.dylib'): # # MacPorts starndard location. # path = '/opt/local/lib/libexempi.dylib'
+if path is None:
+raise ExempiLoadError('Exempi library not found.')
+
+    if os.name != "nt":
+        EXEMPI = ctypes.CDLL(path)
+    else:
+        EXEMPI = ctypes.WinDLL(path)
+
+    return EXEMPI
+
+EXEMPI = \_load_exempi()
+```
