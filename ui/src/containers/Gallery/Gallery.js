@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 
 import { Thumbnail, PhotoWithMetadata, Header, Text } from 'Components'
 import { ICON_FONT_SIZES } from 'Theme'
+import { parseContent } from 'Utilities'
 
 import {
     GalleryWrapper,
@@ -138,7 +139,7 @@ class Gallery extends Component {
                 {galleryDetails.title !== 'All' && (
                     <ProjectDescriptionWrapper>
                         <Header size="medium">{galleryDetails.title}</Header>
-                        <Text>{galleryDetails.description}</Text>
+                        <Text>{parseContent(galleryDetails.description)}</Text>
                         {galleryDetails.content_type == 'Project' && (
                             <Text>{`${galleryDetails.start_date} - ${galleryDetails.end_date}`}</Text>
                         )}

@@ -16,7 +16,7 @@ const CloseIcon = styled(FaTimes)`
     }
 `
 const ProjectDescriptionWrapper = styled.div`
-    margin: ${CONTENT_SPACING / 2}vw 0;
+    margin: ${CONTENT_SPACING.m} 0;
 `
 
 const GalleryWrapper = styled.div`
@@ -79,19 +79,17 @@ const PhotoWithMetadataWrapper = styled.div`
 `
 
 const GalleryItem = styled.div`
-    margin: 1vw;
+    margin: ${CONTENT_SPACING.m};
     color: white;
     flex: 1 0 auto;
     height: auto;
     flex-basis: 29%;
 
     &:nth-child(3n + 1) {
-        margin: ${CONTENT_SPACING.m};
         margin-left: 0;
     }
 
     &:nth-child(3n + 3) {
-        margin: ${CONTENT_SPACING.m};
         margin-right: 0;
     }
 
