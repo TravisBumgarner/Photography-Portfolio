@@ -3,6 +3,7 @@ import { FaInstagram, FaFlickr } from 'react-icons/fa'
 
 import { NatGeoIcon } from 'Resources'
 import { Header } from 'Components'
+import { SNAPSHOT, PROJECT } from 'Constants'
 
 import {
     NavigationWrapper,
@@ -15,7 +16,7 @@ import {
 
 class Navigation extends Component {
     render() {
-        const { galleries, toggleNavigation, locations, categories } = this.props
+        const { galleries, toggleNavigation } = this.props
 
         const projectLinks = []
         const snapshotLinks = []
@@ -25,9 +26,9 @@ class Navigation extends Component {
                     <InternalLink to={`/portfolio/${content_type}/${id}`}>{title}</InternalLink>
                 </LinkListItem>
             )
-            if (content_type === 'Project') {
+            if (content_type === PROJECT) {
                 projectLinks.push(link)
-            } else if (content_type === 'Snapshot') {
+            } else if (content_type === SNAPSHOT) {
                 snapshotLinks.push(link)
             }
         })
@@ -112,7 +113,7 @@ class Navigation extends Component {
                         {/* <Header size="small">By Year</Header> */}
                         <ul>
                             <LinkListItem key={'all'} onClick={toggleNavigation}>
-                                <InternalLink to={`/portfolio/snapshots/all`}>All</InternalLink>
+                                <InternalLink to={`/portfolio/${SNAPSHOT}/all`}>All</InternalLink>
                             </LinkListItem>
                             {snapshotLinks}
                         </ul>

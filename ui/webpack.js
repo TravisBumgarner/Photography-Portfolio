@@ -34,7 +34,8 @@ module.exports = env => {
                 Views: path.resolve(__dirname, 'src/views/'),
                 Theme: path.resolve(__dirname, 'src/theme.js'),
                 Utilities: path.resolve(__dirname, 'src/utilities/'),
-                Resources: path.resolve(__dirname, 'src/resources/')
+                Resources: path.resolve(__dirname, 'src/resources/'),
+                Constants: path.resolve(__dirname, 'src/constants/')
             }
         },
         module: {

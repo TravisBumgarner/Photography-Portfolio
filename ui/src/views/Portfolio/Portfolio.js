@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from 'react'
 
 import { Gallery } from 'Containers'
+import { SNAPSHOT, PROJECT } from 'Constants'
 
-import { PortfolioWrapper, ContentWrapper } from './Portfolio.styles.js'
+import { PortfolioWrapper } from './Portfolio.styles.js'
 
 class Portfolio extends Component {
     constructor(props) {
@@ -30,8 +31,10 @@ class Portfolio extends Component {
     }
 
     filterPhotos = (photos, contentType, galleryId) => {
-        if (contentType === 'snapshots' && galleryId === 'all') {
-            const filteredPhotos = photos.filter(photo => photo.gallery.content_type == 'snapshots')
+        console.log(photos)
+        console.log(contentType)
+        if (contentType === SNAPSHOT && galleryId === 'all') {
+            const filteredPhotos = photos.filter(photo => photo.gallery.content_type == SNAPSHOT)
             this.setState({ filteredPhotos })
         } else {
             const filteredPhotos = photos.filter(photo => photo.gallery.id == galleryId)

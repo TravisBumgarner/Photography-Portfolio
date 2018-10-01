@@ -3,6 +3,9 @@ import React from 'react'
 import { Header, Text } from 'Components'
 
 const parseContent = rawContent => {
+    if (!rawContent) {
+        return ''
+    }
     const lines = rawContent.match(/[^\r\n]+/g)
     return lines.map(line => {
         const [tag, content] = line.split(/#(.+)/)
