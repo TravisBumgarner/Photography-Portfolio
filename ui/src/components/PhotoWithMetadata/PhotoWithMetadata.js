@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 
 import { Text, Header } from 'Components'
+import { ANALOG } from 'Constants'
 
 import {
     StyledPhoto,
@@ -55,7 +56,7 @@ class PhotoWithMetadata extends Component {
                                     {gearString}
                                     <Spacer />
                                     <Header size="inline">Conditions </Header>
-                                    {statsString}
+                                    {camera_type === ANALOG ? 'N/A' : statsString}
                                 </Fragment>
                             )}
                         </Text>
