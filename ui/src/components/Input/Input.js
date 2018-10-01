@@ -6,8 +6,6 @@ class Input extends Component {
     render() {
         const { hintText, name, value, onChange, theme, rows, textarea } = this.props
 
-        console.log(textarea)
-
         return textarea ? (
             <StyledTextArea
                 theme={theme}
