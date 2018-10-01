@@ -117,7 +117,7 @@ class ContactForm extends Component {
                     />
                     <Button theme={theme} label="Submit" onClick={this.handleSubmit} />
                 </ContactFormWrapper>
-                <AlertWrapper isNotification={isNotification}>
+                <AlertWrapper onClick={this.clearNotification} isNotification={isNotification}>
                     <Text inverted>{notificationMessage}</Text>
                 </AlertWrapper>
             </Fragment>
