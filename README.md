@@ -2,14 +2,34 @@
 
 ## Lightroom:
 
-Export photos into a directory with the title of the Year for snapshots or name of project.
-Photos are of format Year_Place_Sequence.jpg (2015_Granada_001.jpg)
+1. Add Metadata to Photos:
+```Categories
+- Nature
+- Street
+- Architecture
+- Black & White
+- Landscapes
+- Abstract
+- People
+IsHomepage
+Gallery
+- 2x3x4
+- 2018
+Location
+- CountryNameHere
+CameraType
+- Digital
+- Analog 
+ContentType
+- Snapshot
+- Project```
+2. Export to directory to load photos. 
 
 # Django
 
 `source ../lib/venv/bin/activate`
+Login to admin panel and create Project if it doesn't already exist. Update metadata as needed. 
 `python manage.py load_photos`
-Login to admin panel and set content_type, dates, description
 
 # Updating UI
 
