@@ -139,7 +139,9 @@ class Gallery extends Component {
                     <ProjectDescriptionWrapper>
                         <Header size="medium">{galleryDetails.title}</Header>
                         <Text>{galleryDetails.description}</Text>
-                        <Text>{`${galleryDetails.start_date} - ${galleryDetails.end_date}`}</Text>
+                        {galleryDetails.content_type == 'Project' && (
+                            <Text>{`${galleryDetails.start_date} - ${galleryDetails.end_date}`}</Text>
+                        )}
                     </ProjectDescriptionWrapper>
                 )}
                 <GalleryWrapper ref={this.myRef}>{grid}</GalleryWrapper>

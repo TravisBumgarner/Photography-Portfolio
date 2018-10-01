@@ -10,8 +10,7 @@ import {
     InternalLink,
     ExternalLink,
     LinkListItem,
-    IconWrapper,
-    EmptySpaceCloseNavigation
+    IconWrapper
 } from './Navigation.styles.js'
 
 class Navigation extends Component {
@@ -30,30 +29,28 @@ class Navigation extends Component {
                 projectLinks.push(link)
             } else if (content_type === 'Snapshot') {
                 snapshotLinks.push(link)
-            } else {
-                throw new Error('Invalid gallery type')
             }
         })
 
-        const locationLinks = []
-        locations.map(({ id, title }) => {
-            const link = (
-                <LinkListItem key={id} onClick={toggleNavigation}>
-                    <InternalLink to={`/portfolio/locations/${title}`}>{title}</InternalLink>
-                </LinkListItem>
-            )
-            locationLinks.push(link)
-        })
+        // const locationLinks = []
+        // locations.map(({ id, title }) => {
+        //     const link = (
+        //         <LinkListItem key={id} onClick={toggleNavigation}>
+        //             <InternalLink to={`/portfolio/locations/${title}`}>{title}</InternalLink>
+        //         </LinkListItem>
+        //     )
+        //     locationLinks.push(link)
+        // })
 
-        const categoriesLinks = []
-        categories.map(({ id, title }) => {
-            const link = (
-                <LinkListItem key={id} onClick={toggleNavigation}>
-                    <InternalLink to={`/portfolio/categories/${title}`}>{title}</InternalLink>
-                </LinkListItem>
-            )
-            categoriesLinks.push(link)
-        })
+        // const categoriesLinks = []
+        // categories.map(({ id, title }) => {
+        //     const link = (
+        //         <LinkListItem key={id} onClick={toggleNavigation}>
+        //             <InternalLink to={`/portfolio/categories/${title}`}>{title}</InternalLink>
+        //         </LinkListItem>
+        //     )
+        //     categoriesLinks.push(link)
+        // })
 
         const socialSectionContent = [
             {
@@ -112,22 +109,17 @@ class Navigation extends Component {
 
                     <SubNavigationWrapper>
                         <Header size="medium">Snapshots</Header>
+                        {/* <Header size="small">By Year</Header> */}
                         <ul>
                             <LinkListItem key={'all'} onClick={toggleNavigation}>
                                 <InternalLink to={`/portfolio/snapshots/all`}>All</InternalLink>
                             </LinkListItem>
                             {snapshotLinks}
                         </ul>
-                    </SubNavigationWrapper>
-
-                    <SubNavigationWrapper>
-                        <Header size="medium">Categories</Header>
+                        {/* <Header size="small">By Category</Header>
                         <ul>{categoriesLinks}</ul>
-                    </SubNavigationWrapper>
-
-                    <SubNavigationWrapper>
-                        <Header size="medium">Locations</Header>
-                        <ul>{locationLinks}</ul>
+                        <Header size="small">By Location</Header>
+                        <ul>{locationLinks}</ul> */}
                     </SubNavigationWrapper>
 
                     <SubNavigationWrapper>{socialLinks}</SubNavigationWrapper>
