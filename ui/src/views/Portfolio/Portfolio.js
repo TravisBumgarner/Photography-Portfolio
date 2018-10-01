@@ -31,8 +31,6 @@ class Portfolio extends Component {
     }
 
     filterPhotos = (photos, contentType, galleryId) => {
-        console.log(photos)
-        console.log(contentType)
         if (contentType === SNAPSHOT && galleryId === 'all') {
             const filteredPhotos = photos.filter(photo => photo.gallery.content_type == SNAPSHOT)
             this.setState({ filteredPhotos })
