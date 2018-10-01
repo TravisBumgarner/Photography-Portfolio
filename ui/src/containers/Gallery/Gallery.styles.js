@@ -12,7 +12,7 @@ const CloseIcon = styled(FaTimes)`
     fill: #ccc;
 
     &:hover {
-        fill: #000;
+        fill: rgb(74, 207, 160);
     }
 `
 const ProjectDescriptionWrapper = styled.div`
@@ -35,7 +35,7 @@ const PreviousButton = styled(FaArrowCircleLeft)`
     fill: #ccc;
 
     &:hover {
-        fill: #000;
+        fill: rgb(74, 207, 160);
     }
 `
 const NextButton = styled(FaArrowCircleRight)`
@@ -45,7 +45,7 @@ const NextButton = styled(FaArrowCircleRight)`
     fill: #ccc;
 
     &:hover {
-        fill: #000;
+        fill: rgb(74, 207, 160);
     }
 `
 

@@ -26,7 +26,7 @@ const LinkListItem = styled.li`
 
     &:hover {
         color: ${props => props.theme.secondaryColor};
-        border-left: 5px solid black;
+        border-left: 5px solid rgb(74, 207, 160);
     }
 `
 

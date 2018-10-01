@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 
-import { Header } from 'Components'
 import { ICON_FONT_SIZES } from 'Theme'
 
-import { TitleBarWrapper, NavigationOpen, InternalLink } from './TitleBar.styles'
+import { TitleBarWrapper, NavigationOpen, InternalLink, StyledHeader } from './TitleBar.styles'
 
 class TitleBar extends Component {
     render() {
@@ -11,7 +10,7 @@ class TitleBar extends Component {
         return (
             <TitleBarWrapper>
                 <InternalLink to="/">
-                    <Header size="large">Travis Bumgarner Photography</Header>
+                    <StyledHeader size="large">Travis Bumgarner Photography</StyledHeader>
                 </InternalLink>
                 <NavigationOpen
                     isNavigationVisible={isNavigationVisible}

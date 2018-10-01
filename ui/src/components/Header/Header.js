@@ -4,19 +4,19 @@ import { LargeHeader, MediumHeader, SmallHeader, InlineHeader } from './Header.s
 
 class Header extends Component {
     render() {
-        const { size, children } = this.props
+        const { size, children, className } = this.props
 
         switch (size) {
             case 'large':
-                return <LargeHeader>{children}</LargeHeader>
+                return <LargeHeader className={className}>{children}</LargeHeader>
             case 'medium':
-                return <MediumHeader>{children}</MediumHeader>
+                return <MediumHeader className={className}>{children}</MediumHeader>
             case 'small':
-                return <SmallHeader>{children}</SmallHeader>
+                return <SmallHeader className={className}>{children}</SmallHeader>
             case 'inline':
-                return <InlineHeader>{children}</InlineHeader>
+                return <InlineHeader className={className}>{children}</InlineHeader>
             default:
-                return <SmallHeader>{children}</SmallHeader>
+                return <SmallHeader className={className}>{children}</SmallHeader>
         }
     }
 }

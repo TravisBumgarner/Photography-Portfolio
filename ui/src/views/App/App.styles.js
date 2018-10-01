@@ -15,7 +15,7 @@ const NavigationClose = styled(({ isNavigationVisible, ...rest }) => <FaCaretRig
     fill: #ccc;
 
     &:hover {
-        fill: #000;
+        fill: rgb(74, 207, 160);
     }
 `
 

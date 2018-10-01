@@ -10,7 +10,7 @@ const sharedStyles = props => css`
     box-sizing: border-box;
     margin: 10px 0;
     border: 0px;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid rgb(74, 207, 160);
     font-size: ${FONT_SIZE_INPUTS_AND_BUTTONS}px;
 
     &::placeholder {
