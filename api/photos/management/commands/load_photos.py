@@ -242,15 +242,15 @@ class Command(BaseCommand):
                     continue
 
                 src = File(
-                    name=os.path.join('full', lightroom_keywords['Gallery'], input_file_root),
+                    name=os.path.join('full', lightroom_keywords['Gallery'], input_file_name),
                     file=open(input_full_path, 'rb')
                 )
 
-                small_output_path = os.path.join('small', lightroom_keywords['Gallery'], input_file_root)
+                small_output_path = os.path.join('small', lightroom_keywords['Gallery'], input_file_name)
                 src_thumbnail_small = create_thumbnail(
                     input_full_path, small_output_path, size=(200, 200))
 
-                medium_output_path = os.path.join('medium', lightroom_keywords['Gallery'], input_file_root)
+                medium_output_path = os.path.join('medium', lightroom_keywords['Gallery'], input_file_name)
                 src_thumbnail_medium = create_thumbnail(
                     input_full_path, medium_output_path, size=(800, 800))
 
