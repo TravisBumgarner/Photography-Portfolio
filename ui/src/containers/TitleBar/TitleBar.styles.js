@@ -22,6 +22,7 @@ const StyledHeader = styled(Header)`
 
 const InternalLink = styled(Link)`
     text-decoration: none;
+    color: black;
 
     &:visited {
         color: black;
