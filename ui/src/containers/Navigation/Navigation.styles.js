@@ -38,6 +38,7 @@ const sharedStyles = props => css`
     font-size: ${TEXT_FONT_SIZES.m};
     color: black;
     width: 100%;
+    display: inline-block;
 
     &:visited {
         color: black;
