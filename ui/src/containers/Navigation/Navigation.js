@@ -16,11 +16,11 @@ import {
 
 class Navigation extends Component {
     render() {
-        const { galleries, toggleNavigation } = this.props
+        const { galleries, toggleNavigation, isHomepage } = this.props
 
         const projectLinks = []
         const snapshotLinks = []
-        
+
         galleries.sort((a, b) => (a.title > b.title ? 1 : -1)) // Sort galleries alphabetically
         galleries.map(({ id, title, content_type }) => {
             const link = (
@@ -99,7 +99,7 @@ class Navigation extends Component {
 
         return (
             <Fragment>
-                <NavigationWrapper>
+                <NavigationWrapper isHomepage={isHomepage}>
                     <SubNavigationWrapper>
                         <Header size="medium">Main</Header>
                         <ul>{miscLinks}</ul>

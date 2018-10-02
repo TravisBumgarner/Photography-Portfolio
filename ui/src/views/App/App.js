@@ -100,7 +100,7 @@ class App extends Component {
             locations,
             categories
         } = this.state
-        
+
         return isLoading ? null : (
             <Fragment>
                 <GlobalStyle isBackgroundVisible={isBackgroundVisible} />
@@ -110,6 +110,7 @@ class App extends Component {
                         {isNavigationVisible &&
                             pathname !== '/' && <NavigationGutter onClick={this.toggleNavigation} />}
                         <Navigation
+                            isHomepage={pathname === '/'}
                             isNavigationVisible={isNavigationVisible}
                             galleries={galleries}
                             locations={locations}

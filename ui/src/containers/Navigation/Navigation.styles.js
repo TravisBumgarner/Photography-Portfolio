@@ -2,20 +2,20 @@ import styled, { css } from 'styled-components'
 
 import { Link } from 'react-router-dom'
 
-import { FONT_FAMILY_HEADER, CONTENT_SPACING, TEXT_FONT_SIZES } from 'Theme'
+import { FONT_FAMILY_HEADER, CONTENT_SPACING, TEXT_FONT_SIZES, TRANSITION_SPEED } from 'Theme'
 
 const NavigationWrapper = styled.div`
     text-align: right;
     z-index: 999;
     padding: ${CONTENT_SPACING.l};
-    border-left: 5px solid black;
+    border-left: ${props => (!props.isHomepage ? '5px solid #ccc' : '')};
     height: 100vh;
-    background-color: white;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     width: 300px;
+    background-color: ${props => (!props.isHomepage ? 'rgba(255,255,255,1)' : 'rgba(255,255,255,0)')};
 `
 
 const SubNavigationWrapper = styled.div`
