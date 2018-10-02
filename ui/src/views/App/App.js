@@ -98,7 +98,6 @@ class App extends Component {
             photos,
             isLoading,
             isNavigationVisible,
-            isBackgroundVisible,
             pathname,
             locations,
             categories,

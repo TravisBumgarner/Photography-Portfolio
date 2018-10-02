@@ -19,5 +19,6 @@ class PhotoAdmin(admin.ModelAdmin):
         'file_name',
         'make',
         'model',
+        'lens',
     )
     search_fields = ('file_name',)
