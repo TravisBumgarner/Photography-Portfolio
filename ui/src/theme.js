@@ -6,7 +6,10 @@ const CONTENT_SPACING = {
     s: '0.25rem',
     m: '0.5rem',
     l: '1rem',
-    xl: '2rem'
+    xl: '2rem',
+    xxl: '4rem',
+    xxxl: '8rem',
+    xxxxl: '16rem'
 }
 const HEADER_FONT_SIZES = {
     s: '1.4rem',
@@ -32,14 +35,6 @@ const FONT_FAMILY_TEXT = "'Montserrat', sans-serif"
 
 const FONT_SIZE_INPUTS_AND_BUTTONS = 14
 
-const PAGE_THEME = styled.div`
-    padding: ${CONTENT_SPACING.l};
-    overflow: scroll;
-    width: 100vw;
-    height: 100vh;
-    box-sizing: border-box;
-`
-
 const sizes = {
     desktop: 992,
     tablet: 768,
@@ -55,6 +50,22 @@ const MEDIA = Object.keys(sizes).reduce((acc, label) => {
     `
     return acc
 }, {})
+
+const PAGE_THEME = styled.div`
+    padding: ${CONTENT_SPACING.l};
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    margin-top: ${CONTENT_SPACING.xl};
+
+    ${MEDIA.tablet`
+        margin-top: 4rem;
+    `};
+
+    ${MEDIA.phone`
+        margin-top: 6rem;
+    `};
+`
 
 const GlobalStyle = createGlobalStyle`
     html {
