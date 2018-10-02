@@ -1,9 +1,11 @@
 import styled from 'styled-components'
 import React from 'react'
 
+import { MEDIA, CONTENT_SPACING } from 'Theme'
+
 const StyledPhoto = styled.img`
     max-width: 100%;
-    max-height: 100%;
+    max-height: 95%;
 `
 
 const PhotoWithMetadataWrapper = styled.div`
@@ -22,16 +24,27 @@ const Spacer = styled(({ className }) => <span className={className}>//</span>)`
 `
 
 const PhotoWrapper = styled.div`
-    width: 100%;
-    height: 90%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-sizing: border-box;
+    margin: 0;
+
+    ${MEDIA.phone`
+        height: 100%;
+        margin: 0 ${CONTENT_SPACING.m};
+    `};
 `
 
 const MetadataWrapper = styled.div`
     width: 100%;
     height: 10%;
     text-align: center;
-    /* display: flex;
-    justify-content: space-around; */
+    ${MEDIA.phone`
+        display: none;
+    `};
 `
 
 export { StyledPhoto, MetadataWrapper, PhotoWrapper, PhotoWithMetadataWrapper, Spacer }
