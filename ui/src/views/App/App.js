@@ -100,7 +100,7 @@ class App extends Component {
             locations,
             categories
         } = this.state
-        console.log('GALLERIES', galleries)
+        
         return isLoading ? null : (
             <Fragment>
                 <GlobalStyle isBackgroundVisible={isBackgroundVisible} />
