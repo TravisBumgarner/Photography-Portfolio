@@ -13,20 +13,29 @@ class Home extends Component {
     }
 
     componentDidMount() {
+        const { backgroundPhotos } = this.props
         this.interval = window.setInterval(this.incrementBgIndex, 8000)
+        this.getPhotoCycleInfo(backgroundPhotos)
     }
 
     componentWillReceiveProps(nextProps) {
-        const maxBgIndex = nextProps.backgroundPhotos.length - 1
-
-        this.setState({
-            maxBgIndex,
-            currentBgIndex: Math.floor(Math.random() * maxBgIndex)
-        })
+        this.getPhotoCycleInfo(nextProps.backgroundPhotos)
     }
 
     componentWillUnmount() {
         window.clearInterval(this.interval)
+    }
+
+    getPhotoCycleInfo = photos => {
+        const { maxBgIndex } = this.state
+        if (maxBgIndex !== photos.length - 1) {
+            const maxBgIndex = photos.length - 1
+
+            this.setState({
+                maxBgIndex,
+                currentBgIndex: Math.floor(Math.random() * maxBgIndex)
+            })
+        }
     }
 
     incrementBgIndex = () => {

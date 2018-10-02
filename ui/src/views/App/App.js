@@ -36,7 +36,6 @@ class App extends Component {
         Promise.all([this.getPhotos(), this.getGalleries(), this.getLocations(), this.getCategories()]).then(
             responses => {
                 const backgroundPhotos = responses[0].filter(photo => photo.is_home_background).map(photo => photo.src)
-                console.log(backgroundPhotos)
                 this.setState({
                     photos: responses[0],
                     galleries: responses[1],
@@ -58,9 +57,6 @@ class App extends Component {
         if (pathname !== nextPathname) {
             statePatch.pathname = nextPathname
         }
-        // if (nextPathname === '/') {
-        //     statePatch.isNavigationVisible = true
-        // }
         this.setState({ ...statePatch })
     }
 
@@ -109,7 +105,6 @@ class App extends Component {
             backgroundPhotos
         } = this.state
 
-        console.log(isNavigationVisible)
         return isLoading ? null : (
             <Fragment>
                 <GlobalStyle isHomepage={pathname === '/'} />
