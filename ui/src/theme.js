@@ -56,7 +56,7 @@ const PAGE_THEME = styled.div`
     width: 100vw;
     height: 100vh;
     box-sizing: border-box;
-    margin-top: ${CONTENT_SPACING.xl};
+    margin-top: 3rem;
 
     ${MEDIA.tablet`
         margin-top: 4rem;
