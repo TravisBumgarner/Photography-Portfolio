@@ -3,9 +3,10 @@ const express = require('express')
 
 const app = express()
 
-app.use('/', express.static(path.resolve(__dirname + '/dist')))
-app.get('/', (request, response) => {
-    response.sendFile(path.resolve(__dirname + '/dist/index.html'))
+console.log(path.resolve(__dirname, './dist', 'index.html'))
+app.use('/static', express.static(path.resolve(__dirname + '/dist')))
+app.get('*', function(request, response) {
+    response.sendFile(path.resolve(__dirname, './dist', 'index.html'))
 })
 
 const port = 25062

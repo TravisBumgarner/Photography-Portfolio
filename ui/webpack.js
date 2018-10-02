@@ -25,7 +25,7 @@ module.exports = env => {
         output: {
             filename: '[name]-[hash].bundle.js',
             path: path.resolve(__dirname, 'dist'),
-            publicPath: '/'
+            publicPath: '/static'
         },
         resolve: {
             alias: {
