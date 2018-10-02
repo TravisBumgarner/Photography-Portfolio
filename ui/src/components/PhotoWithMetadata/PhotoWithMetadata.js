@@ -36,8 +36,12 @@ class PhotoWithMetadata extends Component {
         } = this.props
 
         const locationString = `${location.title}`
-        const gearString = `${make} ${model}  ${lens}`
-        const statsString = `F${aperture} ${shutter_speed}" ${iso}ISO ${focal_length}mm`
+        const gearString = make || model || lens ? `${make} ${model} ${lens}` : 'N/A'
+        const statsString =
+            aperture || shutter_speed || iso || focal_length
+                ? `F${aperture} ${shutter_speed}" ${iso}ISO ${focal_length}mm`
+                : 'N/A'
+
         return (
             <PhotoWithMetadataWrapper>
                 <PhotoWrapper>

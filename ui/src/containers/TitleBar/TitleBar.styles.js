@@ -16,6 +16,7 @@ const TitleBarWrapper = styled.div`
     position: fixed;
     top: 0;
     left: 0;
+    background-color: rgba(255, 255, 255, 1);
 `
 
 const InternalLink = styled(Link)`
