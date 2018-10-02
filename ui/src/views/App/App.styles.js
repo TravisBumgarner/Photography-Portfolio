@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import React from 'react'
 
-import { TRANSITION_SPEED } from 'Theme'
+import { TRANSITION_SPEED, ICON_COLOR } from 'Theme'
 
 import { FaCaretRight } from 'react-icons/fa'
 
@@ -12,10 +12,10 @@ const NavigationClose = styled(({ isNavigationVisible, ...rest }) => <FaCaretRig
     transition: opacity ${TRANSITION_SPEED}s;
     opacity: ${props => (props.isNavigationVisible ? 1 : 0)};
     z-index: 999;
-    fill: #ccc;
+    fill: ${ICON_COLOR.initial};
 
     &:hover {
-        fill: rgb(74, 207, 160);
+        fill: ${ICON_COLOR.hover};
     }
 `
 

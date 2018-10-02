@@ -13,7 +13,7 @@ class App extends Component {
         super(props)
         this.state = {
             photos: [],
-            isNavigationVisible: true,
+            isNavigationVisible: false,
             isBackgroundVisible: true,
             pathname: null,
             galleries: [],
@@ -27,7 +27,10 @@ class App extends Component {
             location: { pathname }
         } = this.props
 
-        this.setState({ pathname, isNavigationVisible: pathname === '/' })
+        this.setState({
+            pathname
+            // isNavigationVisible: pathname === '/'
+        })
 
         Promise.all([this.getPhotos(), this.getGalleries(), this.getLocations(), this.getCategories()]).then(
             responses => {
@@ -51,9 +54,9 @@ class App extends Component {
         if (pathname !== nextPathname) {
             statePatch.pathname = nextPathname
         }
-        if (nextPathname === '/') {
-            statePatch.isNavigationVisible = true
-        }
+        // if (nextPathname === '/') {
+        //     statePatch.isNavigationVisible = true
+        // }
         this.setState({ ...statePatch })
     }
 
@@ -101,14 +104,14 @@ class App extends Component {
             categories
         } = this.state
 
+        console.log(isNavigationVisible)
         return isLoading ? null : (
             <Fragment>
-                <GlobalStyle isBackgroundVisible={isBackgroundVisible} />
+                <GlobalStyle isHomepage={pathname === '/'} />
                 <AppWrapper>
                     <TitleBar isNavigationVisible={isNavigationVisible} toggleNavigation={this.toggleNavigation} />
                     <NavigationWrapper isNavigationVisible={isNavigationVisible}>
-                        {isNavigationVisible &&
-                            pathname !== '/' && <NavigationGutter onClick={this.toggleNavigation} />}
+                        {isNavigationVisible && <NavigationGutter onClick={this.toggleNavigation} />}
                         <Navigation
                             isHomepage={pathname === '/'}
                             isNavigationVisible={isNavigationVisible}
@@ -117,13 +120,11 @@ class App extends Component {
                             categories={categories}
                             toggleNavigation={this.toggleNavigation}
                         />
-                        {pathname !== '/' && (
-                            <NavigationClose
-                                isNavigationVisible={isNavigationVisible}
-                                onClick={this.toggleNavigation}
-                                size={ICON_FONT_SIZES.l}
-                            />
-                        )}
+                        <NavigationClose
+                            isNavigationVisible={isNavigationVisible}
+                            onClick={this.toggleNavigation}
+                            size={ICON_FONT_SIZES.l}
+                        />
                     </NavigationWrapper>
                     <Switch>
                         <Route exact path="/" component={Home} />

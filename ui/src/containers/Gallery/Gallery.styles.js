@@ -2,17 +2,17 @@ import styled from 'styled-components'
 
 import { FaTimes, FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa'
 
-import { CONTENT_SPACING, MEDIA } from 'Theme'
+import { CONTENT_SPACING, MEDIA, ICON_COLOR } from 'Theme'
 
 const CloseIcon = styled(FaTimes)`
     position: fixed;
     right: 20px;
     top: 20px;
     z-index: 999;
-    fill: #ccc;
+    fill: ${ICON_COLOR.initial};
 
     &:hover {
-        fill: rgb(74, 207, 160);
+        fill: ${ICON_COLOR.hover};
     }
 `
 const ProjectDescriptionWrapper = styled.div`
@@ -32,20 +32,20 @@ const PreviousButton = styled(FaArrowCircleLeft)`
     position: fixed;
     top: calc(50vh - 1.5em);
     left: 20px;
-    fill: #ccc;
+    fill: ${ICON_COLOR.initial};
 
     &:hover {
-        fill: rgb(74, 207, 160);
+        fill: ${ICON_COLOR.hover};
     }
 `
 const NextButton = styled(FaArrowCircleRight)`
     position: fixed;
     top: calc(50vh - 1.5em);
     right: 20px;
-    fill: #ccc;
+    fill: ${ICON_COLOR.initial};
 
     &:hover {
-        fill: rgb(74, 207, 160);
+        fill: ${ICON_COLOR.hover};
     }
 `
 

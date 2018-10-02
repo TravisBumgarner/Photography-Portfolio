@@ -18,6 +18,11 @@ const TEXT_FONT_SIZES = {
     m: '1.0rem'
 }
 
+const ICON_COLOR = {
+    initial: '#000',
+    hover: 'rgb(74, 207, 160)'
+}
+
 const ICON_FONT_SIZES = {
     ...HEADER_FONT_SIZES
 }
@@ -56,6 +61,8 @@ const GlobalStyle = createGlobalStyle`
     }
 
     body {
+        background-image: ${props =>
+            props.isHomepage ? `url('http://localhost:8000/media/full/2015/2015_2015-01_089.jpg')` : ''};
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
@@ -81,5 +88,6 @@ export {
     CONTENT_SPACING,
     HEADER_FONT_SIZES,
     TEXT_FONT_SIZES,
-    ICON_FONT_SIZES
+    ICON_FONT_SIZES,
+    ICON_COLOR
 }
