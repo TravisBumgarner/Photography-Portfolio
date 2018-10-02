@@ -13,11 +13,11 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        // this.interval = window.setInterval(this.incrementBgIndex, 4000)
+        this.interval = window.setInterval(this.incrementBgIndex, 8000)
     }
 
     componentWillReceiveProps(nextProps) {
-        const maxBgIndex = nextProps.backgroundImages.length - 1
+        const maxBgIndex = nextProps.backgroundPhotos.length - 1
 
         this.setState({
             maxBgIndex,
@@ -39,10 +39,10 @@ class Home extends Component {
     }
 
     render() {
-        const { backgroundImages } = this.props
+        const { backgroundPhotos } = this.props
         const { currentBgIndex } = this.state
 
-        return <HomeWrapper backgroundImageUrl={backgroundImages[currentBgIndex]} />
+        return <HomeWrapper backgroundImageUrl={backgroundPhotos[currentBgIndex]} />
     }
 }
 

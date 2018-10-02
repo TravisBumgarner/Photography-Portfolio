@@ -14,7 +14,6 @@ const HomeWrapper = styled(PAGE_THEME)`
     right: 0;
     position: fixed;
     z-index: 0;
-    opacity: 0.5;
 `
 
 export { HomeWrapper }

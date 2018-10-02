@@ -19,7 +19,7 @@ class App extends Component {
             galleries: [],
             locations: [],
             categories: [],
-            backgroundImages: []
+            backgroundPhotos: []
         }
     }
 
@@ -33,21 +33,19 @@ class App extends Component {
             // isNavigationVisible: pathname === '/'
         })
 
-        Promise.all([
-            this.getPhotos(),
-            this.getGalleries(),
-            this.getLocations(),
-            this.getCategories(),
-            this.getBackgroundImages()
-        ]).then(responses => {
-            this.setState({
-                photos: responses[0],
-                galleries: responses[1],
-                locations: responses[2],
-                categories: responses[3],
-                backgroundImages: responses[4]
-            })
-        })
+        Promise.all([this.getPhotos(), this.getGalleries(), this.getLocations(), this.getCategories()]).then(
+            responses => {
+                const backgroundPhotos = responses[0].filter(photo => photo.is_home_background).map(photo => photo.src)
+                console.log(backgroundPhotos)
+                this.setState({
+                    photos: responses[0],
+                    galleries: responses[1],
+                    locations: responses[2],
+                    categories: responses[3],
+                    backgroundPhotos
+                })
+            }
+        )
     }
 
     componentWillReceiveProps(nextProps) {
@@ -94,14 +92,6 @@ class App extends Component {
             .catch(error => [])
     }
 
-    getBackgroundImages = () => {
-        return [
-            'http://localhost:8000/media/full/2017/2017_Alaska_368.jpg',
-            'http://localhost:8000/media/full/Architecture%20of%20Mexico/2015_San_Cristobal_-_Projects_209.jpg',
-            'http://localhost:8000/media/full/Architecture%20of%20Mexico/2015_San_Cristobal_-_Projects_220.jpg'
-        ]
-    }
-
     toggleNavigation = () => {
         this.setState({ isNavigationVisible: !this.state.isNavigationVisible })
     }
@@ -116,7 +106,7 @@ class App extends Component {
             pathname,
             locations,
             categories,
-            backgroundImages
+            backgroundPhotos
         } = this.state
 
         console.log(isNavigationVisible)
@@ -142,7 +132,7 @@ class App extends Component {
                         />
                     </NavigationWrapper>
                     <Switch>
-                        <Route exact path="/" render={rest => <Home backgroundImages={backgroundImages} {...rest} />} />
+                        <Route exact path="/" render={rest => <Home backgroundPhotos={backgroundPhotos} {...rest} />} />
                         <Route exact path="/blog" render={rest => <Blog {...rest} />} />
                         <Route exact path="/contact" render={rest => <Contact {...rest} />} />
                         <Route exact path="/about" render={rest => <About {...rest} />} />
