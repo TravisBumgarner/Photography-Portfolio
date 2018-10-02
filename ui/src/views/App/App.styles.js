@@ -34,6 +34,7 @@ const NavigationWrapper = styled.div`
     box-sizing: border-box;
     display: flex;
     position: fixed;
+    z-index: 999;
     bottom: 0;
     transition: right ${TRANSITION_SPEED}s;
     right: ${props => (props.isNavigationVisible ? '0' : `-100vw`)};

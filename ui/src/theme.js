@@ -35,6 +35,9 @@ const FONT_SIZE_INPUTS_AND_BUTTONS = 14
 const PAGE_THEME = styled.div`
     padding: ${CONTENT_SPACING.l};
     overflow: scroll;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
 `
 
 const sizes = {

@@ -12,7 +12,8 @@ const TitleBarWrapper = styled.div`
     padding: 0 ${CONTENT_SPACING.l};
     display: flex;
     justify-content: space-between;
-    /* background-color: white; */
+    z-index: 999;
+    position: relative;
 `
 
 const InternalLink = styled(Link)`
