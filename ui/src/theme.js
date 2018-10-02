@@ -62,7 +62,7 @@ const GlobalStyle = createGlobalStyle`
 
     body {
         background-image: ${props =>
-            props.isHomepage ? `url('http://localhost:8000/media/full/2015/2015_2015-01_089.jpg')` : ''};
+            props.isHomepage ? `url('http://localhost:8000/media/full/2017/2017_Alaska_368.jpg')` : ''};
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;

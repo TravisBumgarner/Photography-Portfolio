@@ -15,11 +15,6 @@ const TitleBarWrapper = styled.div`
     /* background-color: white; */
 `
 
-const StyledHeader = styled(Header)`
-    border-left: 5px solid rgb(74, 207, 160);
-    padding-left: ${CONTENT_SPACING.l};
-`
-
 const InternalLink = styled(Link)`
     text-decoration: none;
     color: black;
@@ -41,4 +36,4 @@ const NavigationOpen = styled(({ isNavigationVisible, ...rest }) => <FaBars {...
     }
 `
 
-export { TitleBarWrapper, NavigationOpen, InternalLink, StyledHeader }
+export { TitleBarWrapper, NavigationOpen, InternalLink }
