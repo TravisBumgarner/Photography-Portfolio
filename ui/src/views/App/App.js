@@ -61,28 +61,28 @@ class App extends Component {
         return axios
             .get(__API__ + 'galleries/')
             .then(({ data: galleries }) => galleries)
-            .catch(error => console.log(error))
+            .catch(error => [])
     }
 
     getLocations = () => {
         return axios
             .get(__API__ + 'locations/')
             .then(({ data: locations }) => locations)
-            .catch(error => console.log(error))
+            .catch(error => [])
     }
 
     getCategories = () => {
         return axios
             .get(__API__ + 'categories/')
             .then(({ data: categories }) => categories)
-            .catch(error => console.log(error))
+            .catch(error => [])
     }
 
     getPhotos = () => {
         return axios
             .get(__API__ + 'photos/')
             .then(({ data: photos }) => photos)
-            .catch(error => console.log(error))
+            .catch(error => [])
     }
 
     toggleNavigation = () => {
@@ -100,6 +100,7 @@ class App extends Component {
             locations,
             categories
         } = this.state
+        console.log('GALLERIES', galleries)
         return isLoading ? null : (
             <Fragment>
                 <GlobalStyle isBackgroundVisible={isBackgroundVisible} />

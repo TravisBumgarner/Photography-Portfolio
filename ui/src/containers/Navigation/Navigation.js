@@ -20,7 +20,7 @@ class Navigation extends Component {
 
         const projectLinks = []
         const snapshotLinks = []
-
+        
         galleries.sort((a, b) => (a.title > b.title ? 1 : -1)) // Sort galleries alphabetically
         galleries.map(({ id, title, content_type }) => {
             const link = (
