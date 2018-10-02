@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { FaTimes, FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa'
 
-import { CONTENT_SPACING } from 'Theme'
+import { CONTENT_SPACING, MEDIA } from 'Theme'
 
 const CloseIcon = styled(FaTimes)`
     position: fixed;
@@ -98,6 +98,10 @@ const GalleryItem = styled.div`
         float: left;
         padding-top: 100%;
     }
+
+    ${MEDIA.desktop`
+        margin: ${CONTENT_SPACING.xs};
+    `};
 `
 
 export {
