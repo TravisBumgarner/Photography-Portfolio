@@ -1,7 +1,8 @@
-import styled, { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle, css } from 'styled-components'
 
 const TRANSITION_SPEED = 1
 const CONTENT_SPACING = {
+    xs: '0.125rem',
     s: '0.25rem',
     m: '0.5rem',
     l: '1rem',
@@ -48,6 +49,12 @@ const MEDIA = Object.keys(sizes).reduce((acc, label) => {
 }, {})
 
 const GlobalStyle = createGlobalStyle`
+    html {
+        font-size: 18px;
+        ${MEDIA.desktop`font-size: 16px;`}
+        ${MEDIA.tablet`font-size: 14px;`}
+    }
+
     body {
         background-repeat: no-repeat;
         background-position: center;
@@ -59,7 +66,6 @@ const GlobalStyle = createGlobalStyle`
         right: 0;
         position: absolute;
         z-index: -1;
-        font-size: 20px;
     }
 `
 
