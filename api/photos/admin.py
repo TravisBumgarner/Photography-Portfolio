@@ -16,7 +16,8 @@ class GalleryAdmin(admin.ModelAdmin):
 @admin.register(Photo)
 class PhotoAdmin(admin.ModelAdmin):
     list_display = (
-        'title',
+        'file_name',
         'make',
         'model',
     )
+    search_fields = ('file_name',)

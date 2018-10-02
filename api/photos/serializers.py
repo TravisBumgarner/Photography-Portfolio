@@ -47,7 +47,6 @@ class PhotoSerializer(serializers.ModelSerializer):
             'id',
             'src',
             'file_name',
-            'title',
             'gallery',
             'location',
             'date_taken',
@@ -64,5 +63,6 @@ class PhotoSerializer(serializers.ModelSerializer):
             'aperture',
             'shutter_speed',
             'iso',
-            'focal_length'
+            'focal_length',
+            'is_home_background',
         )

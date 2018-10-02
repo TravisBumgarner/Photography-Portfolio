@@ -34,7 +34,6 @@ class Photo(models.Model):
 
     # File Details
     file_name = models.CharField(max_length=200)
-    title = models.CharField(max_length=200, null=True)
     width = models.IntegerField(null=True)
     height = models.IntegerField(null=True)
     gallery = models.ForeignKey(Gallery, on_delete=models.CASCADE, null=True)
@@ -56,3 +55,7 @@ class Photo(models.Model):
     location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
     camera_type = models.CharField(max_length=200, null=True)
     category = models.ManyToManyField(Category)
+
+    # Misc
+    is_home_background = models.BooleanField(default=False)
+    
