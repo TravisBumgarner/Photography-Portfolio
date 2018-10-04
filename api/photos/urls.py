@@ -12,5 +12,4 @@ router.register(r'categories', CategoryViewSet, base_name='Categories')
 
 urlpatterns = [
     url(r'^', include(router.urls)),
-    url(r'^get_random_photo$', GetRandomImage.as_view()),
 ]

@@ -11,17 +11,6 @@ from .serializers import *
 from .models import *
 
 
-class GetRandomImage(APIView):
-    queryset = Photo.objects.filter(width__gte=BACKGROUND_IMAGE_WIDTH)
-    serializer_class = PhotoSerializer
-
-    def get(self, request, format=None):
-        random_object = self.queryset.order_by('?')[0]
-        serializer = PhotoSerializer(
-            random_object, context={"request": request})
-        return Response(serializer.data)
-
-
 class GalleryViewSet(ReadOnlyModelViewSet):
     queryset = Gallery.objects.all()
     serializer_class = GallerySerializer
@@ -41,6 +30,6 @@ class CategoryViewSet(ReadOnlyModelViewSet):
 
 
 class PhotoViewSet(ReadOnlyModelViewSet):
-    queryset = Photo.objects.all()
+    queryset = Photo.objects.all().order_by('-date_taken')
     serializer_class = PhotoSerializer
     pagination_class = None
