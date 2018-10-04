@@ -20,5 +20,11 @@ class PhotoAdmin(admin.ModelAdmin):
         'make',
         'model',
         'lens',
+        'shooting_mode',
+        'aperture',
+        'shutter_speed',
+        'iso',
+        'focal_length',
+        'date_taken'
     )
     search_fields = ('file_name',)

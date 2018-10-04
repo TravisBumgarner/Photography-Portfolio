@@ -112,15 +112,16 @@ def process_garbage_metadata(raw_exif_data):
 
 
 def process_general_raw(raw_exif_data):
-    # print_raw_keys_and_data(raw_exif_data)
+    print_raw_keys_and_data(raw_exif_data)
     processed_exif_data = {}
 
-    processed_exif_data["lens"] = ""
-    processed_exif_data["shooting_mode"] = str(raw_exif_data.get("EXIF ExposureMode", ""))
-    processed_exif_data["aperture"] = str(raw_exif_data.get("EXIF FNumber", ""))
+    processed_exif_data["lens"] = str(raw_exif_data.get("EXIF LensModel", ""))
+    processed_exif_data["shooting_mode"] = str(raw_exif_data.get("EXIF ExposureProgram", ""))
+    processed_exif_data["aperture"] = compute_fractional_string(str(raw_exif_data.get("EXIF FNumber", "")))
     processed_exif_data["shutter_speed"] = str(raw_exif_data.get("EXIF ExposureTime", ""))
     processed_exif_data["iso"] = str(raw_exif_data.get("EXIF ISOSpeedRatings", ""))
-    processed_exif_data['focal_length'] = str(raw_exif_data.get('EXIF FocalLength', ""))
+    processed_exif_data['focal_length'] = round(
+        float(compute_fractional_string(str(raw_exif_data.get('EXIF FocalLength', "0")))), 1)
     processed_exif_data["date_taken"] = compute_date(raw_exif_data.get("EXIF DateTimeOriginal", None))
 
     return processed_exif_data
