@@ -2,7 +2,8 @@ api_django/media
 api/photos/load_photos_dir
 bin/
 test_images/
-dist/
+ui/dist/index.html
+ui/dist/app*.js
 node_modules/
 .DS_STORE
 .vscode/
