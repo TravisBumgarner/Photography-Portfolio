@@ -10,19 +10,11 @@ BACKGROUND_IMAGE_WIDTH = 1400
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-if IS_DEVELOPMENT:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-    STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
 
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-    MEDIA_URL = '/media/'
-
-else:
-    STATIC_ROOT = '/home/tbumgarner/webapps/photo20_api_static/'
-    STATIC_URL = 'http:/api.travisbumgarner.photography/static/'
-
-    MEDIA_ROOT = '/home/tbumgarner/webapps/photo20_api_media/'
-    MEDIA_URL = 'http://api.travisbumgarner.photography/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 SECRET_KEY = config.SECRET_KEY
 
@@ -32,7 +24,8 @@ ALLOWED_HOSTS = [
     'localhost',
     'www.travisbumgarner.photography',
     'travisbumgarner.photography',
-    'api.travisbumgarner.photography'
+    'api.travisbumgarner.photography',
+    '138.197.3.120',
 ]
 
 CORS_ORIGIN_WHITELIST = (
