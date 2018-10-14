@@ -29,6 +29,6 @@ class CategoryViewSet(ReadOnlyModelViewSet):
 
 
 class PhotoViewSet(ReadOnlyModelViewSet):
-    queryset = Photo.objects.all().order_by('-date_tadken')
+    queryset = Photo.objects.all().order_by('-date_taken')
     serializer_class = PhotoSerializer
     pagination_class = None
