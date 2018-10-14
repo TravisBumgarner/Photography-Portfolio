@@ -11,4 +11,5 @@ config.py
 db.sqlite3
 __pycache__/
 media/
+static/
 api_django/db.sqlite3
