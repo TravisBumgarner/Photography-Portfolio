@@ -1,4 +1,4 @@
-from api_django.config import PUSHOVER_APP_TOKEN, PUSHOVER_USER_KEY
+from .config import PUSHOVER_APP_TOKEN, PUSHOVER_USER_KEY
 import http.client
 import urllib
 
