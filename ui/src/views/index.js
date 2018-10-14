@@ -4,5 +4,6 @@ import Contact from './Contact/Contact'
 import About from './About/About'
 import Portfolio from './Portfolio/Portfolio'
 import Blog from './Blog/Blog'
+import Error404 from './Error404/Error404'
 
-export { App, Home, Contact, About, Portfolio, Blog }
+export { App, Home, Contact, About, Portfolio, Blog, Error404 }

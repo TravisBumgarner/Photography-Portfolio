@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import axios from 'axios'
 
-import { Home, Contact, About, Portfolio, Blog } from 'Views'
+import { Home, Contact, About, Portfolio, Blog, Error404 } from 'Views'
 import { Navigation, TitleBar } from 'Containers'
 import { GlobalStyle, ICON_FONT_SIZES } from 'Theme'
 
@@ -134,6 +134,7 @@ class App extends Component {
                             path="/portfolio/:contentType/:galleryId"
                             render={rest => <Portfolio photos={photos} galleries={galleries} {...rest} />}
                         />
+                        <Route component={Error404} />
                     </Switch>
                 </AppWrapper>
             </Fragment>
