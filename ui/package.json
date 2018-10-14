@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start": "NODE_ENV=development webpack-dev-server --hot --inline --mode=development --config webpack.js",
-	"start-do": "NODE_ENV=development webpack-dev-server --host 0.0.0.0 --port 3001 --config webpack.js",
+        "start-do-dev": "NODE_ENV=development webpack-dev-server --host 0.0.0.0 --port 3000 --config webpack.js",
         "bundle": "rm ./dist/index.html; rm ./dist/app*; mkdir ./dist; NODE_ENV=production; webpack --mode=production --config webpack.js",
         "start-prod": "npm run bundle; node server.js"
     },

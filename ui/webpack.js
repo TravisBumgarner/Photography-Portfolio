@@ -3,19 +3,19 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 let apiHost
-setupApi = () => {
+let publicPath
+setupEnv = () => {
     switch (process.env.NODE_ENV) {
-        case 'production':
-            apiHost = "'http://api.travisbumgarner.photography/'"
-            break
         case 'development':
             apiHost = "'http://localhost:8000/'"
+            publicPath = '/'
             break
         default:
             apiHost = "'http://api.travisbumgarner.photography/'"
+            publicPath = '/static'
     }
 }
-setupApi()
+setupEnv()
 
 module.exports = env => {
     return {
@@ -25,7 +25,7 @@ module.exports = env => {
         output: {
             filename: '[name]-[hash].bundle.js',
             path: path.resolve(__dirname, 'dist'),
-            publicPath: '/static'
+            publicPath
         },
         resolve: {
             alias: {
