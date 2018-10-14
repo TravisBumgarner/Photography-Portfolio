@@ -19,7 +19,7 @@ from PIL import Image, ImageDraw
 
 
 from photos.models import *
-from api_django.settings import MEDIA_ROOT, BASE_DIR
+from django.conf.settings import MEDIA_ROOT, BASE_DIR
 
 
 INPUT_ROOT = os.path.join(BASE_DIR, 'photos', 'load_photos_dir')
