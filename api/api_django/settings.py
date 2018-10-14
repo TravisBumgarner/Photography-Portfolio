@@ -1,12 +1,9 @@
 import os
 
-from api_django import config
+from .config import SECRET_KEY as KEY
 
-IS_DEVELOPMENT = os.getenv('SITE') != 'production'
-
-# Custom Settings
-BACKGROUND_IMAGE_WIDTH = 1400
-
+IS_PRODUCTION = os.getenv('SITE', 'production') == 'production'
+DEBUG = not IS_PRODUCTION
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -16,9 +13,7 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-SECRET_KEY = config.SECRET_KEY
-
-DEBUG = IS_DEVELOPMENT
+SECRET_KEY = KEY
 
 ALLOWED_HOSTS = [
     'localhost',

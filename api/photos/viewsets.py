@@ -6,7 +6,6 @@ from rest_framework.response import Response
 
 import random
 
-from api_django.settings import BACKGROUND_IMAGE_WIDTH
 from .serializers import *
 from .models import *
 
@@ -30,6 +29,6 @@ class CategoryViewSet(ReadOnlyModelViewSet):
 
 
 class PhotoViewSet(ReadOnlyModelViewSet):
-    queryset = Photo.objects.all().order_by('-date_taken')
+    queryset = Photo.objects.all().order_by('-date_tadken')
     serializer_class = PhotoSerializer
     pagination_class = None
