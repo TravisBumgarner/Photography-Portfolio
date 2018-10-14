@@ -12,7 +12,5 @@ urlpatterns = [
     url(r'^', include('contact.urls')),
 ]
 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-if settings.IS_PRODUCTION is False:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)

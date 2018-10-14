@@ -4,14 +4,20 @@ from .config import SECRET_KEY as KEY
 
 IS_PRODUCTION = os.getenv('SITE', 'production') == 'production'
 DEBUG = not IS_PRODUCTION
+ 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+
+if IS_PRODUCTION:
+    MEDIA_URL = 'http://api.travisbumgarner.photography/media/'
+    STATIC_URL = 'http://api.travisbumgarner.photography/static/'
+else:
+    MEDIA_ROOT = '/media/'
+    STATIC_ROOT = '/static/'
 
 SECRET_KEY = KEY
 
