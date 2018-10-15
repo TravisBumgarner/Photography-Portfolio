@@ -13,29 +13,29 @@ class Portfolio extends Component {
     componentWillMount() {
         const {
             match: {
-                params: { contentType, galleryId }
+                params: { contentType, gallerySlug }
             },
             photos
         } = this.props
-        this.filterPhotos(photos, contentType, galleryId)
+        this.filterPhotos(photos, contentType, gallerySlug)
     }
 
     componentWillReceiveProps(nextProps) {
         const {
             match: {
-                params: { contentType, galleryId }
+                params: { contentType, gallerySlug }
             },
             photos
         } = nextProps
-        this.filterPhotos(photos, contentType, galleryId)
+        this.filterPhotos(photos, contentType, gallerySlug)
     }
 
-    filterPhotos = (photos, contentType, galleryId) => {
-        if (contentType === SNAPSHOT && galleryId === 'all') {
+    filterPhotos = (photos, contentType, gallerySlug) => {
+        if (contentType === SNAPSHOT && gallerySlug === 'all') {
             const filteredPhotos = photos.filter(photo => photo.gallery.content_type == SNAPSHOT)
             this.setState({ filteredPhotos })
         } else {
-            const filteredPhotos = photos.filter(photo => photo.gallery.id == galleryId)
+            const filteredPhotos = photos.filter(photo => photo.gallery.title == gallerySlug)
             this.setState({ filteredPhotos })
         }
     }
@@ -43,14 +43,14 @@ class Portfolio extends Component {
     render() {
         const {
             match: {
-                params: { galleryId }
+                params: { gallerySlug }
             },
             photos,
             galleries
         } = this.props
 
         const { filteredPhotos } = this.state
-        let galleryDetails = galleries.length && galleries.filter(gallery => gallery.id == galleryId)[0]
+        let galleryDetails = galleries.length && galleries.filter(gallery => gallery.slug == gallerySlug)[0]
         galleryDetails = galleryDetails || { title: 'All', description: 'All Snapshots' }
         return photos ? (
             <PortfolioWrapper>

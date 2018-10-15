@@ -3,6 +3,7 @@ from django.db import models
 
 class Gallery(models.Model):
     title = models.CharField(max_length=200, unique=True)
+    slug = models.CharField(max_length=200, null=True)
     description = models.TextField(blank=True, null=True)
     start_date = models.DateField(null=True)
     end_date = models.DateField(null=True)
@@ -58,4 +59,3 @@ class Photo(models.Model):
 
     # Misc
     is_home_background = models.BooleanField(default=False)
-    

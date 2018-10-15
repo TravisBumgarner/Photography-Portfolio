@@ -103,7 +103,7 @@ class App extends Component {
             categories,
             backgroundPhotos
         } = this.state
-
+        
         return isLoading ? null : (
             <Fragment>
                 <GlobalStyle isHomepage={pathname === '/'} />
@@ -131,7 +131,7 @@ class App extends Component {
                         <Route exact path="/contact" render={rest => <Contact {...rest} />} />
                         <Route exact path="/about" render={rest => <About {...rest} />} />
                         <Route
-                            path="/portfolio/:contentType/:galleryId"
+                            path="/portfolio/:contentType/:gallerySlug"
                             render={rest => <Portfolio photos={photos} galleries={galleries} {...rest} />}
                         />
                         <Route component={Error404} />

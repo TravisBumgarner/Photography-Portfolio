@@ -33,6 +33,7 @@ class GallerySerializer(serializers.ModelSerializer):
             'description',
             'start_date',
             'end_date',
+            'slug',
         )
 
 

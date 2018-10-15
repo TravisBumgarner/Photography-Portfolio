@@ -22,10 +22,10 @@ class Navigation extends Component {
         const snapshotLinks = []
 
         galleries.sort((a, b) => (a.title > b.title ? 1 : -1)) // Sort galleries alphabetically
-        galleries.map(({ id, title, content_type }) => {
+        galleries.map(({ id, title, content_type, slug }) => {
             const link = (
                 <LinkListItem key={id} onClick={toggleNavigation}>
-                    <InternalLink to={`/portfolio/${content_type}/${id}`}>{title}</InternalLink>
+                    <InternalLink to={`/portfolio/${content_type}/${slug}`}>{title}</InternalLink>
                 </LinkListItem>
             )
             if (content_type === PROJECT) {

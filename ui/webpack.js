@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 let apiHost
 let publicPath
 setupEnv = () => {
+    console.log(process.env.NODE_ENV)
     switch (process.env.NODE_ENV) {
         case 'development':
             apiHost = "'http://localhost:8000/'"
@@ -14,6 +15,7 @@ setupEnv = () => {
             apiHost = "'http://api.travisbumgarner.photography/'"
             publicPath = '/static'
     }
+    console.log(apiHost)
 }
 setupEnv()
 
