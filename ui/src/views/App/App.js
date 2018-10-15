@@ -103,7 +103,7 @@ class App extends Component {
             categories,
             backgroundPhotos
         } = this.state
-        
+
         return isLoading ? null : (
             <Fragment>
                 <GlobalStyle isHomepage={pathname === '/'} />

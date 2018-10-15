@@ -76,23 +76,30 @@ class Gallery extends Component {
         window.removeEventListener('keydown', this.handleKeyPress)
     }
 
-    setSelectedPhotoIndex = index => {
-        this.setState({ selectedPhotoIndex: index })
+    setAsSelectedPhoto = selectedPhotoIndex => {
+        this.setSelectedPhotoIndex(selectedPhotoIndex)
         window.addEventListener('keydown', this.handleKeyPress)
     }
 
     getPreviousPhotoIndex = () => {
         const { maxPhotoIndex, selectedPhotoIndex } = this.state
-        this.setState({
-            selectedPhotoIndex: selectedPhotoIndex === 0 ? maxPhotoIndex : selectedPhotoIndex - 1
-        })
+        this.setState(selectedPhotoIndex === 0 ? maxPhotoIndex : selectedPhotoIndex - 1)
     }
 
     getNextPhotoIndex = () => {
         const { maxPhotoIndex, selectedPhotoIndex } = this.state
-        this.setState({
-            selectedPhotoIndex: selectedPhotoIndex === maxPhotoIndex ? 0 : selectedPhotoIndex + 1
-        })
+        this.setSelectedPhotoIndex(selectedPhotoIndex === maxPhotoIndex ? 0 : selectedPhotoIndex + 1)
+    }
+
+    setSelectedPhotoIndex = selectedPhotoIndex => {
+        const { photos } = this.state
+        const {
+            gallery: { content_type, slug },
+            id
+        } = photos[selectedPhotoIndex]
+        this.props.history.push(`/portfolio/${content_type}/${slug}/${id}`)
+
+        this.setState({ selectedPhotoIndex })
     }
 
     generateGrid = () => {
@@ -104,7 +111,7 @@ class Gallery extends Component {
                     color1={photo.color_sample_1}
                     color2={photo.color_sample_2}
                     index={index}
-                    setSelectedPhotoIndex={this.setSelectedPhotoIndex}
+                    setAsSelectedPhoto={this.setAsSelectedPhoto}
                 />
             </GalleryItem>
         ))

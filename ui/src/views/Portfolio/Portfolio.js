@@ -46,7 +46,8 @@ class Portfolio extends Component {
                 params: { gallerySlug }
             },
             photos,
-            galleries
+            galleries,
+            history
         } = this.props
 
         const { filteredPhotos } = this.state
@@ -54,7 +55,7 @@ class Portfolio extends Component {
         galleryDetails = galleryDetails || { title: 'All', description: 'All Snapshots' }
         return photos ? (
             <PortfolioWrapper>
-                <Gallery photos={filteredPhotos} galleryDetails={galleryDetails} />
+                <Gallery history={history} photos={filteredPhotos} galleryDetails={galleryDetails} />
             </PortfolioWrapper>
         ) : (
             <PortfolioWrapper />
