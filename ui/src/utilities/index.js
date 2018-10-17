@@ -7,20 +7,24 @@ const parseContent = rawContent => {
         return ''
     }
     const lines = rawContent.match(/[^\r\n]+/g)
-    return lines.map(line => {
+    return lines.map((line, index) => {
         const [tag, content] = line.split(/#(.+)/)
 
         switch (tag) {
             case 'h1':
-                return <Header size="large">{content}</Header>
+                return (
+                    <Header key={index} size="large">
+                        {content}
+                    </Header>
+                )
                 break
             case 'p':
-                return <Text>{content}</Text>
+                return <Text key={index}>{content}</Text>
                 break
             case 'img':
-                return <img src={content} />
+                return <img key={index} src={content} />
             default:
-                return <Text>{content}</Text>
+                return <Text key={index}>{content}</Text>
         }
     })
 }
