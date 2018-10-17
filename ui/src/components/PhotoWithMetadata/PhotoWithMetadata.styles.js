@@ -1,11 +1,40 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import React from 'react'
+import { FaCamera, FaExclamationTriangle } from 'react-icons/fa'
 
 import { MEDIA, CONTENT_SPACING } from 'Theme'
 
 const StyledPhoto = styled.img`
     max-width: 100%;
     max-height: 95%;
+    ${props => (props.isLoading ? 'visibility:hidden' : '')};
+`
+
+const colorChange = keyframes`
+  0% {
+    fill: #fff;
+  }
+
+  50% {
+    fill: rgb(74, 207, 160);
+  }
+
+  100% {
+      fill: #fff;
+  }
+`
+
+const LoadingIcon = styled(FaCamera)`
+    animation: ${colorChange} 2s linear infinite;
+    position: fixed;
+    top: calc(50vw - 2.5em);
+    left: calc(50vh - 2.5em);
+`
+
+const ErrorIcon = styled(FaExclamationTriangle)`
+    position: fixed;
+    top: calc(50vw - 2.5em);
+    left: calc(50vh - 2.5em);
 `
 
 const PhotoWithMetadataWrapper = styled.div`
@@ -47,4 +76,4 @@ const MetadataWrapper = styled.div`
     `};
 `
 
-export { StyledPhoto, MetadataWrapper, PhotoWrapper, PhotoWithMetadataWrapper, Spacer }
+export { StyledPhoto, MetadataWrapper, PhotoWrapper, PhotoWithMetadataWrapper, Spacer, LoadingIcon, ErrorIcon }

@@ -30,7 +30,7 @@ const GalleryWrapper = styled.div`
 
 const PreviousButton = styled(FaArrowCircleLeft)`
     position: fixed;
-    top: calc(50vh - 1.5em);
+    top: calc(50vh - 1em);
     left: 20px;
     fill: ${ICON_COLOR.initial};
 
@@ -40,7 +40,7 @@ const PreviousButton = styled(FaArrowCircleLeft)`
 `
 const NextButton = styled(FaArrowCircleRight)`
     position: fixed;
-    top: calc(50vh - 1.5em);
+    top: calc(50vh - 1em);
     right: 20px;
     fill: ${ICON_COLOR.initial};
 
