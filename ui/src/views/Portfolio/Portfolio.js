@@ -35,7 +35,7 @@ class Portfolio extends Component {
             const filteredPhotos = photos.filter(photo => photo.gallery.content_type == SNAPSHOT)
             this.setState({ filteredPhotos })
         } else {
-            const filteredPhotos = photos.filter(photo => photo.gallery.title == gallerySlug)
+            const filteredPhotos = photos.filter(photo => photo.gallery.slug == gallerySlug)
             this.setState({ filteredPhotos })
         }
     }

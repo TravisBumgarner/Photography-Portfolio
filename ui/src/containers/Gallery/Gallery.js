@@ -149,10 +149,6 @@ class Gallery extends Component {
         const { galleryDetails } = this.props
         const grid = this.generateGrid()
 
-        if (!photos.length) {
-            return <p>Loading</p>
-        }
-
         return selectedPhotoIndex !== null ? (
             <PhotoWithMetadataWrapper>
                 <CloseIcon size={ICON_FONT_SIZES.l} onClick={this.returnToGridView} />
