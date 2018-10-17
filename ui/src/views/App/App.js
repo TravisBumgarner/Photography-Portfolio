@@ -19,7 +19,8 @@ class App extends Component {
             galleries: [],
             locations: [],
             categories: [],
-            backgroundPhotos: []
+            backgroundPhotos: [],
+            isLoading: true
         }
     }
 
@@ -41,7 +42,8 @@ class App extends Component {
                     galleries: responses[1],
                     locations: responses[2],
                     categories: responses[3],
-                    backgroundPhotos
+                    backgroundPhotos,
+                    isLoading: false
                 })
             }
         )
@@ -104,7 +106,9 @@ class App extends Component {
             backgroundPhotos
         } = this.state
 
-        return isLoading ? null : (
+        return isLoading ? (
+            ''
+        ) : (
             <Fragment>
                 <GlobalStyle isHomepage={pathname === '/'} />
                 <AppWrapper>
@@ -134,6 +138,7 @@ class App extends Component {
                             path="/portfolio/:contentType/:gallerySlug/:photoId?"
                             render={rest => <Portfolio photos={photos} galleries={galleries} {...rest} />}
                         />
+                        <Route path="/error404" component={Error404} />
                         <Route component={Error404} />
                     </Switch>
                 </AppWrapper>

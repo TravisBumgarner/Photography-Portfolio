@@ -34,7 +34,12 @@ class Gallery extends Component {
     componentDidMount() {
         const { photoId } = this.props
         if (photoId) {
-            this.setSelectedPhotoIndex(photoId)
+            const selectedPhotoIndex = this.photoIdToSelectedPhotoIndex(photoId)
+            if (selectedPhotoIndex !== -1) {
+                this.setSelectedPhotoIndex(selectedPhotoIndex)
+            } else {
+                this.props.history.push('/error404')
+            }
         }
         window.addEventListener('scroll', this.onScroll, false)
     }
@@ -50,6 +55,12 @@ class Gallery extends Component {
 
     componentWillUnmount() {
         window.removeEventListener('scroll', this.onScroll, false)
+    }
+
+    photoIdToSelectedPhotoIndex = photoId => {
+        const { photos } = this.state
+        const selectedPhotoIndex = photos.findIndex(photo => photo.id == photoId)
+        return selectedPhotoIndex
     }
 
     onScroll = () => {
@@ -76,7 +87,7 @@ class Gallery extends Component {
     }
 
     returnToGridView = () => {
-        this.setState({ selectedPhotoIndex: null })
+        this.setSelectedPhotoIndex(null)
         window.removeEventListener('keydown', this.handleKeyPress)
     }
 
@@ -97,14 +108,17 @@ class Gallery extends Component {
 
     setSelectedPhotoIndex = selectedPhotoIndex => {
         const { photos } = this.state
-        console.log('setphotoindex', selectedPhotoIndex)
-        this.setState({ selectedPhotoIndex })
-        if (photos.length && selectedPhotoIndex) {
-            const {
-                gallery: { content_type, slug }
-            } = photos[selectedPhotoIndex]
-            this.props.history.push(`/portfolio/${content_type}/${slug}/${selectedPhotoIndex}`)
+        const {
+            galleryDetails: { content_type, slug }
+        } = this.props
+
+        if (selectedPhotoIndex !== null) {
+            const { id } = photos[selectedPhotoIndex]
+            this.props.history.push(`/portfolio/${content_type}/${slug}/${id}`)
+        } else {
+            this.props.history.push(`/portfolio/${content_type}/${slug}`)
         }
+        this.setState({ selectedPhotoIndex })
     }
 
     generateGrid = () => {
@@ -138,7 +152,6 @@ class Gallery extends Component {
         if (!photos.length) {
             return <p>Loading</p>
         }
-        console.log('render', photos[selectedPhotoIndex])
 
         return selectedPhotoIndex !== null ? (
             <PhotoWithMetadataWrapper>
@@ -156,7 +169,7 @@ class Gallery extends Component {
                 {galleryDetails.title !== 'All' && (
                     <ProjectDescriptionWrapper>
                         <Header size="medium">{galleryDetails.title}</Header>
-                        <Text>{parseContent(galleryDetails.description)}</Text>
+                        {parseContent(galleryDetails.description)}
                         {galleryDetails.content_type == 'Project' && (
                             <Text>{`${galleryDetails.start_date} - ${galleryDetails.end_date}`}</Text>
                         )}
