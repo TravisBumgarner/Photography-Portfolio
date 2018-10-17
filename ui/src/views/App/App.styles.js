@@ -1,9 +1,9 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import React from 'react'
 
 import { TRANSITION_SPEED, ICON_COLOR } from 'Theme'
 
-import { FaCaretRight } from 'react-icons/fa'
+import { FaCaretRight, FaCamera } from 'react-icons/fa'
 
 const NavigationClose = styled(({ isNavigationVisible, ...rest }) => <FaCaretRight {...rest} />)`
     position: absolute;
@@ -17,6 +17,31 @@ const NavigationClose = styled(({ isNavigationVisible, ...rest }) => <FaCaretRig
     &:hover {
         fill: ${ICON_COLOR.hover};
     }
+`
+const colorChange = keyframes`
+  0% {
+    fill: #fff;
+  }
+
+  50% {
+    fill: rgb(74, 207, 160);
+  }
+
+  100% {
+      fill: #fff;
+  }
+`
+
+const LoadingIcon = styled(FaCamera)`
+    animation: ${colorChange} 2s linear infinite;
+`
+
+const LoadingIconWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
 `
 
 const NavigationGutter = styled.div`
@@ -40,4 +65,4 @@ const NavigationWrapper = styled.div`
     right: ${props => (props.isNavigationVisible ? '0' : `-100vw`)};
 `
 
-export { AppWrapper, NavigationWrapper, NavigationClose, NavigationGutter }
+export { AppWrapper, NavigationWrapper, NavigationClose, NavigationGutter, LoadingIcon, LoadingIconWrapper }

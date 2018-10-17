@@ -6,7 +6,14 @@ import { Home, Contact, About, Portfolio, Blog, Error404 } from 'Views'
 import { Navigation, TitleBar } from 'Containers'
 import { GlobalStyle, ICON_FONT_SIZES } from 'Theme'
 
-import { AppWrapper, NavigationWrapper, NavigationClose, NavigationGutter } from './App.styles.js'
+import {
+    AppWrapper,
+    NavigationWrapper,
+    NavigationClose,
+    NavigationGutter,
+    LoadingIcon,
+    LoadingIconWrapper
+} from './App.styles.js'
 
 class App extends Component {
     constructor(props) {
@@ -42,8 +49,8 @@ class App extends Component {
                     galleries: responses[1],
                     locations: responses[2],
                     categories: responses[3],
-                    backgroundPhotos,
-                    isLoading: false
+                    backgroundPhotos
+                    // isLoading: false
                 })
             }
         )
@@ -107,7 +114,9 @@ class App extends Component {
         } = this.state
 
         return isLoading ? (
-            ''
+            <LoadingIconWrapper>
+                <LoadingIcon size="5em" />
+            </LoadingIconWrapper>
         ) : (
             <Fragment>
                 <GlobalStyle isHomepage={pathname === '/'} />
