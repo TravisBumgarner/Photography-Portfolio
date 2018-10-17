@@ -32,7 +32,20 @@ class Gallery extends Component {
     }
 
     componentDidMount() {
+        const { photoId } = this.props
+        if (photoId) {
+            this.setSelectedPhotoIndex(photoId)
+        }
         window.addEventListener('scroll', this.onScroll, false)
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const { photos } = nextProps
+        this.setState({
+            photos,
+            // selectedPhotoIndex: null,
+            maxPhotoIndex: photos.length - 1
+        })
     }
 
     componentWillUnmount() {
@@ -62,15 +75,6 @@ class Gallery extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        const { photos } = nextProps
-        this.setState({
-            photos,
-            selectedPhotoIndex: null,
-            maxPhotoIndex: photos.length - 1
-        })
-    }
-
     returnToGridView = () => {
         this.setState({ selectedPhotoIndex: null })
         window.removeEventListener('keydown', this.handleKeyPress)
@@ -93,13 +97,14 @@ class Gallery extends Component {
 
     setSelectedPhotoIndex = selectedPhotoIndex => {
         const { photos } = this.state
-        const {
-            gallery: { content_type, slug },
-            id
-        } = photos[selectedPhotoIndex]
-        this.props.history.push(`/portfolio/${content_type}/${slug}/${id}`)
-
+        console.log('setphotoindex', selectedPhotoIndex)
         this.setState({ selectedPhotoIndex })
+        if (photos.length && selectedPhotoIndex) {
+            const {
+                gallery: { content_type, slug }
+            } = photos[selectedPhotoIndex]
+            this.props.history.push(`/portfolio/${content_type}/${slug}/${selectedPhotoIndex}`)
+        }
     }
 
     generateGrid = () => {
@@ -129,6 +134,11 @@ class Gallery extends Component {
         const { selectedPhotoIndex, photos } = this.state
         const { galleryDetails } = this.props
         const grid = this.generateGrid()
+
+        if (!photos.length) {
+            return <p>Loading</p>
+        }
+        console.log('render', photos[selectedPhotoIndex])
 
         return selectedPhotoIndex !== null ? (
             <PhotoWithMetadataWrapper>

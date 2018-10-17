@@ -131,7 +131,7 @@ class App extends Component {
                         <Route exact path="/contact" render={rest => <Contact {...rest} />} />
                         <Route exact path="/about" render={rest => <About {...rest} />} />
                         <Route
-                            path="/portfolio/:contentType/:gallerySlug"
+                            path="/portfolio/:contentType/:gallerySlug/:photoId?"
                             render={rest => <Portfolio photos={photos} galleries={galleries} {...rest} />}
                         />
                         <Route component={Error404} />

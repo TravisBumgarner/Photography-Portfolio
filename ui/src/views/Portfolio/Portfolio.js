@@ -43,7 +43,7 @@ class Portfolio extends Component {
     render() {
         const {
             match: {
-                params: { gallerySlug }
+                params: { gallerySlug, photoId }
             },
             photos,
             galleries,
@@ -55,7 +55,7 @@ class Portfolio extends Component {
         galleryDetails = galleryDetails || { title: 'All', description: 'All Snapshots' }
         return photos ? (
             <PortfolioWrapper>
-                <Gallery history={history} photos={filteredPhotos} galleryDetails={galleryDetails} />
+                <Gallery history={history} photoId={photoId} photos={filteredPhotos} galleryDetails={galleryDetails} />
             </PortfolioWrapper>
         ) : (
             <PortfolioWrapper />

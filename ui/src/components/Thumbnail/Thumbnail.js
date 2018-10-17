@@ -5,6 +5,7 @@ import { ThumbnailWrapper } from './Thumbnail.styles'
 class Thumbnail extends Component {
     handleClick = () => {
         const { index, setAsSelectedPhoto } = this.props
+        console.log(index)
         setAsSelectedPhoto(index)
     }
 
