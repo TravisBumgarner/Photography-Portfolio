@@ -23,8 +23,8 @@ CameraType
 - Digital
 - Analog
 ContentType
-- Snapshot
-- Project
+- snapshot
+- pgitroject
 ```
 
 2. Export to directory with file naming options `Date (YYYY)_Folder Name_Sequence # (001)`
