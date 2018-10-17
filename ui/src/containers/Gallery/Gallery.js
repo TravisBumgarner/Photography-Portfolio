@@ -98,7 +98,7 @@ class Gallery extends Component {
 
     getPreviousPhotoIndex = () => {
         const { maxPhotoIndex, selectedPhotoIndex } = this.state
-        this.setState(selectedPhotoIndex === 0 ? maxPhotoIndex : selectedPhotoIndex - 1)
+        this.setSelectedPhotoIndex(selectedPhotoIndex === 0 ? maxPhotoIndex : selectedPhotoIndex - 1)
     }
 
     getNextPhotoIndex = () => {

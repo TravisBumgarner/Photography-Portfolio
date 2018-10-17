@@ -50,7 +50,7 @@ class App extends Component {
                     locations: responses[2],
                     categories: responses[3],
                     backgroundPhotos
-                    // isLoading: false
+                    isLoading: false
                 })
             }
         )
