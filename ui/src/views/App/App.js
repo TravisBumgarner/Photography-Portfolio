@@ -49,7 +49,7 @@ class App extends Component {
                     galleries: responses[1],
                     locations: responses[2],
                     categories: responses[3],
-                    backgroundPhotos
+                    backgroundPhotos,
                     isLoading: false
                 })
             }
