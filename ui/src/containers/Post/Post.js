@@ -1,19 +1,23 @@
 import React, { Component } from 'react'
 
-import { Header } from 'Components'
+import { Header, Text } from 'Components'
 import { parseContent } from 'Utilities'
 
-import { PostWrapper } from './Post.styles'
+import { PostWrapper, TextWrapper, PhotoWrapper, StyledPhoto} from './Post.styles'
 
 class Post extends Component {
     render() {
-        const { title, content, date } = this.props
-        const parsedContent = parseContent(content)
+        const { title, content, date, photo_src } = this.props
         return (
             <PostWrapper>
-                <Header size="small">{title}</Header>
-                {date}
-                {parsedContent}
+                <TextWrapper>
+                    <Header size="small">{title}</Header>
+                    <Text>{date}</Text>
+                    {parseContent(content)}
+                </TextWrapper>
+                <PhotoWrapper>
+                    <StyledPhoto src={photo_src}/>
+                </PhotoWrapper>
             </PostWrapper>
         )
     }
