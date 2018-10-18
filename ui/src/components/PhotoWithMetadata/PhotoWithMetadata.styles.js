@@ -27,14 +27,14 @@ const colorChange = keyframes`
 const LoadingIcon = styled(FaCamera)`
     animation: ${colorChange} 2s linear infinite;
     position: fixed;
-    top: calc(50vw - 2.5em);
-    left: calc(50vh - 2.5em);
+    top: calc(50vh - 2.5em);
+    left: calc(50vw - 2.5em);
 `
 
 const ErrorIcon = styled(FaExclamationTriangle)`
     position: fixed;
-    top: calc(50vw - 2.5em);
-    left: calc(50vh - 2.5em);
+    top: calc(50vh - 2.5em);
+    left: calc(50vw - 2.5em);
 `
 
 const PhotoWithMetadataWrapper = styled.div`
