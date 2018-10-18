@@ -11,15 +11,14 @@ DEBUG = not IS_PRODUCTION
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 if IS_PRODUCTION:
     MEDIA_URL = 'http://api.travisbumgarner.photography/media/'
     STATIC_URL = 'http://api.travisbumgarner.photography/static/'
 else:
-    MEDIA_ROOT = '/media/'
-    STATIC_ROOT = '/static/'
+    MEDIA_URL = '/media/'
+    STATIC_URL = '/static/'
 
 SECRET_KEY = KEY
 
@@ -121,7 +120,7 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.ScopedRateThrottle',
     ),
     'DEFAULT_THROTTLE_RATES': {
-        'contact.create': '100/day',  # TODO: Change this back.
+        'contact.create': '5/day',
     }
 }
 
