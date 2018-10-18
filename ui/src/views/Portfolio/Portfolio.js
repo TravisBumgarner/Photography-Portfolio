@@ -49,10 +49,14 @@ class Portfolio extends Component {
             galleries,
             history
         } = this.props
-
         const { filteredPhotos } = this.state
         let galleryDetails = galleries.length && galleries.filter(gallery => gallery.slug == gallerySlug)[0]
-        galleryDetails = galleryDetails || { title: 'All', description: 'All Snapshots' }
+        galleryDetails = galleryDetails || {
+            content_type: SNAPSHOT,
+            slug: 'all',
+            title: 'All',
+            description: 'All Snapshots'
+        }
         return photos ? (
             <PortfolioWrapper>
                 <Gallery history={history} photoId={photoId} photos={filteredPhotos} galleryDetails={galleryDetails} />

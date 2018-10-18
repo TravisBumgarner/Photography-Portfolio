@@ -37,6 +37,7 @@ class Gallery extends Component {
             const selectedPhotoIndex = this.photoIdToSelectedPhotoIndex(photoId)
             if (selectedPhotoIndex !== -1) {
                 this.setSelectedPhotoIndex(selectedPhotoIndex)
+                window.addEventListener('keydown', this.handleKeyPress)
             } else {
                 this.props.history.push('/error404')
             }
@@ -48,7 +49,6 @@ class Gallery extends Component {
         const { photos } = nextProps
         this.setState({
             photos,
-            // selectedPhotoIndex: null,
             maxPhotoIndex: photos.length - 1
         })
     }
@@ -143,12 +143,11 @@ class Gallery extends Component {
 
         return grid
     }
-
     render() {
         const { selectedPhotoIndex, photos } = this.state
         const { galleryDetails } = this.props
         const grid = this.generateGrid()
-
+        console.log(photos, selectedPhotoIndex)
         return selectedPhotoIndex !== null ? (
             <PhotoWithMetadataWrapper>
                 <CloseIcon size={ICON_FONT_SIZES.l} onClick={this.returnToGridView} />

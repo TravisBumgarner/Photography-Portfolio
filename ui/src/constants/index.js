@@ -1,5 +1,5 @@
-const SNAPSHOT = 'Snapshot'
-const PROJECT = 'Project'
+const SNAPSHOT = 'snapshot'
+const PROJECT = 'project'
 const ANALOG = 'Analog'
 const DIGITAL = 'Digital'
 
