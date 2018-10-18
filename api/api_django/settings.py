@@ -1,10 +1,12 @@
 import os
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 from .config import SECRET_KEY as KEY
 
 IS_PRODUCTION = os.getenv('SITE', 'production') == 'production'
 DEBUG = not IS_PRODUCTION
- 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,6 +22,11 @@ else:
     STATIC_ROOT = '/static/'
 
 SECRET_KEY = KEY
+
+sentry_sdk.init(
+    dsn="https://823cc798cd174323bcd8555bcb4faa0e@sentry.io/1304163",
+    integrations=[DjangoIntegration()]
+)
 
 ALLOWED_HOSTS = [
     'localhost',
