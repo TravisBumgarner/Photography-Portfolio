@@ -11,5 +11,6 @@ class PostSerializer(serializers.ModelSerializer):
             'title',
             'summary',
             'date',
-            'content'
+            'content',
+            'photo_src'
         )
