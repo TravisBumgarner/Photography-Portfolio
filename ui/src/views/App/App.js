@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import axios from 'axios'
 
-import { Home, Contact, About, Portfolio, Blog, Error404 } from 'Views'
+import { Home, Contact, About, Portfolio, Blog, Error404, Error500 } from 'Views'
 import { Navigation, TitleBar } from 'Containers'
 import { GlobalStyle, ICON_FONT_SIZES } from 'Theme'
 
@@ -38,7 +38,6 @@ class App extends Component {
 
         this.setState({
             pathname
-            // isNavigationVisible: pathname === '/'
         })
 
         Promise.all([this.getPhotos(), this.getGalleries(), this.getLocations(), this.getCategories()]).then(
@@ -147,6 +146,7 @@ class App extends Component {
                             path="/portfolio/:contentType/:gallerySlug/:photoId?"
                             render={rest => <Portfolio photos={photos} galleries={galleries} {...rest} />}
                         />
+                        <Route path="/error500" component={Error500} />
                         <Route path="/error404" component={Error404} />
                         <Route component={Error404} />
                     </Switch>
