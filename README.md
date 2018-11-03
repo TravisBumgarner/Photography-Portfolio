@@ -59,4 +59,9 @@ ContentType
 [Tutorial
 ](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04)
 
+# Nginx
+
+1. Make changes in `/etc/nginx/sites-available` *with `sudo`*
+2. If not symlinked, link changes from `sites-available` to `sites-enabled`
+3. Restart `sudo service nginx restart`
 
