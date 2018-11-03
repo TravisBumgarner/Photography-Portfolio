@@ -14,8 +14,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 if IS_PRODUCTION:
-    MEDIA_URL = 'http://api.travisbumgarner.photography/media/'
-    STATIC_URL = 'http://api.travisbumgarner.photography/static/'
+    MEDIA_URL = 'https://api.travisbumgarner.photography/media/'
+    STATIC_URL = 'https://api.travisbumgarner.photography/static/'
 else:
     MEDIA_URL = '/media/'
     STATIC_URL = '/static/'
