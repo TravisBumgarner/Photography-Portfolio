@@ -1,6 +1,4 @@
-# Add Content
-
-## Lightroom:
+# Lightroom
 
 1. Add Metadata to Photos:
 
@@ -31,53 +29,39 @@ ContentType
 3. Zip directory
 4. Upload via Cyberduck
 
+# React
+
+## Update UI
+
+1. Make changes
+2. Build bundle `npm run bundle`
+3. List Services `pm2 list`
+4. Restart Desired Service `pm2 restart service-name.js`
+
+## Sentry
+
+1. Create new project
+2. Use [code](https://github.com/TravisBumgarner/photo20/blob/master/ui/src/index.js) as example 
+
 # Django
 
-`source ../lib/venv/bin/activate`
-Login to admin panel and create Project if it doesn't already exist. Update metadata as needed.
-`SITE=production python manage.py load_photos`
+# Update API
 
-# Updating UI
+1. Make Changes
+2. Restart gunicorn `sudo systemctl restart gunicorn`
 
-from within photo20/ui
-git pull
-`../bin_node/stop`
-`../bin_node/npm run bundle`
-`../bin_node/start`
+# Sentry
+1. Add snippet of code in `settings.py`
+2. Restart gunicorn `sudo systemctl restart gunicorn`
 
-# Updating API
+# HTTPS
 
-`git pull`
-`source ../lib/venv/bin/activate`
-Make changes
-`./apache2/bin/stop`
-`./apache2/bin/start`
+[Tutorial
+](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04)
 
-# GAHHH 🤷🤷🤷🤷🤷🤷🤷
+# Nginx
 
-To use xmp library on Webfaction:
+1. Make changes in `/etc/nginx/sites-available` *with `sudo`*
+2. If not symlinked, link changes from `sites-available` to `sites-enabled`
+3. Restart `sudo service nginx restart`
 
-1. Follow these instructions: https://docs.webfaction.com/software/home-install.html
-2. With a `wget` of the tar.bz2 here: https://libopenraw.freedesktop.org/wiki/Exempi/
-3. Then modify virtualenv `site-packages/libxmp/exempi.py` with the following:
-
-```
-def _load_exempi():
-"""
-Loads exempi library.
-"""
-path = '/home/tbumgarner/lib/libexempi.so'
-#path = ctypes.util.find_library('exempi')
-#if path is None: # if platform.system().startswith('Darwin'): # if os.path.exists('/opt/local/lib/libexempi.dylib'): # # MacPorts starndard location. # path = '/opt/local/lib/libexempi.dylib'
-if path is None:
-raise ExempiLoadError('Exempi library not found.')
-
-    if os.name != "nt":
-        EXEMPI = ctypes.CDLL(path)
-    else:
-        EXEMPI = ctypes.WinDLL(path)
-
-    return EXEMPI
-
-EXEMPI = \_load_exempi()
-```
