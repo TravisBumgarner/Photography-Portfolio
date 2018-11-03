@@ -65,3 +65,16 @@ ContentType
 2. If not symlinked, link changes from `sites-available` to `sites-enabled`
 3. Restart `sudo service nginx restart`
 
+# Gunicorn
+
+Services live in `/etc/systemd/system/project_api.service`
+
+## Create
+
+1. `sudo systemctl start service_name`
+2. `sudo systemctl enable service_name`
+
+## Status
+
+1. `sudo systemctl status service_name`
+
