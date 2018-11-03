@@ -59,8 +59,6 @@ class PhotoWithMetadata extends Component {
             }
         } = this.props
 
-        console.log(this.props)
-
         const locationString = `${location.title}`
         const gearString = make || model || lens ? `${make} ${model} ${lens}` : 'N/A'
         const statsString =

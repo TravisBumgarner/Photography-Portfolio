@@ -147,7 +147,6 @@ class Gallery extends Component {
         const { selectedPhotoIndex, photos } = this.state
         const { galleryDetails } = this.props
         const grid = this.generateGrid()
-        console.log(photos, selectedPhotoIndex)
         return selectedPhotoIndex !== null ? (
             <PhotoWithMetadataWrapper>
                 <CloseIcon size={ICON_FONT_SIZES.l} onClick={this.returnToGridView} />
