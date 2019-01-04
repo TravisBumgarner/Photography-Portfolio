@@ -27,7 +27,9 @@ const ICON_COLOR = {
 }
 
 const ICON_FONT_SIZES = {
-    ...HEADER_FONT_SIZES
+    s: '1.4em',
+    m: '1.7em',
+    l: '2em'
 }
 
 const FONT_FAMILY_HEADER = "'Raleway', sans-serif;"
