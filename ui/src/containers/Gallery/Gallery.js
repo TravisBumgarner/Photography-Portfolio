@@ -68,6 +68,7 @@ class Gallery extends Component {
         const node = this.myRef.current
 
         if (
+            node &&
             node.clientHeight !== 0 &&
             infiniteScrollImageCount < maxPhotoIndex &&
             window.innerHeight + window.scrollY >= node.clientHeight - 250
