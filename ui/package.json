@@ -13,7 +13,7 @@
     "license": "ISC",
     "dependencies": {
         "@sentry/browser": "^4.1.1",
-        "axios": "^0.18.0",
+        "axios": "^0.18.1",
         "express": "^4.16.3",
         "nodemon": "^1.18.4",
         "react": "^16.4.2",
