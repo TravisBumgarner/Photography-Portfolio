@@ -49,13 +49,4 @@ const InternalLink = styled(Link)`
     ${props => sharedStyles(props)};
 `
 
-const ExternalLink = styled.a`
-    ${props => sharedStyles(props)};
-`
-
-const IconWrapper = styled.div`
-    display: inline-block;
-    padding-left: ${CONTENT_SPACING.m};
-`
-
-export { NavigationWrapper, SubNavigationWrapper, InternalLink, ExternalLink, LinkListItem, IconWrapper }
+export { NavigationWrapper, SubNavigationWrapper, InternalLink, LinkListItem }

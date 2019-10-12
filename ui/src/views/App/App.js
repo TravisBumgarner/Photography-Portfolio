@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import axios from 'axios'
 
-import { Home, Contact, About, Portfolio, Blog, Error404, Error500 } from 'Views'
+import { Home, Contact, About, Portfolio, Error404, Error500 } from 'Views'
 import { Navigation, TitleBar } from 'Containers'
 import { GlobalStyle, ICON_FONT_SIZES } from 'Theme'
 
@@ -139,7 +139,6 @@ class App extends Component {
                     </NavigationWrapper>
                     <Switch>
                         <Route exact path="/" render={rest => <Home backgroundPhotos={backgroundPhotos} {...rest} />} />
-                        <Route exact path="/blog" render={rest => <Blog {...rest} />} />
                         <Route exact path="/contact" render={rest => <Contact {...rest} />} />
                         <Route exact path="/about" render={rest => <About {...rest} />} />
                         <Route
