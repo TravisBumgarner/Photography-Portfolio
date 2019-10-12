@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 
 import { Gallery } from 'Containers'
-import { SNAPSHOT, PROJECT } from 'Constants'
+import { SNAPSHOT } from 'Constants'
 
 import { PortfolioWrapper } from './Portfolio.styles.js'
 

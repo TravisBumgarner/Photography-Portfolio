@@ -6,8 +6,8 @@ import { SNAPSHOT, PROJECT } from 'Constants'
 import {
     NavigationWrapper,
     SubNavigationWrapper,
-    InternalLink,
     ExternalLink,
+    InternalLink,
     LinkListItem,
     IconWrapper
 } from './Navigation.styles.js'
@@ -55,20 +55,7 @@ class Navigation extends Component {
         const socialLinks = socialSectionContent.map(m => {
             return (
                 <LinkListItem key={m.title} onClick={toggleNavigation}>
-                    <InternalLink to={m.route}>{m.title}</InternalLink>
-                </LinkListItem>
-            )
-        })
-
-        const miscSectionContent = [
-            { title: 'About', route: '/about' },
-            { title: 'Contact', route: '/contact' }
-        ]
-
-        const miscLinks = miscSectionContent.map(m => {
-            return (
-                <LinkListItem key={m.title} onClick={toggleNavigation}>
-                    <InternalLink to={m.route}>{m.title}</InternalLink>
+                    <ExternalLink href={m.route}>{m.title}</ExternalLink>
                 </LinkListItem>
             )
         })
@@ -76,11 +63,6 @@ class Navigation extends Component {
         return (
             <Fragment>
                 <NavigationWrapper isHomepage={isHomepage}>
-                    <SubNavigationWrapper>
-                        <Header size="medium">Main</Header>
-                        <ul>{miscLinks}</ul>
-                    </SubNavigationWrapper>
-
                     <SubNavigationWrapper>
                         <Header size="medium">Photo Essays</Header>
                         <ul>{projectLinks}</ul>
@@ -97,8 +79,13 @@ class Navigation extends Component {
                     </SubNavigationWrapper>
 
                     <SubNavigationWrapper>
-                        <Header size="medium">Social</Header>
-                        <ul>{socialLinks}</ul>
+                        <Header size="medium">Connect</Header>
+                        <ul>
+                            <LinkListItem key="about" onClick={toggleNavigation}>
+                                <InternalLink to="/about">About</InternalLink>
+                            </LinkListItem>
+                            {socialLinks}
+                        </ul>
                     </SubNavigationWrapper>
                 </NavigationWrapper>
             </Fragment>

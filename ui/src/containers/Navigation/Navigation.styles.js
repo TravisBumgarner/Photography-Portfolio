@@ -49,4 +49,8 @@ const InternalLink = styled(Link)`
     ${props => sharedStyles(props)};
 `
 
-export { NavigationWrapper, SubNavigationWrapper, InternalLink, LinkListItem }
+const ExternalLink = styled.a`
+    ${props => sharedStyles(props)};
+`
+
+export { NavigationWrapper, SubNavigationWrapper, InternalLink, ExternalLink, LinkListItem }
