@@ -2,7 +2,7 @@ astroid==2.0.4
 autopep8==1.4
 certifi==2018.8.24
 colorgram.py==1.1.0
-Django==2.1.5
+Django==2.1.11
 django-cors-headers==2.4.0
 djangorestframework==3.8.2
 ExifRead==2.1.2
