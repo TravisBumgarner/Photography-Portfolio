@@ -9,21 +9,21 @@ class Gallery(models.Model):
     end_date = models.DateField(null=True)
     content_type = models.CharField(max_length=20)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
 
 class Category(models.Model):
     title = models.CharField(max_length=200, unique=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
 
 class Location(models.Model):
     title = models.CharField(max_length=200, unique=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
 
