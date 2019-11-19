@@ -1,8 +1,7 @@
 import os
 import sys
 from datetime import datetime
-import shutil
-from io import StringIO, BytesIO
+from io import BytesIO
 
 from libxmp.utils import file_to_dict
 import exifread
@@ -10,19 +9,13 @@ import exifread
 from django.core.files import File
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.management.base import BaseCommand
+from django.conf import
 
-from libxmp.utils import file_to_dict
-import colorgram
-import os
-from io import StringIO, BytesIO
-from PIL import Image, ImageDraw
-
+from PIL import Image
 
 from photos.models import *
-from django.conf.settings import MEDIA_ROOT, BASE_DIR
 
-
-INPUT_ROOT = os.path.join(BASE_DIR, 'photos', 'load_photos_dir')
+INPUT_ROOT = os.path.join(settings.BASE_DIR, 'photos', 'load_photos_dir')
 print(INPUT_ROOT + '\n\n\n')
 if not os.path.isdir(INPUT_ROOT):
     os.makedirs(INPUT_ROOT)
@@ -297,7 +290,6 @@ class Command(BaseCommand):
                     camera_type=lightroom_keywords['CameraType'],
                 )
 
-                categories = []
                 photo.save()
                 for c in lightroom_keywords['Category']:
                     category, _ = Category.objects.get_or_create(
