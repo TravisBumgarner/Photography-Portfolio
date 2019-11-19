@@ -22,10 +22,12 @@ CameraType
 - Analog
 ContentType
 - snapshot
-- pgitroject
+- project
 ```
 
-2. Export to directory with file naming options `Date (YYYY)_Folder Name_Sequence # (001)`
+2. Export to directory with
+  - file naming options `Date (YYYY)_Folder Name_Sequence # (001)` (Select `Date(YYYY)`, `Folder Name`, and `Sequence # (001)` because screw lightroom can't copy and paste the format)
+  - Max size 1000 x 1000
 3. Zip directory
 4. Upload via Cyberduck
 
