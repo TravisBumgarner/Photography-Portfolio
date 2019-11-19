@@ -26,9 +26,9 @@ class Navigation extends Component {
                     <InternalLink to={`/portfolio/${content_type}/${slug}`}>{title}</InternalLink>
                 </LinkListItem>
             )
-            if (content_type === PROJECT) {
+            if (content_type.toLowerCase()  === PROJECT) {
                 projectLinks.push(link)
-            } else if (content_type === SNAPSHOT) {
+            } else if (content_type.toLowerCase()  === SNAPSHOT) {
                 snapshotLinks.push(link)
             }
         })

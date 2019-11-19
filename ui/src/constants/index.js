@@ -1,6 +1,6 @@
 const SNAPSHOT = 'snapshot'
 const PROJECT = 'project'
-const ANALOG = 'Analog'
-const DIGITAL = 'Digital'
+const ANALOG = 'analog'
+const DIGITAL = 'digital'
 
 export { SNAPSHOT, PROJECT, ANALOG, DIGITAL }
