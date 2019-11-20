@@ -72,28 +72,28 @@ class App extends Component {
         return axios
             .get(__API__ + 'galleries/')
             .then(({ data: galleries }) => galleries)
-            .catch(error => [])
+            .catch(console.log)
     }
 
     getLocations = () => {
         return axios
             .get(__API__ + 'locations/')
             .then(({ data: locations }) => locations)
-            .catch(error => [])
+            .catch(console.log)
     }
 
     getCategories = () => {
         return axios
             .get(__API__ + 'categories/')
             .then(({ data: categories }) => categories)
-            .catch(error => [])
+            .catch(console.log)
     }
 
     getPhotos = () => {
         return axios
             .get(__API__ + 'photos/')
             .then(({ data: photos }) => photos)
-            .catch(error => [])
+            .catch(console.log)
     }
 
     toggleNavigation = () => {

@@ -93,10 +93,10 @@ class PhotoWithMetadata extends Component {
                                             {locationString}
                                             <Spacer />
                                             <Header size="inline">Gear </Header>
-                                            {camera_type === ANALOG ? 'Film Camera' : gearString}
+                                            {camera_type.toLowerCase() === ANALOG ? 'Film Camera' : gearString}
                                             <Spacer />
                                             <Header size="inline">Conditions </Header>
-                                            {camera_type === ANALOG ? 'N/A' : statsString}
+                                            {camera_type.toLowerCase()  === ANALOG ? 'N/A' : statsString}
                                         </Fragment>
                                     )}
                                 </Text>

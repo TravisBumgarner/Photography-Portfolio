@@ -7,9 +7,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls')),
     path('admin/', admin.site.urls),
-    url(r'^', include('posts.urls')),
     url(r'^', include('photos.urls')),
-    url(r'^', include('contact.urls')),
 ]
 
 if settings.DEBUG:
