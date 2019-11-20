@@ -155,6 +155,8 @@ def process_exif_data(full_path):
     elif raw_make == '' and raw_model == '':
         model_specific_processed_exif_data = process_garbage_metadata(raw_exif_data)
 
+    elif raw_make == 'Google' and raw_model == 'Pixel 3':
+        model_specific_processed_exif_data = process_garbage_metadata(raw_exif_data)
     else:
         print('MISSING "{}"{}'.format(raw_make, raw_model))
 
