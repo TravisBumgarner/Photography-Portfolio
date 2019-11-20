@@ -116,10 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_CLASSES': (
         'rest_framework.throttling.ScopedRateThrottle',
-    ),
-    'DEFAULT_THROTTLE_RATES': {
-        'contact.create': '5/day',
-    }
+    )
 }
 
 LANGUAGE_CODE = 'en-us'

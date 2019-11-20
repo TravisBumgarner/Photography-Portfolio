@@ -1,7 +1,8 @@
 import os
 import sys
 from datetime import datetime
-from io import BytesIO
+import shutil
+from io import StringIO, BytesIO
 
 from libxmp.utils import file_to_dict
 import exifread
@@ -9,11 +10,15 @@ import exifread
 from django.core.files import File
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.management.base import BaseCommand
-from django.conf import settings
 
-from PIL import Image
+from libxmp.utils import file_to_dict
+import os
+from io import StringIO, BytesIO
+from PIL import Image, ImageDraw
+
 
 from photos.models import *
+from django.conf import settings
 
 INPUT_ROOT = os.path.join(settings.BASE_DIR, 'photos', 'load_photos_dir')
 print(INPUT_ROOT + '\n\n\n')
@@ -147,9 +152,6 @@ def process_exif_data(full_path):
     elif raw_make in ['motorola'] and raw_model in ['moto x4']:
         model_specific_processed_exif_data = process_moto_x4(raw_exif_data)
 
-    elif raw_make in ['Google'] and raw_model in ['Pixel 3']:
-        model_specific_processed_exif_data = process_garbage_metadata(raw_exif_data)
-
     elif raw_make == '' and raw_model == '':
         model_specific_processed_exif_data = process_garbage_metadata(raw_exif_data)
 
@@ -190,20 +192,7 @@ def get_lightroom_keywords(full_path):
     xmp = file_to_dict(full_path)
     # The metadata we want is from http://ns.adobe.com/lightroom/1.0/'
     # There are a bunch of other keys in xmp.keys()
-    
-    # Potential xmp keys
-    # 'http://ns.google.com/photos/1.0/camera/'
-    # 'http://ns.adobe.com/xap/1.0/'
-    # 'http://ns.adobe.com/exif/1.0/aux/'
-    # 'http://ns.adobe.com/photoshop/1.0/'
-    # 'http://ns.adobe.com/xap/1.0/mm/'
-    # 'http://purl.org/dc/elements/1.1/'
-    # 'http://ns.adobe.com/camera-raw-settings/1.0/'
-    # 'http://ns.adobe.com/tiff/1.0/'
-    # 'http://ns.adobe.com/exif/1.0/'
-    # 'http://cipa.jp/exif/1.0/'
-    
-    raw_xmp_data = xmp['http://ns.google.com/photos/1.0/camera/']
+    raw_xmp_data = xmp['http://ns.adobe.com/lightroom/1.0/']
 
     metadata = {
         'Category': [],
@@ -306,6 +295,7 @@ class Command(BaseCommand):
                     camera_type=lightroom_keywords['CameraType'],
                 )
 
+                categories = []
                 photo.save()
                 for c in lightroom_keywords['Category']:
                     category, _ = Category.objects.get_or_create(
