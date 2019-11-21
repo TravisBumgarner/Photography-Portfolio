@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import axios from 'axios'
 
-import { Home, About, Portfolio, Error404, Error500 } from 'Views'
+import { Home, About, Portfolio, Error } from 'Views'
 import { Navigation, TitleBar } from 'Containers'
 import { GlobalStyle, ICON_FONT_SIZES } from 'Theme'
 
@@ -103,9 +103,9 @@ const App = ({location: { pathname }}) => {
                         path="/portfolio/:contentType/:gallerySlug/:photoId?"
                         render={rest => <Portfolio photos={photos} galleries={galleries} {...rest} />}
                     />
-                    <Route path="/error500" component={Error500} />
-                    <Route path="/error404" component={Error404} />
-                    <Route component={Error404} />
+                    <Route path="/error500" render={rest => <Error value="500" {...rest} />} />
+                    <Route path="/error404" render={rest => <Error value="404" {...rest} />} />
+                    <Route render={rest => <Error value="404" {...rest} />} />
                 </Switch>
             </AppWrapper>
         </Fragment>
