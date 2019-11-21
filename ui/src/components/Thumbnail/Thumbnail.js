@@ -2,8 +2,8 @@ import React from 'react'
 
 import { ThumbnailWrapper } from './Thumbnail.styles'
 
-const Thumbnail = ({ index, setAsSelectedPhoto, src }) => {
-    return <ThumbnailWrapper src={src} onClick={() => setAsSelectedPhoto(index)} />
+const Thumbnail = ({ index, handleSwitchToSelectedPhoto, src }) => {
+    return <ThumbnailWrapper src={src} onClick={() => handleSwitchToSelectedPhoto(index)} />
 }
 
 export default Thumbnail

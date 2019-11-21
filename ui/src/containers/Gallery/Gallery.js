@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Fragment } from 'react'
 
 import { Thumbnail, PhotoWithMetadata, Header, Text } from 'Components'
 import { ICON_FONT_SIZES } from 'Theme'
@@ -18,162 +18,138 @@ import {
 
 const ITEMS_PER_ROW = 3
 
-class Gallery extends Component {
-    constructor(props) {
-        super(props)
-        this.myRef = React.createRef()
-        this.handleKeyPress = this.handleKeyPress.bind(this)
-        this.state = {
-            photos: props.photos,
-            selectedPhotoIndex: null,
-            maxPhotoIndex: props.photos.length - 1,
-            infiniteScrollImageCount: 15
-        }
+
+const generateGrid = ({visibleImageCount, photos, handleSwitchToSelectedPhoto}) => {
+    const grid = photos.slice(0, visibleImageCount).map((photo, index) => (
+        <GalleryItem key={photo.id}>
+            <Thumbnail
+                src={photo.src_thumbnail_medium}
+                index={index}
+                handleSwitchToSelectedPhoto={handleSwitchToSelectedPhoto}
+            />
+        </GalleryItem>
+    ))
+
+    // Add blank elements so last row of photos is spaced correctly.
+    while (grid.length % ITEMS_PER_ROW !== 0) {
+        const modulous = grid.length % ITEMS_PER_ROW
+        grid.push(<GalleryItem key={`blank${modulous}`} />)
     }
 
-    componentDidMount() {
-        const { photoId } = this.props
-        if (photoId) {
-            const selectedPhotoIndex = this.photoIdToSelectedPhotoIndex(photoId)
-            if (selectedPhotoIndex !== -1) {
-                this.setSelectedPhotoIndex(selectedPhotoIndex)
-                window.addEventListener('keydown', this.handleKeyPress)
-            } else {
-                this.props.history.push('/error404')
-            }
-        }
-        window.addEventListener('scroll', this.onScroll, false)
-    }
+    return grid
+}
 
-    componentWillReceiveProps(nextProps) {
-        const { photos } = nextProps
-        this.setState({
-            photos,
-            maxPhotoIndex: photos.length - 1
-        })
-    }
+const Gallery = ({
+    photoId,
+    galleryDetails,
+    history,
+    photos
+}) => {
+    const [visibleImageCount, setVisibleImageCount] = React.useState(15)
+    const [selectedPhotoIndex, setSelectedPhotoIndex] = React.useState(null)
 
-    componentWillUnmount() {
-        window.removeEventListener('scroll', this.onScroll, false)
-    }
+    const galleryRef = React.useRef(null)
 
-    photoIdToSelectedPhotoIndex = photoId => {
-        const { photos } = this.state
-        const selectedPhotoIndex = photos.findIndex(photo => photo.id == photoId)
-        return selectedPhotoIndex
-    }
-
-    onScroll = () => {
-        const { infiniteScrollImageCount, maxPhotoIndex } = this.state
-        const node = this.myRef.current
-
+    const onScroll = React.useCallback(() => {
+        const node = galleryRef.current
         if (
             node &&
             node.clientHeight !== 0 &&
-            infiniteScrollImageCount < maxPhotoIndex &&
+            visibleImageCount < photos.length &&
             window.innerHeight + window.scrollY >= node.clientHeight - 250
         ) {
-            this.setState({ infiniteScrollImageCount: (this.state.infiniteScrollImageCount += 12) })
+            setVisibleImageCount(visibleImageCount + 12)
+        }
+    }, [photos, visibleImageCount])
+
+    React.useEffect(() => {
+        window.addEventListener('scroll', onScroll)
+        return () => {
+            window.removeEventListener('scroll', onScroll)
+        }
+    }, [onScroll])
+
+
+    const getPreviousPhotoIndex = () => {
+        const newSelectedPhotoIndex = selectedPhotoIndex === 0 ? photos.length - 1 : selectedPhotoIndex - 1
+        setSelectedPhotoIndex(newSelectedPhotoIndex)
+        handleUrlChange(newSelectedPhotoIndex)
+    }
+
+    const getNextPhotoIndex = () => {
+        const newSelectedPhotoIndex = selectedPhotoIndex === photos.length - 1 ? 0 : selectedPhotoIndex + 1
+        setSelectedPhotoIndex(newSelectedPhotoIndex)
+        handleUrlChange(newSelectedPhotoIndex)
+    }
+
+    const handleKeyPress = event => {
+        if(selectedPhotoIndex === null){
+            return null
+        }
+
+        if (event.key === 'ArrowLeft') {
+            getPreviousPhotoIndex()
+        } else if (event.key === 'ArrowRight') {
+            getNextPhotoIndex()
+        } else if (event.key === 'Escape') {
+            handleSwitchToGrid()
         }
     }
 
-    handleKeyPress(e) {
-        if (e.key === 'ArrowLeft') {
-            this.getPreviousPhotoIndex()
-        } else if (e.key === 'ArrowRight') {
-            this.getNextPhotoIndex()
-        } else if (e.key === 'Escape') {
-            this.returnToGridView()
+    React.useEffect(() => {
+        window.addEventListener('keydown', handleKeyPress)
+        return () => {
+            window.removeEventListener('keydown', handleKeyPress)
         }
+    }, [selectedPhotoIndex])
+
+    const handleSwitchToSelectedPhoto = (newSelectedPhotoIndex) => {
+        console.log(newSelectedPhotoIndex)
+        setSelectedPhotoIndex(newSelectedPhotoIndex)
+        handleUrlChange(newSelectedPhotoIndex)
     }
 
-    returnToGridView = () => {
-        this.setSelectedPhotoIndex(null)
-        window.removeEventListener('keydown', this.handleKeyPress)
+    const handleSwitchToGrid = () => {
+        setSelectedPhotoIndex(null)
+        handleUrlChange(null)
     }
 
-    setAsSelectedPhoto = selectedPhotoIndex => {
-        this.setSelectedPhotoIndex(selectedPhotoIndex)
-        window.addEventListener('keydown', this.handleKeyPress)
-    }
-
-    getPreviousPhotoIndex = () => {
-        const { maxPhotoIndex, selectedPhotoIndex } = this.state
-        this.setSelectedPhotoIndex(selectedPhotoIndex === 0 ? maxPhotoIndex : selectedPhotoIndex - 1)
-    }
-
-    getNextPhotoIndex = () => {
-        const { maxPhotoIndex, selectedPhotoIndex } = this.state
-        this.setSelectedPhotoIndex(selectedPhotoIndex === maxPhotoIndex ? 0 : selectedPhotoIndex + 1)
-    }
-
-    setSelectedPhotoIndex = selectedPhotoIndex => {
-        const { photos } = this.state
-        const {
-            galleryDetails: { content_type, slug }
-        } = this.props
-
-        if (selectedPhotoIndex !== null) {
-            const { id } = photos[selectedPhotoIndex]
-            this.props.history.push(`/portfolio/${content_type}/${slug}/${id}`)
+    const handleUrlChange = newSelectedPhotoIndex => {
+        if (newSelectedPhotoIndex !== null) {
+            const { id } = photos[newSelectedPhotoIndex]
+            history.push(`/portfolio/${galleryDetails.content_type}/${galleryDetails.slug}/${id}`)
         } else {
-            this.props.history.push(`/portfolio/${content_type}/${slug}`)
+            history.push(`/portfolio/${galleryDetails.content_type}/${galleryDetails.slug}`)
         }
-        this.setState({ selectedPhotoIndex })
     }
 
-    generateGrid = () => {
-        const { photos, infiniteScrollImageCount } = this.state
-        const grid = photos.slice(0, infiniteScrollImageCount).map((photo, index) => (
-            <GalleryItem key={photo.id}>
-                <Thumbnail
-                    src={photo.src_thumbnail_medium}
-                    color1={photo.color_sample_1}
-                    color2={photo.color_sample_2}
-                    index={index}
-                    setAsSelectedPhoto={this.setAsSelectedPhoto}
-                />
-            </GalleryItem>
-        ))
+    const grid = generateGrid({visibleImageCount, photos, handleSwitchToSelectedPhoto})
 
-        // Add blank elements so last row of photos is spaced correctly.
-        while (grid.length % ITEMS_PER_ROW !== 0) {
-            const modulous = grid.length % ITEMS_PER_ROW
-            grid.push(<GalleryItem key={`blank${modulous}`} />)
-        }
-
-        return grid
-    }
-    render() {
-        const { selectedPhotoIndex, photos } = this.state
-        const { galleryDetails } = this.props
-        const grid = this.generateGrid()
-        return selectedPhotoIndex !== null ? (
+    return ( 
+        selectedPhotoIndex !== null ?  (
             <PhotoWithMetadataWrapper>
-                <CloseIcon size={ICON_FONT_SIZES.l} onClick={this.returnToGridView} />
-                <PreviousContainer onClick={this.getPreviousPhotoIndex}>
+                <CloseIcon size={ICON_FONT_SIZES.l} onClick={handleSwitchToGrid} />
+                <PreviousContainer onClick={getPreviousPhotoIndex}>
                     <PreviousButton size={ICON_FONT_SIZES.l} />
                 </PreviousContainer>
-                <NextContainer onClick={this.getNextPhotoIndex}>
+                <NextContainer onClick={getNextPhotoIndex}>
                     <NextButton size={ICON_FONT_SIZES.l} />
                 </NextContainer>
                 <PhotoWithMetadata details={photos[selectedPhotoIndex]} />
             </PhotoWithMetadataWrapper>
         ) : (
             <Fragment>
-                {galleryDetails.title !== 'All' && (
-                    <ProjectDescriptionWrapper>
-                        <Header size="medium">{galleryDetails.title}</Header>
-                        {parseContent(galleryDetails.description)}
-                        {galleryDetails.content_type == 'Project' && (
-                            <Text>{`${galleryDetails.start_date} - ${galleryDetails.end_date}`}</Text>
-                        )}
-                    </ProjectDescriptionWrapper>
-                )}
-                <GalleryWrapper ref={this.myRef}>{grid}</GalleryWrapper>
+                <ProjectDescriptionWrapper>
+                    <Header size="medium">{galleryDetails.title}</Header>
+                    {parseContent(galleryDetails.description)}
+                    {galleryDetails.content_type == 'Project' && (
+                        <Text>{`${galleryDetails.start_date} - ${galleryDetails.end_date}`}</Text>
+                    )}
+                </ProjectDescriptionWrapper>
+                <GalleryWrapper ref={galleryRef}>{grid}</GalleryWrapper>
             </Fragment>
         )
-    }
+    )
 }
 
 export default Gallery

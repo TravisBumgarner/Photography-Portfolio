@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React from 'react'
 
 import { Gallery } from 'Containers'
 import { SNAPSHOT } from 'Constants'
@@ -9,7 +9,9 @@ const ALL_GALLERY = {
     content_type: SNAPSHOT,
     slug: 'all',
     title: 'All',
-    description: 'All Snapshots'
+    description: 'All Snapshots',
+    start_date: "2017-01-01",
+    end_date: "2017-01-01"
 }
 
 const Portfolio = (
