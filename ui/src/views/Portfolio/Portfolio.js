@@ -5,66 +5,48 @@ import { SNAPSHOT } from 'Constants'
 
 import { PortfolioWrapper } from './Portfolio.styles.js'
 
-class Portfolio extends Component {
-    constructor(props) {
-        super(props)
-        this.state = { filteredPhotos: [] }
-    }
-    componentWillMount() {
-        const {
-            match: {
-                params: { contentType, gallerySlug }
-            },
-            photos
-        } = this.props
-        this.filterPhotos(photos, contentType, gallerySlug)
-    }
+const ALL_GALLERY = {
+    content_type: SNAPSHOT,
+    slug: 'all',
+    title: 'All',
+    description: 'All Snapshots'
+}
 
-    componentWillReceiveProps(nextProps) {
-        const {
-            match: {
-                params: { contentType, gallerySlug }
-            },
-            photos
-        } = nextProps
-        this.filterPhotos(photos, contentType, gallerySlug)
-    }
+const Portfolio = (
+    { match: {
+        params: {contentType, gallerySlug, photoId}
+    },
+    photos,
+    galleries,
+    history }
+) => {
+    const [filteredPhotos, setFilteredPhotos] = React.useState([])
 
-    filterPhotos = (photos, contentType, gallerySlug) => {
+    const filterPhotos = () => {
         if (contentType === SNAPSHOT && gallerySlug === 'all') {
             const filteredPhotos = photos.filter(photo => photo.gallery.content_type == SNAPSHOT)
-            this.setState({ filteredPhotos })
+            setFilteredPhotos(filteredPhotos)
         } else {
             const filteredPhotos = photos.filter(photo => photo.gallery.slug == gallerySlug)
-            this.setState({ filteredPhotos })
+            setFilteredPhotos(filteredPhotos)
         }
     }
 
-    render() {
-        const {
-            match: {
-                params: { gallerySlug, photoId }
-            },
-            photos,
-            galleries,
-            history
-        } = this.props
-        const { filteredPhotos } = this.state
-        let galleryDetails = galleries.length && galleries.filter(gallery => gallery.slug == gallerySlug)[0]
-        galleryDetails = galleryDetails || {
-            content_type: SNAPSHOT,
-            slug: 'all',
-            title: 'All',
-            description: 'All Snapshots'
-        }
-        return photos ? (
-            <PortfolioWrapper>
-                <Gallery history={history} photoId={photoId} photos={filteredPhotos} galleryDetails={galleryDetails} />
-            </PortfolioWrapper>
-        ) : (
-            <PortfolioWrapper />
-        )
-    }
+    React.useEffect(filterPhotos, [contentType, gallerySlug])
+
+    let galleryDetails = galleries.length && galleries.find(gallery => gallery.slug == gallerySlug)
+    galleryDetails = galleryDetails || ALL_GALLERY
+
+    return  (
+        <PortfolioWrapper>
+            <Gallery
+            history={history}
+            photoId={photoId}
+            photos={filteredPhotos}
+            galleryDetails={galleryDetails}
+        />
+        </PortfolioWrapper>
+    ) 
 }
 
 export default Portfolio
