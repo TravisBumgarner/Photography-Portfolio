@@ -1,9 +1,14 @@
 import React from 'react'
 
 import { Gallery } from 'Containers'
-import { SNAPSHOT } from 'Constants'
+
 
 import { PortfolioWrapper } from './Portfolio.styles.js'
+
+const SNAPSHOT = 'snapshot'
+const PROJECT = 'project'
+const ANALOG = 'analog'
+const DIGITAL = 'digital'
 
 const ALL_GALLERY = {
     content_type: SNAPSHOT,

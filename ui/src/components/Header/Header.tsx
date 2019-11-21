@@ -2,7 +2,9 @@ import React from 'react'
 
 import { LargeHeader, MediumHeader, SmallHeader, InlineHeader } from './Header.styles.js'
 
-const Header = ({size, children, className}) => {
+type Props = { size: string, children: any, className: string }
+
+const Header = ({ size, children, className }: Props) => {
     switch (size) {
         case 'large':
             return <LargeHeader className={className}>{children}</LargeHeader>
@@ -18,3 +20,4 @@ const Header = ({size, children, className}) => {
 }
 
 export default Header
+export { Props as HeaderProps }

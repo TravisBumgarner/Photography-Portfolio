@@ -5,7 +5,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 let apiHost
 let publicPath
 setupEnv = () => {
-    console.log(process.env.NODE_ENV)
     switch (process.env.NODE_ENV) {
         case 'development':
             apiHost = "'http://localhost:8000/'"
@@ -15,14 +14,13 @@ setupEnv = () => {
             apiHost = "'https://api.travisbumgarner.photography/'"
             publicPath = '/static'
     }
-    console.log(apiHost)
 }
 setupEnv()
 
 module.exports = env => {
     return {
         entry: {
-            app: './src/index.js'
+            app: './src/index.tsx'
         },
         output: {
             filename: '[name]-[hash].bundle.js',
@@ -35,9 +33,9 @@ module.exports = env => {
                 Containers: path.resolve(__dirname, 'src/containers/'),
                 Views: path.resolve(__dirname, 'src/views/'),
                 Theme: path.resolve(__dirname, 'src/theme.js'),
-                Utilities: path.resolve(__dirname, 'src/utilities/'),
-                Constants: path.resolve(__dirname, 'src/constants/')
-            }
+                Utilities: path.resolve(__dirname, 'src/utilities/')
+            },
+            extensions: ['.ts', '.tsx', '.js']
         },
         module: {
             rules: [

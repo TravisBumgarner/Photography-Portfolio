@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 
 import { Text, Header } from 'Components'
-import { ANALOG } from 'Constants'
 
 import {
     StyledPhoto,
@@ -18,8 +17,8 @@ const PHONE = 'Phone'
 const FILM = 'Film Camera'
 
 
-const Metadata = ({details}) => {
-    
+const Metadata = ({ details }) => {
+
     const {
         make,
         model,
@@ -31,8 +30,6 @@ const Metadata = ({details}) => {
         location,
         camera_type
     } = details
-
-    console.log('photometadat', details)
 
     const locationString = `${location.title}`
     const gearString = make || model || lens ? `${make} ${model} ${lens}` : 'N/A'
@@ -47,29 +44,29 @@ const Metadata = ({details}) => {
                 {camera_type === FILM ? (
                     'Film Camera, N/A'
                 ) : (
-                    <Fragment>
-                        <Header size="inline">Location </Header>
-                        {locationString}
-                        <Spacer />
-                        <Header size="inline">Gear </Header>
-                        {camera_type.toLowerCase() === ANALOG ? 'Film Camera' : gearString}
-                        <Spacer />
-                        <Header size="inline">Conditions </Header>
-                        {camera_type.toLowerCase()  === ANALOG ? 'N/A' : statsString}
-                    </Fragment>
-                )}
+                        <Fragment>
+                            <Header size="inline">Location </Header>
+                            {locationString}
+                            <Spacer />
+                            <Header size="inline">Gear </Header>
+                            {camera_type.toLowerCase() === 'film' ? 'Film Camera' : gearString}
+                            <Spacer />
+                            <Header size="inline">Conditions </Header>
+                            {camera_type.toLowerCase() === 'film' ? 'N/A' : statsString}
+                        </Fragment>
+                    )}
             </Text>
         </MetadataWrapper>
     )
 }
 
-const PhotoWithMetadata = ({details}) => {
-    const [ isLoading, setIsLoading ] = React.useState(true)
+const PhotoWithMetadata = ({ details }) => {
+    const [isLoading, setIsLoading] = React.useState(true)
 
     React.useEffect(() => {
         setIsLoading(true)
     }, [details.id])
-    
+
     return (
         <PhotoWithMetadataWrapper>
             <LoadingIcon isloading={isLoading} />
@@ -80,7 +77,7 @@ const PhotoWithMetadata = ({details}) => {
                     onLoad={() => setIsLoading(false)}
                     src={details.src}
                 />
-                { isLoading ? null : <Metadata details={details} /> }
+                {isLoading ? null : <Metadata details={details} />}
             </PhotoWrapper>
         </PhotoWithMetadataWrapper>
     )

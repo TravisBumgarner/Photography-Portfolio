@@ -1,7 +1,11 @@
 import React from 'react'
 
 import { Header } from 'Components'
-import { SNAPSHOT, PROJECT } from 'Constants'
+
+const SNAPSHOT = 'snapshot'
+const PROJECT = 'project'
+const ANALOG = 'analog'
+const DIGITAL = 'digital'
 
 import {
     NavigationWrapper,

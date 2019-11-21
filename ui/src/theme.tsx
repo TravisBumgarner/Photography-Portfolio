@@ -44,7 +44,7 @@ const sizes = {
 }
 
 // Iterate through the sizes and create a media template
-const MEDIA = Object.keys(sizes).reduce((acc, label) => {
+const MEDIA: { tablet: any, phone: any, desktop: any } = Object.keys(sizes).reduce((acc, label) => {
     acc[label] = (...args) => css`
         @media (max-width: ${sizes[label] / 16}em) {
             ${css(...args)};
@@ -52,6 +52,27 @@ const MEDIA = Object.keys(sizes).reduce((acc, label) => {
     `
     return acc
 }, {})
+
+// const media = (...args: string[]) => {
+//     return {
+//         desktop: css`
+//             @media (max-width: ${992 / 16}em) {
+//                 ${css(...args)};
+//             }
+//         `,
+//         tablet: css`
+//             @media (max-width: ${768 / 16}em) {
+//                 ${css(...args)};
+//             }
+//         `,
+//         phone: css`
+//             @media (max-width: ${576 / 16}em) {
+//                 ${css(...args)};
+//             }
+//          `,
+//     }
+// }
+
 
 const PAGE_THEME = styled.div`
     padding: ${CONTENT_SPACING.l};
@@ -77,8 +98,6 @@ const GlobalStyle = createGlobalStyle`
     }
 
     body {
-        /* background-image: ${props =>
-            props.isHomepage ? `url('http://localhost:8000/media/full/2017/2017_Alaska_368.jpg')` : ''}; */
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;

@@ -1,9 +1,8 @@
 import styled, { keyframes } from 'styled-components'
 import React from 'react'
+import { FaCaretRight, FaCamera } from 'react-icons/fa'
 
 import { TRANSITION_SPEED, ICON_COLOR } from 'Theme'
-
-import { FaCaretRight, FaCamera } from 'react-icons/fa'
 
 const NavigationClose = styled(({ isNavigationVisible, ...rest }) => <FaCaretRight {...rest} />)`
     position: absolute;
