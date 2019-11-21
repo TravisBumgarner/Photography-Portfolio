@@ -1,18 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import { ThumbnailWrapper } from './Thumbnail.styles'
 
-class Thumbnail extends Component {
-    handleClick = () => {
-        const { index, setAsSelectedPhoto } = this.props
-        setAsSelectedPhoto(index)
-    }
-
-    render() {
-        const { src } = this.props
-
-        return <ThumbnailWrapper src={src} onClick={this.handleClick} />
-    }
+const Thumbnail = ({ index, setAsSelectedPhoto, src }) => {
+    return <ThumbnailWrapper src={src} onClick={() => setAsSelectedPhoto(index)} />
 }
 
 export default Thumbnail
