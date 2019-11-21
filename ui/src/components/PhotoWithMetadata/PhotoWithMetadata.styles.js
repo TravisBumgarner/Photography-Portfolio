@@ -7,7 +7,7 @@ import { MEDIA, CONTENT_SPACING } from 'Theme'
 const StyledPhoto = styled.img`
     max-width: 100%;
     max-height: 95%;
-    ${props => (props.isLoading ? 'visibility:hidden' : '')};
+    ${props => (props.isLoading ? 'display: none' : '')};
 `
 
 const colorChange = keyframes`
@@ -29,12 +29,7 @@ const LoadingIcon = styled(FaCamera)`
     position: fixed;
     top: calc(50vh - 2.5em);
     left: calc(50vw - 2.5em);
-`
-
-const ErrorIcon = styled(FaExclamationTriangle)`
-    position: fixed;
-    top: calc(50vh - 2.5em);
-    left: calc(50vw - 2.5em);
+    ${props => (props.isLoading ? '' : 'display: none')};
 `
 
 const PhotoWithMetadataWrapper = styled.div`
@@ -76,4 +71,4 @@ const MetadataWrapper = styled.div`
     `};
 `
 
-export { StyledPhoto, MetadataWrapper, PhotoWrapper, PhotoWithMetadataWrapper, Spacer, LoadingIcon, ErrorIcon }
+export { StyledPhoto, MetadataWrapper, PhotoWrapper, PhotoWithMetadataWrapper, Spacer, LoadingIcon }
