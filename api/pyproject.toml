@@ -6,12 +6,12 @@ authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
 python = "3.7.4"
-Django = "2.1.5"
+Django = "2.1.11"
 django-cors-headers = "2.4.0"
-djangorestframework = "3.8.2"
+djangorestframework = "3.9.1"
 ExifRead = "2.1.2"
 gunicorn = "19.9.0"
-Pillow = "5.2.0"
+Pillow = "6.2.0"
 pylint = "2.1.1"
 sentry-sdk = "0.4.3"
 python-xmp-toolkit = "^2.0"
