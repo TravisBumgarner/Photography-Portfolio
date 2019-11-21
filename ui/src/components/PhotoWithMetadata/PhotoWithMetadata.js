@@ -32,6 +32,8 @@ const Metadata = ({details}) => {
         camera_type
     } = details
 
+    console.log('photometadat', details)
+
     const locationString = `${location.title}`
     const gearString = make || model || lens ? `${make} ${model} ${lens}` : 'N/A'
     const statsString =
@@ -67,7 +69,7 @@ const PhotoWithMetadata = ({details}) => {
     React.useEffect(() => {
         setIsLoading(true)
     }, [details.id])
-
+    
     return (
         <PhotoWithMetadataWrapper>
             <LoadingIcon isloading={isLoading} />

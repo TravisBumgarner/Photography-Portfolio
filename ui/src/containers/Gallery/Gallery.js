@@ -46,10 +46,10 @@ const Gallery = ({
     photos
 }) => {
     const [visibleImageCount, setVisibleImageCount] = React.useState(15)
-    const [selectedPhotoIndex, setSelectedPhotoIndex] = React.useState(null)
+    const [selectedPhotoIndex, setSelectedPhotoIndex] = React.useState(undefined)
 
     const galleryRef = React.useRef(null)
-
+    
     const onScroll = React.useCallback(() => {
         const node = galleryRef.current
         if (
@@ -69,7 +69,6 @@ const Gallery = ({
         }
     }, [onScroll])
 
-
     const getPreviousPhotoIndex = () => {
         const newSelectedPhotoIndex = selectedPhotoIndex === 0 ? photos.length - 1 : selectedPhotoIndex - 1
         setSelectedPhotoIndex(newSelectedPhotoIndex)
@@ -83,8 +82,8 @@ const Gallery = ({
     }
 
     const handleKeyPress = event => {
-        if(selectedPhotoIndex === null){
-            return null
+        if(selectedPhotoIndex === undefined){
+            return
         }
 
         if (event.key === 'ArrowLeft') {
@@ -104,18 +103,17 @@ const Gallery = ({
     }, [selectedPhotoIndex])
 
     const handleSwitchToSelectedPhoto = (newSelectedPhotoIndex) => {
-        console.log(newSelectedPhotoIndex)
         setSelectedPhotoIndex(newSelectedPhotoIndex)
         handleUrlChange(newSelectedPhotoIndex)
     }
 
     const handleSwitchToGrid = () => {
-        setSelectedPhotoIndex(null)
-        handleUrlChange(null)
+        setSelectedPhotoIndex(undefined)
+        handleUrlChange(undefined)
     }
 
     const handleUrlChange = newSelectedPhotoIndex => {
-        if (newSelectedPhotoIndex !== null) {
+        if (newSelectedPhotoIndex !== undefined) {
             const { id } = photos[newSelectedPhotoIndex]
             history.push(`/portfolio/${galleryDetails.content_type}/${galleryDetails.slug}/${id}`)
         } else {
@@ -125,8 +123,29 @@ const Gallery = ({
 
     const grid = generateGrid({visibleImageCount, photos, handleSwitchToSelectedPhoto})
 
+    const getSelectedPhotoFromUrl = () => {
+        if(photoId !== undefined){
+            let indexFound 
+            photos.forEach((photo, index) => {
+                if(photo.id == photoId){
+                    indexFound = index
+                    console.log(indexFound)
+                }
+            })
+            if(indexFound !== undefined){
+                setSelectedPhotoIndex(indexFound)
+            }
+        }
+    }
+
+    React.useEffect(getSelectedPhotoFromUrl, [photos])
+
+    if(!photos.length) {
+        return null
+    }
+
     return ( 
-        selectedPhotoIndex !== null ?  (
+        selectedPhotoIndex !== undefined ?  (
             <PhotoWithMetadataWrapper>
                 <CloseIcon size={ICON_FONT_SIZES.l} onClick={handleSwitchToGrid} />
                 <PreviousContainer onClick={getPreviousPhotoIndex}>
