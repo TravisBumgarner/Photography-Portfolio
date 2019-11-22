@@ -2,20 +2,20 @@ import React from 'react'
 
 import { LargeHeader, MediumHeader, SmallHeader, InlineHeader } from './Header.styles.js'
 
-type Props = { size: string, children: any, className: string }
+type Props = { size: string, children: any }
 
 const Header = ({ size, children, className }: Props) => {
     switch (size) {
         case 'large':
-            return <LargeHeader className={className}>{children}</LargeHeader>
+            return <LargeHeader>{children}</LargeHeader>
         case 'medium':
-            return <MediumHeader className={className}>{children}</MediumHeader>
+            return <MediumHeader>{children}</MediumHeader>
         case 'small':
-            return <SmallHeader className={className}>{children}</SmallHeader>
+            return <SmallHeader>{children}</SmallHeader>
         case 'inline':
-            return <InlineHeader className={className}>{children}</InlineHeader>
+            return <InlineHeader>{children}</InlineHeader>
         default:
-            return <SmallHeader className={className}>{children}</SmallHeader>
+            return <SmallHeader>{children}</SmallHeader>
     }
 }
 

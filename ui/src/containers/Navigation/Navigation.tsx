@@ -4,8 +4,6 @@ import { Header } from 'Components'
 
 const SNAPSHOT = 'snapshot'
 const PROJECT = 'project'
-const ANALOG = 'analog'
-const DIGITAL = 'digital'
 
 import {
     NavigationWrapper,
@@ -13,11 +11,18 @@ import {
     ExternalLink,
     InternalLink,
     LinkListItem,
-} from './Navigation.styles.js'
+} from './Navigation.styles'
 
-const Navigation = ({ galleries, toggleNavigation, isHomepage }) => {
-    const projectLinks = []
-    const snapshotLinks = []
+import { GalleryType } from '../../views/App/App.types'
+
+type Props = {
+    galleries: GalleryType[],
+    toggleNavigation: () => void
+}
+
+const Navigation = ({ galleries, toggleNavigation }: Props) => {
+    const projectLinks: React.ReactElement[] = []
+    const snapshotLinks: React.ReactElement[] = []
 
     galleries.sort((a, b) => (a.title > b.title ? 1 : -1)) // Sort galleries alphabetically
     galleries.map(({ id, title, content_type, slug }) => {
@@ -26,9 +31,9 @@ const Navigation = ({ galleries, toggleNavigation, isHomepage }) => {
                 <InternalLink to={`/portfolio/${content_type}/${slug}`}>{title}</InternalLink>
             </LinkListItem>
         )
-        if (content_type.toLowerCase()  === PROJECT) {
+        if (content_type.toLowerCase() === PROJECT) {
             projectLinks.push(link)
-        } else if (content_type.toLowerCase()  === SNAPSHOT) {
+        } else if (content_type.toLowerCase() === SNAPSHOT) {
             snapshotLinks.push(link)
         }
     })
@@ -61,7 +66,7 @@ const Navigation = ({ galleries, toggleNavigation, isHomepage }) => {
     })
 
     return (
-        <NavigationWrapper isHomepage={isHomepage}>
+        <NavigationWrapper>
             <SubNavigationWrapper>
                 <Header size="medium">Photo Essays</Header>
                 <ul>{projectLinks}</ul>

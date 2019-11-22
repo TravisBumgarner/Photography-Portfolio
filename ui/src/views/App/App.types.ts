@@ -1,17 +1,31 @@
-import { number } from "prop-types"
+type GalleryType = {
+    "id": number
+    "title": string
+    "content_type": string
+    "description": string
+    "start_date": string
+    "end_date": string
+    "slug": string
+}
 
-type Photo = {
+type CategoryType = {
+    "id": number
+    "title": string
+}
+
+type LocationType = {
+    "id": number,
+    "title": string
+}
+
+type PhotoType = {
     "id": number
     "src": string
     "file_name": string
-    "gallery": {
-        "id": number
-    }
-    "location": {
-        "id": number
-    }
+    "gallery": GalleryType
+    "location": LocationType
     "date_taken": string
-    "category": { id: number }[]
+    "category": CategoryType[]
     "width": number
     "height": number
     "src_thumbnail_medium": string
@@ -28,24 +42,4 @@ type Photo = {
     "is_home_background": boolean
 }
 
-type Gallery = {
-    "id": number
-    "title": string
-    "content_type": string
-    "description": string
-    "start_date": string
-    "end_date": string
-    "slug": string
-}
-
-type Category = {
-    "id": number
-    "title": string
-}
-
-type Location = {
-    "id": number,
-    "title": string
-}
-
-export { Location, Category, Gallery, Photo }
+export { LocationType, CategoryType, GalleryType, PhotoType }

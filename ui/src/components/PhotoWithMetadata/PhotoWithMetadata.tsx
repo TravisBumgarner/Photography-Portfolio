@@ -11,13 +11,12 @@ import {
     LoadingIcon,
 } from './PhotoWithMetadata.styles'
 
-const PS = 'Point & Shoot Camera'
-const DSLR = 'DSLR Camera'
-const PHONE = 'Phone'
+import { PhotoType } from '../../views/App/App.types'
+
 const FILM = 'Film Camera'
 
 
-const Metadata = ({ details }) => {
+const Metadata = ({ details }: { details: PhotoType }) => {
 
     const {
         make,
@@ -60,7 +59,7 @@ const Metadata = ({ details }) => {
     )
 }
 
-const PhotoWithMetadata = ({ details }) => {
+const PhotoWithMetadata = ({ details }: { details: PhotoType }) => {
     const [isLoading, setIsLoading] = React.useState(true)
 
     React.useEffect(() => {
@@ -73,7 +72,6 @@ const PhotoWithMetadata = ({ details }) => {
             <PhotoWrapper>
                 <StyledPhoto
                     isLoading={isLoading}
-                    isLandscape={details.width > details.height}
                     onLoad={() => setIsLoading(false)}
                     src={details.src}
                 />

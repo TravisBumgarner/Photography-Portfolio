@@ -61,7 +61,7 @@ const NavigationWrapper = styled.div`
     z-index: 999;
     bottom: 0;
     transition: right ${TRANSITION_SPEED}s;
-    right: ${props => (props.isNavigationVisible ? '0' : `-100vw`)};
+    right: ${({ isNavigationVisible }: { isNavigationVisible: boolean }) => (isNavigationVisible ? '0' : `-100vw`)};
 `
 
 export { AppWrapper, NavigationWrapper, NavigationClose, NavigationGutter, LoadingIcon, LoadingIconWrapper }

@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { FONT_FAMILY_TEXT, CONTENT_SPACING, TEXT_FONT_SIZES } from 'Theme'
 
 const DefaultText = styled.p`
-    color: ${props => (props.inverted ? 'white' : 'black')};
     font-family: ${FONT_FAMILY_TEXT};
     line-height: 1.5;
     padding-bottom: ${CONTENT_SPACING.m};

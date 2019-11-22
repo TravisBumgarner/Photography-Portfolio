@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const ThumbnailWrapper = styled.div`
-    background-image: url(${props => props.src});
+    background-image: url(${({ src }: { src: string }) => src});
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

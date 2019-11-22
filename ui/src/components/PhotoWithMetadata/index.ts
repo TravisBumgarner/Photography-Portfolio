@@ -1,3 +1,3 @@
 import PhotoWithMetadata from './PhotoWithMetadata'
 
-export default 'PhotoWithMetadata'
+export default PhotoWithMetadata

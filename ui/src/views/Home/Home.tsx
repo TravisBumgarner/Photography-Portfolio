@@ -2,8 +2,13 @@ import React from 'react'
 
 import { useInterval } from 'Utilities'
 import { HomeWrapper } from './Home.styles.js'
+import { PhotoType } from '../App/App.types'
 
-const Home = ({ backgroundPhotos }) => {
+type Props = {
+    backgroundPhotos: PhotoType[]
+}
+
+const Home = ({ backgroundPhotos }: Props) => {
     const [backgroundImageIndex, setBackgroundImageIndex] = React.useState(0)
 
     useInterval(() => setBackgroundImageIndex(backgroundImageIndex + 1), 4000);

@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 
-import { PAGE_THEME, TRANSITION_SPEED } from 'Theme'
+import { PAGE_THEME } from 'Theme'
 
 const HomeWrapper = styled(PAGE_THEME)`
-    background-image: ${props => `url('${props.backgroundImageUrl}')`};
+    background-image: ${({ backgroundImageUrl }: { backgroundImageUrl: string }) => `url('${backgroundImageUrl}')`};
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

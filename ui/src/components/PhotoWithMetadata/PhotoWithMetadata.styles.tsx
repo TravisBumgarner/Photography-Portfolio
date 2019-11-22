@@ -7,7 +7,7 @@ import { MEDIA, CONTENT_SPACING } from 'Theme'
 const StyledPhoto = styled.img`
     max-width: 100%;
     max-height: 95%;
-    ${props => (props.isLoading ? 'display: none' : '')};
+    ${({isLoading}: {isLoading: boolean}) => (isLoading ? 'display: none' : '')};
 `
 
 const colorChange = keyframes`
@@ -29,7 +29,7 @@ const LoadingIcon = styled(FaCamera)`
     position: fixed;
     top: calc(50vh - 2.5em);
     left: calc(50vw - 2.5em);
-    ${props => (props.isLoading ? '' : 'display: none')};
+    ${({isLoading}: {isLoading: boolean}) => (isLoading ? '' : 'display: none')};
 `
 
 const PhotoWithMetadataWrapper = styled.div`

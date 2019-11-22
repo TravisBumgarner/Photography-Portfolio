@@ -16,10 +16,10 @@ import {
 } from './App.styles.js'
 
 import {
-    Gallery,
-    Photo,
-    Location,
-    Category
+    GalleryType,
+    PhotoType,
+    LocationType,
+    CategoryType
 } from './App.types'
 
 type Props = {
@@ -29,11 +29,11 @@ type Props = {
 }
 
 const App = ({ location: { pathname } }: Props) => {
-    const [photos, setPhotos] = React.useState<Photo[]>([])
-    const [galleries, setGalleries] = React.useState<Gallery[]>([])
-    const [locations, setLocations] = React.useState<Location[]>([])
-    const [categories, setCategories] = React.useState<Category[]>([])
-    const [backgroundPhotos, setBackgroundPhotos] = React.useState<Photo[]>([])
+    const [photos, setPhotos] = React.useState<PhotoType[]>([])
+    const [galleries, setGalleries] = React.useState<GalleryType[]>([])
+    const [locations, setLocations] = React.useState<LocationType[]>([])
+    const [categories, setCategories] = React.useState<CategoryType[]>([])
+    const [backgroundPhotos, setBackgroundPhotos] = React.useState<PhotoType[]>([])
 
     const [isNavigationVisible, setIsNavigationVisible] = React.useState(false)
     const [isLoading, setIsLoading] = React.useState(true)
@@ -70,12 +70,12 @@ const App = ({ location: { pathname } }: Props) => {
         Promise.all([getPhotos(), getGalleries(), getLocations(), getCategories()]).then(
             (
                 [photos, galleries, locations, categories]:
-                    [Photo[], Gallery[], Location[], Category[]]
+                    [PhotoType[], GalleryType[], LocationType[], CategoryType[]]
             ) => {
                 setBackgroundPhotos(photos.filter(photo => photo.is_home_background))
                 setPhotos(photos)
                 setGalleries(galleries)
-                setLocations(locations)s
+                setLocations(locations)
                 setCategories(categories)
                 setIsLoading(false)
             }
@@ -98,11 +98,7 @@ const App = ({ location: { pathname } }: Props) => {
                     <NavigationWrapper isNavigationVisible={isNavigationVisible}>
                         {isNavigationVisible && <NavigationGutter onClick={toggleNavigation} />}
                         <Navigation
-                            isHomepage={pathname === '/'}
-                            isNavigationVisible={isNavigationVisible}
                             galleries={galleries}
-                            locations={locations}
-                            categories={categories}
                             toggleNavigation={toggleNavigation}
                         />
                         <NavigationClose
@@ -113,7 +109,7 @@ const App = ({ location: { pathname } }: Props) => {
                     </NavigationWrapper>
                     <Switch>
                         <Route exact path="/" render={rest => <Home backgroundPhotos={backgroundPhotos} {...rest} />} />
-                        <Route exact path="/about" render={rest => <About {...rest} />} />
+                        <Route exact path="/about" component={About} />
                         <Route
                             path="/portfolio/:contentType/:gallerySlug/:photoId?"
                             render={rest => <Portfolio photos={photos} galleries={galleries} {...rest} />}

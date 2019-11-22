@@ -31,7 +31,7 @@ const LinkListItem = styled.li`
     }
 `
 
-const sharedStyles = props => css`
+const sharedStyles = css`
     text-decoration: none;
     font-family: ${FONT_FAMILY_HEADER};
     font-weight: 100;
@@ -46,11 +46,11 @@ const sharedStyles = props => css`
 `
 
 const InternalLink = styled(Link)`
-    ${props => sharedStyles(props)};
+    ${sharedStyles}
 `
 
 const ExternalLink = styled.a`
-    ${props => sharedStyles(props)};
+    ${sharedStyles}
 `
 
 export { NavigationWrapper, SubNavigationWrapper, InternalLink, ExternalLink, LinkListItem }

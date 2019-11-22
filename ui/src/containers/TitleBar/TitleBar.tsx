@@ -5,7 +5,12 @@ import { Header } from 'Components'
 
 import { TitleBarWrapper, NavigationOpen, InternalLink } from './TitleBar.styles'
 
-const TitleBar = ({ toggleNavigation, isNavigationVisible }) => {
+type Props = {
+    toggleNavigation: boolean
+    isNavigationVisible: boolean
+}
+
+const TitleBar = ({ toggleNavigation, isNavigationVisible }: Props) => {
     return (
         <TitleBarWrapper>
             <InternalLink to="/">

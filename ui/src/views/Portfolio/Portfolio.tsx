@@ -1,33 +1,48 @@
 import React from 'react'
 
-import { Gallery } from 'Containers'
-
-
+import { GalleryType, PhotoType } from '../App/App.types'
 import { PortfolioWrapper } from './Portfolio.styles.js'
+import { Gallery } from 'Containers'
 
 const SNAPSHOT = 'snapshot'
 const PROJECT = 'project'
 const ANALOG = 'analog'
 const DIGITAL = 'digital'
 
-const ALL_GALLERY = {
+const ALL_GALLERY: GalleryType = {
     content_type: SNAPSHOT,
     slug: 'all',
+    id: -1,
     title: 'All',
     description: 'All Snapshots',
     start_date: "2017-01-01",
     end_date: "2017-01-01"
 }
 
-const Portfolio = (
-    { match: {
-        params: {contentType, gallerySlug, photoId}
+type Props = {
+    match: {
+        params: {
+            contentType: string
+            gallerySlug: string
+            photoId: String
+        }
     },
-    photos,
-    galleries,
-    history }
+    photos: PhotoType[],
+    galleries: GalleryType[],
+    history: any
+}
+
+const Portfolio = (
+    {
+        match: {
+            params: { contentType, gallerySlug, photoId }
+        },
+        photos,
+        galleries,
+        history
+    }: Props
 ) => {
-    const [filteredPhotos, setFilteredPhotos] = React.useState([])
+    const [filteredPhotos, setFilteredPhotos] = React.useState<PhotoType[]>([])
 
     const filterPhotos = () => {
         if (contentType === SNAPSHOT && gallerySlug === 'all') {
@@ -44,16 +59,16 @@ const Portfolio = (
     let galleryDetails = galleries.length && galleries.find(gallery => gallery.slug == gallerySlug)
     galleryDetails = galleryDetails || ALL_GALLERY
 
-    return  (
+    return (
         <PortfolioWrapper>
             <Gallery
-            history={history}
-            photoId={photoId}
-            photos={filteredPhotos}
-            galleryDetails={galleryDetails}
-        />
+                history={history}
+                photoId={photoId}
+                photos={filteredPhotos}
+                galleryDetails={galleryDetails}
+            />
         </PortfolioWrapper>
-    ) 
+    )
 }
 
 export default Portfolio

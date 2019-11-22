@@ -3,6 +3,7 @@ import React, { Fragment } from 'react'
 import { Thumbnail, PhotoWithMetadata, Header, Text } from 'Components'
 import { ICON_FONT_SIZES } from 'Theme'
 import { parseContent } from 'Utilities'
+import { PhotoType, GalleryType } from '../../views/App/App.types'
 
 import {
     GalleryWrapper,
@@ -18,8 +19,13 @@ import {
 
 const ITEMS_PER_ROW = 3
 
+type GenerateGridProps = {
+    visibleImageCount: number,
+    photos: PhotoType[],
+    handleSwitchToSelectedPhoto: (newSelectedPhotoIndex: number | undefined) => void
+}
 
-const generateGrid = ({visibleImageCount, photos, handleSwitchToSelectedPhoto}) => {
+const generateGrid = ({ visibleImageCount, photos, handleSwitchToSelectedPhoto }: GenerateGridProps) => {
     const grid = photos.slice(0, visibleImageCount).map((photo, index) => (
         <GalleryItem key={photo.id}>
             <Thumbnail
@@ -39,17 +45,24 @@ const generateGrid = ({visibleImageCount, photos, handleSwitchToSelectedPhoto}) 
     return grid
 }
 
+type Props = {
+    photoId: number,
+    galleryDetails: GalleryType,
+    history: any,
+    photos: PhotoType[]
+}
+
 const Gallery = ({
     photoId,
     galleryDetails,
     history,
     photos
-}) => {
-    const [visibleImageCount, setVisibleImageCount] = React.useState(15)
-    const [selectedPhotoIndex, setSelectedPhotoIndex] = React.useState(undefined)
+}: Props) => {
+    const [visibleImageCount, setVisibleImageCount] = React.useState<number>(15)
+    const [selectedPhotoIndex, setSelectedPhotoIndex] = React.useState<number | undefined>(undefined)
 
-    const galleryRef = React.useRef(null)
-    
+    const galleryRef = React.useRef<HTMLInputElement>(null)
+
     const onScroll = React.useCallback(() => {
         const node = galleryRef.current
         if (
@@ -70,19 +83,27 @@ const Gallery = ({
     }, [onScroll])
 
     const getPreviousPhotoIndex = () => {
+        if (selectedPhotoIndex === undefined) {
+            return
+        }
+
         const newSelectedPhotoIndex = selectedPhotoIndex === 0 ? photos.length - 1 : selectedPhotoIndex - 1
         setSelectedPhotoIndex(newSelectedPhotoIndex)
         handleUrlChange(newSelectedPhotoIndex)
     }
 
     const getNextPhotoIndex = () => {
+        if (selectedPhotoIndex === undefined) {
+            return
+        }
+
         const newSelectedPhotoIndex = selectedPhotoIndex === photos.length - 1 ? 0 : selectedPhotoIndex + 1
         setSelectedPhotoIndex(newSelectedPhotoIndex)
         handleUrlChange(newSelectedPhotoIndex)
     }
 
-    const handleKeyPress = event => {
-        if(selectedPhotoIndex === undefined){
+    const handleKeyPress = (event: KeyboardEvent) => {
+        if (selectedPhotoIndex === undefined) {
             return
         }
 
@@ -102,7 +123,7 @@ const Gallery = ({
         }
     }, [selectedPhotoIndex])
 
-    const handleSwitchToSelectedPhoto = (newSelectedPhotoIndex) => {
+    const handleSwitchToSelectedPhoto = (newSelectedPhotoIndex: number) => {
         setSelectedPhotoIndex(newSelectedPhotoIndex)
         handleUrlChange(newSelectedPhotoIndex)
     }
@@ -112,7 +133,7 @@ const Gallery = ({
         handleUrlChange(undefined)
     }
 
-    const handleUrlChange = newSelectedPhotoIndex => {
+    const handleUrlChange = (newSelectedPhotoIndex: number | undefined) => {
         if (newSelectedPhotoIndex !== undefined) {
             const { id } = photos[newSelectedPhotoIndex]
             history.push(`/portfolio/${galleryDetails.content_type}/${galleryDetails.slug}/${id}`)
@@ -121,18 +142,18 @@ const Gallery = ({
         }
     }
 
-    const grid = generateGrid({visibleImageCount, photos, handleSwitchToSelectedPhoto})
+    const grid = generateGrid({ visibleImageCount, photos, handleSwitchToSelectedPhoto })
 
     const getSelectedPhotoFromUrl = () => {
-        if(photoId !== undefined){
-            let indexFound 
+        if (photoId !== undefined) {
+            let indexFound
             photos.forEach((photo, index) => {
-                if(photo.id == photoId){
+                if (photo.id == photoId) {
                     indexFound = index
                     console.log(indexFound)
                 }
             })
-            if(indexFound !== undefined){
+            if (indexFound !== undefined) {
                 setSelectedPhotoIndex(indexFound)
             }
         }
@@ -140,12 +161,12 @@ const Gallery = ({
 
     React.useEffect(getSelectedPhotoFromUrl, [photos])
 
-    if(!photos.length) {
+    if (!photos.length) {
         return null
     }
 
-    return ( 
-        selectedPhotoIndex !== undefined ?  (
+    return (
+        selectedPhotoIndex !== undefined ? (
             <PhotoWithMetadataWrapper>
                 <CloseIcon size={ICON_FONT_SIZES.l} onClick={handleSwitchToGrid} />
                 <PreviousContainer onClick={getPreviousPhotoIndex}>
@@ -157,17 +178,17 @@ const Gallery = ({
                 <PhotoWithMetadata details={photos[selectedPhotoIndex]} />
             </PhotoWithMetadataWrapper>
         ) : (
-            <Fragment>
-                <ProjectDescriptionWrapper>
-                    <Header size="medium">{galleryDetails.title}</Header>
-                    {parseContent(galleryDetails.description)}
-                    {galleryDetails.content_type == 'Project' && (
-                        <Text>{`${galleryDetails.start_date} - ${galleryDetails.end_date}`}</Text>
-                    )}
-                </ProjectDescriptionWrapper>
-                <GalleryWrapper ref={galleryRef}>{grid}</GalleryWrapper>
-            </Fragment>
-        )
+                <Fragment>
+                    <ProjectDescriptionWrapper>
+                        <Header size="medium">{galleryDetails.title}</Header>
+                        {parseContent(galleryDetails.description)}
+                        {galleryDetails.content_type == 'Project' && (
+                            <Text>{`${galleryDetails.start_date} - ${galleryDetails.end_date}`}</Text>
+                        )}
+                    </ProjectDescriptionWrapper>
+                    <GalleryWrapper ref={galleryRef}>{grid}</GalleryWrapper>
+                </Fragment>
+            )
     )
 }
 
