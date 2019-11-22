@@ -4,7 +4,7 @@ import { LargeHeader, MediumHeader, SmallHeader, InlineHeader } from './Header.s
 
 type Props = { size: string, children: any }
 
-const Header = ({ size, children, className }: Props) => {
+const Header = ({ size, children }: Props) => {
     switch (size) {
         case 'large':
             return <LargeHeader>{children}</LargeHeader>

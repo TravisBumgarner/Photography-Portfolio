@@ -44,37 +44,14 @@ const sizes = {
 }
 
 // Iterate through the sizes and create a media template
-const MEDIA: { tablet: any, phone: any, desktop: any } = Object.keys(sizes).reduce((acc, label) => {
-    acc[label] = (...args) => css`
+const MEDIA = Object.keys(sizes).reduce((acc, label: keyof typeof sizes) => {
+    const entry = (args: any[]) => css`
         @media (max-width: ${sizes[label] / 16}em) {
-            ${css(...args)};
+            ${args.length > 0 ? css(...args) : ''};
         }
     `
-    return acc
+    return { ...acc, [sizes[label]]: entry }
 }, {})
-
-console.log(MEDIA)
-
-// const media = (...args: string[]) => {
-//     return {
-//         desktop: css`
-//             @media (max-width: ${992 / 16}em) {
-//                 ${css(...args)};
-//             }
-//         `,
-//         tablet: css`
-//             @media (max-width: ${768 / 16}em) {
-//                 ${css(...args)};
-//             }
-//         `,
-//         phone: css`
-//             @media (max-width: ${576 / 16}em) {
-//                 ${css(...args)};
-//             }
-//          `,
-//     }
-// }
-
 
 const PAGE_THEME = styled.div`
     padding: ${CONTENT_SPACING.l};
@@ -116,7 +93,6 @@ const GlobalStyle = createGlobalStyle`
 export {
     MEDIA,
     GlobalStyle,
-    generateTheme,
     PAGE_THEME,
     FONT_FAMILY_TEXT,
     FONT_FAMILY_HEADER,
