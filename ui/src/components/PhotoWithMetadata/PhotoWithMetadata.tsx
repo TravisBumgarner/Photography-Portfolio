@@ -13,7 +13,7 @@ import {
 
 import { PhotoType } from '../../views/App/App.types'
 
-const FILM = 'Film Camera'
+const FILM = 'Film'
 
 
 const Metadata = ({ details }: { details: PhotoType }) => {

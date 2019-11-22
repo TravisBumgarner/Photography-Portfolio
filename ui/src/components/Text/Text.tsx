@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { MediumText } from './Text.styles.js'
+import { MediumText } from './Text.styles'
 import { any } from 'prop-types'
 
 type Props = {

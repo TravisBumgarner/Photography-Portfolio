@@ -32,7 +32,7 @@ module.exports = env => {
                 Components: path.resolve(__dirname, 'src/components/'),
                 Containers: path.resolve(__dirname, 'src/containers/'),
                 Views: path.resolve(__dirname, 'src/views/'),
-                Theme: path.resolve(__dirname, 'src/theme.js'),
+                Theme: path.resolve(__dirname, 'src/theme.tsx'),
                 Utilities: path.resolve(__dirname, 'src/utilities/')
             },
             extensions: ['.ts', '.tsx', '.js']
@@ -40,13 +40,9 @@ module.exports = env => {
         module: {
             rules: [
                 {
-                    test: /\.js$/,
+                    test: /\.[jt]s[x]$/,
                     exclude: /node_modules/,
                     loader: 'babel-loader',
-                    query: {
-                        presets: ['@babel/preset-env', '@babel/preset-react'],
-                        plugins: [require('babel-plugin-transform-class-properties')]
-                    }
                 }
             ]
         },

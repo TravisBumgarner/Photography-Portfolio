@@ -6,7 +6,7 @@ import { Header } from 'Components'
 import { TitleBarWrapper, NavigationOpen, InternalLink } from './TitleBar.styles'
 
 type Props = {
-    toggleNavigation: boolean
+    toggleNavigation: () => void
     isNavigationVisible: boolean
 }
 

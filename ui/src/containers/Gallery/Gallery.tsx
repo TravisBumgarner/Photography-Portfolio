@@ -46,7 +46,7 @@ const generateGrid = ({ visibleImageCount, photos, handleSwitchToSelectedPhoto }
 }
 
 type Props = {
-    photoId: number,
+    photoId: string,
     galleryDetails: GalleryType,
     history: any,
     photos: PhotoType[]
@@ -148,7 +148,7 @@ const Gallery = ({
         if (photoId !== undefined) {
             let indexFound
             photos.forEach((photo, index) => {
-                if (photo.id == photoId) {
+                if (photo.id === parseInt(photoId, 10)) {
                     indexFound = index
                     console.log(indexFound)
                 }

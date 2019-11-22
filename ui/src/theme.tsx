@@ -53,6 +53,8 @@ const MEDIA: { tablet: any, phone: any, desktop: any } = Object.keys(sizes).redu
     return acc
 }, {})
 
+console.log(MEDIA)
+
 // const media = (...args: string[]) => {
 //     return {
 //         desktop: css`

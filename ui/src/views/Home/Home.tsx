@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useInterval } from 'Utilities'
-import { HomeWrapper } from './Home.styles.js'
+import { HomeWrapper } from './Home.styles'
 import { PhotoType } from '../App/App.types'
 
 type Props = {

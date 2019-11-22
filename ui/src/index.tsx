@@ -9,7 +9,14 @@ Sentry.init({
     dsn: 'https://9f4ad55370e84dea97293045aab74b8b@sentry.io/1304092'
 })
 
-class SentryWrapper extends Component {
+interface IProps {
+}
+
+interface IState {
+    error: ErrorEvent | null
+}
+
+class SentryWrapper extends Component<IProps, IState> {
     constructor(props: any) {
         super(props)
         this.state = {

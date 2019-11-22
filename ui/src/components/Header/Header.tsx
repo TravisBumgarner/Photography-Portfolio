@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { LargeHeader, MediumHeader, SmallHeader, InlineHeader } from './Header.styles.js'
+import { LargeHeader, MediumHeader, SmallHeader, InlineHeader } from './Header.styles'
 
 type Props = { size: string, children: any }
 

@@ -1,13 +1,10 @@
 import React from 'react'
 
 import { GalleryType, PhotoType } from '../App/App.types'
-import { PortfolioWrapper } from './Portfolio.styles.js'
+import { PortfolioWrapper } from './Portfolio.styles'
 import { Gallery } from 'Containers'
 
 const SNAPSHOT = 'snapshot'
-const PROJECT = 'project'
-const ANALOG = 'analog'
-const DIGITAL = 'digital'
 
 const ALL_GALLERY: GalleryType = {
     content_type: SNAPSHOT,
@@ -24,7 +21,7 @@ type Props = {
         params: {
             contentType: string
             gallerySlug: string
-            photoId: String
+            photoId: string
         }
     },
     photos: PhotoType[],

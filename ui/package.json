@@ -4,11 +4,10 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "NODE_ENV=development webpack-dev-server --hot --inline --mode=development --config webpack.js",
-        "start-dev": "NODE_ENV=development webpack-dev-server --host 0.0.0.0 --port 3000 --config webpack.js",
+        "start-dev": "NODE_ENV=development webpack-dev-server --mode=development --config webpack.js",
         "bundle": "rm ./dist/index.html; rm ./dist/app*; mkdir ./dist; NODE_ENV=production; webpack --mode=production --config webpack.js --verobose",
         "start-prod": "npm run bundle; node server.js",
-        "precommit": "tsc --noEmit"
+        "precommit": "tsc --noEmit --skipLibCheck"
     },
     "author": "",
     "license": "ISC",
@@ -28,6 +27,7 @@
         "@babel/core": "^7.0.0",
         "@babel/preset-env": "^7.0.0",
         "@babel/preset-react": "^7.0.0",
+        "@babel/preset-typescript": "^7.7.2",
         "@types/express": "^4.17.2",
         "@types/react": "^16.9.11",
         "@types/react-dom": "^16.9.4",
@@ -37,6 +37,7 @@
         "babel-plugin-transform-class-properties": "^6.24.1",
         "eslint": "^5.5.0",
         "html-webpack-plugin": "^3.2.0",
+        "ts-loader": "^6.2.1",
         "webpack": "^4.17.1",
         "webpack-cli": "^3.1.0",
         "webpack-dev-server": "^3.9.0"

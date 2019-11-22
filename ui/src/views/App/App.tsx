@@ -13,7 +13,7 @@ import {
     NavigationGutter,
     LoadingIcon,
     LoadingIconWrapper
-} from './App.styles.js'
+} from './App.styles'
 
 import {
     GalleryType,
