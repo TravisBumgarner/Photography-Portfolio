@@ -47,10 +47,10 @@ const sizes = {
 const MEDIA = Object.keys(sizes).reduce((acc, label: keyof typeof sizes) => {
     const entry = (args: any[]) => css`
         @media (max-width: ${sizes[label] / 16}em) {
-            ${args.length > 0 ? css(...args) : ''};
+            ${css(...args)};
         }
     `
-    return { ...acc, [sizes[label]]: entry }
+    return { ...acc, [label]: entry }
 }, {})
 
 const PAGE_THEME = styled.div`
