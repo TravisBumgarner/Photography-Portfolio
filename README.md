@@ -46,6 +46,10 @@ ContentType
 1. Create new project
 2. Use [code](https://github.com/TravisBumgarner/photo20/blob/master/ui/src/index.js) as example 
 
+# Python 
+
+1. Install exempi `brew install exempi` 
+
 # Django
 
 # Update API

@@ -1,3 +1,8 @@
+- [ ] Refactor photo script
+    - [ ] Remove django references
+    - [ ] Create separate data for galleries
+    - [ ] Create separate data for categories
+    - [x] ~~Create separate data for locations~~
 - [ ] Rewrite load photo script to generate JSON file(s) instead
 - [ ] Hookup front end to read from photos instead of API
 - [ ] Kill API
