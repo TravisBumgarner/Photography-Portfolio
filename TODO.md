@@ -1,0 +1,5 @@
+- [ ] Rewrite load photo script to generate JSON file(s) instead
+- [ ] Hookup front end to read from photos instead of API
+- [ ] Kill API
+- [ ] Setup script and / or Lightroom to load photos of different sizes
+- [ ] Hookup front end to multisized photos
