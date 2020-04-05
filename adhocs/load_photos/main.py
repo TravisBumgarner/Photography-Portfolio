@@ -1,6 +1,7 @@
 import os
 import sys
 import shutil
+import json
 
 # from io import StringIO, BytesIO
 
@@ -64,75 +65,78 @@ def main():
     INPUT_ROOT = os.path.abspath("./input_photos")
     print(INPUT_ROOT + "\n\n\n")
 
-    if not os.path.isdir(INPUT_ROOT):
-        os.makedirs(INPUT_ROOT)
+    for dir in [INPUT_ROOT, "./output_photos", "./output_json"]:
+        if not os.path.isdir(dir):
+            os.makedirs(dir)
+
+    photos = []
+    categories = set([])
+    galleries = {}
+    locations = set([])
 
     for input_file_name in os.listdir(INPUT_ROOT):
-        # try:
-        input_full_path = os.path.join(INPUT_ROOT, input_file_name)
-        input_file_root, file_extension = input_file_name.split(".")
+        try:
+            input_full_path = os.path.join(INPUT_ROOT, input_file_name)
+            input_file_root, file_extension = input_file_name.split(".")
 
-        if file_extension not in ["jpg", "jpeg"]:
-            print("    Skipping file: {}".format(input_file_name))
-            continue
-        else:
-            print("    Processing file: {}".format(input_file_name))
+            if file_extension not in ["jpg", "jpeg"]:
+                print("    Skipping file: {}".format(input_file_name))
+                continue
+            else:
+                print("    Processing file: {}".format(input_file_name))
 
-        lightroom_keywords = get_lightroom_keywords(input_full_path)
+            lightroom_keywords = get_lightroom_keywords(input_full_path)
 
-        exif_data = process_exif_data(input_full_path)
-        if not exif_data:
-            continue
+            exif_data = process_exif_data(input_full_path)
+            if not exif_data:
+                continue
 
-        # try:
-        #     gallery = Gallery.objects.get(title=lightroom_keywords["Gallery"])
-        # except Gallery.DoesNotExist:
-        #     gallery = Gallery.objects.create(
-        #         title=lightroom_keywords["Gallery"],
-        #         content_type=lightroom_keywords["ContentType"],
-        #     )
+            if lightroom_keywords["Gallery"] not in galleries:
+                galleries[lightroom_keywords["Gallery"]] = {
+                    "title": lightroom_keywords["Gallery"],
+                    "content_type": lightroom_keywords["ContentType"],
+                }
 
-        # location, _ = Location.objects.get_or_create(
-        #     title=lightroom_keywords["Location"],
-        # )
-        print(exif_data)
-        photo = {
-            # src
-            # src: src,
-            # src_thumbnail_small: src_thumbnail_small,
-            # src_thumbnail_medium: src_thumbnail_medium,
-            # File Details
-            # file_name=os.path.join(
-            #     "full", lightroom_keywords["Gallery"], input_file_root
-            # ),
-            # width: exif_data["width"],
-            # height: exif_data["height"],
-            # gallery: gallery,
-            # Hardware Details
-            "make": exif_data["make"],
-            "model": exif_data["model"],
-            "lens": exif_data["lens"],
-            # Photo Details
-            "date_taken": exif_data["date_taken"],
-            "shooting_mode": exif_data["shooting_mode"],
-            "aperture": exif_data["aperture"],
-            "shutter_speed": exif_data["shutter_speed"],
-            "iso": exif_data["iso"],
-            "focal_length": exif_data["focal_length"],
-            # Lightroom Metadata
-            "location": lightroom_keywords["Location"],
-            "camera_type": lightroom_keywords["CameraType"],
-        }
+            locations.add(lightroom_keywords["Location"])
 
-        # categories = []
-        # photo.save()
-        # for c in lightroom_keywords["Category"]:
-        #     category, _ = Category.objects.get_or_create(title=c,)
-        #     photo.category.add(category)
-        print(photo)
-        # except Exception as e:
-        #     print(e)
-        #     print("Messed up on photo", input_file_name)
+            categories.update(lightroom_keywords["Category"])
+
+            photo = {
+                "file_name": input_file_name,
+                "gallery": lightroom_keywords["Gallery"],
+                "categories": lightroom_keywords["Category"],
+                # Hardware Details
+                "make": exif_data["make"],
+                "model": exif_data["model"],
+                "lens": exif_data["lens"],
+                # Photo Details
+                "date_taken": exif_data["date_taken"],
+                "shooting_mode": exif_data["shooting_mode"],
+                "aperture": exif_data["aperture"],
+                "shutter_speed": exif_data["shutter_speed"],
+                "iso": exif_data["iso"],
+                "focal_length": exif_data["focal_length"],
+                # Lightroom Metadata
+                "location": lightroom_keywords["Location"],
+                "camera_type": lightroom_keywords["CameraType"],
+            }
+
+            photos.append(photo)
+        except Exception as e:
+            print(e)
+            print("Messed up on photo", input_file_name)
+
+        with open("output_json/photos.json", "w") as outfile:
+            json.dump(photos, outfile, default=str)
+
+        with open("output_json/galleries.json", "w") as outfile:
+            json.dump(list(galleries.values()), outfile)
+
+        with open("output_json/locations.json", "w") as outfile:
+            json.dump(list(locations), outfile)
+
+        with open("output_json/categories.json", "w") as outfile:
+            json.dump(list(categories), outfile)
 
 
 if __name__ == "__main__":
