@@ -29,7 +29,7 @@ const generateGrid = ({ visibleImageCount, photos, handleSwitchToSelectedPhoto }
     const grid = photos.slice(0, visibleImageCount).map((photo, index) => (
         <GalleryItem key={photo.id}>
             <Thumbnail
-                src={photo.src_thumbnail_medium}
+                src={photo.src}
                 index={index}
                 handleSwitchToSelectedPhoto={handleSwitchToSelectedPhoto}
             />

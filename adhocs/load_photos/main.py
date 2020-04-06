@@ -2,6 +2,8 @@ import os
 import sys
 import shutil
 import json
+import uuid
+from slugify import slugify
 
 # from io import StringIO, BytesIO
 
@@ -94,6 +96,7 @@ def main():
             if lightroom_keywords["Gallery"] not in galleries:
                 galleries[lightroom_keywords["Gallery"]] = {
                     "title": lightroom_keywords["Gallery"],
+                    "slug": slugify(lightroom_keywords["Gallery"]),
                     "content_type": lightroom_keywords["ContentType"],
                 }
 
@@ -102,8 +105,9 @@ def main():
             categories.update(lightroom_keywords["Category"])
 
             photo = {
-                "file_name": input_file_name,
-                "gallery": lightroom_keywords["Gallery"],
+                "id": str(uuid.uuid4()),
+                "src": input_file_name,
+                "gallery": galleries[lightroom_keywords["Gallery"]]
                 "categories": lightroom_keywords["Category"],
                 # Hardware Details
                 "make": exif_data["make"],

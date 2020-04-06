@@ -65,7 +65,7 @@ const PhotoWithMetadata = ({ details }: { details: PhotoType }) => {
     React.useEffect(() => {
         setIsLoading(true)
     }, [details.id])
-
+    console.log(details)
     return (
         <PhotoWithMetadataWrapper>
             <LoadingIcon isloading={isLoading} />
@@ -73,7 +73,7 @@ const PhotoWithMetadata = ({ details }: { details: PhotoType }) => {
                 <StyledPhoto
                     isLoading={isLoading}
                     onLoad={() => setIsLoading(false)}
-                    src={details.src}
+                    src={`https://storage.googleapis.com/photo21/photos/${details.src}`}
                 />
                 {isLoading ? null : <Metadata details={details} />}
             </PhotoWrapper>

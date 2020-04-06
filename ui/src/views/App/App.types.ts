@@ -19,9 +19,8 @@ type LocationType = {
 }
 
 type PhotoType = {
-    "id": number
+    "id": string
     "src": string
-    "file_name": string
     "gallery": GalleryType
     "location": LocationType
     "date_taken": string
