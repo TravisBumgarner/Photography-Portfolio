@@ -14,7 +14,7 @@
     - [x] Collapse folders to files where possible
     - [x] Make shared components 
 - [x] Figure out why refreshing the pages moves selcted photo back to gallery
-- [ ] Add 404 of sorts for old photos
+- [x] Add 404 of sorts for old photos
 - [ ] Figure out where to capture whether is bg or not
 - [ ] Setup script and / or Lightroom to load photos of different sizes
 - [ ] Hookup front end to multisized photos

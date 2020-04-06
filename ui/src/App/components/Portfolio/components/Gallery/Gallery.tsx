@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { Redirect } from 'react-router-dom'
 
 import { Thumbnail, PhotoWithMetadata } from './components'
 import { Header, Text } from 'sharedComponents'
@@ -151,11 +152,12 @@ const Gallery = ({
             photos.forEach((photo, index) => {
                 if (photo.id === photoId) {
                     indexFound = index
-                    console.log(indexFound)
                 }
             })
             if (indexFound !== undefined) {
                 setSelectedPhotoIndex(indexFound)
+            } else {
+                window.location.replace("/error404")
             }
         }
     }
@@ -165,7 +167,6 @@ const Gallery = ({
     if (!photos.length) {
         return null
     }
-    console.log(photos, selectedPhotoIndex)
     return (
         selectedPhotoIndex !== undefined ? (
             <PhotoWithMetadataWrapper>
