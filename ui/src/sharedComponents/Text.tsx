@@ -1,3 +1,4 @@
+import React from 'react'
 import styled from 'styled-components'
 
 import { FONT_FAMILY_TEXT, CONTENT_SPACING, TEXT_FONT_SIZES } from 'Theme'
@@ -21,4 +22,12 @@ const MediumText = styled(DefaultText)`
     font-size: ${TEXT_FONT_SIZES.m};
 `
 
-export { MediumText }
+type Props = {
+    children: any
+}
+
+const Text = ({ children }: Props) => {
+    return <MediumText>{children}</MediumText>
+}
+
+export default Text

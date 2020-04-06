@@ -4,7 +4,7 @@
     "baseUrl": ".",
     "paths": {
       "*": [
-        "types/*"
+        "src/types/*"
       ],
       "Components": [
         "src/components"
@@ -13,7 +13,7 @@
         "src/sharedComponents"
       ],
       "types": [
-        "types"
+        "src/types"
       ],
       "Containers": [
         "src/containers"
