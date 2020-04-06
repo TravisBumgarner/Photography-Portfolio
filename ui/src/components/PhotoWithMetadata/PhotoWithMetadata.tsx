@@ -30,7 +30,6 @@ const Metadata = ({ details }: { details: PhotoType }) => {
         camera_type
     } = details
 
-    const locationString = `${location.title}`
     const gearString = make || model || lens ? `${make} ${model} ${lens}` : 'N/A'
     const statsString =
         aperture || shutter_speed || iso || focal_length
@@ -45,7 +44,7 @@ const Metadata = ({ details }: { details: PhotoType }) => {
                 ) : (
                         <Fragment>
                             <Header size="inline">Location </Header>
-                            {locationString}
+                            {location}
                             <Spacer />
                             <Header size="inline">Gear </Header>
                             {camera_type.toLowerCase() === 'film' ? 'Film Camera' : gearString}
