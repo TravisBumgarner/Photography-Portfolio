@@ -12,7 +12,7 @@ const ErrorWrapper = styled(PAGE_THEME)`
     margin-top: 0;
 `
 
-const Error404 = ({ value }: { value: '404' | '500' }) => {
+const Error = ({ value }: { value: '404' | '500' }) => {
     let message
     let header
 
@@ -36,4 +36,4 @@ const Error404 = ({ value }: { value: '404' | '500' }) => {
     )
 }
 
-export default Error404
+export default Error

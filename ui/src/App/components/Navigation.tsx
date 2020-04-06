@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Header } from 'sharedComponents'
 import styled, { css } from 'styled-components'
 import { FONT_FAMILY_HEADER, CONTENT_SPACING, TEXT_FONT_SIZES } from 'Theme'
-import { GalleryType } from 'types'
+import { GalleryType } from 'sharedTypes'
 
 const NavigationWrapper = styled.div`
     text-align: right;

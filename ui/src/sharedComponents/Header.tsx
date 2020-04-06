@@ -6,12 +6,12 @@ import { FONT_FAMILY_HEADER, CONTENT_SPACING, HEADER_FONT_SIZES } from 'Theme'
 type Props = { size: string, children: any }
 
 const sharedStyles = () => css`
-    font-weight: 700;
-    font-family: ${FONT_FAMILY_HEADER};
+
 `
 
 const LargeHeader = styled.h1`
-    ${(props: Partial<Props>) => sharedStyles()};
+    font-weight: 700;
+    font-family: ${FONT_FAMILY_HEADER};
     text-transform: uppercase;
     margin-bottom: ${CONTENT_SPACING.l};
     margin-top: ${CONTENT_SPACING.l};
@@ -19,7 +19,8 @@ const LargeHeader = styled.h1`
 `
 
 const MediumHeader = styled.h2`
-    ${(props: Partial<Props>) => sharedStyles()};
+    font-weight: 700;
+    font-family: ${FONT_FAMILY_HEADER};
     text-transform: uppercase;
     margin-bottom: ${CONTENT_SPACING.m};
     margin-top: ${CONTENT_SPACING.m};
@@ -27,7 +28,8 @@ const MediumHeader = styled.h2`
 `
 
 const SmallHeader = styled.h3`
-    ${(props: Partial<Props>) => sharedStyles()};
+    font-weight: 700;
+    font-family: ${FONT_FAMILY_HEADER};
     font-size: ${HEADER_FONT_SIZES.s};
     margin-bottom: ${CONTENT_SPACING.s};
     margin-top: ${CONTENT_SPACING.s};

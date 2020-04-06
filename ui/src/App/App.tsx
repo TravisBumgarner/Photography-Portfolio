@@ -11,7 +11,7 @@ import {
     PhotoType,
     LocationType,
     CategoryType
-} from 'types'
+} from 'sharedTypes'
 
 import output from './output.json'
 

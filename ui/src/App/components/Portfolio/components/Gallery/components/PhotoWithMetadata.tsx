@@ -1,39 +1,16 @@
 import React, { Fragment } from 'react'
-import { FaCamera, FaExclamationTriangle } from 'react-icons/fa'
 import styled, { keyframes } from 'styled-components'
 
 import { Text, Header } from 'sharedComponents'
-import { PhotoType } from 'types'
+import { PhotoType } from 'sharedTypes'
 import { MEDIA, CONTENT_SPACING } from 'Theme'
 
 const FILM = 'Film'
 
 const StyledPhoto = styled.img`
+    z-index: 999;
     max-width: 100%;
     max-height: 95%;
-    ${({isLoading}: {isLoading: boolean}) => (isLoading ? 'display: none' : '')};
-`
-
-const colorChange = keyframes`
-  0% {
-    fill: #fff;
-  }
-
-  50% {
-    fill: rgb(74, 207, 160);
-  }
-
-  100% {
-      fill: #fff;
-  }
-`
-
-const LoadingIcon = styled(FaCamera)`
-    animation: ${colorChange} 2s linear infinite;
-    position: fixed;
-    top: calc(50vh - 2.5em);
-    left: calc(50vw - 2.5em);
-    ${({isLoading}: {isLoading: boolean}) => (isLoading ? '' : 'display: none')};
 `
 
 const PhotoWithMetadataWrapper = styled.div`
@@ -76,7 +53,6 @@ const MetadataWrapper = styled.div`
 `
 
 const Metadata = ({ details }: { details: PhotoType }) => {
-
     const {
         make,
         model,
@@ -118,22 +94,13 @@ const Metadata = ({ details }: { details: PhotoType }) => {
 }
 
 const PhotoWithMetadata = ({ details }: { details: PhotoType }) => {
-    const [isLoading, setIsLoading] = React.useState(true)
-
-    React.useEffect(() => {
-        setIsLoading(true)
-    }, [details.id])
-    console.log(details)
     return (
         <PhotoWithMetadataWrapper>
-            <LoadingIcon isloading={isLoading} />
             <PhotoWrapper>
                 <StyledPhoto
-                    isLoading={isLoading}
-                    onLoad={() => setIsLoading(false)}
                     src={`https://storage.googleapis.com/photo21/photos/large/${details.src}`}
                 />
-                {isLoading ? null : <Metadata details={details} />}
+                <Metadata details={details} />
             </PhotoWrapper>
         </PhotoWithMetadataWrapper>
     )

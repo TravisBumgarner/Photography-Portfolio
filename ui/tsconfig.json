@@ -12,8 +12,8 @@
       "sharedComponents": [
         "src/sharedComponents"
       ],
-      "types": [
-        "src/types"
+      "sharedTypes": [
+        "src/sharedTypes/index.ts"
       ],
       "Containers": [
         "src/containers"

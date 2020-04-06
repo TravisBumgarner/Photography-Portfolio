@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { useInterval } from 'Utilities'
-import { PhotoType } from 'types'
+import { PhotoType } from 'sharedTypes'
 import { PAGE_THEME } from 'Theme'
 
 const HomeWrapper = styled(PAGE_THEME)`

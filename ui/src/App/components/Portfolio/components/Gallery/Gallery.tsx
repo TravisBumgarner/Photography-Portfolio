@@ -4,7 +4,7 @@ import { Thumbnail, PhotoWithMetadata } from './components'
 import { Header, Text } from 'sharedComponents'
 import { ICON_FONT_SIZES } from 'Theme'
 import { parseContent } from 'Utilities'
-import { PhotoType, GalleryType } from 'types'
+import { PhotoType, GalleryType } from 'sharedTypes'
 
 import {
     GalleryWrapper,
@@ -61,7 +61,7 @@ const Gallery = ({
 }: Props) => {
     const [visibleImageCount, setVisibleImageCount] = React.useState<number>(15)
     const [selectedPhotoIndex, setSelectedPhotoIndex] = React.useState<number | undefined>(undefined)
-
+    console.log('selectedPhotoIndex', selectedPhotoIndex)
     const galleryRef = React.useRef<HTMLInputElement>(null)
 
     const onScroll = React.useCallback(() => {
@@ -149,7 +149,7 @@ const Gallery = ({
         if (photoId !== undefined) {
             let indexFound
             photos.forEach((photo, index) => {
-                if (photo.id === parseInt(photoId, 10)) {
+                if (photo.id === photoId) {
                     indexFound = index
                     console.log(indexFound)
                 }
@@ -165,7 +165,7 @@ const Gallery = ({
     if (!photos.length) {
         return null
     }
-
+    console.log(photos, selectedPhotoIndex)
     return (
         selectedPhotoIndex !== undefined ? (
             <PhotoWithMetadataWrapper>

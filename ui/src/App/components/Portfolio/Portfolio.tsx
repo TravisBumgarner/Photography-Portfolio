@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { GalleryType, PhotoType } from 'types'
+import { GalleryType, PhotoType } from 'sharedTypes'
 import { PortfolioWrapper } from './Portfolio.styles'
 import { Gallery } from './components'
 
