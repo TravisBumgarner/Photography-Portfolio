@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 
-import { Text, Header } from 'Components'
+import { Text, Header } from 'sharedComponents'
 
 import {
     StyledPhoto,

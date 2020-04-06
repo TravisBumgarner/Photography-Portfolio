@@ -25,12 +25,26 @@ ContentType
 - project
 ```
 
+2. Export Settings:
+
+  - Thumbnails:
+    - Resize 400 x 400 pixels
+    - Quality: 50%
+    - Sharpen for screen standard
+    - Disable `Write Keywords as Lightroom Hierarchy`
+    - output directory: `thumbnails`
+  - Large:
+    - Resize 1200 x 1200 pixels
+    - Quality: 80%
+    - Sharpen for screen standard
+    - Don't enlarge
+    - Enable `Write Keywords as Lightroom Hierarchy`
+    - output directory: `large`
+
 2. Export to directory with
-  - In metadata export section select `Write Keywords as Lightroom Hierarchy`
   - file naming options `Date (YYYY)_Folder Name_Sequence # (001)` (Select `Date(YYYY)`, `Folder Name`, and `Sequence # (001)` because screw lightroom can't copy and paste the format)
-  - Max size 1000 x 1000
-3. Zip directory
-4. Upload via Cyberduck
+
+3. Upload to AWS
 
 # React
 

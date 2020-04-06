@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react'
 
-import { Thumbnail, PhotoWithMetadata, Header, Text } from 'Components'
+import { Thumbnail, PhotoWithMetadata } from './components'
+import { Header, Text } from 'sharedComponents'
 import { ICON_FONT_SIZES } from 'Theme'
 import { parseContent } from 'Utilities'
-import { PhotoType, GalleryType } from '../../views/App/App.types'
+import { PhotoType, GalleryType } from 'types'
 
 import {
     GalleryWrapper,

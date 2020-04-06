@@ -30,6 +30,8 @@ module.exports = env => {
         resolve: {
             alias: {
                 Components: path.resolve(__dirname, 'src/components/'),
+                sharedComponents: path.resolve(__dirname, 'src/sharedComponents/'),
+                types: path.resolve(__dirname, 'types/'),
                 Containers: path.resolve(__dirname, 'src/containers/'),
                 Views: path.resolve(__dirname, 'src/views/'),
                 Theme: path.resolve(__dirname, 'src/theme.tsx'),

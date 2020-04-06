@@ -9,6 +9,9 @@
       "Components": [
         "src/components"
       ],
+      "sharedComponents": [
+        "src/sharedComponents"
+      ],
       "Containers": [
         "src/containers"
       ],

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Text, Header } from 'Components'
+import { Text, Header } from 'sharedComponents'
 import { PAGE_THEME, CONTENT_SPACING } from 'Theme'
 
 const ContentSection = styled.div`

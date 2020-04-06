@@ -3,13 +3,16 @@
     - [x] Create separate data for galleries
     - [x] Create separate data for categories
     - [ ] Figure out what photo sizes work
-    - [ ] Update read me with new process
+    - [x] Update read me with new process
     - [ ] Consider have it generate UUIDs
     - [x] ~~Create separate data for locations~~
 - [x] Rewrite load photo script to generate JSON file(s) instead
 - [x] Hookup front end to read from photos instead of API
 - [x] Kill API
 - [x] Merge json files into one
+- [ ] Refactor front end
+    - [ ] Collapse folders to files where possible
+    - [ ] Make shared components 
 - [ ] Figure out why refreshing the pages moves selcted photo back to gallery
 - [ ] Add 404 of sorts for old photos
 - [ ] Figure out where to capture whether is bg or not
@@ -17,3 +20,4 @@
 - [ ] Hookup front end to multisized photos
     - [ ] Decide which sizes
     - [ ] Adjust CSS Acordingly - including for thumbnails. Image should not be larger than 100%
+- [ ] Find missing photos

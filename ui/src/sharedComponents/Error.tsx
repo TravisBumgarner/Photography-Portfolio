@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Header, Text } from 'Components'
+import { Header, Text } from 'sharedComponents'
 import { PAGE_THEME } from 'Theme'
 
 const ErrorWrapper = styled(PAGE_THEME)`

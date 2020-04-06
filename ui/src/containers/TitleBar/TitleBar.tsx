@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { ICON_FONT_SIZES } from 'Theme'
-import { Header } from 'Components'
+import { Header } from 'sharedComponents'
 
 import { TitleBarWrapper, NavigationOpen, InternalLink } from './TitleBar.styles'
 

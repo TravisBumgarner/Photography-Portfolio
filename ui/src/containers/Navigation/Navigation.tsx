@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Header } from 'Components'
+import { Header } from 'sharedComponents'
 
 const SNAPSHOT = 'snapshot'
 const PROJECT = 'project'
@@ -13,7 +13,7 @@ import {
     LinkListItem,
 } from './Navigation.styles'
 
-import { GalleryType } from '../../views/App/App.types'
+import { GalleryType } from 'types'
 
 type Props = {
     galleries: GalleryType[],

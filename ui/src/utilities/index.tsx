@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Header, Text } from 'Components'
+import { Header, Text } from 'sharedComponents'
 
 const parseContent = (rawContent: string) => {
   if (!rawContent) {
@@ -28,7 +28,6 @@ const parseContent = (rawContent: string) => {
     }
   })
 }
-
 
 function useInterval(callback: any, delay: number) {
   const savedCallback = React.useRef<any>();
