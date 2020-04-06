@@ -1,9 +1,16 @@
 import React from 'react'
+import styled from 'styled-components'
 
 import { Header, Text } from 'Components'
+import { PAGE_THEME } from 'Theme'
 
-import { ErrorWrapper } from './Error.styles'
-
+const ErrorWrapper = styled(PAGE_THEME)`
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 0;
+`
 
 const Error404 = ({ value }: { value: '404' | '500' }) => {
     let message
