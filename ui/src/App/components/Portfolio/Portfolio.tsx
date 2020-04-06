@@ -2,7 +2,7 @@ import React from 'react'
 
 import { GalleryType, PhotoType } from 'types'
 import { PortfolioWrapper } from './Portfolio.styles'
-import { Gallery } from 'Containers'
+import { Gallery } from './components'
 
 const SNAPSHOT = 'snapshot'
 

@@ -3,10 +3,15 @@ import { Switch, Route } from 'react-router-dom'
 import styled, { keyframes } from 'styled-components'
 import { FaCaretRight, FaCamera } from 'react-icons/fa'
 
-import { Home, About, Portfolio } from './components'
+import { Home, About, Portfolio, Navigation, TitleBar } from './components'
 import { Error } from 'sharedComponents'
-import { Navigation, TitleBar } from 'Containers'
 import { GlobalStyle, ICON_FONT_SIZES, TRANSITION_SPEED, ICON_COLOR } from 'Theme'
+import {
+    GalleryType,
+    PhotoType,
+    LocationType,
+    CategoryType
+} from 'types'
 
 import output from './output.json'
 
@@ -69,13 +74,6 @@ const NavigationWrapper = styled.div`
     transition: right ${TRANSITION_SPEED}s;
     right: ${({ isNavigationVisible }: { isNavigationVisible: boolean }) => (isNavigationVisible ? '0' : `-100vw`)};
 `
-
-import {
-    GalleryType,
-    PhotoType,
-    LocationType,
-    CategoryType
-} from 'types'
 
 type Props = {
     location: {

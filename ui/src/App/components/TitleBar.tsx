@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import { FaBars } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
-import { CONTENT_SPACING, TRANSITION_SPEED, ICON_COLOR } from 'Theme'
+import { Header } from 'sharedComponents'
+import { CONTENT_SPACING, ICON_FONT_SIZES, TRANSITION_SPEED, ICON_COLOR } from 'Theme'
 
 const TitleBarWrapper = styled.div`
     width: 100vw;
@@ -39,4 +40,24 @@ const NavigationOpen = styled(({ isNavigationVisible, ...rest }) => <FaBars {...
     }
 `
 
-export { TitleBarWrapper, NavigationOpen, InternalLink }
+type Props = {
+    toggleNavigation: () => void
+    isNavigationVisible: boolean
+}
+
+const TitleBar = ({ toggleNavigation, isNavigationVisible }: Props) => {
+    return (
+        <TitleBarWrapper>
+            <InternalLink to="/">
+                <Header size="large">Travis Bumgarner Photography</Header>
+            </InternalLink>
+            <NavigationOpen
+                isNavigationVisible={isNavigationVisible}
+                onClick={toggleNavigation}
+                size={ICON_FONT_SIZES.l}
+            />
+        </TitleBarWrapper>
+    )
+}
+
+export default TitleBar

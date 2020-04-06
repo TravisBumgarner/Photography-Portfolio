@@ -12,6 +12,9 @@
       "sharedComponents": [
         "src/sharedComponents"
       ],
+      "types": [
+        "types"
+      ],
       "Containers": [
         "src/containers"
       ],
