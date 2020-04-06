@@ -6,6 +6,9 @@ import { Home, About, Portfolio, Error } from 'Views'
 import { Navigation, TitleBar } from 'Containers'
 import { GlobalStyle, ICON_FONT_SIZES } from 'Theme'
 
+import photos from './photos.json'
+import galleries from './galleries.json'
+
 import {
     AppWrapper,
     NavigationWrapper,
@@ -28,59 +31,20 @@ type Props = {
     }
 }
 
+type Data = { photos: PhotoType[], galleries: GalleryType[], locations: LocationType[], categories: CategoryType[], backgroundPhotos: PhotoType[] }
+const getData = (): Data => {
+    const locations: LocationType[] = []
+    const categories: CategoryType[] = []
+    const backgroundPhotos: PhotoType[] = []
+
+    return { photos, galleries, locations, categories, backgroundPhotos }
+}
+
 const App = ({ location: { pathname } }: Props) => {
-    const [photos, setPhotos] = React.useState<PhotoType[]>([])
-    const [galleries, setGalleries] = React.useState<GalleryType[]>([])
-    const [locations, setLocations] = React.useState<LocationType[]>([])
-    const [categories, setCategories] = React.useState<CategoryType[]>([])
-    const [backgroundPhotos, setBackgroundPhotos] = React.useState<PhotoType[]>([])
+    const { galleries, locations, categories, backgroundPhotos, photos } = getData()
 
     const [isNavigationVisible, setIsNavigationVisible] = React.useState(false)
-    const [isLoading, setIsLoading] = React.useState(true)
-
-    const getGalleries = () => {
-        return axios
-            .get(__API__ + 'galleries/')
-            .then(({ data: galleries }) => galleries)
-            .catch(console.log)
-    }
-
-    const getLocations = () => {
-        return axios
-            .get(__API__ + 'locations/')
-            .then(({ data: locations }) => locations)
-            .catch(console.log)
-    }
-
-    const getCategories = () => {
-        return axios
-            .get(__API__ + 'categories/')
-            .then(({ data: categories }) => categories)
-            .catch(console.log)
-    }
-
-    const getPhotos = () => {
-        return axios
-            .get(__API__ + 'photos/')
-            .then(({ data: photos }) => photos)
-            .catch(console.log)
-    }
-
-    React.useEffect(() => {
-        Promise.all([getPhotos(), getGalleries(), getLocations(), getCategories()]).then(
-            (
-                [photos, galleries, locations, categories]:
-                    [PhotoType[], GalleryType[], LocationType[], CategoryType[]]
-            ) => {
-                setBackgroundPhotos(photos.filter(photo => photo.is_home_background))
-                setPhotos(photos)
-                setGalleries(galleries)
-                setLocations(locations)
-                setCategories(categories)
-                setIsLoading(false)
-            }
-        )
-    }, [])
+    const [isLoading, setIsLoading] = React.useState(false)
 
     const toggleNavigation = () => {
         setIsNavigationVisible(!isNavigationVisible)

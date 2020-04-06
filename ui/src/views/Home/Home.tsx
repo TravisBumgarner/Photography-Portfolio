@@ -9,11 +9,11 @@ type Props = {
 }
 
 const Home = ({ backgroundPhotos }: Props) => {
-    const [backgroundImageIndex, setBackgroundImageIndex] = React.useState(0)
+    // const [backgroundImageIndex, setBackgroundImageIndex] = React.useState(0)
 
-    useInterval(() => setBackgroundImageIndex(backgroundImageIndex + 1), 4000);
+    // useInterval(() => setBackgroundImageIndex(backgroundImageIndex + 1), 4000);
 
-    return <HomeWrapper backgroundImageUrl={backgroundPhotos[backgroundImageIndex % backgroundPhotos.length].src} />
+    return <HomeWrapper /*backgroundImageUrl={backgroundPhotos[backgroundImageIndex % backgroundPhotos.length].src}*/ />
 }
 
 export default Home
