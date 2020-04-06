@@ -72,7 +72,7 @@ const PhotoWithMetadata = ({ details }: { details: PhotoType }) => {
                 <StyledPhoto
                     isLoading={isLoading}
                     onLoad={() => setIsLoading(false)}
-                    src={`https://storage.googleapis.com/photo21/photos/${details.src}`}
+                    src={`https://storage.googleapis.com/photo21/photos/large/${details.src}`}
                 />
                 {isLoading ? null : <Metadata details={details} />}
             </PhotoWrapper>
