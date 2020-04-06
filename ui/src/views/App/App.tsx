@@ -35,7 +35,7 @@ type Data = { photos: PhotoType[], galleries: GalleryType[], locations: Location
 const getData = (): Data => {
     const locations: LocationType[] = []
     const categories: CategoryType[] = []
-    const backgroundPhotos: PhotoType[] = []
+    const backgroundPhotos: PhotoType[] = photos.filter(photo => photo.is_home_background)
 
     return { photos, galleries, locations, categories, backgroundPhotos }
 }

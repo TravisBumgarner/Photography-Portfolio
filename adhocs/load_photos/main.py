@@ -107,7 +107,7 @@ def main():
             photo = {
                 "id": str(uuid.uuid4()),
                 "src": input_file_name,
-                "gallery": galleries[lightroom_keywords["Gallery"]]
+                "gallery": galleries[lightroom_keywords["Gallery"]],
                 "categories": lightroom_keywords["Category"],
                 # Hardware Details
                 "make": exif_data["make"],
@@ -123,6 +123,7 @@ def main():
                 # Lightroom Metadata
                 "location": lightroom_keywords["Location"],
                 "camera_type": lightroom_keywords["CameraType"],
+                "is_home_background": True,
             }
 
             photos.append(photo)

@@ -7,7 +7,8 @@
     - [ ] Consider have it generate UUIDs
     - [x] ~~Create separate data for locations~~
 - [x] Rewrite load photo script to generate JSON file(s) instead
-- [ ] Hookup front end to read from photos instead of API
-- [ ] Kill API
+- [x] Hookup front end to read from photos instead of API
+- [x] Kill API
+- [ ] Merge json files into one
 - [ ] Setup script and / or Lightroom to load photos of different sizes
 - [ ] Hookup front end to multisized photos
