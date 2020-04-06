@@ -6,8 +6,7 @@ import { Home, About, Portfolio, Error } from 'Views'
 import { Navigation, TitleBar } from 'Containers'
 import { GlobalStyle, ICON_FONT_SIZES } from 'Theme'
 
-import photos from './photos.json'
-import galleries from './galleries.json'
+import output from './output.json'
 
 import {
     AppWrapper,
@@ -35,9 +34,9 @@ type Data = { photos: PhotoType[], galleries: GalleryType[], locations: Location
 const getData = (): Data => {
     const locations: LocationType[] = []
     const categories: CategoryType[] = []
-    const backgroundPhotos: PhotoType[] = photos.filter(photo => photo.is_home_background)
+    const backgroundPhotos: PhotoType[] = output.photos.filter(photo => photo.is_home_background)
 
-    return { photos, galleries, locations, categories, backgroundPhotos }
+    return { photos: output.photos, galleries: output.galleries, locations, categories, backgroundPhotos }
 }
 
 const App = ({ location: { pathname } }: Props) => {

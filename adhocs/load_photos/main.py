@@ -131,17 +131,25 @@ def main():
             print(e)
             print("Messed up on photo", input_file_name)
 
-        with open("output_json/photos.json", "w") as outfile:
-            json.dump(photos, outfile, default=str)
+        output = {
+            "photos": photos,
+            "galleries": list(galleries.values()),
+            "locations": list(locations),
+            "categories": list(categories),
+        }
+        with open("output_json/output.json", "w") as outfile:
+            json.dump(output, outfile, default=str)
+        # with open("output_json/photos.json", "w") as outfile:
+        #     json.dump(photos, outfile, default=str)
 
-        with open("output_json/galleries.json", "w") as outfile:
-            json.dump(list(galleries.values()), outfile)
+        # with open("output_json/galleries.json", "w") as outfile:
+        #     json.dump(list(galleries.values()), outfile)
 
-        with open("output_json/locations.json", "w") as outfile:
-            json.dump(list(locations), outfile)
+        # with open("output_json/locations.json", "w") as outfile:
+        #     json.dump(list(locations), outfile)
 
-        with open("output_json/categories.json", "w") as outfile:
-            json.dump(list(categories), outfile)
+        # with open("output_json/categories.json", "w") as outfile:
+        #     json.dump(list(categories), outfile)
 
 
 if __name__ == "__main__":
