@@ -37,7 +37,7 @@ const About = () => {
             <Header size="medium">About</Header>
             <ContentWrapper>
                 <ContentSubWrapperLeft>
-                    <Portrait src="http://api.travisbumgarner.photography/static/images/travis.jpg" />
+                    <Portrait src="https://storage.googleapis.com/photo21/travis.jpg" />
                 </ContentSubWrapperLeft>
                 <ContentSubWrapperRight>
                     <ContentSection>

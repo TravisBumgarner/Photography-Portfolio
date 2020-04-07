@@ -19,7 +19,7 @@ type Props = {
 }
 
 const Thumbnail = ({ index, handleSwitchToSelectedPhoto, src }: Props) => {
-    return <ThumbnailWrapper src={`https://storage.googleapis.com/photo21/photos/thumbnails/${src}`} onClick={() => handleSwitchToSelectedPhoto(index)} />
+    return <ThumbnailWrapper src={`https://storage.googleapis.com/photo21/photos/thumbnail/${src}`} onClick={() => handleSwitchToSelectedPhoto(index)} />
 }
 
 export default Thumbnail
