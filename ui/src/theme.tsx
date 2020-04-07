@@ -56,9 +56,10 @@ const MEDIA = Object.keys(sizes).reduce((acc, label: keyof typeof sizes) => {
 const PAGE_THEME = styled.div`
     padding: ${CONTENT_SPACING.l};
     width: 100vw;
+    max-width: 1200px;
     height: 100vh;
     box-sizing: border-box;
-    margin-top: 3rem;
+    margin: 3rem auto 0;
 
     ${MEDIA.tablet`
         margin-top: 4rem;

@@ -6,7 +6,6 @@
     - [x] Consider have it generate UUIDs
     - [x] ~~Create separate data for locations~~
 - [x] Rewrite load photo script to generate JSON file(s) instead
-- [ ] Figure out what photo sizes work
 - [x] Hookup front end to read from photos instead of API
 - [x] Kill API
 - [x] Merge json files into one
@@ -17,7 +16,12 @@
 - [x] Add 404 of sorts for old photos
 - [x] Figure out where to capture whether is bg or not
 - [x] Setup script and / or Lightroom to load photos of different sizes
-- [ ] Hookup front end to multisized photos
-    - [ ] Decide which sizes
-    - [ ] Adjust CSS Acordingly - including for thumbnails. Image should not be larger than 100%
+- [x] Hookup front end to multisized photos
+    - [ ] ~~Decide which sizes~~
+    - [x] Adjust CSS Acordingly - including for thumbnails. Image should not be larger than 100%
 - [ ] Find missing photos
+- [ ] Move to GCP
+- [ ] Cleanup Ugly Code
+    - [ ] Titlebar wrapping down over page titles.
+    - [ ] Add back in loading indicator for photos?
+    - [ ] If metadata wraps it loads off screen for some widths

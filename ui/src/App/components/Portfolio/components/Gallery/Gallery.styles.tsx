@@ -23,7 +23,7 @@ const GalleryWrapper = styled.div`
     display: flex;
     padding: 0;
     list-style: none;
-    justify-content: space-around;
+    justify-content: space-between;
     flex-wrap: wrap;
     line-height: 30px;
 `
@@ -85,6 +85,8 @@ const GalleryItem = styled.div`
     flex: 1 0 auto;
     height: auto;
     flex-basis: 29%;
+    max-width: 400px;
+    max-height: 400px;
 
     &:nth-child(3n + 1) {
         margin-left: 0;

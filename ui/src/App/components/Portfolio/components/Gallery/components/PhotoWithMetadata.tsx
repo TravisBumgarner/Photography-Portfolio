@@ -8,7 +8,6 @@ import { MEDIA, CONTENT_SPACING } from 'Theme'
 const FILM = 'Film'
 
 const StyledPhoto = styled.img`
-    z-index: 999;
     max-width: 100%;
     max-height: 95%;
 `
