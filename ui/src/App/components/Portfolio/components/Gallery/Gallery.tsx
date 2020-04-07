@@ -62,7 +62,6 @@ const Gallery = ({
 }: Props) => {
     const [visibleImageCount, setVisibleImageCount] = React.useState<number>(15)
     const [selectedPhotoIndex, setSelectedPhotoIndex] = React.useState<number | undefined>(undefined)
-    console.log('selectedPhotoIndex', selectedPhotoIndex)
     const galleryRef = React.useRef<HTMLInputElement>(null)
 
     const onScroll = React.useCallback(() => {

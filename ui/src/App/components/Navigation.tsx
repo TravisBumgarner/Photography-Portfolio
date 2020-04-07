@@ -69,9 +69,9 @@ const Navigation = ({ galleries, toggleNavigation }: Props) => {
     const snapshotLinks: React.ReactElement[] = []
 
     galleries.sort((a, b) => (a.title > b.title ? 1 : -1)) // Sort galleries alphabetically
-    galleries.map(({ id, title, content_type, slug }) => {
+    galleries.map(({ title, content_type, slug }) => {
         const link = (
-            <LinkListItem key={id} onClick={toggleNavigation}>
+            <LinkListItem key={slug} onClick={toggleNavigation}>
                 <InternalLink to={`/portfolio/${content_type}/${slug}`}>{title}</InternalLink>
             </LinkListItem>
         )

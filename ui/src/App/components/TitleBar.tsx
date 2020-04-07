@@ -39,7 +39,8 @@ const NavigationOpen = styled(({ isNavigationVisible, ...rest }) => <FaBars {...
     padding-top: ${CONTENT_SPACING.l};
     transition: opacity ${TRANSITION_SPEED}s;
     opacity: ${props => (props.isNavigationVisible ? 0 : 1)};
-
+    cursor: pointer;
+    
     &:hover {
         fill: ${ICON_COLOR.hover};
     }

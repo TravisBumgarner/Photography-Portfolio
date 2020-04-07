@@ -1,22 +1,12 @@
 type GalleryType = {
-    "id": number
     "title": string
     "content_type": string
-    "description": string
-    "start_date": string
-    "end_date": string
     "slug": string
 }
 
-type CategoryType = {
-    "id": number
-    "title": string
-}
+type CategoryType = string[]
 
-type LocationType = {
-    "id": number,
-    "title": string
-}
+type LocationType = string
 
 type PhotoType = {
     "id": string
@@ -25,10 +15,6 @@ type PhotoType = {
     "location": LocationType
     "date_taken": string
     "category": CategoryType[]
-    "width": number
-    "height": number
-    "src_thumbnail_medium": string
-    "src_thumbnail_small": string
     "camera_type": "Digital" | "Film"
     "make": string
     "model": string

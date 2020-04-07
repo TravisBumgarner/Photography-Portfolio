@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import styled, { keyframes } from 'styled-components'
-import { FaCaretRight, FaCamera } from 'react-icons/fa'
+import { FaCaretRight } from 'react-icons/fa'
 
 import { Home, About, Portfolio, Navigation, TitleBar } from './components'
 import { Error } from 'sharedComponents'
@@ -23,35 +23,11 @@ const NavigationClose = styled(({ isNavigationVisible, ...rest }) => <FaCaretRig
     opacity: ${props => (props.isNavigationVisible ? 1 : 0)};
     z-index: 999;
     fill: ${ICON_COLOR.initial};
+    cursor: pointer;
 
     &:hover {
         fill: ${ICON_COLOR.hover};
     }
-`
-const colorChange = keyframes`
-  0% {
-    fill: #fff;
-  }
-
-  50% {
-    fill: rgb(74, 207, 160);
-  }
-
-  100% {
-      fill: #fff;
-  }
-`
-
-const LoadingIcon = styled(FaCamera)`
-    animation: ${colorChange} 2s linear infinite;
-`
-
-const LoadingIconWrapper = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: 100vh;
 `
 
 const NavigationGutter = styled.div`
@@ -75,12 +51,6 @@ const NavigationWrapper = styled.div`
     right: ${({ isNavigationVisible }: { isNavigationVisible: boolean }) => (isNavigationVisible ? '0' : `-100vw`)};
 `
 
-type Props = {
-    location: {
-        pathname: string
-    }
-}
-
 type Data = { photos: PhotoType[], galleries: GalleryType[], locations: LocationType[], categories: CategoryType[], backgroundPhotos: PhotoType[] }
 const getData = (): Data => {
     const locations: LocationType[] = []
@@ -90,51 +60,46 @@ const getData = (): Data => {
     return { photos: output.photos, galleries: output.galleries, locations, categories, backgroundPhotos }
 }
 
-const App = ({ location: { pathname } }: Props) => {
-    const { galleries, locations, categories, backgroundPhotos, photos } = getData()
+const App = () => {
+    const { galleries, backgroundPhotos, photos } = getData()
 
     const [isNavigationVisible, setIsNavigationVisible] = React.useState(false)
-    const [isLoading, setIsLoading] = React.useState(false)
 
     const toggleNavigation = () => {
         setIsNavigationVisible(!isNavigationVisible)
     }
 
-    return isLoading ? (
-        <LoadingIconWrapper>
-            <LoadingIcon size="5em" />
-        </LoadingIconWrapper>
-    ) : (
-            <Fragment>
-                <GlobalStyle />
-                <AppWrapper>
-                    <TitleBar isNavigationVisible={isNavigationVisible} toggleNavigation={toggleNavigation} />
-                    <NavigationWrapper isNavigationVisible={isNavigationVisible}>
-                        {isNavigationVisible && <NavigationGutter onClick={toggleNavigation} />}
-                        <Navigation
-                            galleries={galleries}
-                            toggleNavigation={toggleNavigation}
-                        />
-                        <NavigationClose
-                            isNavigationVisible={isNavigationVisible}
-                            onClick={toggleNavigation}
-                            size={ICON_FONT_SIZES.l}
-                        />
-                    </NavigationWrapper>
-                    <Switch>
-                        <Route exact path="/" render={rest => <Home backgroundPhotos={backgroundPhotos} {...rest} />} />
-                        <Route exact path="/about" component={About} />
-                        <Route
-                            path="/portfolio/:contentType/:gallerySlug/:photoId?"
-                            render={rest => <Portfolio photos={photos} galleries={galleries} {...rest} />}
-                        />
-                        <Route path="/error500" render={rest => <Error value="500" {...rest} />} />
-                        <Route path="/error404" render={rest => <Error value="404" {...rest} />} />
-                        <Route render={rest => <Error value="404" {...rest} />} />
-                    </Switch>
-                </AppWrapper>
-            </Fragment>
-        )
+    return (
+        <>
+            <GlobalStyle />
+            <AppWrapper>
+                <TitleBar isNavigationVisible={isNavigationVisible} toggleNavigation={toggleNavigation} />
+                <NavigationWrapper isNavigationVisible={isNavigationVisible}>
+                    {isNavigationVisible && <NavigationGutter onClick={toggleNavigation} />}
+                    <Navigation
+                        galleries={galleries}
+                        toggleNavigation={toggleNavigation}
+                    />
+                    <NavigationClose
+                        isNavigationVisible={isNavigationVisible}
+                        onClick={toggleNavigation}
+                        size={ICON_FONT_SIZES.l}
+                    />
+                </NavigationWrapper>
+                <Switch>
+                    <Route exact path="/" render={rest => <Home backgroundPhotos={backgroundPhotos} {...rest} />} />
+                    <Route exact path="/about" component={About} />
+                    <Route
+                        path="/portfolio/:contentType/:gallerySlug/:photoId?"
+                        render={rest => <Portfolio photos={photos} galleries={galleries} {...rest} />}
+                    />
+                    <Route path="/error500" render={rest => <Error value="500" {...rest} />} />
+                    <Route path="/error404" render={rest => <Error value="404" {...rest} />} />
+                    <Route render={rest => <Error value="404" {...rest} />} />
+                </Switch>
+            </AppWrapper>
+        </>)
+
 }
 
 export default App
