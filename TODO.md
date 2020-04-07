@@ -19,9 +19,15 @@
 - [x] Hookup front end to multisized photos
     - [ ] ~~Decide which sizes~~
     - [x] Adjust CSS Acordingly - including for thumbnails. Image should not be larger than 100%
-- [ ] Find missing photos
+- [x] Find missing photos
 - [ ] Move to GCP
 - [ ] Cleanup Ugly Code
     - [ ] Titlebar wrapping down over page titles.
     - [ ] Add back in loading indicator for photos?
     - [ ] If metadata wraps it loads off screen for some widths
+- [ ] Change cursor for button hover
+- [ ] select new photos
+- [ ] finish updating readme
+- [ ] minify code
+- [ ] move all photos to gcp
+- [ ] Update types

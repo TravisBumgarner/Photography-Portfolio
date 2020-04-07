@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components'
 
 import { Text, Header } from 'sharedComponents'
 import { PhotoType } from 'sharedTypes'
-import { MEDIA, CONTENT_SPACING } from 'Theme'
+import { MEDIA, CONTENT_SPACING } from 'theme'
 
 const FILM = 'Film'
 

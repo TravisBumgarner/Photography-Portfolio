@@ -29,13 +29,10 @@ module.exports = env => {
         },
         resolve: {
             alias: {
-                Components: path.resolve(__dirname, 'src/components/'),
                 sharedComponents: path.resolve(__dirname, 'src/sharedComponents/'),
-                sharedTypes: path.resolve(__dirname, 'src/types/index.ts'),
-                Containers: path.resolve(__dirname, 'src/containers/'),
-                Views: path.resolve(__dirname, 'src/views/'),
-                Theme: path.resolve(__dirname, 'src/theme.tsx'),
-                Utilities: path.resolve(__dirname, 'src/utilities/')
+                sharedTypes: path.resolve(__dirname, 'src/sharedTypes/index.ts'),
+                theme: path.resolve(__dirname, 'src/theme.tsx'),
+                utilities: path.resolve(__dirname, 'src/utilities/')
             },
             extensions: ['.ts', '.tsx', '.js']
         },

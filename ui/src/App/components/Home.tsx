@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { useInterval } from 'Utilities'
+import { useInterval } from 'utilities'
 import { PhotoType } from 'sharedTypes'
-import { PAGE_THEME } from 'Theme'
+import { PAGE_THEME } from 'theme'
 
 const HomeWrapper = styled(PAGE_THEME)`
     background-image: ${({ backgroundImageUrl }: { backgroundImageUrl: string }) => `url('https://storage.googleapis.com/photo21/photos/${backgroundImageUrl}')`};

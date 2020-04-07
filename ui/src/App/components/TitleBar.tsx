@@ -4,7 +4,7 @@ import { FaBars } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
 import { Header } from 'sharedComponents'
-import { CONTENT_SPACING, ICON_FONT_SIZES, TRANSITION_SPEED, ICON_COLOR } from 'Theme'
+import { CONTENT_SPACING, ICON_FONT_SIZES, TRANSITION_SPEED, ICON_COLOR } from 'theme'
 
 const SuperWrapper = styled.div`
     z-index: 900;

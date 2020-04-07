@@ -5,7 +5,7 @@ import { FaCaretRight, FaCamera } from 'react-icons/fa'
 
 import { Home, About, Portfolio, Navigation, TitleBar } from './components'
 import { Error } from 'sharedComponents'
-import { GlobalStyle, ICON_FONT_SIZES, TRANSITION_SPEED, ICON_COLOR } from 'Theme'
+import { GlobalStyle, ICON_FONT_SIZES, TRANSITION_SPEED, ICON_COLOR } from 'theme'
 import {
     GalleryType,
     PhotoType,

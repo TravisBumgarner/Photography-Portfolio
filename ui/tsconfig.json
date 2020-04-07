@@ -6,25 +6,16 @@
       "*": [
         "src/types/*"
       ],
-      "Components": [
-        "src/components"
-      ],
       "sharedComponents": [
         "src/sharedComponents"
       ],
       "sharedTypes": [
         "src/sharedTypes/index.ts"
       ],
-      "Containers": [
-        "src/containers"
-      ],
-      "Views": [
-        "src/views"
-      ],
-      "Theme": [
+      "theme": [
         "src/theme.js"
       ],
-      "Utilities": [
+      "utilities": [
         "src/utilities"
       ]
     },

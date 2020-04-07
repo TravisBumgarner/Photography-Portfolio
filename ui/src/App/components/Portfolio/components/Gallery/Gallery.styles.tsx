@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { FaTimes, FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa'
 
-import { CONTENT_SPACING, MEDIA, ICON_COLOR } from 'Theme'
+import { CONTENT_SPACING, MEDIA, ICON_COLOR } from 'theme'
 
 const CloseIcon = styled(FaTimes)`
     position: fixed;

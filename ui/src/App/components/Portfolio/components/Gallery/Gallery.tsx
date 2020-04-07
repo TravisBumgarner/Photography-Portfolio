@@ -3,8 +3,8 @@ import { Redirect } from 'react-router-dom'
 
 import { Thumbnail, PhotoWithMetadata } from './components'
 import { Header, Text } from 'sharedComponents'
-import { ICON_FONT_SIZES } from 'Theme'
-import { parseContent } from 'Utilities'
+import { ICON_FONT_SIZES } from 'theme'
+import { parseContent } from 'utilities'
 import { PhotoType, GalleryType } from 'sharedTypes'
 
 import {

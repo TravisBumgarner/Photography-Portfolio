@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { Header, Text } from 'sharedComponents'
-import { PAGE_THEME } from 'Theme'
+import { PAGE_THEME } from 'theme'
 
 const ErrorWrapper = styled(PAGE_THEME)`
     align-items: center;

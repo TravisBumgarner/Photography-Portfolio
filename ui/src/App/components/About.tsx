@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { Text, Header } from 'sharedComponents'
-import { PAGE_THEME, CONTENT_SPACING } from 'Theme'
+import { PAGE_THEME, CONTENT_SPACING } from 'theme'
 
 const ContentSection = styled.div`
     flex: 1;
