@@ -42,6 +42,7 @@ def get_lightroom_keywords(full_path):
         "Gallery": "",
         "ContentType": "",
         "CameraType": "",
+        "IsBackgroundPhoto": False,
     }
 
     # The first entry is always noise so skip it.
@@ -50,11 +51,14 @@ def get_lightroom_keywords(full_path):
         # Each keyword gets it's own entry in the list along with a bunch of noise, it is the 2nd element
         keyword = entry[1]
         try:
-            key, value = keyword.split("|")
-            if key == "Category":
-                metadata["Category"].append(value)
+            if keyword == "IsBackgroundPhoto":
+                metadata["IsBackgroundPhoto"] = True
             else:
-                metadata[key] = value
+                key, value = keyword.split("|")
+                if key == "Category":
+                    metadata["Category"].append(value)
+                else:
+                    metadata[key] = value
         except Exception as e:
             print("Metadata Issue: {}".format(full_path))
             print(e)
@@ -123,7 +127,7 @@ def main():
                 # Lightroom Metadata
                 "location": lightroom_keywords["Location"],
                 "camera_type": lightroom_keywords["CameraType"],
-                "is_home_background": True,
+                "is_home_background": lightroom_keywords["IsBackgroundPhoto"],
             }
 
             photos.append(photo)

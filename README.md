@@ -23,6 +23,7 @@ CameraType
 ContentType
 - snapshot
 - project
+IsBackgroundPhoto (Check for True)
 ```
 
 2. Export Settings:
@@ -40,9 +41,6 @@ ContentType
     - Don't enlarge
     - Enable `Write Keywords as Lightroom Hierarchy`
     - output directory: `large`
-
-2. Export to directory with
-  - file naming options `Date (YYYY)_Folder Name_Sequence # (001)` (Select `Date(YYYY)`, `Folder Name`, and `Sequence # (001)` because screw lightroom can't copy and paste the format)
 
 3. Upload to AWS
 
