@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { FaTimes, FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa'
 
 import { CONTENT_SPACING, MEDIA, ICON_COLOR } from 'theme'
+const RACE_CONDITION_MAGIC_NUMBER = 100
 
 const CloseIcon = styled(FaTimes)`
     position: fixed;
@@ -57,6 +58,7 @@ const PreviousContainer = styled.div`
     width: 50%;
     height: 100%;
     cursor: w-resize;
+    z-index: ${RACE_CONDITION_MAGIC_NUMBER + 2};
 `
 
 const NextContainer = styled.div`
@@ -67,6 +69,7 @@ const NextContainer = styled.div`
     width: 50%;
     height: 100%;
     cursor: e-resize;
+    z-index: ${RACE_CONDITION_MAGIC_NUMBER + 2};
 `
 
 const PhotoWithMetadataWrapper = styled.div`
@@ -116,5 +119,6 @@ export {
     PhotoWithMetadataWrapper,
     ProjectDescriptionWrapper,
     PreviousButton,
-    NextButton
+    NextButton,
+    RACE_CONDITION_MAGIC_NUMBER
 }

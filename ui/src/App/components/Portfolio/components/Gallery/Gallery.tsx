@@ -155,8 +155,6 @@ const Gallery = ({
             })
             if (indexFound !== undefined) {
                 setSelectedPhotoIndex(indexFound)
-            } else {
-                window.location.replace("/error404")
             }
         }
     }

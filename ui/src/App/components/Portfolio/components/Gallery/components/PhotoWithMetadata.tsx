@@ -1,15 +1,41 @@
 import React, { Fragment } from 'react'
 import styled, { keyframes } from 'styled-components'
+import { FaCamera, FaExclamationTriangle } from 'react-icons/fa'
 
 import { Text, Header } from 'sharedComponents'
 import { PhotoType } from 'sharedTypes'
 import { MEDIA, CONTENT_SPACING } from 'theme'
+import { RACE_CONDITION_MAGIC_NUMBER } from '../Gallery.styles'
 
 const FILM = 'Film'
+
 
 const StyledPhoto = styled.img`
     max-width: 100%;
     max-height: 95%;
+    z-index: ${RACE_CONDITION_MAGIC_NUMBER + 1};
+`
+
+const colorChange = keyframes`
+  0% {
+    fill: #fff;
+  }
+
+  50% {
+    fill: rgb(74, 207, 160);
+  }
+
+  100% {
+      fill: #fff;
+  }
+`
+
+const LoadingIcon = styled(FaCamera)`
+    animation: ${colorChange} 2s linear infinite;
+    position: fixed;
+    top: calc(50vh - 2.5em);
+    left: calc(50vw - 2.5em);
+    z-index: ${RACE_CONDITION_MAGIC_NUMBER};
 `
 
 const PhotoWithMetadataWrapper = styled.div`
@@ -93,13 +119,21 @@ const Metadata = ({ details }: { details: PhotoType }) => {
 }
 
 const PhotoWithMetadata = ({ details }: { details: PhotoType }) => {
+    const [isLoading, setIsLoading] = React.useState(true)
+
+    React.useEffect(() => {
+        setIsLoading(true)
+    }, [])
+
     return (
         <PhotoWithMetadataWrapper>
+            {isLoading ? <LoadingIcon size="5em" /> : null}
             <PhotoWrapper>
                 <StyledPhoto
+                    onLoad={() => setIsLoading(false)}
                     src={`https://storage.googleapis.com/photo21/photos/large/${details.src}`}
                 />
-                <Metadata details={details} />
+                {isLoading ? null : <Metadata details={details} />}
             </PhotoWrapper>
         </PhotoWithMetadataWrapper>
     )
