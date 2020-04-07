@@ -1,20 +1,17 @@
 import React from 'react'
+import styled from 'styled-components'
 
 import { GalleryType, PhotoType } from 'sharedTypes'
-import { PortfolioWrapper } from './Portfolio.styles'
 import { Gallery } from './components'
-
-const SNAPSHOT = 'snapshot'
+import { PAGE_THEME } from 'theme'
 
 const ALL_GALLERY: GalleryType = {
-    content_type: SNAPSHOT,
+    content_type: 'snapshot',
     slug: 'all',
-    id: -1,
-    title: 'All',
-    description: 'All Snapshots',
-    start_date: "2017-01-01",
-    end_date: "2017-01-01"
+    title: 'All'
 }
+
+const PortfolioWrapper = styled(PAGE_THEME)``
 
 type Props = {
     match: {
@@ -42,8 +39,8 @@ const Portfolio = (
     const [filteredPhotos, setFilteredPhotos] = React.useState<PhotoType[]>([])
 
     const filterPhotos = () => {
-        if (contentType === SNAPSHOT && gallerySlug === 'all') {
-            const filteredPhotos = photos.filter(photo => photo.gallery.content_type == SNAPSHOT)
+        if (contentType === 'snapshot' && gallerySlug === 'all') {
+            const filteredPhotos = photos.filter(photo => photo.gallery.content_type == 'snapshot')
             setFilteredPhotos(filteredPhotos)
         } else {
             const filteredPhotos = photos.filter(photo => photo.gallery.slug == gallerySlug)

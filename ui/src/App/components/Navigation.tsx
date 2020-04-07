@@ -55,10 +55,6 @@ const ExternalLink = styled.a`
     ${sharedStyles}
 `
 
-const SNAPSHOT = 'snapshot'
-const PROJECT = 'project'
-
-
 type Props = {
     galleries: GalleryType[],
     toggleNavigation: () => void
@@ -68,16 +64,16 @@ const Navigation = ({ galleries, toggleNavigation }: Props) => {
     const projectLinks: React.ReactElement[] = []
     const snapshotLinks: React.ReactElement[] = []
 
-    galleries.sort((a, b) => (a.title > b.title ? 1 : -1)) // Sort galleries alphabetically
+    galleries.sort((a, b) => (a.title > b.title ? 1 : -1))
     galleries.map(({ title, content_type, slug }) => {
         const link = (
             <LinkListItem key={slug} onClick={toggleNavigation}>
                 <InternalLink to={`/portfolio/${content_type}/${slug}`}>{title}</InternalLink>
             </LinkListItem>
         )
-        if (content_type.toLowerCase() === PROJECT) {
+        if (content_type.toLowerCase() === 'project') {
             projectLinks.push(link)
-        } else if (content_type.toLowerCase() === SNAPSHOT) {
+        } else if (content_type.toLowerCase() === 'snapshot') {
             snapshotLinks.push(link)
         }
     })
@@ -120,7 +116,7 @@ const Navigation = ({ galleries, toggleNavigation }: Props) => {
                 <Header size="medium">Snapshots</Header>
                 <ul>
                     <LinkListItem key={'all'} onClick={toggleNavigation}>
-                        <InternalLink to={`/portfolio/${SNAPSHOT}/all`}>All</InternalLink>
+                        <InternalLink to={`/portfolio/snapshot/all`}>All</InternalLink>
                     </LinkListItem>
                     {snapshotLinks}
                 </ul>

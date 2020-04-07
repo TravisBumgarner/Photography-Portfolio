@@ -25,10 +25,12 @@
     - [ ] Titlebar wrapping down over page titles.
     - [ ] Add back in loading indicator for photos?
     - [ ] If metadata wraps it loads off screen for some widths
+    - [ ] Update selfportrait photo
 - [x] Change cursor for button hover
 - [ ] select new photos
-- [ ] finish updating readme
+- [x] finish updating readme
 - [ ] minify code
 - [ ] move all photos to gcp
 - [x] Update types
 - [ ] Make menu scrollable
+- [ ] Add gcp instructions to readme
