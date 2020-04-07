@@ -4,28 +4,9 @@ import shutil
 import json
 import uuid
 from slugify import slugify
-
-# from io import StringIO, BytesIO
-
 from libxmp.utils import file_to_dict
-
-from libxmp.utils import file_to_dict
-import os
-
-# from io import StringIO, BytesIO
-# from PIL import Image, ImageDraw
 
 from exif import process_exif_data
-
-
-# def create_thumbnail(input_full_path, output_full_path, size):
-#     im_thumb = Image.open(input_full_path)
-#     im_thumb.thumbnail(size)
-#     thumb_io = BytesIO()
-#     im_thumb.save(thumb_io, format="JPEG")
-#     thumb_file = InMemoryUploadedFile(thumb_io, None, "_", "image/jpeg", None, None)
-
-#     return File(name=output_full_path, file=thumb_file)
 
 
 def get_lightroom_keywords(full_path):
@@ -143,17 +124,6 @@ def main():
         }
         with open("output_json/output.json", "w") as outfile:
             json.dump(output, outfile, default=str)
-        # with open("output_json/photos.json", "w") as outfile:
-        #     json.dump(photos, outfile, default=str)
-
-        # with open("output_json/galleries.json", "w") as outfile:
-        #     json.dump(list(galleries.values()), outfile)
-
-        # with open("output_json/locations.json", "w") as outfile:
-        #     json.dump(list(locations), outfile)
-
-        # with open("output_json/categories.json", "w") as outfile:
-        #     json.dump(list(categories), outfile)
 
 
 if __name__ == "__main__":

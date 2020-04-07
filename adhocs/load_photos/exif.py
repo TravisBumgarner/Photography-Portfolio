@@ -86,7 +86,7 @@ def process_garbage_metadata(raw_exif_data):
 
 
 def process_general_raw(raw_exif_data):
-    print_raw_keys_and_data(raw_exif_data)
+    # print_raw_keys_and_data(raw_exif_data)
     processed_exif_data = {}
 
     processed_exif_data["lens"] = str(raw_exif_data.get("EXIF LensModel", ""))
@@ -155,8 +155,5 @@ def process_exif_data(full_path):
         **general_processed_exif_data,
         **model_specific_processed_exif_data,
     }
-
-    # im = Image.open(full_path)
-    # processed_exif_data["width"], processed_exif_data["height"] = im.size
 
     return processed_exif_data
