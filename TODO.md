@@ -22,7 +22,7 @@
 - [x] Find missing photos
 - [ ] Cleanup Ugly Code
     - [ ] Titlebar wrapping down over page titles.
-    - [ ] Add back in loading indicator for photos?
+    - [x] Add back in loading indicator for photos?
     - [ ] If metadata wraps it loads off screen for some widths
 - [x] Update selfportrait photo
 - [x] Change cursor for button hover
@@ -31,5 +31,5 @@
 - [ ] minify code
 - [ ] Move to GCP
 - [x] Update types
-- [ ] Make menu scrollable
+- [x] Make menu scrollable
 - [ ] Add gcp instructions to readme

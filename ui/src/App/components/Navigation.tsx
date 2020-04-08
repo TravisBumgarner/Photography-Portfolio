@@ -13,11 +13,10 @@ const NavigationWrapper = styled.div`
     border-left: 5px solid black;
     height: 100vh;
     box-sizing: border-box;
-    display: flex;
     flex-direction: column;
-    justify-content: flex-end;
     width: 300px;
     background-color: rgba(255, 255, 255, 1);
+    overflow: scroll;
 `
 
 const SubNavigationWrapper = styled.div`
