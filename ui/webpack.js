@@ -27,6 +27,7 @@ module.exports = env => {
             path: path.resolve(__dirname, 'dist'),
             publicPath
         },
+        devtool: '',
         resolve: {
             alias: {
                 sharedComponents: path.resolve(__dirname, 'src/sharedComponents/'),

@@ -26,10 +26,11 @@
     - [ ] If metadata wraps it loads off screen for some widths
 - [x] Update selfportrait photo
 - [x] Change cursor for button hover
-- [ ] select new photos
+- [x] select new photos
 - [x] finish updating readme
 - [ ] minify code
 - [ ] Move to GCP
 - [x] Update types
 - [x] Make menu scrollable
 - [ ] Add gcp instructions to readme
+- [ ] Add project descriptions as JSON

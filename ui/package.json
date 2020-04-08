@@ -5,17 +5,15 @@
     "main": "index.js",
     "scripts": {
         "start-dev": "NODE_ENV=development webpack-dev-server --mode=development --config webpack.js",
-        "bundle": "rm ./dist/index.html; rm ./dist/app*; mkdir ./dist; NODE_ENV=production; webpack --mode=production --config webpack.js --verobose",
-        "start-prod": "npm run bundle; node server.js",
-        "precommit": "tsc --noEmit --skipLibCheck"
+        "bundle-ui": "rm ./dist/index.html; rm ./dist/app*; mkdir ./dist; NODE_ENV=production; webpack --mode production --config webpack.js --verobose",
+        "precommit": "tsc --noEmit --skipLibCheck",
+        "deploy": "gcloud builds submit --tag gcr.io/photo21-273400/frontend && gcloud run deploy frontend --image gcr.io/photo21-273400/frontend --platform managed --region us-east1"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
         "@sentry/browser": "^4.1.1",
         "axios": "^0.18.1",
-        "express": "^4.16.3",
-        "nodemon": "^1.18.4",
         "react": "^16.12.0",
         "react-dom": "^16.12.0",
         "react-icons": "^3.1.0",
