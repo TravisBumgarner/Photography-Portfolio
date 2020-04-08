@@ -50,9 +50,10 @@ def get_lightroom_keywords(full_path):
 
 def main():
     INPUT_ROOT = os.path.abspath("./input_photos")
+    OUTPUT_ROOT = os.path.abspath("../ui/src/App/")
     print(INPUT_ROOT + "\n\n\n")
 
-    for dir in [INPUT_ROOT, "./output_photos", "./output_json"]:
+    for dir in [INPUT_ROOT, "./output_json"]:
         if not os.path.isdir(dir):
             os.makedirs(dir)
 
@@ -116,14 +117,16 @@ def main():
             print(e)
             print("Messed up on photo", input_file_name)
 
-        output = {
-            "photos": photos,
-            "galleries": list(galleries.values()),
-            "locations": list(locations),
-            "categories": list(categories),
-        }
-        with open("output_json/output.json", "w") as outfile:
-            json.dump(output, outfile, default=str)
+    output = {
+        "photos": photos,
+        "galleries": list(galleries.values()),
+        "locations": list(locations),
+        "categories": list(categories),
+    }
+    ui_app_path = os.path.join(OUTPUT_ROOT, "output.json")
+    print(ui_app_path)
+    with open(ui_app_path, "w") as outfile:
+        json.dump(output, outfile, default=str)
 
 
 if __name__ == "__main__":
