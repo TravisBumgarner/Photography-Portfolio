@@ -24,7 +24,7 @@ module.exports = env => {
         },
         output: {
             filename: '[name]-[hash].bundle.js',
-            path: path.resolve(__dirname, 'dist'),
+            path: path.resolve(__dirname, 'public'),
             publicPath
         },
         devtool: '',
@@ -47,7 +47,7 @@ module.exports = env => {
             ]
         },
         devServer: {
-            contentBase: './dist',
+            contentBase: './public',
             port: 3000,
             historyApiFallback: true,
             publicPath: '/'
@@ -55,6 +55,7 @@ module.exports = env => {
         plugins: [
             new HtmlWebpackPlugin({
                 template: './index.template.ejs',
+                favicon: "./src/favicon.png",
                 inject: 'body'
             }),
             new webpack.DefinePlugin({ __API__: apiHost })

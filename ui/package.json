@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start-dev": "NODE_ENV=development webpack-dev-server --mode=development --config webpack.js",
-        "bundle-ui": "rm ./dist/index.html; rm ./dist/app*; mkdir ./dist; NODE_ENV=production; webpack --mode production --config webpack.js --verobose",
+        "bundle-ui": "NODE_ENV=production; rm -rf ./public; mkdir ./public; webpack --mode=production --config webpack.js --verobose",
         "precommit": "tsc --noEmit --skipLibCheck",
         "deploy": "gcloud builds submit --tag gcr.io/photo21-273400/frontend && gcloud run deploy frontend --image gcr.io/photo21-273400/frontend --platform managed --region us-east1"
     },
