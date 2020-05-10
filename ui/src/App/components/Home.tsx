@@ -28,7 +28,13 @@ const Home = ({ backgroundPhotos }: Props) => {
 
     useInterval(() => setBackgroundImageIndex(backgroundImageIndex + 1), 4000);
 
-    return <HomeWrapper backgroundImageUrl={backgroundPhotos[backgroundImageIndex % backgroundPhotos.length].src} />
+    return <HomeWrapper
+        backgroundImageUrl={
+            backgroundPhotos.length
+                ? backgroundPhotos[backgroundImageIndex % backgroundPhotos.length].src
+                : ''
+        }
+    />
 }
 
 export default Home
