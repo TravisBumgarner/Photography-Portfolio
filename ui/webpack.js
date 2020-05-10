@@ -2,21 +2,6 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-let apiHost
-let publicPath
-setupEnv = () => {
-    switch (process.env.NODE_ENV) {
-        case 'development':
-            apiHost = "'http://localhost:8000/'"
-            publicPath = '/'
-            break
-        default:
-            apiHost = "'https://api.travisbumgarner.photography/'"
-            publicPath = '/static'
-    }
-}
-setupEnv()
-
 module.exports = env => {
     return {
         entry: {
@@ -25,9 +10,8 @@ module.exports = env => {
         output: {
             filename: '[name]-[hash].bundle.js',
             path: path.resolve(__dirname, 'public'),
-            publicPath
+            publicPath: '/'
         },
-        devtool: '',
         resolve: {
             alias: {
                 sharedComponents: path.resolve(__dirname, 'src/sharedComponents/'),
@@ -43,6 +27,10 @@ module.exports = env => {
                     test: /\.[jt]s[x]$/,
                     exclude: /node_modules/,
                     loader: 'babel-loader',
+                },
+                {
+                    test: /\.(jpe?g|png|gif|svg)$/i,
+                    loader: "file-loader"
                 }
             ]
         },
@@ -54,11 +42,10 @@ module.exports = env => {
         },
         plugins: [
             new HtmlWebpackPlugin({
-                template: './index.template.ejs',
+                template: './src/index.template.ejs',
                 favicon: "./src/favicon.png",
                 inject: 'body'
-            }),
-            new webpack.DefinePlugin({ __API__: apiHost })
+            })
         ]
     }
 }

@@ -6,7 +6,7 @@ import { PhotoType } from 'sharedTypes'
 import { PAGE_THEME } from 'theme'
 
 const HomeWrapper = styled(PAGE_THEME)`
-    background-image: ${({ backgroundImageUrl }: { backgroundImageUrl: string }) => `url('https://storage.googleapis.com/photo21/photos/${backgroundImageUrl}')`};
+    background-image: ${({ backgroundImageUrl }: { backgroundImageUrl: string }) => `url('https://storage.googleapis.com/photo21/photos/large/${backgroundImageUrl}')`};
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
