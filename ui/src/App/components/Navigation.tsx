@@ -81,12 +81,12 @@ const Navigation = ({ galleries, toggleNavigation }: Props) => {
             route: 'https://www.linkedin.com/in/travisbumgarner/',
         },
         {
-            title: 'Instagram',
-            route: 'https://www.instagram.com/esafoto/',
+            title: 'Twitter',
+            route: 'https://twitter.com/travis_the_makr/',
         },
         {
-            title: 'NatGeo',
-            route: 'https://yourshot.nationalgeographic.com/profile/778640/',
+            title: 'Instagram',
+            route: 'https://www.instagram.com/esafoto/',
         },
         {
             title: 'Flickr',
@@ -97,7 +97,7 @@ const Navigation = ({ galleries, toggleNavigation }: Props) => {
     const socialLinks = socialSectionContent.map(m => {
         return (
             <LinkListItem key={m.title} onClick={toggleNavigation}>
-                <ExternalLink href={m.route}>{m.title}</ExternalLink>
+                <ExternalLink target="_blank" href={m.route}>{m.title}</ExternalLink>
             </LinkListItem>
         )
     })
