@@ -12,7 +12,7 @@ const FILM = 'Film'
 
 const StyledPhoto = styled.img`
     max-width: 100%;
-    max-height: 95%;
+    max-height: 90%;
     z-index: ${RACE_CONDITION_MAGIC_NUMBER + 1};
 `
 
@@ -61,20 +61,12 @@ const PhotoWrapper = styled.div`
     flex-direction: column;
     box-sizing: border-box;
     margin: 0;
-
-    ${MEDIA.phone`
-        height: 100%;
-        margin: 0 ${CONTENT_SPACING.m};
-    `};
 `
 
 const MetadataWrapper = styled.div`
     width: 100%;
     height: 10%;
     text-align: center;
-    ${MEDIA.phone`
-        display: none;
-    `};
 `
 
 const Metadata = ({ details }: { details: PhotoType }) => {

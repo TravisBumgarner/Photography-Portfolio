@@ -105,9 +105,6 @@ const GalleryItem = styled.div`
         padding-top: 100%;
     }
 
-    ${MEDIA.desktop`
-        margin: ${CONTENT_SPACING.xs};
-    `};
 `
 
 export {
