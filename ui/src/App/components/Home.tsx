@@ -6,17 +6,10 @@ import { PhotoType } from 'sharedTypes'
 import { PAGE_THEME } from 'theme'
 
 const HomeWrapper = styled(PAGE_THEME)`
-    background-image: ${({ backgroundImageUrl }: { backgroundImageUrl: string }) => `url('https://storage.googleapis.com/photo21/photos/large/${backgroundImageUrl}')`};
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    position: fixed;
-    z-index: 0;
+`
+
+const HomeImage = styled.img`
+    width: 100%;
 `
 
 type Props = {
@@ -28,13 +21,12 @@ const Home = ({ backgroundPhotos }: Props) => {
 
     useInterval(() => setBackgroundImageIndex(backgroundImageIndex + 1), 4000);
 
-    return <HomeWrapper
-        backgroundImageUrl={
-            backgroundPhotos.length
-                ? backgroundPhotos[backgroundImageIndex % backgroundPhotos.length].src
-                : ''
-        }
-    />
+    return <HomeWrapper>
+        <HomeImage src={backgroundPhotos.length
+                ? `https://storage.googleapis.com/photo21/photos/large/${backgroundPhotos[backgroundImageIndex % backgroundPhotos.length].src}`
+                : ''}
+        />
+    </HomeWrapper>
 }
 
 export default Home

@@ -35,10 +35,14 @@ const NavigationGutter = styled.div`
     left: 0;
     top: 0;
     z-index: 998;
-    border: 5px solid black;
 `
 
-const AppWrapper = styled.div``
+const AppWrapper = styled.div`
+    padding: 0px 10px;
+    max-width: 1200px;
+    margin: 0px auto;
+    box-sizing: border-box;
+`
 
 const NavigationWrapper = styled.div`
     box-sizing: border-box;

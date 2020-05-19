@@ -11,10 +11,11 @@ const CONTENT_SPACING = {
     xxxl: '8rem',
     xxxxl: '16rem'
 }
+
 const HEADER_FONT_SIZES = {
-    s: '1.4rem',
-    m: '1.7rem',
-    l: '2rem'
+    s: '1.0rem',
+    m: '1.2rem',
+    l: '1.5rem'
 }
 
 const TEXT_FONT_SIZES = {
@@ -27,9 +28,9 @@ const ICON_COLOR = {
 }
 
 const ICON_FONT_SIZES = {
-    s: '1.4em',
-    m: '1.7em',
-    l: '2em'
+    s: '1.0rem',
+    m: '1.2rem',
+    l: '1.5rem'
 }
 
 const FONT_FAMILY_HEADER = "'Raleway', sans-serif;"
@@ -43,38 +44,13 @@ const sizes = {
     phone: 576
 }
 
-// Iterate through the sizes and create a media template
-const MEDIA = Object.keys(sizes).reduce((acc, label: keyof typeof sizes) => {
-    const entry = (args: any[]) => css`
-        @media (max-width: ${sizes[label] / 16}em) {
-            ${css(...args)};
-        }
-    `
-    return { ...acc, [label]: entry }
-}, {})
-
 const PAGE_THEME = styled.div`
-    padding: ${CONTENT_SPACING.l};
-    width: 100vw;
-    max-width: 1200px;
-    height: 100vh;
-    box-sizing: border-box;
-    margin: 3rem auto 0;
-
-    ${MEDIA.tablet`
-        margin-top: 4rem;
-    `};
-
-    ${MEDIA.phone`
-        margin-top: 6rem;
-    `};
 `
 
 const GlobalStyle = createGlobalStyle`
     html {
         font-size: 18px;
-        ${MEDIA.desktop`font-size: 16px;`}
-        ${MEDIA.tablet`font-size: 14px;`}
+        font-weight: 400;
     }
 
     body {
@@ -92,7 +68,6 @@ const GlobalStyle = createGlobalStyle`
 `
 
 export {
-    MEDIA,
     GlobalStyle,
     PAGE_THEME,
     FONT_FAMILY_TEXT,

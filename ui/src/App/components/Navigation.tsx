@@ -14,7 +14,7 @@ const NavigationWrapper = styled.div`
     height: 100vh;
     box-sizing: border-box;
     flex-direction: column;
-    width: 300px;
+    width: 350px;
     background-color: rgba(255, 255, 255, 1);
     overflow: scroll;
 `
@@ -27,7 +27,6 @@ const LinkListItem = styled.li`
     margin: ${CONTENT_SPACING.s} 0;
 
     &:hover {
-        color: ${props => props.theme.secondaryColor};
         border-left: 5px solid rgb(74, 207, 160);
     }
 `
@@ -35,7 +34,6 @@ const LinkListItem = styled.li`
 const sharedStyles = css`
     text-decoration: none;
     font-family: ${FONT_FAMILY_HEADER};
-    font-weight: 100;
     font-size: ${TEXT_FONT_SIZES.m};
     color: black;
     width: 100%;
@@ -83,12 +81,12 @@ const Navigation = ({ galleries, toggleNavigation }: Props) => {
             route: 'https://www.linkedin.com/in/travisbumgarner/',
         },
         {
-            title: 'Instagram',
-            route: 'https://www.instagram.com/esafoto/',
+            title: 'Twitter',
+            route: 'https://twitter.com/travis_the_makr/',
         },
         {
-            title: 'NatGeo',
-            route: 'https://yourshot.nationalgeographic.com/profile/778640/',
+            title: 'Instagram',
+            route: 'https://www.instagram.com/esafoto/',
         },
         {
             title: 'Flickr',
@@ -99,7 +97,7 @@ const Navigation = ({ galleries, toggleNavigation }: Props) => {
     const socialLinks = socialSectionContent.map(m => {
         return (
             <LinkListItem key={m.title} onClick={toggleNavigation}>
-                <ExternalLink href={m.route}>{m.title}</ExternalLink>
+                <ExternalLink target="_blank" href={m.route}>{m.title}</ExternalLink>
             </LinkListItem>
         )
     })
