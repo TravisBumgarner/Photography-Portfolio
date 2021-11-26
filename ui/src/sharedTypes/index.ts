@@ -1,30 +1,30 @@
 type GalleryType = {
-    "title": string
-    "content_type": string
-    "slug": string
-}
+  title: string;
+  content_type: string;
+  slug: string;
+};
 
-type CategoryType = string[]
+type CategoryType = string[];
 
-type LocationType = string
+type LocationType = string;
 
 type PhotoType = {
-    "id": string
-    "src": string
-    "gallery": GalleryType
-    "location": LocationType
-    "date_taken": string
-    "category": CategoryType[]
-    "camera_type": "Digital" | "Film"
-    "make": string
-    "model": string
-    "lens": string
-    "shooting_mode": string
-    "aperture": string
-    "shutter_speed": string
-    "iso": string
-    "focal_length": string
-    "is_home_background": boolean
-}
+  id: string;
+  src: string;
+  gallery: GalleryType;
+  location: LocationType;
+  date_taken: string;
+  categories: CategoryType;
+  camera_type: string;
+  make: string;
+  model: string;
+  lens: string;
+  shooting_mode: string;
+  aperture: string;
+  shutter_speed: string;
+  iso: string;
+  focal_length: string;
+  is_home_background: boolean;
+};
 
-export { LocationType, CategoryType, GalleryType, PhotoType }
+export { LocationType, CategoryType, GalleryType, PhotoType };

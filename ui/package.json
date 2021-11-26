@@ -1,43 +1,33 @@
 {
-    "name": "ui",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "start-dev": "webpack-dev-server --mode=development --config webpack.js",
-        "bundle-ui": " rm -rf ./public; mkdir ./public; webpack --mode=production --config webpack.js --verobose",
-        "precommit": "tsc --noEmit --skipLibCheck",
-        "deploy": "gcloud builds submit --tag gcr.io/photo21-273400/frontend && gcloud run deploy frontend --image gcr.io/photo21-273400/frontend --platform managed --region us-east1"
-    },
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "@sentry/browser": "^4.1.1",
-        "axios": "^0.18.1",
-        "react": "^16.12.0",
-        "react-dom": "^16.12.0",
-        "react-icons": "^3.1.0",
-        "react-router-dom": "^4.3.1",
-        "styled-components": "^4.0.0-beta.8",
-        "typescript": "^3.7.2"
-    },
-    "devDependencies": {
-        "@babel/core": "^7.0.0",
-        "@babel/preset-env": "^7.0.0",
-        "@babel/preset-react": "^7.0.0",
-        "@babel/preset-typescript": "^7.7.2",
-        "@types/express": "^4.17.2",
-        "@types/react": "^16.9.11",
-        "@types/react-dom": "^16.9.4",
-        "@types/react-router-dom": "^5.1.2",
-        "@types/styled-components": "^4.4.0",
-        "babel-loader": "^8.0.0",
-        "babel-plugin-transform-class-properties": "^6.24.1",
-        "eslint": "^5.5.0",
-        "html-webpack-plugin": "^3.2.0",
-        "ts-loader": "^6.2.1",
-        "webpack": "^4.42.1",
-        "webpack-cli": "^3.3.11",
-        "webpack-dev-server": "^3.11.0"
-    }
+  "name": "ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start-dev": "webpack-dev-server --mode=development --config=webpack.js",
+    "bundle-ui": " rm -rf ./public; mkdir ./public; webpack --mode=production --config webpack.js --verobose",
+    "precommit": "tsc --noEmit --skipLibCheck",
+    "deploy": "gcloud builds submit --tag gcr.io/photo21-273400/frontend && gcloud run deploy frontend --image gcr.io/photo21-273400/frontend --platform managed --region us-east1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sentry/browser": "^4.1.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-icons": "^3.1.0",
+    "react-router-dom": "^4.3.1",
+    "styled-components": "^4.0.0-beta.8",
+    "webpack-dev-server": "^4.6.0"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.37",
+    "@types/styled-components": "^5.1.15",
+    "eslint": "^8.3.0",
+    "html-webpack-plugin": "^5.5.0",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.2",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1"
+  }
 }

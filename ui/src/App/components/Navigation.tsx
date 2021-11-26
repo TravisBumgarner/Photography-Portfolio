@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Link } from 'react-router-dom'
 
 import { Header } from 'sharedComponents'
@@ -86,7 +86,7 @@ const Navigation = ({ galleries, toggleNavigation }: Props) => {
         },
         {
             title: 'Instagram',
-            route: 'https://www.instagram.com/esafoto/',
+            route: 'https://www.instagram.com/esafodos/',
         },
         {
             title: 'Flickr',

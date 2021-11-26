@@ -1,34 +1,21 @@
 {
   "compilerOptions": {
-    "resolveJsonModule": true,
+    "outDir": "./dist/",
+    "noImplicitAny": false, // Todo: change
+    "module": "es6",
+    "target": "es5",
+    "jsx": "react",
+    "allowJs": true,
+    "moduleResolution": "node",
     "baseUrl": ".",
-    "paths": {
-      "*": [
-        "src/types/*"
-      ],
-      "sharedComponents": [
-        "src/sharedComponents"
-      ],
-      "sharedTypes": [
-        "src/sharedTypes/index.ts"
-      ],
-      "theme": [
-        "src/theme.js"
-      ],
-      "utilities": [
-        "src/utilities"
-      ]
-    },
-    "module": "commonjs",
-    "noImplicitAny": true,
-    "removeComments": true,
-    "preserveConstEnums": true,
-    "sourceMap": true,
-    "strictNullChecks": true,
+    "resolveJsonModule": true,
     "esModuleInterop": true,
-    "jsx": "react"
-  },
-  "exclude": [
-    "node_modules"
-  ],
+    "paths": {
+      "*": ["src/types/*"],
+      "sharedComponents": ["src/sharedComponents"],
+      "sharedTypes": ["src/sharedTypes/index.ts"],
+      "theme": ["src/theme.js"],
+      "utilities": ["src/utilities"]
+    }
+  }
 }

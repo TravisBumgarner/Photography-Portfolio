@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import * as React from 'react'
 import * as Sentry from '@sentry/browser'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import ReactDOM from 'react-dom'
@@ -16,7 +16,7 @@ interface IState {
     error: ErrorEvent | null
 }
 
-class SentryWrapper extends Component<IProps, IState> {
+class SentryWrapper extends React.Component<IProps, IState> {
     constructor(props: any) {
         super(props)
         this.state = {

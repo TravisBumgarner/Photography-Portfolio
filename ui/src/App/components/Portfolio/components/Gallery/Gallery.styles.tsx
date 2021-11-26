@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { FaTimes, FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa'
 
-import { CONTENT_SPACING, MEDIA, ICON_COLOR } from 'theme'
+import { CONTENT_SPACING, ICON_COLOR } from 'theme'
 const RACE_CONDITION_MAGIC_NUMBER = 100
 
 const CloseIcon = styled(FaTimes)`

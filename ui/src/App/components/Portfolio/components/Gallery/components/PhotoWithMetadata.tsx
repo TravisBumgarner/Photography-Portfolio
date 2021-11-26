@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react'
+import * as React from 'react'
 import styled, { keyframes } from 'styled-components'
 import { FaCamera, FaExclamationTriangle } from 'react-icons/fa'
 
 import { Text, Header } from 'sharedComponents'
 import { PhotoType } from 'sharedTypes'
-import { MEDIA, CONTENT_SPACING } from 'theme'
+import { CONTENT_SPACING } from 'theme'
 import { RACE_CONDITION_MAGIC_NUMBER } from '../Gallery.styles'
 
 const FILM = 'Film'
@@ -94,7 +94,7 @@ const Metadata = ({ details }: { details: PhotoType }) => {
                 {camera_type === FILM ? (
                     'Film Camera, N/A'
                 ) : (
-                        <Fragment>
+                        <>
                             <Header size="inline">Location </Header>
                             {location}
                             <Spacer />
@@ -103,7 +103,7 @@ const Metadata = ({ details }: { details: PhotoType }) => {
                             <Spacer />
                             <Header size="inline">Conditions </Header>
                             {camera_type.toLowerCase() === 'film' ? 'N/A' : statsString}
-                        </Fragment>
+                        </>
                     )}
             </Text>
         </MetadataWrapper>

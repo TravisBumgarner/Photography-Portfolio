@@ -105,7 +105,7 @@ def main():
                 "aperture": exif_data["aperture"],
                 "shutter_speed": exif_data["shutter_speed"],
                 "iso": exif_data["iso"],
-                "focal_length": exif_data["focal_length"],
+                "focal_length": f'{exif_data["focal_length"]}',
                 # Lightroom Metadata
                 "location": lightroom_keywords["Location"],
                 "camera_type": lightroom_keywords["CameraType"],
