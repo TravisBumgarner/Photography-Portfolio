@@ -17,7 +17,7 @@
       "aperture": "20",
       "shutter_speed": "1/160",
       "iso": "400",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "Peru",
       "camera_type": "Digital",
       "is_home_background": false
@@ -39,7 +39,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/1000",
       "iso": "125",
-      "focal_length": 30.1,
+      "focal_length": "30.1",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -61,7 +61,7 @@
       "aperture": "18",
       "shutter_speed": "1/50",
       "iso": "100",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -83,7 +83,7 @@
       "aperture": "22",
       "shutter_speed": "3/5",
       "iso": "100",
-      "focal_length": 10.0,
+      "focal_length": "10.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -105,7 +105,7 @@
       "aperture": "16",
       "shutter_speed": "1/160",
       "iso": "400",
-      "focal_length": 18.0,
+      "focal_length": "18.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -127,7 +127,7 @@
       "aperture": "2.8",
       "shutter_speed": "1/3200",
       "iso": "500",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -149,7 +149,7 @@
       "aperture": "8",
       "shutter_speed": "1/1000",
       "iso": "100",
-      "focal_length": 150.0,
+      "focal_length": "150.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -171,7 +171,7 @@
       "aperture": "5",
       "shutter_speed": "1/25",
       "iso": "100",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -193,7 +193,7 @@
       "aperture": "2",
       "shutter_speed": "1/4000",
       "iso": "400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -215,7 +215,7 @@
       "aperture": "10",
       "shutter_speed": "1/250",
       "iso": "800",
-      "focal_length": 70.0,
+      "focal_length": "70.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -237,7 +237,7 @@
       "aperture": "6.3",
       "shutter_speed": "1/2500",
       "iso": "3200",
-      "focal_length": 300.0,
+      "focal_length": "300.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -259,7 +259,7 @@
       "aperture": "2.8",
       "shutter_speed": "1/4000",
       "iso": "400",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -281,7 +281,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/4000",
       "iso": "1600",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -303,7 +303,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/1000",
       "iso": "400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -325,7 +325,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -347,7 +347,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/400",
       "iso": "250",
-      "focal_length": 14.0,
+      "focal_length": "14.0",
       "location": "Spain",
       "camera_type": "Digital",
       "is_home_background": false
@@ -369,7 +369,7 @@
       "aperture": "2.8",
       "shutter_speed": "1/1600",
       "iso": "100",
-      "focal_length": 40.0,
+      "focal_length": "40.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -391,7 +391,7 @@
       "aperture": "4",
       "shutter_speed": "1/8",
       "iso": "1600",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -413,7 +413,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/1250",
       "iso": "320",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -435,7 +435,7 @@
       "aperture": "11",
       "shutter_speed": "1/800",
       "iso": "400",
-      "focal_length": 24.0,
+      "focal_length": "24.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -457,7 +457,7 @@
       "aperture": "5",
       "shutter_speed": "1/250",
       "iso": "800",
-      "focal_length": 30.0,
+      "focal_length": "30.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -479,7 +479,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/320",
       "iso": "1250",
-      "focal_length": 18.0,
+      "focal_length": "18.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -501,7 +501,7 @@
       "aperture": "3",
       "shutter_speed": "1/50",
       "iso": "3200",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -523,7 +523,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/15",
       "iso": "645",
-      "focal_length": 4.4,
+      "focal_length": "4.4",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -545,7 +545,7 @@
       "aperture": "8",
       "shutter_speed": "1/250",
       "iso": "125",
-      "focal_length": 12.2,
+      "focal_length": "12.2",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -567,7 +567,7 @@
       "aperture": "4.5",
       "shutter_speed": "1/2000",
       "iso": "200",
-      "focal_length": 210.0,
+      "focal_length": "210.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -589,7 +589,7 @@
       "aperture": "22",
       "shutter_speed": "1/5",
       "iso": "400",
-      "focal_length": 18.0,
+      "focal_length": "18.0",
       "location": "Peru",
       "camera_type": "Digital",
       "is_home_background": false
@@ -611,7 +611,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/80",
       "iso": "1600",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -633,7 +633,7 @@
       "aperture": "11",
       "shutter_speed": "1/2",
       "iso": "80",
-      "focal_length": 16.0,
+      "focal_length": "16.0",
       "location": "Guatemala",
       "camera_type": "Digital",
       "is_home_background": false
@@ -655,7 +655,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/4000",
       "iso": "3200",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -677,7 +677,7 @@
       "aperture": "3.3",
       "shutter_speed": "1/60",
       "iso": "720",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -699,7 +699,7 @@
       "aperture": "4.5",
       "shutter_speed": "30",
       "iso": "4000",
-      "focal_length": 10.0,
+      "focal_length": "10.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -721,7 +721,7 @@
       "aperture": "3.2",
       "shutter_speed": "1/4000",
       "iso": "200",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -743,7 +743,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/4000",
       "iso": "1600",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -765,7 +765,7 @@
       "aperture": "3.5",
       "shutter_speed": "1/1000",
       "iso": "800",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Guatemala",
       "camera_type": "Digital",
       "is_home_background": false
@@ -787,7 +787,7 @@
       "aperture": "5",
       "shutter_speed": "1/500",
       "iso": "2500",
-      "focal_length": 230.0,
+      "focal_length": "230.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -809,7 +809,7 @@
       "aperture": "11",
       "shutter_speed": "5",
       "iso": "500",
-      "focal_length": 26.0,
+      "focal_length": "26.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -831,7 +831,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -853,7 +853,7 @@
       "aperture": "1.7",
       "shutter_speed": "1/160",
       "iso": "100",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -875,7 +875,7 @@
       "aperture": "1.7",
       "shutter_speed": "1/100",
       "iso": "100",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -897,7 +897,7 @@
       "aperture": "5",
       "shutter_speed": "1/80",
       "iso": "100",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -919,7 +919,7 @@
       "aperture": "10",
       "shutter_speed": "1/1000",
       "iso": "500",
-      "focal_length": 170.0,
+      "focal_length": "170.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -941,7 +941,7 @@
       "aperture": "2.5",
       "shutter_speed": "1/640",
       "iso": "3200",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -963,7 +963,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -985,7 +985,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -1007,7 +1007,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -1029,7 +1029,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/200",
       "iso": "800",
-      "focal_length": 200.0,
+      "focal_length": "200.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1051,7 +1051,7 @@
       "aperture": "16",
       "shutter_speed": "20",
       "iso": "100",
-      "focal_length": 18.0,
+      "focal_length": "18.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1073,7 +1073,7 @@
       "aperture": "11",
       "shutter_speed": "1/250",
       "iso": "100",
-      "focal_length": 28.8,
+      "focal_length": "28.8",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1095,7 +1095,7 @@
       "aperture": "6.3",
       "shutter_speed": "1/320",
       "iso": "400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1117,7 +1117,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -1139,7 +1139,7 @@
       "aperture": "8",
       "shutter_speed": "1/125",
       "iso": "400",
-      "focal_length": 37.1,
+      "focal_length": "37.1",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1161,7 +1161,7 @@
       "aperture": "3.2",
       "shutter_speed": "1/320",
       "iso": "100",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1183,7 +1183,7 @@
       "aperture": "4.5",
       "shutter_speed": "1/250",
       "iso": "400",
-      "focal_length": 200.0,
+      "focal_length": "200.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1205,7 +1205,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/4000",
       "iso": "160",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Spain",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1227,7 +1227,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/60",
       "iso": "1600",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1249,7 +1249,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/640",
       "iso": "3200",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1271,7 +1271,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/2000",
       "iso": "800",
-      "focal_length": 135.0,
+      "focal_length": "135.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1293,7 +1293,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -1315,7 +1315,7 @@
       "aperture": "3.5",
       "shutter_speed": "1/125",
       "iso": "6400",
-      "focal_length": 20.4,
+      "focal_length": "20.4",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1337,7 +1337,7 @@
       "aperture": "8",
       "shutter_speed": "1/500",
       "iso": "1600",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1359,7 +1359,7 @@
       "aperture": "8",
       "shutter_speed": "1/200",
       "iso": "200",
-      "focal_length": 55.0,
+      "focal_length": "55.0",
       "location": "Colombia",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1381,7 +1381,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/2000",
       "iso": "3200",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1403,7 +1403,7 @@
       "aperture": "11",
       "shutter_speed": "1/100",
       "iso": "800",
-      "focal_length": 12.6,
+      "focal_length": "12.6",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1425,7 +1425,7 @@
       "aperture": "1.7",
       "shutter_speed": "1/50",
       "iso": "800",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1447,7 +1447,7 @@
       "aperture": "8",
       "shutter_speed": "1/320",
       "iso": "125",
-      "focal_length": 37.1,
+      "focal_length": "37.1",
       "location": "Guatemala",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1469,7 +1469,7 @@
       "aperture": "8",
       "shutter_speed": "1/160",
       "iso": "400",
-      "focal_length": 13.9,
+      "focal_length": "13.9",
       "location": "Guatemala",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1491,7 +1491,7 @@
       "aperture": "11",
       "shutter_speed": "1/320",
       "iso": "1000",
-      "focal_length": 55.0,
+      "focal_length": "55.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1513,7 +1513,7 @@
       "aperture": "8",
       "shutter_speed": "1/80",
       "iso": "125",
-      "focal_length": 12.2,
+      "focal_length": "12.2",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1535,7 +1535,7 @@
       "aperture": "11",
       "shutter_speed": "1/1600",
       "iso": "400",
-      "focal_length": 13.2,
+      "focal_length": "13.2",
       "location": "Guatemala",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1557,7 +1557,7 @@
       "aperture": "8",
       "shutter_speed": "1/500",
       "iso": "1600",
-      "focal_length": 26.0,
+      "focal_length": "26.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1579,7 +1579,7 @@
       "aperture": "3.5",
       "shutter_speed": "1/4000",
       "iso": "100",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1601,7 +1601,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -1623,7 +1623,7 @@
       "aperture": "25",
       "shutter_speed": "1/125",
       "iso": "320",
-      "focal_length": 23.0,
+      "focal_length": "23.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1645,7 +1645,7 @@
       "aperture": "4",
       "shutter_speed": "1/125",
       "iso": "3200",
-      "focal_length": 70.0,
+      "focal_length": "70.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1667,7 +1667,7 @@
       "aperture": "14",
       "shutter_speed": "1/160",
       "iso": "800",
-      "focal_length": 20.0,
+      "focal_length": "20.0",
       "location": "Colombia",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1689,7 +1689,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/800",
       "iso": "100",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1711,7 +1711,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/1250",
       "iso": "800",
-      "focal_length": 140.0,
+      "focal_length": "140.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1733,7 +1733,7 @@
       "aperture": "8",
       "shutter_speed": "1/400",
       "iso": "400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1755,7 +1755,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/500",
       "iso": "800",
-      "focal_length": 22.0,
+      "focal_length": "22.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1777,7 +1777,7 @@
       "aperture": "8",
       "shutter_speed": "1/250",
       "iso": "125",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1799,7 +1799,7 @@
       "aperture": "11",
       "shutter_speed": "1/200",
       "iso": "100",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1821,7 +1821,7 @@
       "aperture": "8",
       "shutter_speed": "1/50",
       "iso": "125",
-      "focal_length": 12.2,
+      "focal_length": "12.2",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1843,7 +1843,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/8",
       "iso": "800",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -1865,7 +1865,7 @@
       "aperture": "10",
       "shutter_speed": "1/200",
       "iso": "800",
-      "focal_length": 280.0,
+      "focal_length": "280.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1887,7 +1887,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/50",
       "iso": "8000",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1909,7 +1909,7 @@
       "aperture": "5",
       "shutter_speed": "1/30",
       "iso": "400",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "Peru",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1931,7 +1931,7 @@
       "aperture": "4.5",
       "shutter_speed": "1/40",
       "iso": "800",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1953,7 +1953,7 @@
       "aperture": "13",
       "shutter_speed": "1/40",
       "iso": "100",
-      "focal_length": 22.0,
+      "focal_length": "22.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1975,7 +1975,7 @@
       "aperture": "6.3",
       "shutter_speed": "1/200",
       "iso": "100",
-      "focal_length": 45.0,
+      "focal_length": "45.0",
       "location": "Peru",
       "camera_type": "Digital",
       "is_home_background": false
@@ -1997,7 +1997,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/1000",
       "iso": "500",
-      "focal_length": 45.0,
+      "focal_length": "45.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2019,7 +2019,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/640",
       "iso": "100",
-      "focal_length": 140.0,
+      "focal_length": "140.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2041,7 +2041,7 @@
       "aperture": "11",
       "shutter_speed": "1/25",
       "iso": "800",
-      "focal_length": 12.2,
+      "focal_length": "12.2",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2063,7 +2063,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/4000",
       "iso": "1600",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2085,7 +2085,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/30",
       "iso": "59",
-      "focal_length": 4.4,
+      "focal_length": "4.4",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2107,7 +2107,7 @@
       "aperture": "9",
       "shutter_speed": "1/1000",
       "iso": "1600",
-      "focal_length": 70.0,
+      "focal_length": "70.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2129,7 +2129,7 @@
       "aperture": "8",
       "shutter_speed": "1/320",
       "iso": "400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2151,7 +2151,7 @@
       "aperture": "4.5",
       "shutter_speed": "1/320",
       "iso": "1000",
-      "focal_length": 18.0,
+      "focal_length": "18.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2173,7 +2173,7 @@
       "aperture": "8",
       "shutter_speed": "1/320",
       "iso": "125",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2195,7 +2195,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2217,7 +2217,7 @@
       "aperture": "11",
       "shutter_speed": "1/400",
       "iso": "1250",
-      "focal_length": 300.0,
+      "focal_length": "300.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2239,7 +2239,7 @@
       "aperture": "9",
       "shutter_speed": "1/60",
       "iso": "200",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2261,7 +2261,7 @@
       "aperture": "1.7",
       "shutter_speed": "1/40",
       "iso": "6400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2283,7 +2283,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/500",
       "iso": "125",
-      "focal_length": 45.0,
+      "focal_length": "45.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2305,7 +2305,7 @@
       "aperture": "2.5",
       "shutter_speed": "1/4000",
       "iso": "12800",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2327,7 +2327,7 @@
       "aperture": "9",
       "shutter_speed": "1/20",
       "iso": "200",
-      "focal_length": 11.8,
+      "focal_length": "11.8",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2349,7 +2349,7 @@
       "aperture": "3.2",
       "shutter_speed": "1/1250",
       "iso": "125",
-      "focal_length": 14.8,
+      "focal_length": "14.8",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2371,7 +2371,7 @@
       "aperture": "5.6",
       "shutter_speed": "2/5",
       "iso": "100",
-      "focal_length": 45.0,
+      "focal_length": "45.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2393,7 +2393,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/50",
       "iso": "800",
-      "focal_length": 40.0,
+      "focal_length": "40.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2415,7 +2415,7 @@
       "aperture": "8",
       "shutter_speed": "1/400",
       "iso": "400",
-      "focal_length": 20.6,
+      "focal_length": "20.6",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2437,7 +2437,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2459,7 +2459,7 @@
       "aperture": "8",
       "shutter_speed": "1/800",
       "iso": "200",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2481,7 +2481,7 @@
       "aperture": "6.3",
       "shutter_speed": "1/250",
       "iso": "400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2503,7 +2503,7 @@
       "aperture": "6.3",
       "shutter_speed": "1/50",
       "iso": "100",
-      "focal_length": 10.0,
+      "focal_length": "10.0",
       "location": "Spain",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2525,7 +2525,7 @@
       "aperture": "9",
       "shutter_speed": "1/80",
       "iso": "100",
-      "focal_length": 24.0,
+      "focal_length": "24.0",
       "location": "Peru",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2547,7 +2547,7 @@
       "aperture": "16",
       "shutter_speed": "1/400",
       "iso": "400",
-      "focal_length": 70.0,
+      "focal_length": "70.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2569,7 +2569,7 @@
       "aperture": "11",
       "shutter_speed": "1/400",
       "iso": "640",
-      "focal_length": 38.0,
+      "focal_length": "38.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2591,7 +2591,7 @@
       "aperture": "4",
       "shutter_speed": "1/25",
       "iso": "100",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2613,7 +2613,7 @@
       "aperture": "29",
       "shutter_speed": "1/3",
       "iso": "200",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "Peru",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2635,7 +2635,7 @@
       "aperture": "2",
       "shutter_speed": "1/200",
       "iso": "100",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2657,7 +2657,7 @@
       "aperture": "4",
       "shutter_speed": "1/80",
       "iso": "200",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2679,7 +2679,7 @@
       "aperture": "4.5",
       "shutter_speed": "30",
       "iso": "4000",
-      "focal_length": 10.0,
+      "focal_length": "10.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2701,7 +2701,7 @@
       "aperture": "2",
       "shutter_speed": "1/1600",
       "iso": "50",
-      "focal_length": 4.0,
+      "focal_length": "4.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2723,7 +2723,7 @@
       "aperture": "8",
       "shutter_speed": "1/100",
       "iso": "125",
-      "focal_length": 21.1,
+      "focal_length": "21.1",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2745,7 +2745,7 @@
       "aperture": "13",
       "shutter_speed": "1/640",
       "iso": "500",
-      "focal_length": 20.0,
+      "focal_length": "20.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2767,7 +2767,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/1000",
       "iso": "200",
-      "focal_length": 150.0,
+      "focal_length": "150.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2789,7 +2789,7 @@
       "aperture": "9",
       "shutter_speed": "1/2500",
       "iso": "1600",
-      "focal_length": 300.0,
+      "focal_length": "300.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2811,7 +2811,7 @@
       "aperture": "10",
       "shutter_speed": "1/60",
       "iso": "80",
-      "focal_length": 37.1,
+      "focal_length": "37.1",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2833,7 +2833,7 @@
       "aperture": "5",
       "shutter_speed": "1/80",
       "iso": "100",
-      "focal_length": 29.0,
+      "focal_length": "29.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2855,7 +2855,7 @@
       "aperture": "8",
       "shutter_speed": "1/500",
       "iso": "1600",
-      "focal_length": 16.8,
+      "focal_length": "16.8",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2877,7 +2877,7 @@
       "aperture": "3",
       "shutter_speed": "1/2500",
       "iso": "500",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": true
@@ -2899,7 +2899,7 @@
       "aperture": "3",
       "shutter_speed": "1/2000",
       "iso": "500",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2921,7 +2921,7 @@
       "aperture": "4.5",
       "shutter_speed": "1/2000",
       "iso": "400",
-      "focal_length": 23.8,
+      "focal_length": "23.8",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2943,7 +2943,7 @@
       "aperture": "10",
       "shutter_speed": "1/160",
       "iso": "400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2965,7 +2965,7 @@
       "aperture": "14",
       "shutter_speed": "1/800",
       "iso": "800",
-      "focal_length": 200.0,
+      "focal_length": "200.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -2987,7 +2987,7 @@
       "aperture": "11",
       "shutter_speed": "1/500",
       "iso": "400",
-      "focal_length": 24.0,
+      "focal_length": "24.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3009,7 +3009,7 @@
       "aperture": "4.5",
       "shutter_speed": "1/80",
       "iso": "800",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3031,7 +3031,7 @@
       "aperture": "6.3",
       "shutter_speed": "13/10",
       "iso": "100",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3053,7 +3053,7 @@
       "aperture": "11",
       "shutter_speed": "1/80",
       "iso": "125",
-      "focal_length": 30.8,
+      "focal_length": "30.8",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3075,7 +3075,7 @@
       "aperture": "13",
       "shutter_speed": "1/40",
       "iso": "100",
-      "focal_length": 20.0,
+      "focal_length": "20.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3097,7 +3097,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/4000",
       "iso": "800",
-      "focal_length": 300.0,
+      "focal_length": "300.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3119,7 +3119,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/80",
       "iso": "608",
-      "focal_length": 4.4,
+      "focal_length": "4.4",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3141,7 +3141,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/320",
       "iso": "2500",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3163,7 +3163,7 @@
       "aperture": "22",
       "shutter_speed": "1/6",
       "iso": "100",
-      "focal_length": 17.0,
+      "focal_length": "17.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3185,7 +3185,7 @@
       "aperture": "13",
       "shutter_speed": "1/800",
       "iso": "1600",
-      "focal_length": 40.0,
+      "focal_length": "40.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3207,7 +3207,7 @@
       "aperture": "4.5",
       "shutter_speed": "1/4000",
       "iso": "180",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3229,7 +3229,7 @@
       "aperture": "8",
       "shutter_speed": "1/25",
       "iso": "100",
-      "focal_length": 210.0,
+      "focal_length": "210.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3251,7 +3251,7 @@
       "aperture": "2.8",
       "shutter_speed": "1/160",
       "iso": "500",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3273,7 +3273,7 @@
       "aperture": "8",
       "shutter_speed": "1/1250",
       "iso": "400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3295,7 +3295,7 @@
       "aperture": "11",
       "shutter_speed": "1/800",
       "iso": "640",
-      "focal_length": 185.0,
+      "focal_length": "185.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3317,7 +3317,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/1250",
       "iso": "400",
-      "focal_length": 45.0,
+      "focal_length": "45.0",
       "location": "Peru",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3339,7 +3339,7 @@
       "aperture": "9",
       "shutter_speed": "1/160",
       "iso": "100",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "Peru",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3361,7 +3361,7 @@
       "aperture": "11",
       "shutter_speed": "1/250",
       "iso": "400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3383,7 +3383,7 @@
       "aperture": "8",
       "shutter_speed": "1/1250",
       "iso": "1600",
-      "focal_length": 25.6,
+      "focal_length": "25.6",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3405,7 +3405,7 @@
       "aperture": "11",
       "shutter_speed": "1/500",
       "iso": "400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3427,7 +3427,7 @@
       "aperture": "13",
       "shutter_speed": "1/15",
       "iso": "800",
-      "focal_length": 29.0,
+      "focal_length": "29.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3449,7 +3449,7 @@
       "aperture": "22",
       "shutter_speed": "2",
       "iso": "100",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3471,7 +3471,7 @@
       "aperture": "22",
       "shutter_speed": "1/400",
       "iso": "400",
-      "focal_length": 280.0,
+      "focal_length": "280.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3493,7 +3493,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "Iceland",
       "camera_type": "Analog",
       "is_home_background": false
@@ -3515,7 +3515,7 @@
       "aperture": "11",
       "shutter_speed": "1/400",
       "iso": "200",
-      "focal_length": 14.9,
+      "focal_length": "14.9",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3537,7 +3537,7 @@
       "aperture": "22",
       "shutter_speed": "1/2",
       "iso": "400",
-      "focal_length": 20.0,
+      "focal_length": "20.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3559,7 +3559,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "Iceland",
       "camera_type": "Analog",
       "is_home_background": true
@@ -3581,7 +3581,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "Iceland",
       "camera_type": "Analog",
       "is_home_background": false
@@ -3603,7 +3603,7 @@
       "aperture": "11",
       "shutter_speed": "1/250",
       "iso": "400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3625,7 +3625,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/320",
       "iso": "320",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3647,7 +3647,7 @@
       "aperture": "2.8",
       "shutter_speed": "1/100",
       "iso": "6400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Guatemala",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3669,7 +3669,7 @@
       "aperture": "3.5",
       "shutter_speed": "1/80",
       "iso": "800",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3691,7 +3691,7 @@
       "aperture": "11",
       "shutter_speed": "20",
       "iso": "100",
-      "focal_length": 20.0,
+      "focal_length": "20.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3713,7 +3713,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/40",
       "iso": "800",
-      "focal_length": 200.0,
+      "focal_length": "200.0",
       "location": "Colombia",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3735,7 +3735,7 @@
       "aperture": "3.2",
       "shutter_speed": "1/640",
       "iso": "100",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3757,7 +3757,7 @@
       "aperture": "8",
       "shutter_speed": "1/800",
       "iso": "400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3779,7 +3779,7 @@
       "aperture": "10",
       "shutter_speed": "1/320",
       "iso": "400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3801,7 +3801,7 @@
       "aperture": "3.5",
       "shutter_speed": "1/500",
       "iso": "125",
-      "focal_length": 12.0,
+      "focal_length": "12.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3823,7 +3823,7 @@
       "aperture": "11",
       "shutter_speed": "1/2000",
       "iso": "1000",
-      "focal_length": 48.0,
+      "focal_length": "48.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3845,7 +3845,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/125",
       "iso": "4000",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3867,7 +3867,7 @@
       "aperture": "2.5",
       "shutter_speed": "1/1000",
       "iso": "400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3889,7 +3889,7 @@
       "aperture": "3.5",
       "shutter_speed": "1/640",
       "iso": "6400",
-      "focal_length": 18.0,
+      "focal_length": "18.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3911,7 +3911,7 @@
       "aperture": "11",
       "shutter_speed": "1/400",
       "iso": "400",
-      "focal_length": 18.0,
+      "focal_length": "18.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3933,7 +3933,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/13",
       "iso": "160",
-      "focal_length": 20.0,
+      "focal_length": "20.0",
       "location": "England",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3955,7 +3955,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -3977,7 +3977,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/160",
       "iso": "800",
-      "focal_length": 300.0,
+      "focal_length": "300.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -3999,7 +3999,7 @@
       "aperture": "25",
       "shutter_speed": "1/3",
       "iso": "100",
-      "focal_length": 38.0,
+      "focal_length": "38.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4021,7 +4021,7 @@
       "aperture": "4",
       "shutter_speed": "1/40",
       "iso": "100",
-      "focal_length": 26.0,
+      "focal_length": "26.0",
       "location": "Peru",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4043,7 +4043,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/3200",
       "iso": "400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4065,7 +4065,7 @@
       "aperture": "8",
       "shutter_speed": "1/2000",
       "iso": "800",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4087,7 +4087,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/640",
       "iso": "125",
-      "focal_length": 20.0,
+      "focal_length": "20.0",
       "location": "England",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4109,7 +4109,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/800",
       "iso": "400",
-      "focal_length": 280.0,
+      "focal_length": "280.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4131,7 +4131,7 @@
       "aperture": "11",
       "shutter_speed": "1/1000",
       "iso": "200",
-      "focal_length": 110.0,
+      "focal_length": "110.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4153,7 +4153,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/640",
       "iso": "125",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Costa Rica",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4175,7 +4175,7 @@
       "aperture": "4.5",
       "shutter_speed": "1/320",
       "iso": "400",
-      "focal_length": 24.0,
+      "focal_length": "24.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4197,7 +4197,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "Iceland",
       "camera_type": "Analog",
       "is_home_background": false
@@ -4219,7 +4219,7 @@
       "aperture": "11",
       "shutter_speed": "1/60",
       "iso": "800",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4241,7 +4241,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/250",
       "iso": "80",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4263,7 +4263,7 @@
       "aperture": "16",
       "shutter_speed": "1/400",
       "iso": "400",
-      "focal_length": 85.0,
+      "focal_length": "85.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4285,7 +4285,7 @@
       "aperture": "10",
       "shutter_speed": "2",
       "iso": "80",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Guatemala",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4307,7 +4307,7 @@
       "aperture": "10",
       "shutter_speed": "1/80",
       "iso": "125",
-      "focal_length": 14.9,
+      "focal_length": "14.9",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4329,7 +4329,7 @@
       "aperture": "13",
       "shutter_speed": "1/40",
       "iso": "400",
-      "focal_length": 18.0,
+      "focal_length": "18.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4351,7 +4351,7 @@
       "aperture": "2.8",
       "shutter_speed": "1/800",
       "iso": "500",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4373,7 +4373,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/200",
       "iso": "200",
-      "focal_length": 300.0,
+      "focal_length": "300.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4395,7 +4395,7 @@
       "aperture": "13",
       "shutter_speed": "1/1250",
       "iso": "400",
-      "focal_length": 40.0,
+      "focal_length": "40.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4417,7 +4417,7 @@
       "aperture": "4",
       "shutter_speed": "1/250",
       "iso": "125",
-      "focal_length": 11.8,
+      "focal_length": "11.8",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4439,7 +4439,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/200",
       "iso": "70",
-      "focal_length": 4.4,
+      "focal_length": "4.4",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4461,7 +4461,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/400",
       "iso": "400",
-      "focal_length": 23.8,
+      "focal_length": "23.8",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4483,7 +4483,7 @@
       "aperture": "2.5",
       "shutter_speed": "1/60",
       "iso": "6400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4505,7 +4505,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/640",
       "iso": "800",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4527,7 +4527,7 @@
       "aperture": "11",
       "shutter_speed": "1/5",
       "iso": "80",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4549,7 +4549,7 @@
       "aperture": "10",
       "shutter_speed": "1/4000",
       "iso": "400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4571,7 +4571,7 @@
       "aperture": "11",
       "shutter_speed": "1/320",
       "iso": "200",
-      "focal_length": 20.2,
+      "focal_length": "20.2",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4593,7 +4593,7 @@
       "aperture": "11",
       "shutter_speed": "1/400",
       "iso": "100",
-      "focal_length": 20.0,
+      "focal_length": "20.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4615,7 +4615,7 @@
       "aperture": "2.8",
       "shutter_speed": "1/400",
       "iso": "100",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4637,7 +4637,7 @@
       "aperture": "11",
       "shutter_speed": "1/500",
       "iso": "400",
-      "focal_length": 18.2,
+      "focal_length": "18.2",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4659,7 +4659,7 @@
       "aperture": "29",
       "shutter_speed": "1/13",
       "iso": "100",
-      "focal_length": 18.0,
+      "focal_length": "18.0",
       "location": "England",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4681,7 +4681,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/500",
       "iso": "6400",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4703,7 +4703,7 @@
       "aperture": "4",
       "shutter_speed": "1/1600",
       "iso": "800",
-      "focal_length": 70.0,
+      "focal_length": "70.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4725,7 +4725,7 @@
       "aperture": "11",
       "shutter_speed": "1/160",
       "iso": "100",
-      "focal_length": 18.9,
+      "focal_length": "18.9",
       "location": "Guatemala",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4747,7 +4747,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/1250",
       "iso": "200",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Peru",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4769,7 +4769,7 @@
       "aperture": "3",
       "shutter_speed": "1/2000",
       "iso": "500",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4791,7 +4791,7 @@
       "aperture": "4",
       "shutter_speed": "1/800",
       "iso": "2500",
-      "focal_length": 70.0,
+      "focal_length": "70.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4813,7 +4813,7 @@
       "aperture": "3.2",
       "shutter_speed": "1/1600",
       "iso": "500",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4835,7 +4835,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/2500",
       "iso": "61",
-      "focal_length": 4.4,
+      "focal_length": "4.4",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4857,7 +4857,7 @@
       "aperture": "4.8",
       "shutter_speed": "1/200",
       "iso": "2500",
-      "focal_length": 195.0,
+      "focal_length": "195.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4879,7 +4879,7 @@
       "aperture": "3",
       "shutter_speed": "1/2500",
       "iso": "500",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4901,7 +4901,7 @@
       "aperture": "8",
       "shutter_speed": "1/80",
       "iso": "800",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4923,7 +4923,7 @@
       "aperture": "11",
       "shutter_speed": "1/500",
       "iso": "400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4945,7 +4945,7 @@
       "aperture": "2.8",
       "shutter_speed": "1/2000",
       "iso": "500",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4967,7 +4967,7 @@
       "aperture": "8",
       "shutter_speed": "1/400",
       "iso": "500",
-      "focal_length": 46.0,
+      "focal_length": "46.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -4989,7 +4989,7 @@
       "aperture": "20",
       "shutter_speed": "1/125",
       "iso": "400",
-      "focal_length": 12.0,
+      "focal_length": "12.0",
       "location": "England",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5011,7 +5011,7 @@
       "aperture": "3.5",
       "shutter_speed": "1/1000",
       "iso": "25600",
-      "focal_length": 19.0,
+      "focal_length": "19.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5033,7 +5033,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/400",
       "iso": "100",
-      "focal_length": 17.0,
+      "focal_length": "17.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5055,7 +5055,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/250",
       "iso": "3200",
-      "focal_length": 10.0,
+      "focal_length": "10.0",
       "location": "Spain",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5077,7 +5077,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/500",
       "iso": "800",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5099,7 +5099,7 @@
       "aperture": "10",
       "shutter_speed": "1/100",
       "iso": "400",
-      "focal_length": 18.0,
+      "focal_length": "18.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5121,7 +5121,7 @@
       "aperture": "10",
       "shutter_speed": "1/320",
       "iso": "250",
-      "focal_length": 20.0,
+      "focal_length": "20.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5143,7 +5143,7 @@
       "aperture": "11",
       "shutter_speed": "1/250",
       "iso": "400",
-      "focal_length": 14.2,
+      "focal_length": "14.2",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5165,7 +5165,7 @@
       "aperture": "2.2",
       "shutter_speed": "1/800",
       "iso": "800",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5187,7 +5187,7 @@
       "aperture": "8",
       "shutter_speed": "1/160",
       "iso": "400",
-      "focal_length": 27.5,
+      "focal_length": "27.5",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5209,7 +5209,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/100",
       "iso": "400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5231,7 +5231,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/100",
       "iso": "125",
-      "focal_length": 18.0,
+      "focal_length": "18.0",
       "location": "England",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5253,7 +5253,7 @@
       "aperture": "13",
       "shutter_speed": "1/400",
       "iso": "1250",
-      "focal_length": 180.0,
+      "focal_length": "180.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5275,7 +5275,7 @@
       "aperture": "6.3",
       "shutter_speed": "1/50",
       "iso": "400",
-      "focal_length": 15.4,
+      "focal_length": "15.4",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5297,7 +5297,7 @@
       "aperture": "8",
       "shutter_speed": "1/400",
       "iso": "125",
-      "focal_length": 37.1,
+      "focal_length": "37.1",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5319,7 +5319,7 @@
       "aperture": "22",
       "shutter_speed": "1/25",
       "iso": "100",
-      "focal_length": 62.0,
+      "focal_length": "62.0",
       "location": "England",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5341,7 +5341,7 @@
       "aperture": "4",
       "shutter_speed": "1/500",
       "iso": "1600",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5363,7 +5363,7 @@
       "aperture": "10",
       "shutter_speed": "1/4000",
       "iso": "800",
-      "focal_length": 250.0,
+      "focal_length": "250.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5385,7 +5385,7 @@
       "aperture": "11",
       "shutter_speed": "1/40",
       "iso": "125",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5407,7 +5407,7 @@
       "aperture": "2",
       "shutter_speed": "13/10",
       "iso": "200",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5429,7 +5429,7 @@
       "aperture": "4",
       "shutter_speed": "1/800",
       "iso": "800",
-      "focal_length": 110.0,
+      "focal_length": "110.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5451,7 +5451,7 @@
       "aperture": "11",
       "shutter_speed": "1/250",
       "iso": "250",
-      "focal_length": 38.0,
+      "focal_length": "38.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": true
@@ -5473,7 +5473,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/1250",
       "iso": "400",
-      "focal_length": 52.0,
+      "focal_length": "52.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5495,7 +5495,7 @@
       "aperture": "11",
       "shutter_speed": "1/640",
       "iso": "400",
-      "focal_length": 26.0,
+      "focal_length": "26.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5517,7 +5517,7 @@
       "aperture": "2.8",
       "shutter_speed": "1/200",
       "iso": "400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5539,7 +5539,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/250",
       "iso": "400",
-      "focal_length": 300.0,
+      "focal_length": "300.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5561,7 +5561,7 @@
       "aperture": "11",
       "shutter_speed": "1/800",
       "iso": "320",
-      "focal_length": 32.0,
+      "focal_length": "32.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5583,7 +5583,7 @@
       "aperture": "11",
       "shutter_speed": "1/640",
       "iso": "800",
-      "focal_length": 25.3,
+      "focal_length": "25.3",
       "location": "Guatemala",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5605,7 +5605,7 @@
       "aperture": "8",
       "shutter_speed": "1/640",
       "iso": "400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5627,7 +5627,7 @@
       "aperture": "13",
       "shutter_speed": "1/250",
       "iso": "1250",
-      "focal_length": 180.0,
+      "focal_length": "180.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5649,7 +5649,7 @@
       "aperture": "13",
       "shutter_speed": "1/250",
       "iso": "1000",
-      "focal_length": 28.0,
+      "focal_length": "28.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5671,7 +5671,7 @@
       "aperture": "11",
       "shutter_speed": "1/160",
       "iso": "100",
-      "focal_length": 20.0,
+      "focal_length": "20.0",
       "location": "Spain",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5693,7 +5693,7 @@
       "aperture": "4.5",
       "shutter_speed": "1/500",
       "iso": "1250",
-      "focal_length": 135.0,
+      "focal_length": "135.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5715,7 +5715,7 @@
       "aperture": "11",
       "shutter_speed": "1/400",
       "iso": "250",
-      "focal_length": 10.0,
+      "focal_length": "10.0",
       "location": "Spain",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5737,7 +5737,7 @@
       "aperture": "1.7",
       "shutter_speed": "1/60",
       "iso": "1600",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5759,7 +5759,7 @@
       "aperture": "2.5",
       "shutter_speed": "1/80",
       "iso": "800",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5781,7 +5781,7 @@
       "aperture": "5",
       "shutter_speed": "1/60",
       "iso": "250",
-      "focal_length": 55.0,
+      "focal_length": "55.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5803,7 +5803,7 @@
       "aperture": "4.2",
       "shutter_speed": "1/400",
       "iso": "320",
-      "focal_length": 65.0,
+      "focal_length": "65.0",
       "location": "Spain",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5825,7 +5825,7 @@
       "aperture": "5",
       "shutter_speed": "1/500",
       "iso": "400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5847,7 +5847,7 @@
       "aperture": "2.8",
       "shutter_speed": "1/10",
       "iso": "1600",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5869,7 +5869,7 @@
       "aperture": "4",
       "shutter_speed": "1/250",
       "iso": "320",
-      "focal_length": 55.0,
+      "focal_length": "55.0",
       "location": "Spain",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5891,7 +5891,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/160",
       "iso": "400",
-      "focal_length": 18.0,
+      "focal_length": "18.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5913,7 +5913,7 @@
       "aperture": "10",
       "shutter_speed": "1/160",
       "iso": "125",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5935,7 +5935,7 @@
       "aperture": "2",
       "shutter_speed": "1/25",
       "iso": "398",
-      "focal_length": 4.0,
+      "focal_length": "4.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5957,7 +5957,7 @@
       "aperture": "11",
       "shutter_speed": "1/160",
       "iso": "250",
-      "focal_length": 18.0,
+      "focal_length": "18.0",
       "location": "Spain",
       "camera_type": "Digital",
       "is_home_background": false
@@ -5979,7 +5979,7 @@
       "aperture": "3.5",
       "shutter_speed": "1/6",
       "iso": "800",
-      "focal_length": 18.0,
+      "focal_length": "18.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6001,7 +6001,7 @@
       "aperture": "5",
       "shutter_speed": "1/40",
       "iso": "800",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6023,7 +6023,7 @@
       "aperture": "8",
       "shutter_speed": "1/400",
       "iso": "400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6041,7 +6041,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6063,7 +6063,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/10",
       "iso": "800",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -6085,7 +6085,7 @@
       "aperture": "4",
       "shutter_speed": "1/250",
       "iso": "125",
-      "focal_length": 11.8,
+      "focal_length": "11.8",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6107,7 +6107,7 @@
       "aperture": "4",
       "shutter_speed": "1/640",
       "iso": "2500",
-      "focal_length": 100.0,
+      "focal_length": "100.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6129,7 +6129,7 @@
       "aperture": "8",
       "shutter_speed": "1/1000",
       "iso": "125",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6151,7 +6151,7 @@
       "aperture": "13",
       "shutter_speed": "1/640",
       "iso": "1000",
-      "focal_length": 250.0,
+      "focal_length": "250.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6173,7 +6173,7 @@
       "aperture": "4",
       "shutter_speed": "1/160",
       "iso": "400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6195,7 +6195,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/100",
       "iso": "800",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6217,7 +6217,7 @@
       "aperture": "2.2",
       "shutter_speed": "1/1600",
       "iso": "6400",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6239,7 +6239,7 @@
       "aperture": "11",
       "shutter_speed": "1/640",
       "iso": "320",
-      "focal_length": 44.0,
+      "focal_length": "44.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6261,7 +6261,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/640",
       "iso": "6400",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6283,7 +6283,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/40",
       "iso": "3200",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6305,7 +6305,7 @@
       "aperture": "11",
       "shutter_speed": "1/320",
       "iso": "250",
-      "focal_length": 11.0,
+      "focal_length": "11.0",
       "location": "Spain",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6327,7 +6327,7 @@
       "aperture": "8",
       "shutter_speed": "1/125",
       "iso": "1600",
-      "focal_length": 210.0,
+      "focal_length": "210.0",
       "location": "Colombia",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6349,7 +6349,7 @@
       "aperture": "4",
       "shutter_speed": "1/320",
       "iso": "400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6371,7 +6371,7 @@
       "aperture": "5",
       "shutter_speed": "1/800",
       "iso": "125",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6393,7 +6393,7 @@
       "aperture": "11",
       "shutter_speed": "1/1600",
       "iso": "1000",
-      "focal_length": 70.0,
+      "focal_length": "70.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6415,7 +6415,7 @@
       "aperture": "11",
       "shutter_speed": "1/125",
       "iso": "800",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6437,7 +6437,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/15",
       "iso": "3200",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6459,7 +6459,7 @@
       "aperture": "10",
       "shutter_speed": "1/2000",
       "iso": "400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6481,7 +6481,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/2900",
       "iso": "71",
-      "focal_length": 4.4,
+      "focal_length": "4.4",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6503,7 +6503,7 @@
       "aperture": "4",
       "shutter_speed": "1/160",
       "iso": "125",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6525,7 +6525,7 @@
       "aperture": "3.5",
       "shutter_speed": "1/30",
       "iso": "800",
-      "focal_length": 18.0,
+      "focal_length": "18.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6547,7 +6547,7 @@
       "aperture": "20",
       "shutter_speed": "1/10",
       "iso": "800",
-      "focal_length": 18.0,
+      "focal_length": "18.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6569,7 +6569,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/400",
       "iso": "3200",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6591,7 +6591,7 @@
       "aperture": "11",
       "shutter_speed": "1/160",
       "iso": "400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6613,7 +6613,7 @@
       "aperture": "13",
       "shutter_speed": "1/800",
       "iso": "800",
-      "focal_length": 200.0,
+      "focal_length": "200.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6635,7 +6635,7 @@
       "aperture": "4.5",
       "shutter_speed": "1/160",
       "iso": "400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6657,7 +6657,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "Iceland",
       "camera_type": "Analog",
       "is_home_background": false
@@ -6679,7 +6679,7 @@
       "aperture": "8",
       "shutter_speed": "1/2500",
       "iso": "400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6701,7 +6701,7 @@
       "aperture": "16",
       "shutter_speed": "8/5",
       "iso": "100",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6723,7 +6723,7 @@
       "aperture": "4",
       "shutter_speed": "1/500",
       "iso": "125",
-      "focal_length": 11.8,
+      "focal_length": "11.8",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6745,7 +6745,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/4000",
       "iso": "1600",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6767,7 +6767,7 @@
       "aperture": "8",
       "shutter_speed": "1/2500",
       "iso": "500",
-      "focal_length": 19.0,
+      "focal_length": "19.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6789,7 +6789,7 @@
       "aperture": "11",
       "shutter_speed": "1/640",
       "iso": "800",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6811,7 +6811,7 @@
       "aperture": "11",
       "shutter_speed": "1/160",
       "iso": "400",
-      "focal_length": 23.8,
+      "focal_length": "23.8",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6833,7 +6833,7 @@
       "aperture": "3.5",
       "shutter_speed": "1/80",
       "iso": "400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6855,7 +6855,7 @@
       "aperture": "11",
       "shutter_speed": "1/200",
       "iso": "100",
-      "focal_length": 30.0,
+      "focal_length": "30.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6877,7 +6877,7 @@
       "aperture": "5",
       "shutter_speed": "1/800",
       "iso": "2500",
-      "focal_length": 260.0,
+      "focal_length": "260.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6899,7 +6899,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/10",
       "iso": "800",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -6921,7 +6921,7 @@
       "aperture": "2",
       "shutter_speed": "1/570",
       "iso": "50",
-      "focal_length": 4.0,
+      "focal_length": "4.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6943,7 +6943,7 @@
       "aperture": "4.5",
       "shutter_speed": "4",
       "iso": "125",
-      "focal_length": 16.2,
+      "focal_length": "16.2",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6965,7 +6965,7 @@
       "aperture": "14",
       "shutter_speed": "1/1250",
       "iso": "1600",
-      "focal_length": 250.0,
+      "focal_length": "250.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -6987,7 +6987,7 @@
       "aperture": "5",
       "shutter_speed": "1/400",
       "iso": "800",
-      "focal_length": 70.0,
+      "focal_length": "70.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7009,7 +7009,7 @@
       "aperture": "5",
       "shutter_speed": "1/15",
       "iso": "200",
-      "focal_length": 30.0,
+      "focal_length": "30.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7031,7 +7031,7 @@
       "aperture": "11",
       "shutter_speed": "1/640",
       "iso": "400",
-      "focal_length": 55.0,
+      "focal_length": "55.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7053,7 +7053,7 @@
       "aperture": "9",
       "shutter_speed": "1/640",
       "iso": "800",
-      "focal_length": 31.1,
+      "focal_length": "31.1",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7075,7 +7075,7 @@
       "aperture": "4",
       "shutter_speed": "1/250",
       "iso": "400",
-      "focal_length": 70.0,
+      "focal_length": "70.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7097,7 +7097,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -7119,7 +7119,7 @@
       "aperture": "11",
       "shutter_speed": "1/250",
       "iso": "500",
-      "focal_length": 125.0,
+      "focal_length": "125.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7141,7 +7141,7 @@
       "aperture": "6.3",
       "shutter_speed": "1/160",
       "iso": "3200",
-      "focal_length": 10.0,
+      "focal_length": "10.0",
       "location": "England",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7163,7 +7163,7 @@
       "aperture": "10",
       "shutter_speed": "1/1600",
       "iso": "800",
-      "focal_length": 300.0,
+      "focal_length": "300.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7185,7 +7185,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -7207,7 +7207,7 @@
       "aperture": "6.3",
       "shutter_speed": "1/1600",
       "iso": "500",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7229,7 +7229,7 @@
       "aperture": "4.2",
       "shutter_speed": "1/320",
       "iso": "2500",
-      "focal_length": 150.0,
+      "focal_length": "150.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7251,7 +7251,7 @@
       "aperture": "6.3",
       "shutter_speed": "1/125",
       "iso": "500",
-      "focal_length": 10.0,
+      "focal_length": "10.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7273,7 +7273,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/125",
       "iso": "400",
-      "focal_length": 10.9,
+      "focal_length": "10.9",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7295,7 +7295,7 @@
       "aperture": "8",
       "shutter_speed": "1/640",
       "iso": "125",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7317,7 +7317,7 @@
       "aperture": "10",
       "shutter_speed": "1",
       "iso": "100",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Guatemala",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7339,7 +7339,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/1600",
       "iso": "800",
-      "focal_length": 48.0,
+      "focal_length": "48.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7361,7 +7361,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/160",
       "iso": "3200",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7383,7 +7383,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7405,7 +7405,7 @@
       "aperture": "11",
       "shutter_speed": "1/13",
       "iso": "200",
-      "focal_length": 55.0,
+      "focal_length": "55.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7427,7 +7427,7 @@
       "aperture": "1.7",
       "shutter_speed": "1/400",
       "iso": "3200",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7449,7 +7449,7 @@
       "aperture": "16",
       "shutter_speed": "1/125",
       "iso": "400",
-      "focal_length": 12.0,
+      "focal_length": "12.0",
       "location": "Spain",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7471,7 +7471,7 @@
       "aperture": "1.7",
       "shutter_speed": "1/2000",
       "iso": "100",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7493,7 +7493,7 @@
       "aperture": "2.2",
       "shutter_speed": "1/4000",
       "iso": "400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7515,7 +7515,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -7537,7 +7537,7 @@
       "aperture": "11",
       "shutter_speed": "1/200",
       "iso": "100",
-      "focal_length": 20.0,
+      "focal_length": "20.0",
       "location": "England",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7559,7 +7559,7 @@
       "aperture": "13",
       "shutter_speed": "1/1000",
       "iso": "320",
-      "focal_length": 34.0,
+      "focal_length": "34.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7581,7 +7581,7 @@
       "aperture": "4.5",
       "shutter_speed": "1/800",
       "iso": "1600",
-      "focal_length": 150.0,
+      "focal_length": "150.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7603,7 +7603,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/2300",
       "iso": "83",
-      "focal_length": 4.4,
+      "focal_length": "4.4",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7625,7 +7625,7 @@
       "aperture": "8",
       "shutter_speed": "1/400",
       "iso": "125",
-      "focal_length": 12.2,
+      "focal_length": "12.2",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7647,7 +7647,7 @@
       "aperture": "1.7",
       "shutter_speed": "1/160",
       "iso": "800",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7669,7 +7669,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -7691,7 +7691,7 @@
       "aperture": "11",
       "shutter_speed": "6",
       "iso": "80",
-      "focal_length": 17.4,
+      "focal_length": "17.4",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7713,7 +7713,7 @@
       "aperture": "4",
       "shutter_speed": "1/2",
       "iso": "1600",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7735,7 +7735,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -7757,7 +7757,7 @@
       "aperture": "11",
       "shutter_speed": "1/80",
       "iso": "200",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7779,7 +7779,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -7801,7 +7801,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/1250",
       "iso": "250",
-      "focal_length": 13.0,
+      "focal_length": "13.0",
       "location": "Spain",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7823,7 +7823,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/320",
       "iso": "50",
-      "focal_length": 4.4,
+      "focal_length": "4.4",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7845,7 +7845,7 @@
       "aperture": "11",
       "shutter_speed": "1/250",
       "iso": "250",
-      "focal_length": 19.0,
+      "focal_length": "19.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7867,7 +7867,7 @@
       "aperture": "8",
       "shutter_speed": "1/320",
       "iso": "125",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7889,7 +7889,7 @@
       "aperture": "13",
       "shutter_speed": "1/30",
       "iso": "100",
-      "focal_length": 17.0,
+      "focal_length": "17.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7911,7 +7911,7 @@
       "aperture": "11",
       "shutter_speed": "1/60",
       "iso": "800",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7933,7 +7933,7 @@
       "aperture": "4",
       "shutter_speed": "1/640",
       "iso": "640",
-      "focal_length": 24.0,
+      "focal_length": "24.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7955,7 +7955,7 @@
       "aperture": "4.8",
       "shutter_speed": "1/500",
       "iso": "2500",
-      "focal_length": 210.0,
+      "focal_length": "210.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7977,7 +7977,7 @@
       "aperture": "22",
       "shutter_speed": "30",
       "iso": "100",
-      "focal_length": 22.0,
+      "focal_length": "22.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -7999,7 +7999,7 @@
       "aperture": "11",
       "shutter_speed": "1/4000",
       "iso": "400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8021,7 +8021,7 @@
       "aperture": "5",
       "shutter_speed": "1/10",
       "iso": "800",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -8043,7 +8043,7 @@
       "aperture": "4",
       "shutter_speed": "1/250",
       "iso": "125",
-      "focal_length": 11.9,
+      "focal_length": "11.9",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8065,7 +8065,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/10",
       "iso": "800",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -8087,7 +8087,7 @@
       "aperture": "8",
       "shutter_speed": "1/640",
       "iso": "200",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Guatemala",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8109,7 +8109,7 @@
       "aperture": "5",
       "shutter_speed": "1/15",
       "iso": "800",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -8131,7 +8131,7 @@
       "aperture": "11",
       "shutter_speed": "1/2500",
       "iso": "800",
-      "focal_length": 300.0,
+      "focal_length": "300.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8153,7 +8153,7 @@
       "aperture": "14",
       "shutter_speed": "1/320",
       "iso": "1000",
-      "focal_length": 55.0,
+      "focal_length": "55.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8175,7 +8175,7 @@
       "aperture": "4.5",
       "shutter_speed": "1/800",
       "iso": "800",
-      "focal_length": 150.0,
+      "focal_length": "150.0",
       "location": "Colombia",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8197,7 +8197,7 @@
       "aperture": "5",
       "shutter_speed": "1/80",
       "iso": "3200",
-      "focal_length": 100.0,
+      "focal_length": "100.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8219,7 +8219,7 @@
       "aperture": "4.5",
       "shutter_speed": "1/125",
       "iso": "200",
-      "focal_length": 200.0,
+      "focal_length": "200.0",
       "location": "Colombia",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8241,7 +8241,7 @@
       "aperture": "13",
       "shutter_speed": "1/1600",
       "iso": "800",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8263,7 +8263,7 @@
       "aperture": "10",
       "shutter_speed": "1/200",
       "iso": "400",
-      "focal_length": 20.0,
+      "focal_length": "20.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8285,7 +8285,7 @@
       "aperture": "6.3",
       "shutter_speed": "1/80",
       "iso": "400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8307,7 +8307,7 @@
       "aperture": "9",
       "shutter_speed": "1/40",
       "iso": "800",
-      "focal_length": 18.0,
+      "focal_length": "18.0",
       "location": "Colombia",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8329,7 +8329,7 @@
       "aperture": "11",
       "shutter_speed": "1/640",
       "iso": "200",
-      "focal_length": 19.1,
+      "focal_length": "19.1",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8351,7 +8351,7 @@
       "aperture": "11",
       "shutter_speed": "1/200",
       "iso": "400",
-      "focal_length": 13.8,
+      "focal_length": "13.8",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8373,7 +8373,7 @@
       "aperture": "11",
       "shutter_speed": "1/100",
       "iso": "125",
-      "focal_length": 22.0,
+      "focal_length": "22.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8395,7 +8395,7 @@
       "aperture": "8",
       "shutter_speed": "1/800",
       "iso": "500",
-      "focal_length": 17.0,
+      "focal_length": "17.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8417,7 +8417,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/1250",
       "iso": "800",
-      "focal_length": 300.0,
+      "focal_length": "300.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8439,7 +8439,7 @@
       "aperture": "2.8",
       "shutter_speed": "1/2500",
       "iso": "500",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8461,7 +8461,7 @@
       "aperture": "4.5",
       "shutter_speed": "1/320",
       "iso": "800",
-      "focal_length": 12.3,
+      "focal_length": "12.3",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8483,7 +8483,7 @@
       "aperture": "11",
       "shutter_speed": "1/40",
       "iso": "400",
-      "focal_length": 300.0,
+      "focal_length": "300.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8505,7 +8505,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/60",
       "iso": "2000",
-      "focal_length": 20.0,
+      "focal_length": "20.0",
       "location": "Spain",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8527,7 +8527,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/640",
       "iso": "100",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8549,7 +8549,7 @@
       "aperture": "4.5",
       "shutter_speed": "1/100",
       "iso": "160",
-      "focal_length": 33.9,
+      "focal_length": "33.9",
       "location": "Guatemala",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8571,7 +8571,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/125",
       "iso": "4000",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8593,7 +8593,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/400",
       "iso": "1250",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8615,7 +8615,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/4000",
       "iso": "6400",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8637,7 +8637,7 @@
       "aperture": "4",
       "shutter_speed": "1/250",
       "iso": "400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8659,7 +8659,7 @@
       "aperture": "3.2",
       "shutter_speed": "1/200",
       "iso": "100",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8681,7 +8681,7 @@
       "aperture": "11",
       "shutter_speed": "1/40",
       "iso": "320",
-      "focal_length": 36.0,
+      "focal_length": "36.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8703,7 +8703,7 @@
       "aperture": "2.5",
       "shutter_speed": "1/1000",
       "iso": "400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8725,7 +8725,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/2000",
       "iso": "1600",
-      "focal_length": 34.6,
+      "focal_length": "34.6",
       "location": "Costa Rica",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8747,7 +8747,7 @@
       "aperture": "2.8",
       "shutter_speed": "1/1600",
       "iso": "100",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8769,7 +8769,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/400",
       "iso": "400",
-      "focal_length": 180.0,
+      "focal_length": "180.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8791,7 +8791,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/640",
       "iso": "125",
-      "focal_length": 16.6,
+      "focal_length": "16.6",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8813,7 +8813,7 @@
       "aperture": "3.5",
       "shutter_speed": "1/1000",
       "iso": "125",
-      "focal_length": 11.8,
+      "focal_length": "11.8",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8835,7 +8835,7 @@
       "aperture": "6.3",
       "shutter_speed": "1/20",
       "iso": "400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8857,7 +8857,7 @@
       "aperture": "4",
       "shutter_speed": "1/40",
       "iso": "800",
-      "focal_length": 22.0,
+      "focal_length": "22.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8879,7 +8879,7 @@
       "aperture": "4",
       "shutter_speed": "1/1000",
       "iso": "400",
-      "focal_length": 24.0,
+      "focal_length": "24.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8901,7 +8901,7 @@
       "aperture": "4",
       "shutter_speed": "1/60",
       "iso": "1600",
-      "focal_length": 70.0,
+      "focal_length": "70.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8923,7 +8923,7 @@
       "aperture": "5",
       "shutter_speed": "1/4000",
       "iso": "800",
-      "focal_length": 70.0,
+      "focal_length": "70.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8945,7 +8945,7 @@
       "aperture": "8",
       "shutter_speed": "1/160",
       "iso": "125",
-      "focal_length": 37.1,
+      "focal_length": "37.1",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8967,7 +8967,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/125",
       "iso": "400",
-      "focal_length": 17.6,
+      "focal_length": "17.6",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -8989,7 +8989,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/160",
       "iso": "4000",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9011,7 +9011,7 @@
       "aperture": "3.5",
       "shutter_speed": "1/40",
       "iso": "25600",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9033,7 +9033,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "Iceland",
       "camera_type": "Analog",
       "is_home_background": false
@@ -9055,7 +9055,7 @@
       "aperture": "11",
       "shutter_speed": "1/30",
       "iso": "125",
-      "focal_length": 37.0,
+      "focal_length": "37.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9077,7 +9077,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/400",
       "iso": "400",
-      "focal_length": 30.8,
+      "focal_length": "30.8",
       "location": "Costa Rica",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9099,7 +9099,7 @@
       "aperture": "11",
       "shutter_speed": "1/30",
       "iso": "800",
-      "focal_length": 20.2,
+      "focal_length": "20.2",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9121,7 +9121,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/4000",
       "iso": "1000",
-      "focal_length": 155.0,
+      "focal_length": "155.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9143,7 +9143,7 @@
       "aperture": "6.3",
       "shutter_speed": "1/800",
       "iso": "400",
-      "focal_length": 70.0,
+      "focal_length": "70.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9165,7 +9165,7 @@
       "aperture": "16",
       "shutter_speed": "30",
       "iso": "100",
-      "focal_length": 22.0,
+      "focal_length": "22.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9187,7 +9187,7 @@
       "aperture": "8",
       "shutter_speed": "1/60",
       "iso": "160",
-      "focal_length": 19.8,
+      "focal_length": "19.8",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9209,7 +9209,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/80",
       "iso": "200",
-      "focal_length": 200.0,
+      "focal_length": "200.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9231,7 +9231,7 @@
       "aperture": "8",
       "shutter_speed": "1/500",
       "iso": "400",
-      "focal_length": 10.8,
+      "focal_length": "10.8",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9253,7 +9253,7 @@
       "aperture": "4.9",
       "shutter_speed": "1/250",
       "iso": "200",
-      "focal_length": 37.1,
+      "focal_length": "37.1",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9275,7 +9275,7 @@
       "aperture": "4.5",
       "shutter_speed": "1/320",
       "iso": "200",
-      "focal_length": 26.0,
+      "focal_length": "26.0",
       "location": "Colombia",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9297,7 +9297,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -9319,7 +9319,7 @@
       "aperture": "10",
       "shutter_speed": "1/2000",
       "iso": "500",
-      "focal_length": 13.0,
+      "focal_length": "13.0",
       "location": "England",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9341,7 +9341,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/125",
       "iso": "100",
-      "focal_length": 194.0,
+      "focal_length": "194.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9363,7 +9363,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9385,7 +9385,7 @@
       "aperture": "11",
       "shutter_speed": "1/640",
       "iso": "400",
-      "focal_length": 55.0,
+      "focal_length": "55.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9407,7 +9407,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/1600",
       "iso": "1600",
-      "focal_length": 13.2,
+      "focal_length": "13.2",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9429,7 +9429,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -9451,7 +9451,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/200",
       "iso": "125",
-      "focal_length": 19.8,
+      "focal_length": "19.8",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9473,7 +9473,7 @@
       "aperture": "5",
       "shutter_speed": "1/8",
       "iso": "800",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -9495,7 +9495,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/3200",
       "iso": "640",
-      "focal_length": 200.0,
+      "focal_length": "200.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9517,7 +9517,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/1000",
       "iso": "400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9539,7 +9539,7 @@
       "aperture": "8",
       "shutter_speed": "1/200",
       "iso": "125",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9561,7 +9561,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/100",
       "iso": "125",
-      "focal_length": 20.0,
+      "focal_length": "20.0",
       "location": "England",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9583,7 +9583,7 @@
       "aperture": "4",
       "shutter_speed": "1/1000",
       "iso": "100",
-      "focal_length": 70.0,
+      "focal_length": "70.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9605,7 +9605,7 @@
       "aperture": "5",
       "shutter_speed": "1/50",
       "iso": "800",
-      "focal_length": 40.0,
+      "focal_length": "40.0",
       "location": "Colombia",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9627,7 +9627,7 @@
       "aperture": "4.9",
       "shutter_speed": "1/50",
       "iso": "1600",
-      "focal_length": 36.3,
+      "focal_length": "36.3",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9649,7 +9649,7 @@
       "aperture": "11",
       "shutter_speed": "1",
       "iso": "800",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -9671,7 +9671,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/160",
       "iso": "100",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "Peru",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9693,7 +9693,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/20",
       "iso": "1600",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9715,7 +9715,7 @@
       "aperture": "13",
       "shutter_speed": "1/80",
       "iso": "200",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9737,7 +9737,7 @@
       "aperture": "4.5",
       "shutter_speed": "1/1250",
       "iso": "100",
-      "focal_length": 150.0,
+      "focal_length": "150.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9759,7 +9759,7 @@
       "aperture": "22",
       "shutter_speed": "4",
       "iso": "100",
-      "focal_length": 34.0,
+      "focal_length": "34.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9781,7 +9781,7 @@
       "aperture": "10",
       "shutter_speed": "1/200",
       "iso": "400",
-      "focal_length": 14.1,
+      "focal_length": "14.1",
       "location": "Guatemala",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9803,7 +9803,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/20",
       "iso": "400",
-      "focal_length": 55.0,
+      "focal_length": "55.0",
       "location": "Peru",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9825,7 +9825,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/500",
       "iso": "100",
-      "focal_length": 30.0,
+      "focal_length": "30.0",
       "location": "Peru",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9847,7 +9847,7 @@
       "aperture": "11",
       "shutter_speed": "1/800",
       "iso": "1250",
-      "focal_length": 17.0,
+      "focal_length": "17.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9869,7 +9869,7 @@
       "aperture": "4",
       "shutter_speed": "1/160",
       "iso": "80",
-      "focal_length": 25.6,
+      "focal_length": "25.6",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9891,7 +9891,7 @@
       "aperture": "8",
       "shutter_speed": "1/40",
       "iso": "160",
-      "focal_length": 12.5,
+      "focal_length": "12.5",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9913,7 +9913,7 @@
       "aperture": "11",
       "shutter_speed": "1/50",
       "iso": "640",
-      "focal_length": 17.0,
+      "focal_length": "17.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9935,7 +9935,7 @@
       "aperture": "2",
       "shutter_speed": "1/125",
       "iso": "800",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9957,7 +9957,7 @@
       "aperture": "8",
       "shutter_speed": "1/125",
       "iso": "125",
-      "focal_length": 20.6,
+      "focal_length": "20.6",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -9979,7 +9979,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/200",
       "iso": "400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10001,7 +10001,7 @@
       "aperture": "4",
       "shutter_speed": "1/30",
       "iso": "400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10023,7 +10023,7 @@
       "aperture": "8",
       "shutter_speed": "1/30",
       "iso": "250",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10045,7 +10045,7 @@
       "aperture": "11",
       "shutter_speed": "1/60",
       "iso": "250",
-      "focal_length": 44.0,
+      "focal_length": "44.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10067,7 +10067,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -10089,7 +10089,7 @@
       "aperture": "5",
       "shutter_speed": "1/1000",
       "iso": "400",
-      "focal_length": 11.3,
+      "focal_length": "11.3",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10111,7 +10111,7 @@
       "aperture": "10",
       "shutter_speed": "1/500",
       "iso": "500",
-      "focal_length": 14.0,
+      "focal_length": "14.0",
       "location": "England",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10133,7 +10133,7 @@
       "aperture": "5",
       "shutter_speed": "1/20",
       "iso": "1600",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10155,7 +10155,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10177,7 +10177,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10199,7 +10199,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -10221,7 +10221,7 @@
       "aperture": "8",
       "shutter_speed": "1/3",
       "iso": "800",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -10243,7 +10243,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/250",
       "iso": "3200",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10265,7 +10265,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/8",
       "iso": "800",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -10287,7 +10287,7 @@
       "aperture": "2.8",
       "shutter_speed": "1/1000",
       "iso": "500",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10309,7 +10309,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/4000",
       "iso": "3200",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10331,7 +10331,7 @@
       "aperture": "4.5",
       "shutter_speed": "1/50",
       "iso": "800",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10353,7 +10353,7 @@
       "aperture": "2.8",
       "shutter_speed": "1/1000",
       "iso": "500",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10375,7 +10375,7 @@
       "aperture": "4.5",
       "shutter_speed": "1/800",
       "iso": "100",
-      "focal_length": 55.0,
+      "focal_length": "55.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10397,7 +10397,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/250",
       "iso": "100",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10419,7 +10419,7 @@
       "aperture": "2.8",
       "shutter_speed": "1/1250",
       "iso": "100",
-      "focal_length": 40.0,
+      "focal_length": "40.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10441,7 +10441,7 @@
       "aperture": "11",
       "shutter_speed": "1/2000",
       "iso": "1250",
-      "focal_length": 120.0,
+      "focal_length": "120.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10463,7 +10463,7 @@
       "aperture": "4",
       "shutter_speed": "1/1250",
       "iso": "125",
-      "focal_length": 18.0,
+      "focal_length": "18.0",
       "location": "Guatemala",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10485,7 +10485,7 @@
       "aperture": "10",
       "shutter_speed": "1/320",
       "iso": "100",
-      "focal_length": 38.0,
+      "focal_length": "38.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10507,7 +10507,7 @@
       "aperture": "6.3",
       "shutter_speed": "1/640",
       "iso": "400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10529,7 +10529,7 @@
       "aperture": "3.2",
       "shutter_speed": "1/50",
       "iso": "125",
-      "focal_length": 15.6,
+      "focal_length": "15.6",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10551,7 +10551,7 @@
       "aperture": "3.5",
       "shutter_speed": "1/60",
       "iso": "800",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10573,7 +10573,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/1250",
       "iso": "400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10595,7 +10595,7 @@
       "aperture": "20",
       "shutter_speed": "1/10",
       "iso": "100",
-      "focal_length": 18.0,
+      "focal_length": "18.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10617,7 +10617,7 @@
       "aperture": "8",
       "shutter_speed": "1/2000",
       "iso": "1600",
-      "focal_length": 28.8,
+      "focal_length": "28.8",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10639,7 +10639,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -10661,7 +10661,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/40",
       "iso": "64",
-      "focal_length": 4.4,
+      "focal_length": "4.4",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10679,7 +10679,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10701,7 +10701,7 @@
       "aperture": "9",
       "shutter_speed": "1/160",
       "iso": "200",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10723,7 +10723,7 @@
       "aperture": "11",
       "shutter_speed": "1/60",
       "iso": "100",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10745,7 +10745,7 @@
       "aperture": "6.3",
       "shutter_speed": "1/640",
       "iso": "100",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10767,7 +10767,7 @@
       "aperture": "8",
       "shutter_speed": "1/400",
       "iso": "500",
-      "focal_length": 16.0,
+      "focal_length": "16.0",
       "location": "England",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10789,7 +10789,7 @@
       "aperture": "11",
       "shutter_speed": "1/640",
       "iso": "400",
-      "focal_length": 40.0,
+      "focal_length": "40.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10811,7 +10811,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/1600",
       "iso": "1600",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10833,7 +10833,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/800",
       "iso": "400",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10855,7 +10855,7 @@
       "aperture": "8",
       "shutter_speed": "1/200",
       "iso": "125",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10877,7 +10877,7 @@
       "aperture": "3.2",
       "shutter_speed": "1/500",
       "iso": "100",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10899,7 +10899,7 @@
       "aperture": "5",
       "shutter_speed": "1/8",
       "iso": "800",
-      "focal_length": 10.4,
+      "focal_length": "10.4",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -10921,7 +10921,7 @@
       "aperture": "6.3",
       "shutter_speed": "1/100",
       "iso": "100",
-      "focal_length": 10.0,
+      "focal_length": "10.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10943,7 +10943,7 @@
       "aperture": "3",
       "shutter_speed": "1/1250",
       "iso": "500",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10965,7 +10965,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/250",
       "iso": "5000",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -10987,7 +10987,7 @@
       "aperture": "8",
       "shutter_speed": "1/2500",
       "iso": "250",
-      "focal_length": 27.0,
+      "focal_length": "27.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11009,7 +11009,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/55",
       "iso": "138",
-      "focal_length": 4.4,
+      "focal_length": "4.4",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11031,7 +11031,7 @@
       "aperture": "5.6",
       "shutter_speed": "1/4",
       "iso": "400",
-      "focal_length": 40.0,
+      "focal_length": "40.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11053,7 +11053,7 @@
       "aperture": "8",
       "shutter_speed": "1/500",
       "iso": "250",
-      "focal_length": 26.0,
+      "focal_length": "26.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11075,7 +11075,7 @@
       "aperture": "13",
       "shutter_speed": "1/1250",
       "iso": "500",
-      "focal_length": 19.0,
+      "focal_length": "19.0",
       "location": "",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11097,7 +11097,7 @@
       "aperture": "4.5",
       "shutter_speed": "1/500",
       "iso": "400",
-      "focal_length": 30.0,
+      "focal_length": "30.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11119,7 +11119,7 @@
       "aperture": "1.8",
       "shutter_speed": "1/125",
       "iso": "3200",
-      "focal_length": 35.0,
+      "focal_length": "35.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11141,7 +11141,7 @@
       "aperture": "3",
       "shutter_speed": "1/1250",
       "iso": "500",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11163,7 +11163,7 @@
       "aperture": "4.5",
       "shutter_speed": "1/125",
       "iso": "800",
-      "focal_length": 32.0,
+      "focal_length": "32.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11185,7 +11185,7 @@
       "aperture": "2.5",
       "shutter_speed": "1/60",
       "iso": "6400",
-      "focal_length": 50.0,
+      "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11207,7 +11207,7 @@
       "aperture": "4",
       "shutter_speed": "1/320",
       "iso": "5000",
-      "focal_length": 82.0,
+      "focal_length": "82.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11229,7 +11229,7 @@
       "aperture": "11",
       "shutter_speed": "1/1000",
       "iso": "1250",
-      "focal_length": 17.0,
+      "focal_length": "17.0",
       "location": "Iceland",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11251,7 +11251,7 @@
       "aperture": "10",
       "shutter_speed": "1/1250",
       "iso": "500",
-      "focal_length": 300.0,
+      "focal_length": "300.0",
       "location": "",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11273,7 +11273,7 @@
       "aperture": "11",
       "shutter_speed": "1/320",
       "iso": "800",
-      "focal_length": 17.6,
+      "focal_length": "17.6",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11295,7 +11295,7 @@
       "aperture": "5",
       "shutter_speed": "1/200",
       "iso": "1250",
-      "focal_length": 17.0,
+      "focal_length": "17.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": true
@@ -11317,7 +11317,7 @@
       "aperture": "7.1",
       "shutter_speed": "1/200",
       "iso": "3200",
-      "focal_length": 240.0,
+      "focal_length": "240.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11339,7 +11339,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -11361,7 +11361,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11383,7 +11383,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -11405,7 +11405,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11427,7 +11427,7 @@
       "aperture": "",
       "shutter_speed": "",
       "iso": "",
-      "focal_length": 0.0,
+      "focal_length": "0.0",
       "location": "United States",
       "camera_type": "Analog",
       "is_home_background": false
@@ -11449,7 +11449,7 @@
       "aperture": "8",
       "shutter_speed": "1/1000",
       "iso": "800",
-      "focal_length": 37.1,
+      "focal_length": "37.1",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11471,7 +11471,7 @@
       "aperture": "8",
       "shutter_speed": "1/160",
       "iso": "125",
-      "focal_length": 12.3,
+      "focal_length": "12.3",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11493,7 +11493,7 @@
       "aperture": "8",
       "shutter_speed": "1/50",
       "iso": "125",
-      "focal_length": 12.2,
+      "focal_length": "12.2",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11515,7 +11515,7 @@
       "aperture": "8",
       "shutter_speed": "1/250",
       "iso": "400",
-      "focal_length": 12.3,
+      "focal_length": "12.3",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11537,7 +11537,7 @@
       "aperture": "3",
       "shutter_speed": "1/800",
       "iso": "500",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11559,7 +11559,7 @@
       "aperture": "32",
       "shutter_speed": "1/20",
       "iso": "400",
-      "focal_length": 70.0,
+      "focal_length": "70.0",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11581,7 +11581,7 @@
       "aperture": "10",
       "shutter_speed": "1/125",
       "iso": "400",
-      "focal_length": 160.0,
+      "focal_length": "160.0",
       "location": "Panama",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11603,7 +11603,7 @@
       "aperture": "8",
       "shutter_speed": "1/60",
       "iso": "125",
-      "focal_length": 15.8,
+      "focal_length": "15.8",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11625,7 +11625,7 @@
       "aperture": "11",
       "shutter_speed": "1/60",
       "iso": "125",
-      "focal_length": 11.9,
+      "focal_length": "11.9",
       "location": "Nicaragua",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11647,7 +11647,7 @@
       "aperture": "2.8",
       "shutter_speed": "1/4000",
       "iso": "200",
-      "focal_length": 90.0,
+      "focal_length": "90.0",
       "location": "Mexico",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11669,7 +11669,7 @@
       "aperture": "11",
       "shutter_speed": "1/500",
       "iso": "200",
-      "focal_length": 30.0,
+      "focal_length": "30.0",
       "location": "Colombia",
       "camera_type": "Digital",
       "is_home_background": false
@@ -11691,7 +11691,7 @@
       "aperture": "4",
       "shutter_speed": "1/80",
       "iso": "1600",
-      "focal_length": 28.5,
+      "focal_length": "28.5",
       "location": "United States",
       "camera_type": "Digital",
       "is_home_background": false
