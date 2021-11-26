@@ -2,12 +2,13 @@ import os
 import sys
 import shutil
 import json
-import uuid
+from uuid import UUID, uuid5
 from slugify import slugify
 from libxmp.utils import file_to_dict
 
 from exif import process_exif_data
 
+photos_namespace = UUID("deadbeef-dead-beef-dead-beefdeadbeef")
 
 def get_lightroom_keywords(full_path):
     # FYI: This was annoying to figure out.
@@ -91,7 +92,7 @@ def main():
             categories.update(lightroom_keywords["Category"])
 
             photo = {
-                "id": str(uuid.uuid4()),
+                "id": str(uuid5(photos_namespace, f'{input_file_name} {exif_data["date_taken"]}')),
                 "src": input_file_name,
                 "gallery": galleries[lightroom_keywords["Gallery"]],
                 "categories": lightroom_keywords["Category"],
