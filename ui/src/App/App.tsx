@@ -49,7 +49,8 @@ const NavigationWrapper = styled.div`
   display: flex;
   position: fixed;
   z-index: 999;
-  bottom: 0;
+  top: 0;
+  overflow: scroll;
   transition: right ${TRANSITION_SPEED}s;
   right: ${({ isNavigationVisible }: { isNavigationVisible: boolean }) =>
     isNavigationVisible ? "0" : `-100vw`};
