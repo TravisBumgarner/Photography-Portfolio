@@ -50,8 +50,8 @@ def get_lightroom_keywords(full_path):
 
 
 def main():
-    INPUT_ROOT = os.path.abspath("./input_photos")
-    OUTPUT_ROOT = os.path.abspath("../ui/src/App/")
+    INPUT_ROOT = os.path.abspath("./input_photos/large")
+    OUTPUT_ROOT = os.path.abspath("../ui/src/App/content/")
     print(INPUT_ROOT + "\n\n\n")
 
     for dir in [INPUT_ROOT, "./output_json"]:

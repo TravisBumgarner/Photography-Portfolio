@@ -125,6 +125,7 @@ def process_exif_data(full_path):
     if raw_make in ["NIKON CORPORATION"] and raw_model in [
         "NIKON D5300",
         "NIKON D3400",
+        "NIKON D7500"
     ]:
         model_specific_processed_exif_data = process_nikon(raw_exif_data)
 

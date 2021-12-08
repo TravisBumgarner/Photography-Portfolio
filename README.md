@@ -33,22 +33,26 @@ IsBackgroundPhoto (Check for True)
     - Quality: 50%
     - Sharpen for screen standard
     - Disable `Write Keywords as Lightroom Hierarchy`
-    - output directory: `thumbnails`
+    - output dir: `thumbnails`
   - `To Portfolio - Large`:
     - Resize 1200 x 1200 pixels
     - Quality: 80%
     - Sharpen for screen standard
     - Don't enlarge
     - Enable `Write Keywords as Lightroom Hierarchy`
-    - output directory: `large`
-  - `To Portfolio - input_photos`
-    - output directory: `load_photos`
+    - output dir: `large`
 
-3. Copy `load_photos` dir to Python script and run script.
+3. Copy `large` directory to `./load_photos`
+4. `mkvirtualenv photo20` (Something is totally messed up here, ended up just using global python, ran outside of vscode)
+5. `workon photo20`
+6. `brew install exempi`
+7. `pip3 install -r requirements.txt`
+8. `python main.py`
 
-4. Upload photos & Code to GCS bucket. 
-Drag and drop `large` and `thumbnail` into GCS
-`npm run deploy`
+9. Navigate to https://console.cloud.google.com/
+10. Drag and drop `large` and `thumbnail` into GCS
+11. `gcloud config set project photo21-273400`
+12. `npm run deploy`
 
 
 
