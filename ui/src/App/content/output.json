@@ -3562,7 +3562,7 @@
       "focal_length": "26.0",
       "location": "Peru",
       "camera_type": "Digital",
-      "is_home_background": true
+      "is_home_background": false
     },
     {
       "id": "2d3ba7b1-d9f6-551a-8c91-836394770d2a",

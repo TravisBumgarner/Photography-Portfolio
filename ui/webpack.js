@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: "./src/index.tsx",
   output: {
-    filename: "[name]-[fullHash].bundle.js",
+    filename: "app.bundle.js",
     path: path.resolve(__dirname, "public"),
   },
   module: {
@@ -33,6 +33,7 @@ module.exports = {
     compress: true,
     port: 3000,
     hot: true,
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
