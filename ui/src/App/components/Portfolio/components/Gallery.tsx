@@ -39,13 +39,12 @@ const GalleryItem = styled.div`
 
 type Props = {
   galleryDetails: GalleryType
-  // history: any
   photos: { [id: string]: PhotoType }
   filteredPhotoIds: string[]
-  setSelectedFilteredPhotoId: any
+  setSelectedFilteredPhotoIndex: any
 };
 
-const Gallery = ({ photos, filteredPhotoIds, galleryDetails, setSelectedFilteredPhotoId }: Props) => {
+const Gallery = ({ photos, filteredPhotoIds, galleryDetails, setSelectedFilteredPhotoIndex }: Props) => {
   return (
     <>
       <ProjectDescriptionWrapper>
@@ -54,7 +53,7 @@ const Gallery = ({ photos, filteredPhotoIds, galleryDetails, setSelectedFiltered
       <GalleryWrapper>{
         filteredPhotoIds.map(id => photos[id]).map((photo, index) => {
           return (<GalleryItem key={photo.id}>
-            <img src={`https://storage.googleapis.com/photo21/photos/thumbnail/${photo.src}`} onClick={() => setSelectedFilteredPhotoId(index)} />
+            <img src={`https://storage.googleapis.com/photo21/photos/thumbnail/${photo.src}`} onClick={() => setSelectedFilteredPhotoIndex(index)} />
           </GalleryItem>)
         })
       }</GalleryWrapper>

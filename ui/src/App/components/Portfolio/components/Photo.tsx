@@ -27,6 +27,7 @@ const StyledPhoto = styled.img`
 
 const PreviousButton = styled(FaArrowCircleLeft)`
     position: fixed;
+    cursor: pointer;
     top: calc(50vh - 1rem);
     left: 20px;
     fill: ${ICON_COLOR.initial};
@@ -40,6 +41,7 @@ const NextButton = styled(FaArrowCircleRight)`
     top: calc(50vh - 1rem);
     right: 20px;
     fill: ${ICON_COLOR.initial};
+    cursor: pointer;
 
     &:hover {
         fill: ${ICON_COLOR.hover};
@@ -124,33 +126,47 @@ const Metadata = ({ details }: { details: PhotoType }) => {
     )
 }
 
-const PhotoWithMetadata = ({ photos, filteredPhotoIds, selectedFilteredPhotoId, setSelectedFilteredPhotoId }: { details: PhotoType } & any) => {
+type PhotoProps = {
+    photos: { [id: string]: PhotoType }
+    filteredPhotoIds: string[]
+    selectedFilteredPhotoIndex: number
+    setSelectedFilteredPhotoIndex: React.Dispatch<React.SetStateAction<number>>
+}
+
+const Photo = ({ photos, filteredPhotoIds, selectedFilteredPhotoIndex, setSelectedFilteredPhotoIndex }: PhotoProps) => {
     const [isLoading, setIsLoading] = React.useState(true)
-    React.useEffect(() => {
-        setIsLoading(true)
-    }, [])
+    React.useEffect(() => setIsLoading(true), [])
 
-    const details = photos[filteredPhotoIds[selectedFilteredPhotoId]]
-    console.log(details)
-    const getPreviousPhotoIndex = () => {
-        const index = selectedFilteredPhotoId - 1 < 0 ? filteredPhotoIds.length - 1 : selectedFilteredPhotoId - 1
-        setSelectedFilteredPhotoId(index)
-    }
+    const details = photos[filteredPhotoIds[selectedFilteredPhotoIndex]]
 
-    const getNextPhotoIndex = () => {
-        const index = selectedFilteredPhotoId + 1 === filteredPhotoIds.length ? 0 : selectedFilteredPhotoId + 1
-        setSelectedFilteredPhotoId(index)
+    const getNextPhotoIndex = (direction: 'left' | 'right') => {
+        const first = 0
+        const last = filteredPhotoIds.length - 1
+        let next
+
+        if (direction === 'left') {
+            next = selectedFilteredPhotoIndex - 1
+            if (next < first) {
+                next = last
+            }
+        } else {
+            next = selectedFilteredPhotoIndex + 1
+            if (next > last) {
+                next = first
+            }
+        }
+        setSelectedFilteredPhotoIndex(next)
     }
 
     const exitSinglePhotoView = () => {
-        setSelectedFilteredPhotoId(undefined)
+        setSelectedFilteredPhotoIndex(undefined)
     }
 
     const handleKeyPress = (event: KeyboardEvent) => {
         if (event.key === "ArrowLeft") {
-            getPreviousPhotoIndex();
+            getNextPhotoIndex('left');
         } else if (event.key === "ArrowRight") {
-            getNextPhotoIndex();
+            getNextPhotoIndex('right');
         } else if (event.key === "Escape") {
             exitSinglePhotoView();
         }
@@ -161,13 +177,13 @@ const PhotoWithMetadata = ({ photos, filteredPhotoIds, selectedFilteredPhotoId, 
         return () => {
             window.removeEventListener("keydown", handleKeyPress);
         };
-    }, []);
+    }, [selectedFilteredPhotoIndex]);
 
     return (
         <div>
             <CloseIcon size={ICON_FONT_SIZES.l} onClick={exitSinglePhotoView} />
-            <PreviousButton size={ICON_FONT_SIZES.l} />
-            <NextButton size={ICON_FONT_SIZES.l} />
+            <PreviousButton size={ICON_FONT_SIZES.l} onClick={() => getNextPhotoIndex('left')} />
+            <NextButton size={ICON_FONT_SIZES.l} onClick={() => getNextPhotoIndex('right')} />
             <PhotoWithMetadataWrapper>
                 {isLoading ? <LoadingIcon size="5em" /> : null}
                 <PhotoWrapper>
@@ -183,4 +199,4 @@ const PhotoWithMetadata = ({ photos, filteredPhotoIds, selectedFilteredPhotoId, 
 }
 
 
-export default PhotoWithMetadata
+export default Photo
