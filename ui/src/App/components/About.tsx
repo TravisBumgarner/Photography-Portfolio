@@ -2,7 +2,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 
 import { Text, Header } from 'sharedComponents'
-import { PAGE_THEME, CONTENT_SPACING } from 'theme'
+import { CONTENT_SPACING } from 'theme'
 
 const ContentSection = styled.div`
     flex: 1;
@@ -29,11 +29,9 @@ const Portrait = styled.img`
     margin-top: ${CONTENT_SPACING.xs};
 `
 
-const AboutWrapper = styled(PAGE_THEME)``
-
 const About = () => {
     return (
-        <AboutWrapper>
+        <>
             <Header size="medium">About</Header>
             <ContentWrapper>
                 <ContentSubWrapperLeft>
@@ -69,7 +67,7 @@ const About = () => {
                     </ContentSection>
                 </ContentSubWrapperRight>
             </ContentWrapper>
-        </AboutWrapper>
+        </>
     )
 }
 

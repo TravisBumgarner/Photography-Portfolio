@@ -1,9 +1,7 @@
 import * as React from 'react'
-import styled from 'styled-components'
 
 import { GalleryType, PhotoType } from 'sharedTypes'
 import { Gallery } from './components'
-import { PAGE_THEME } from 'theme'
 
 const ALL_GALLERY: GalleryType = {
     content_type: 'snapshot',
@@ -11,7 +9,6 @@ const ALL_GALLERY: GalleryType = {
     title: 'All'
 }
 
-const PortfolioWrapper = styled(PAGE_THEME)``
 
 type Props = {
     match: {
@@ -54,14 +51,12 @@ const Portfolio = (
     galleryDetails = galleryDetails || ALL_GALLERY
 
     return (
-        <PortfolioWrapper>
-            <Gallery
-                history={history}
-                photoId={photoId}
-                photos={filteredPhotos}
-                galleryDetails={galleryDetails}
-            />
-        </PortfolioWrapper>
+        <Gallery
+            history={history}
+            photoId={photoId}
+            photos={filteredPhotos}
+            galleryDetails={galleryDetails}
+        />
     )
 }
 

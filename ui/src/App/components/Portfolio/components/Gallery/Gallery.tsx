@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { Thumbnail, PhotoWithMetadata } from "./components";
-import { Header, Text } from "sharedComponents";
+import { PhotoWithMetadata } from "./components";
+import { Header } from "sharedComponents";
 import { ICON_FONT_SIZES } from "theme";
 import { PhotoType, GalleryType } from "sharedTypes";
 
@@ -16,40 +16,6 @@ import {
   NextContainer,
   PreviousContainer,
 } from "./Gallery.styles";
-
-const ITEMS_PER_ROW = 3;
-
-type GenerateGridProps = {
-  visibleImageCount: number;
-  photos: PhotoType[];
-  handleSwitchToSelectedPhoto: (
-    newSelectedPhotoIndex: number | undefined
-  ) => void;
-};
-
-const generateGrid = ({
-  visibleImageCount,
-  photos,
-  handleSwitchToSelectedPhoto,
-}: GenerateGridProps) => {
-  const grid = photos.slice(0, visibleImageCount).map((photo, index) => (
-    <GalleryItem key={photo.id}>
-      <Thumbnail
-        src={photo.src}
-        index={index}
-        handleSwitchToSelectedPhoto={handleSwitchToSelectedPhoto}
-      />
-    </GalleryItem>
-  ));
-
-  // Add blank elements so last row of photos is spaced correctly.
-  while (grid.length % ITEMS_PER_ROW !== 0) {
-    const modulous = grid.length % ITEMS_PER_ROW;
-    grid.push(<GalleryItem key={`blank${modulous}`} />);
-  }
-
-  return grid;
-};
 
 type Props = {
   photoId: string;
@@ -150,12 +116,6 @@ const Gallery = ({ photoId, galleryDetails, history, photos }: Props) => {
     }
   };
 
-  const grid = generateGrid({
-    visibleImageCount,
-    photos,
-    handleSwitchToSelectedPhoto,
-  });
-
   const getSelectedPhotoFromUrl = () => {
     if (photoId !== undefined) {
       let indexFound;
@@ -191,7 +151,13 @@ const Gallery = ({ photoId, galleryDetails, history, photos }: Props) => {
       <ProjectDescriptionWrapper>
         <Header size="medium">{galleryDetails.title}</Header>
       </ProjectDescriptionWrapper>
-      <GalleryWrapper ref={galleryRef}>{grid}</GalleryWrapper>
+      <GalleryWrapper ref={galleryRef}>{
+        photos.map((photo, index) => (
+          <GalleryItem key={photo.id}>
+            <img src={`https://storage.googleapis.com/photo21/photos/thumbnail/${photo.src}`} onClick={() => handleSwitchToSelectedPhoto(index)} />
+          </GalleryItem>
+        ))
+      }</GalleryWrapper>
     </>
   );
 };

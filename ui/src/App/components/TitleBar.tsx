@@ -11,8 +11,6 @@ import {
   ICON_COLOR,
 } from "theme";
 
-const SuperWrapper = styled.div``;
-
 const TitleBarWrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -49,18 +47,16 @@ type Props = {
 
 const TitleBar = ({ toggleNavigation, isNavigationVisible }: Props) => {
   return (
-    <SuperWrapper>
-      <TitleBarWrapper>
-        <InternalLink to="/">
-          <Header size="large">Travis Bumgarner Photography</Header>
-        </InternalLink>
-        <NavigationOpen
-          isNavigationVisible={isNavigationVisible}
-          onClick={toggleNavigation}
-          size={ICON_FONT_SIZES.l}
-        />
-      </TitleBarWrapper>
-    </SuperWrapper>
+    <TitleBarWrapper>
+      <InternalLink to="/">
+        <Header size="large">Travis Bumgarner Photography</Header>
+      </InternalLink>
+      <NavigationOpen
+        isNavigationVisible={isNavigationVisible}
+        onClick={toggleNavigation}
+        size={ICON_FONT_SIZES.l}
+      />
+    </TitleBarWrapper>
   );
 };
 

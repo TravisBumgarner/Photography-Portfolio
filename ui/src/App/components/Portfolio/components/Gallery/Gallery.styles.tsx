@@ -22,11 +22,28 @@ const ProjectDescriptionWrapper = styled.div`
 
 const GalleryWrapper = styled.div`
     display: flex;
-    padding: 0;
-    list-style: none;
-    justify-content: space-between;
     flex-wrap: wrap;
-    line-height: 30px;
+`
+
+const GalleryItem = styled.div`
+    position: relative;
+    flex-basis: calc(33% - 10px);
+    margin: 5px;
+    box-sizing: border-box;
+
+    &::before {
+        content: '';
+        display: block;
+        padding-top: 100%;
+    }
+
+    & > img {
+        position: absolute;
+        top: 0; left: 0;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
 `
 
 const PreviousButton = styled(FaArrowCircleLeft)`
@@ -80,31 +97,6 @@ const PhotoWithMetadataWrapper = styled.div`
     top: 0;
     z-index: 999;
     height: 100vh;
-`
-
-const GalleryItem = styled.div`
-    margin: ${CONTENT_SPACING.m};
-    color: white;
-    flex: 1 0 auto;
-    height: auto;
-    flex-basis: 29%;
-    max-width: 400px;
-    max-height: 400px;
-
-    &:nth-child(3n + 1) {
-        margin-left: 0;
-    }
-
-    &:nth-child(3n + 3) {
-        margin-right: 0;
-    }
-
-    &:before {
-        content: '';
-        float: left;
-        padding-top: 100%;
-    }
-
 `
 
 export {

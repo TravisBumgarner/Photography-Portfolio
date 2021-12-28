@@ -3,12 +3,16 @@ import styled from "styled-components";
 
 import { useInterval } from "utilities";
 import { PhotoType } from "sharedTypes";
-import { PAGE_THEME } from "theme";
 
-const HomeWrapper = styled(PAGE_THEME)``;
+const HomeImageWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+`
 
 const HomeImage = styled.img`
-  width: 100%;
 `;
 
 type Props = {
@@ -20,18 +24,17 @@ const Home = ({ backgroundPhotos }: Props) => {
 
   useInterval(() => setBackgroundImageIndex(backgroundImageIndex + 1), 4000);
   return (
-    <HomeWrapper>
+    <HomeImageWrapper>
       <HomeImage
         src={
           backgroundPhotos.length
-            ? `https://storage.googleapis.com/photo21/photos/large/${
-                backgroundPhotos[backgroundImageIndex % backgroundPhotos.length]
-                  .src
-              }`
+            ? `https://storage.googleapis.com/photo21/photos/large/${backgroundPhotos[backgroundImageIndex % backgroundPhotos.length]
+              .src
+            }`
             : ""
         }
       />
-    </HomeWrapper>
+    </HomeImageWrapper>
   );
 };
 

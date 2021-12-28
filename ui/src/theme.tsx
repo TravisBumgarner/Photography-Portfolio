@@ -44,9 +44,6 @@ const sizes = {
     phone: 576
 }
 
-const PAGE_THEME = styled.div`
-`
-
 const GlobalStyle = createGlobalStyle`
     html {
         font-size: 18px;
@@ -69,7 +66,6 @@ const GlobalStyle = createGlobalStyle`
 
 export {
     GlobalStyle,
-    PAGE_THEME,
     FONT_FAMILY_TEXT,
     FONT_FAMILY_HEADER,
     FONT_SIZE_INPUTS_AND_BUTTONS,

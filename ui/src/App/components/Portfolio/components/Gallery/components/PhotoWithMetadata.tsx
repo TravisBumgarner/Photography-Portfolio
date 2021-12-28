@@ -1,14 +1,12 @@
 import * as React from 'react'
-import styled, { keyframes } from 'styled-components'
-import { FaCamera, FaExclamationTriangle } from 'react-icons/fa'
+import styled from 'styled-components'
+import { FaCamera } from 'react-icons/fa'
 
 import { Text, Header } from 'sharedComponents'
 import { PhotoType } from 'sharedTypes'
-import { CONTENT_SPACING } from 'theme'
 import { RACE_CONDITION_MAGIC_NUMBER } from '../Gallery.styles'
 
 const FILM = 'Film'
-
 
 const StyledPhoto = styled.img`
     max-width: 100%;
@@ -16,22 +14,7 @@ const StyledPhoto = styled.img`
     z-index: ${RACE_CONDITION_MAGIC_NUMBER + 1};
 `
 
-const colorChange = keyframes`
-  0% {
-    fill: #fff;
-  }
-
-  50% {
-    fill: rgb(74, 207, 160);
-  }
-
-  100% {
-      fill: #fff;
-  }
-`
-
 const LoadingIcon = styled(FaCamera)`
-    animation: ${colorChange} 2s linear infinite;
     position: fixed;
     top: calc(50vh - 2.5em);
     left: calc(50vw - 2.5em);
@@ -94,17 +77,17 @@ const Metadata = ({ details }: { details: PhotoType }) => {
                 {camera_type === FILM ? (
                     'Film Camera, N/A'
                 ) : (
-                        <>
-                            <Header size="inline">Location </Header>
-                            {location}
-                            <Spacer />
-                            <Header size="inline">Gear </Header>
-                            {camera_type.toLowerCase() === 'film' ? 'Film Camera' : gearString}
-                            <Spacer />
-                            <Header size="inline">Conditions </Header>
-                            {camera_type.toLowerCase() === 'film' ? 'N/A' : statsString}
-                        </>
-                    )}
+                    <>
+                        <Header size="inline">Location </Header>
+                        {location}
+                        <Spacer />
+                        <Header size="inline">Gear </Header>
+                        {camera_type.toLowerCase() === 'film' ? 'Film Camera' : gearString}
+                        <Spacer />
+                        <Header size="inline">Conditions </Header>
+                        {camera_type.toLowerCase() === 'film' ? 'N/A' : statsString}
+                    </>
+                )}
             </Text>
         </MetadataWrapper>
     )
