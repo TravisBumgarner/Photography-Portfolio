@@ -100,7 +100,7 @@ const App = () => {
             />
             <Route exact path="/about" component={About} />
             <Route
-              path="/portfolio/:contentType/:gallerySlug/:photoId?"
+              path="/portfolio/:contentType/:gallerySlug/:photoIdFromUrl?"
               render={(rest) => (
                 <Portfolio photos={photos} galleries={galleries} {...rest} />
               )}

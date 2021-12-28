@@ -4,7 +4,6 @@ import { FaCamera, FaTimes, FaArrowCircleLeft, FaArrowCircleRight } from 'react-
 
 import { Text, Header } from 'sharedComponents'
 import { PhotoType } from 'sharedTypes'
-import { RACE_CONDITION_MAGIC_NUMBER } from './Gallery/Gallery.styles'
 import { ICON_FONT_SIZES, ICON_COLOR } from "theme";
 
 const FILM = 'Film'
@@ -24,8 +23,7 @@ const CloseIcon = styled(FaTimes)`
 const StyledPhoto = styled.img`
     max-width: 100%;
     max-height: 90%;
-    z-index: ${RACE_CONDITION_MAGIC_NUMBER + 1};
-`
+    `
 
 const PreviousButton = styled(FaArrowCircleLeft)`
     position: fixed;
@@ -48,34 +46,11 @@ const NextButton = styled(FaArrowCircleRight)`
     }
 `
 
-const PreviousContainer = styled.div`
-    position: absolute;
-    display: flex;
-    left: 0;
-    top: 0;
-    width: 50%;
-    height: 100%;
-    cursor: w-resize;
-    z-index: ${RACE_CONDITION_MAGIC_NUMBER + 2};
-`
-
-const NextContainer = styled.div`
-    position: absolute;
-    display: flex;
-    right: 0;
-    top: 0;
-    width: 50%;
-    height: 100%;
-    cursor: e-resize;
-    z-index: ${RACE_CONDITION_MAGIC_NUMBER + 2};
-`
-
 const LoadingIcon = styled(FaCamera)`
     position: fixed;
     top: calc(50vh - 2.5em);
     left: calc(50vw - 2.5em);
-    z-index: ${RACE_CONDITION_MAGIC_NUMBER};
-`
+    `
 
 const PhotoWithMetadataWrapper = styled.div`
     display: flex;
@@ -93,7 +68,7 @@ const Spacer = styled(({ className }) => <span className={className}>//</span>)`
 `
 
 const PhotoWrapper = styled.div`
-    height: 100%;
+    height: 80%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -149,24 +124,35 @@ const Metadata = ({ details }: { details: PhotoType }) => {
     )
 }
 
-const PhotoWithMetadata = ({ details, selectedPhotoIndex, getPreviousPhotoIndex, getNextPhotoIndex, handleSwitchToGrid }: { details: PhotoType } & any) => {
+const PhotoWithMetadata = ({ photos, filteredPhotoIds, selectedFilteredPhotoId, setSelectedFilteredPhotoId }: { details: PhotoType } & any) => {
     const [isLoading, setIsLoading] = React.useState(true)
-
     React.useEffect(() => {
         setIsLoading(true)
     }, [])
 
-    const handleKeyPress = (event: KeyboardEvent) => {
-        if (selectedPhotoIndex === undefined) {
-            return;
-        }
+    const details = photos[filteredPhotoIds[selectedFilteredPhotoId]]
+    console.log(details)
+    const getPreviousPhotoIndex = () => {
+        const index = selectedFilteredPhotoId - 1 < 0 ? filteredPhotoIds.length - 1 : selectedFilteredPhotoId - 1
+        setSelectedFilteredPhotoId(index)
+    }
 
+    const getNextPhotoIndex = () => {
+        const index = selectedFilteredPhotoId + 1 === filteredPhotoIds.length ? 0 : selectedFilteredPhotoId + 1
+        setSelectedFilteredPhotoId(index)
+    }
+
+    const exitSinglePhotoView = () => {
+        setSelectedFilteredPhotoId(undefined)
+    }
+
+    const handleKeyPress = (event: KeyboardEvent) => {
         if (event.key === "ArrowLeft") {
             getPreviousPhotoIndex();
         } else if (event.key === "ArrowRight") {
             getNextPhotoIndex();
         } else if (event.key === "Escape") {
-            handleSwitchToGrid();
+            exitSinglePhotoView();
         }
     };
 
@@ -175,41 +161,26 @@ const PhotoWithMetadata = ({ details, selectedPhotoIndex, getPreviousPhotoIndex,
         return () => {
             window.removeEventListener("keydown", handleKeyPress);
         };
-    }, [selectedPhotoIndex]);
+    }, []);
 
     return (
-        <PhotoWithMetadataWrapper>
-            {isLoading ? <LoadingIcon size="5em" /> : null}
-            <PhotoWrapper>
-                <StyledPhoto
-                    onLoad={() => setIsLoading(false)}
-                    src={`https://storage.googleapis.com/photo21/photos/large/${details.src}`}
-                />
-                {isLoading ? null : <Metadata details={details} />}
-            </PhotoWrapper>
-        </PhotoWithMetadataWrapper>
+        <div>
+            <CloseIcon size={ICON_FONT_SIZES.l} onClick={exitSinglePhotoView} />
+            <PreviousButton size={ICON_FONT_SIZES.l} />
+            <NextButton size={ICON_FONT_SIZES.l} />
+            <PhotoWithMetadataWrapper>
+                {isLoading ? <LoadingIcon size="5em" /> : null}
+                <PhotoWrapper>
+                    <StyledPhoto
+                        onLoad={() => setIsLoading(false)}
+                        src={`https://storage.googleapis.com/photo21/photos/large/${details.src}`}
+                    />
+                    {isLoading ? null : <Metadata details={details} />}
+                </PhotoWrapper>
+            </PhotoWithMetadataWrapper>
+        </div>
     )
 }
 
-const PhotoWithMetadataTempWrapper = ({ selectedPhotoIndex, getNextPhotoIndex, getPreviousPhotoIndex, handleSwitchToGrid, photos }) => {
-    return (
-        <PhotoWithMetadataWrapper>
-            <CloseIcon size={ICON_FONT_SIZES.l} onClick={handleSwitchToGrid} />
-            <PreviousContainer onClick={getPreviousPhotoIndex}>
-                <PreviousButton size={ICON_FONT_SIZES.l} />
-            </PreviousContainer>
-            <NextContainer onClick={getNextPhotoIndex}>
-                <NextButton size={ICON_FONT_SIZES.l} />
-            </NextContainer>
-            <PhotoWithMetadata
-                getPreviousPhotoIndex={getPreviousPhotoIndex}
-                getNextPhotoIndex={getNextPhotoIndex}
-                handleSwitchToGrid={handleSwitchToGrid}
-                details={photos[selectedPhotoIndex]}
-                selectedPhotoIndex={selectedPhotoIndex}
-            />
-        </PhotoWithMetadataWrapper>
-    )
-}
 
-export default PhotoWithMetadataTempWrapper
+export default PhotoWithMetadata

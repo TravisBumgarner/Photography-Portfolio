@@ -1,0 +1,64 @@
+import * as React from "react";
+import styled from 'styled-components'
+
+import { Header } from "sharedComponents";
+import { PhotoType, GalleryType } from "sharedTypes";
+
+import { CONTENT_SPACING } from 'theme'
+
+const ProjectDescriptionWrapper = styled.div`
+    margin: ${CONTENT_SPACING.m} 0;
+`
+
+const GalleryWrapper = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+`
+
+const GalleryItem = styled.div`
+    position: relative;
+    flex-basis: calc(33% - 10px);
+    margin: 5px;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    &::before {
+        content: '';
+        display: block;
+        padding-top: 100%;
+    }
+
+    & > img {
+        position: absolute;
+        top: 0; left: 0;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+`
+
+type Props = {
+  galleryDetails: GalleryType
+  // history: any
+  photos: { [id: string]: PhotoType }
+  filteredPhotoIds: string[]
+  setSelectedFilteredPhotoId: any
+};
+
+const Gallery = ({ photos, filteredPhotoIds, galleryDetails, setSelectedFilteredPhotoId }: Props) => {
+  return (
+    <>
+      <ProjectDescriptionWrapper>
+        <Header size="medium">{galleryDetails.title}</Header>
+      </ProjectDescriptionWrapper>
+      <GalleryWrapper>{
+        filteredPhotoIds.map(id => photos[id]).map((photo, index) => {
+          return (<GalleryItem key={photo.id}>
+            <img src={`https://storage.googleapis.com/photo21/photos/thumbnail/${photo.src}`} onClick={() => setSelectedFilteredPhotoId(index)} />
+          </GalleryItem>)
+        })
+      }</GalleryWrapper>
+    </>)
+};
+
+export default Gallery;

@@ -1,8 +1,10 @@
 import * as React from 'react'
 
 import { GalleryType, PhotoType } from 'sharedTypes'
-import { Gallery } from './components'
-import PhotoWithMetadataTempWrapper from './components/PhotoWithMetadata'
+import {
+    Gallery,
+    Photo
+} from './components'
 
 const ALL_GALLERY: GalleryType = {
     content_type: 'snapshot',
@@ -10,16 +12,15 @@ const ALL_GALLERY: GalleryType = {
     title: 'All'
 }
 
-
 type Props = {
     match: {
         params: {
             contentType: string
             gallerySlug: string
-            photoId: string
+            photoIdFromUrl: string
         }
     },
-    photos: PhotoType[],
+    photos: { [id: string]: PhotoType },
     galleries: GalleryType[],
     history: any
 }
@@ -27,110 +28,87 @@ type Props = {
 const Portfolio = (
     {
         match: {
-            params: { contentType, gallerySlug, photoId }
+            params: { contentType, gallerySlug, photoIdFromUrl }
         },
         photos,
         galleries,
         history
     }: Props
 ) => {
-    const [filteredPhotos, setFilteredPhotos] = React.useState<PhotoType[]>([])
-    const [selectedPhotoIndex, setSelectedPhotoIndex] = React.useState<
-        number | undefined
-    >(undefined);
-
-    const filterPhotos = () => {
+    const [filteredPhotoIds, setFilteredPhotoIds] = React.useState<string[]>([])
+    const [selectedFilteredPhotoId, setSelectedFilteredPhotoId] = React.useState<number | undefined>(undefined);
+    const filterPhotoIds = () => {
         if (contentType === 'snapshot' && gallerySlug === 'all') {
-            const filteredPhotos = photos.filter(photo => photo.gallery.content_type == 'snapshot')
-            setFilteredPhotos(filteredPhotos)
+            const filteredPhotoIds = Object.values(photos).filter(photo => photo.gallery.content_type == 'snapshot').map(({ id }) => id)
+            setFilteredPhotoIds(filteredPhotoIds)
         } else {
-            const filteredPhotos = photos.filter(photo => photo.gallery.slug == gallerySlug)
-            setFilteredPhotos(filteredPhotos)
+            const filteredPhotoIds = Object.values(photos).filter(photo => photo.gallery.slug == gallerySlug).map(({ id }) => id)
+            setFilteredPhotoIds(filteredPhotoIds)
         }
     }
 
-    React.useEffect(filterPhotos, [contentType, gallerySlug])
+    React.useEffect(filterPhotoIds, [contentType, gallerySlug])
 
-    const getSelectedPhotoFromUrl = () => {
-        if (photoId !== undefined) {
-            let indexFound;
-            photos.forEach((photo, index) => {
-                if (photo.id === photoId) {
-                    indexFound = index;
-                }
-            });
-            if (indexFound !== undefined) {
-                setSelectedPhotoIndex(indexFound);
-            }
-        }
-    };
+    // const getSelectedPhotoFromUrl = () => {
+    //     if (photoIdFromUrl !== undefined) {
+    //         let indexFound;
+    //         photos.forEach((photo, index) => {
+    //             if (photo.id === photoIdFromUrl) {
+    //                 indexFound = index;
+    //             }
+    //         });
+    //         if (indexFound !== undefined) {
+    //             setSelectedPhotoIndex(indexFound);
+    //         }
+    //     }
+    // };
 
-    React.useEffect(getSelectedPhotoFromUrl, [photos]);
+    // React.useEffect(
+    //     getSelectedPhotoFromUrl,
+    //     [
+    //         // photos
+    //     ]);
 
-    const handleUrlChange = (newSelectedPhotoIndex: number | undefined) => {
-        if (newSelectedPhotoIndex !== undefined) {
-            const { id } = photos[newSelectedPhotoIndex];
-            history.push(
-                `/portfolio/${galleryDetails.content_type}/${galleryDetails.slug}/${id}`
-            );
-        } else {
-            history.push(
-                `/portfolio/${galleryDetails.content_type}/${galleryDetails.slug}`
-            );
-        }
-    };
+    // const handleUrlChange = (newSelectedPhotoIndex: number | undefined) => {
+    //     if (newSelectedPhotoIndex !== undefined) {
+    //         const { id } = photos[newSelectedPhotoIndex];
+    //         history.push(
+    //             `/portfolio/${galleryDetails.content_type}/${galleryDetails.slug}/${id}`
+    //         );
+    //     } else {
+    //         history.push(
+    //             `/portfolio/${galleryDetails.content_type}/${galleryDetails.slug}`
+    //         );
+    //     }
+    // };
 
     let galleryDetails = galleries.length && galleries.find(gallery => gallery.slug == gallerySlug)
     galleryDetails = galleryDetails || ALL_GALLERY
 
-    const getPreviousPhotoIndex = () => {
-        if (selectedPhotoIndex === undefined) {
-            return;
-        }
+    // const handleSwitchToSelectedPhoto = (newSelectedPhotoIndex: number) => {
+    //     setSelectedPhotoIndex(newSelectedPhotoIndex);
+    //     handleUrlChange(newSelectedPhotoIndex);
+    // };
 
-        const newSelectedPhotoIndex =
-            selectedPhotoIndex === 0 ? photos.length - 1 : selectedPhotoIndex - 1;
-        setSelectedPhotoIndex(newSelectedPhotoIndex);
-        handleUrlChange(newSelectedPhotoIndex);
-    };
+    // const handleSwitchToGrid = () => {
+    //     setSelectedPhotoIndex(undefined);
+    //     handleUrlChange(undefined);
+    // };
 
-    const getNextPhotoIndex = () => {
-        if (selectedPhotoIndex === undefined) {
-            return;
-        }
-
-        const newSelectedPhotoIndex =
-            selectedPhotoIndex === photos.length - 1 ? 0 : selectedPhotoIndex + 1;
-        setSelectedPhotoIndex(newSelectedPhotoIndex);
-        handleUrlChange(newSelectedPhotoIndex);
-    };
-
-    const handleSwitchToSelectedPhoto = (newSelectedPhotoIndex: number) => {
-        setSelectedPhotoIndex(newSelectedPhotoIndex);
-        handleUrlChange(newSelectedPhotoIndex);
-    };
-
-    const handleSwitchToGrid = () => {
-        setSelectedPhotoIndex(undefined);
-        handleUrlChange(undefined);
-    };
-
-    return selectedPhotoIndex
+    return selectedFilteredPhotoId === undefined
         ? (
-            <PhotoWithMetadataTempWrapper
-                getNextPhotoIndex={getNextPhotoIndex}
-                getPreviousPhotoIndex={getPreviousPhotoIndex}
-                selectedPhotoIndex={selectedPhotoIndex}
-                handleSwitchToGrid={handleSwitchToGrid}
+            <Gallery
+                setSelectedFilteredPhotoId={setSelectedFilteredPhotoId}
                 photos={photos}
+                filteredPhotoIds={filteredPhotoIds}
+                galleryDetails={galleryDetails}
             />
         ) : (
-            <Gallery
-                handleSwitchToSelectedPhoto={handleSwitchToSelectedPhoto}
-                history={history}
-                photoId={photoId}
-                photos={filteredPhotos}
-                galleryDetails={galleryDetails}
+            < Photo
+                setSelectedFilteredPhotoId={setSelectedFilteredPhotoId}
+                selectedFilteredPhotoId={selectedFilteredPhotoId}
+                photos={photos}
+                filteredPhotoIds={filteredPhotoIds}
             />
         )
 }
