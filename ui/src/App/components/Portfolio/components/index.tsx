@@ -1,3 +1,4 @@
 import Gallery from './Gallery/Gallery'
+import Photo from './PhotoWithMetadata'
 
-export { Gallery }
+export { Gallery, Photo }
