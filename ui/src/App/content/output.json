@@ -174,7 +174,7 @@
       "focal_length": "50.0",
       "location": "Panama",
       "camera_type": "Digital",
-      "is_home_background": false
+      "is_home_background": true
     },
     "c347db3c-dbaa-5abf-911c-c9dc6817f617": {
       "id": "c347db3c-dbaa-5abf-911c-c9dc6817f617",
@@ -196,7 +196,7 @@
       "focal_length": "50.0",
       "location": "United States",
       "camera_type": "Digital",
-      "is_home_background": false
+      "is_home_background": true
     },
     "b667ae99-5dc3-5999-a173-a635989eaee3": {
       "id": "b667ae99-5dc3-5999-a173-a635989eaee3",

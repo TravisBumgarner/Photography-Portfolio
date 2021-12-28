@@ -10,6 +10,7 @@ import {
   ICON_FONT_SIZES,
   TRANSITION_SPEED,
   ICON_COLOR,
+  APP_BORDER
 } from "theme";
 import getData from "./content";
 
@@ -41,7 +42,7 @@ const GridContainer = styled.div`
   display: grid;
   width: 100vw;
   height: 100vh;
-  padding: 10px;
+  padding: ${APP_BORDER};
   box-sizing: border-box;
   grid-template-columns: 100%;
   grid-template-rows:  min-content 1fr;
@@ -137,4 +138,5 @@ const App = ({ match: {
   );
 };
 
+export { APP_BORDER }
 export default App;

@@ -4,7 +4,7 @@ import { FaCamera, FaTimes, FaArrowCircleLeft, FaArrowCircleRight } from 'react-
 
 import { Text, Header } from 'sharedComponents'
 import { PhotoType } from 'sharedTypes'
-import { ICON_FONT_SIZES, ICON_COLOR } from "theme";
+import { ICON_FONT_SIZES, ICON_COLOR, APP_BORDER } from "theme";
 
 const FILM = 'Film'
 const CONTROLS_WRAPPER_HEIGHT = '50px';
@@ -65,13 +65,13 @@ const PhotoWithMetadataWrapper = styled.div`
     justify-content: center;
     flex-direction: column;
 `
-
+console.log('appborder', APP_BORDER)
 const PhotoWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: calc(100vw - 20px);
-    height: calc(100vh - 20px);
+    width: calc(100vw - ${APP_BORDER} * 2);
+    height: calc(100vh - ${APP_BORDER} * 2);
 `
 
 const ControlsWrapper = styled.div`

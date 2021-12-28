@@ -64,6 +64,8 @@ const GlobalStyle = createGlobalStyle`
     }
 `
 
+const APP_BORDER = '10px';
+
 export {
     GlobalStyle,
     FONT_FAMILY_TEXT,
@@ -74,5 +76,6 @@ export {
     HEADER_FONT_SIZES,
     TEXT_FONT_SIZES,
     ICON_FONT_SIZES,
-    ICON_COLOR
+    ICON_COLOR,
+    APP_BORDER
 }

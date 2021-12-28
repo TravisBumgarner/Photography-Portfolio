@@ -17,10 +17,9 @@ type Data = {
 const getData = (): Data => {
   const locations: LocationType[] = [];
   const categories: CategoryType[] = [];
-  const backgroundPhotos: PhotoType[] = []
-  // Object.values(output.photos).filter(
-  //   ({ is_home_background }) => is_home_background
-  // );
+  const backgroundPhotos: PhotoType[] = Object.values(output.photos).filter(
+    ({ is_home_background }) => is_home_background
+  );
 
   return {
     photos: output.photos as unknown as { string: PhotoType },
