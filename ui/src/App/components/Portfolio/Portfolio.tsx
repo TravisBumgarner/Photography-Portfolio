@@ -17,6 +17,7 @@ type Props = {
     photos: { [id: string]: PhotoType },
     galleries: GalleryType[],
     history: any
+    setIsTitlebarVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const Portfolio = (
@@ -26,7 +27,8 @@ const Portfolio = (
         },
         photos,
         galleries,
-        history
+        history,
+        setIsTitlebarVisible,
     }: Props
 ) => {
     const [filteredPhotoIds, setFilteredPhotoIds] = React.useState<string[]>([])
@@ -40,6 +42,10 @@ const Portfolio = (
             .map(({ id }) => id)
         return filteredPhotoIds
     }
+
+    React.useEffect(() => {
+        setIsTitlebarVisible(selectedFilteredPhotoIndex === undefined)
+    }, [selectedFilteredPhotoIndex])
 
     React.useEffect(() => {
         const filteredPhotoIds = filterPhotoIds()

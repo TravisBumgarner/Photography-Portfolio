@@ -70,24 +70,26 @@ const NavigationWrapper = styled.div`
     isNavigationVisible ? "0" : `-100vw`};
 `;
 
-const App = () => {
+const App = ({ match: {
+  params: { photoIdFromUrl }
+} },) => {
   const { galleries, backgroundPhotos, photos } = getData();
 
   const [isNavigationVisible, setIsNavigationVisible] = React.useState(false);
+  const [isTitlebarVisible, setIsTitlebarVisible] = React.useState(true);
 
   const toggleNavigation = () => {
     setIsNavigationVisible(!isNavigationVisible);
   };
-
   return (
     <>
       <GlobalStyle />
       <GridContainer>
         <GridItemTitleBar>
-          <TitleBar
+          {isTitlebarVisible ? (<TitleBar
             isNavigationVisible={isNavigationVisible}
             toggleNavigation={toggleNavigation}
-          />
+          />) : ""}
         </GridItemTitleBar>
         <GridItemContent>
           <Switch>
@@ -102,7 +104,7 @@ const App = () => {
             <Route
               path="/portfolio/:contentType/:gallerySlug/:photoIdFromUrl?"
               render={(rest) => (
-                <Portfolio photos={photos} galleries={galleries} {...rest} />
+                <Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} {...rest} />
               )}
             />
             <Route
