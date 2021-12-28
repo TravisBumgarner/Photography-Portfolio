@@ -31,15 +31,35 @@ const Portfolio = (
 ) => {
     const [filteredPhotoIds, setFilteredPhotoIds] = React.useState<string[]>([])
     const [selectedFilteredPhotoIndex, setSelectedFilteredPhotoIndex] = React.useState<number | undefined>(undefined);
+    const [initialLoad, setInitialLoad] = React.useState(true)
+    // I couldn't figure out a more elegant way to load in photo IDs from the URL on initial load so we have this useState.
 
     const filterPhotoIds = () => {
         const filteredPhotoIds = Object.values(photos)
             .filter(photo => photo.gallery.slug == gallerySlug)
             .map(({ id }) => id)
-        setFilteredPhotoIds(filteredPhotoIds)
+        return filteredPhotoIds
     }
 
-    React.useEffect(filterPhotoIds, [gallerySlug])
+    React.useEffect(() => {
+        const filteredPhotoIds = filterPhotoIds()
+        if (initialLoad && photoIdFromUrl && selectedFilteredPhotoIndex === undefined) {
+            setSelectedFilteredPhotoIndex(filteredPhotoIds.indexOf(photoIdFromUrl))
+            setInitialLoad(false)
+        }
+        setFilteredPhotoIds(filteredPhotoIds)
+    }, [gallerySlug])
+
+    const handleUrlChange = () => {
+        if (initialLoad && photoIdFromUrl && selectedFilteredPhotoIndex === undefined) {
+            return
+        }
+        history.push(
+            `/portfolio/${galleryDetails.content_type}/${galleryDetails.slug}/${filteredPhotoIds[selectedFilteredPhotoIndex] || ''}`
+        )
+    };
+    React.useEffect(handleUrlChange, [filteredPhotoIds[selectedFilteredPhotoIndex]])
+
 
     const galleryDetails = galleries.length && galleries.find(gallery => gallery.slug == gallerySlug)
     return selectedFilteredPhotoIndex === undefined
