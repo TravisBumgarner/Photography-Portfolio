@@ -17,10 +17,18 @@ const GalleryWrapper = styled.div`
 
 const GalleryItem = styled.div`
     position: relative;
-    flex-basis: calc(33% - 10px);
-    margin: 5px;
+    flex-basis: calc(100% / 3 - 10px);
+    margin: 7.5px;
     box-sizing: border-box;
     cursor: pointer;
+
+    &:nth-child(3n){
+      margin-right: 0;
+    }
+
+    &:nth-child(3n + 1){
+      margin-left: 0;
+    }
 
     &::before {
         content: '';
