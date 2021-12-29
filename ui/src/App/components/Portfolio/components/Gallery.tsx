@@ -50,9 +50,18 @@ type Props = {
   photos: { [id: string]: PhotoType }
   filteredPhotoIds: string[]
   setSelectedFilteredPhotoIndex: any
+  scrollToId: number
+  elementsRef: React.RefObject<any>[]
+  setScrollToId: React.Dispatch<React.SetStateAction<number>>
 };
 
-const Gallery = ({ photos, filteredPhotoIds, galleryDetails, setSelectedFilteredPhotoIndex }: Props) => {
+const Gallery = ({ photos, filteredPhotoIds, galleryDetails, setSelectedFilteredPhotoIndex, scrollToId, setScrollToId, elementsRef }: Props) => {
+  React.useEffect(() => {
+    if (elementsRef.length > 0 && scrollToId !== undefined) {
+      elementsRef[scrollToId].current.scrollIntoView()
+    }
+  }, [elementsRef.length])
+
   return (
     <>
       <ProjectDescriptionWrapper>
@@ -60,7 +69,7 @@ const Gallery = ({ photos, filteredPhotoIds, galleryDetails, setSelectedFiltered
       </ProjectDescriptionWrapper>
       <GalleryWrapper>{
         filteredPhotoIds.map(id => photos[id]).map((photo, index) => {
-          return (<GalleryItem key={photo.id}>
+          return (<GalleryItem key={photo.id} id={photo.id} ref={elementsRef[index]}>
             <img src={`https://storage.googleapis.com/photo21/photos/thumbnail/${photo.src}`} onClick={() => setSelectedFilteredPhotoIndex(index)} />
           </GalleryItem>)
         })

@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { RouteComponentProps } from 'react-router-dom';
 
 import { GalleryType, PhotoType } from 'sharedTypes'
 import {
@@ -16,7 +17,7 @@ type Props = {
     },
     photos: { [id: string]: PhotoType },
     galleries: GalleryType[],
-    history: any
+    history: RouteComponentProps,
     setIsTitlebarVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -35,6 +36,8 @@ const Portfolio = (
     const [selectedFilteredPhotoIndex, setSelectedFilteredPhotoIndex] = React.useState<number | undefined>(undefined);
     const [initialLoad, setInitialLoad] = React.useState(true)
     // I couldn't figure out a more elegant way to load in photo IDs from the URL on initial load so we have this useState.
+    const [scrollToId, setScrollToId] = React.useState<number | undefined>(undefined)
+    // Used for scrolling
 
     React.useEffect(() => setIsTitlebarVisible(selectedFilteredPhotoIndex === undefined), [selectedFilteredPhotoIndex])
 
@@ -51,6 +54,7 @@ const Portfolio = (
             setInitialLoad(false)
         }
         setFilteredPhotoIds(filteredPhotoIds)
+        setScrollToId(undefined)
     }, [gallerySlug])
 
     const handleUrlChange = () => {
@@ -63,8 +67,10 @@ const Portfolio = (
     };
     React.useEffect(handleUrlChange, [filteredPhotoIds[selectedFilteredPhotoIndex]])
 
-
+    const elementsRef = filteredPhotoIds.map(() => React.createRef())
     const galleryDetails = galleries.length && galleries.find(gallery => gallery.slug == gallerySlug)
+
+    console.log('scrolltoid', scrollToId)
     return selectedFilteredPhotoIndex === undefined
         ? (
             <Gallery
@@ -72,6 +78,9 @@ const Portfolio = (
                 photos={photos}
                 filteredPhotoIds={filteredPhotoIds}
                 galleryDetails={galleryDetails}
+                scrollToId={scrollToId}
+                elementsRef={elementsRef}
+                setScrollToId={setScrollToId}
             />
         ) : (
             < Photo
@@ -79,6 +88,7 @@ const Portfolio = (
                 selectedFilteredPhotoIndex={selectedFilteredPhotoIndex}
                 photos={photos}
                 filteredPhotoIds={filteredPhotoIds}
+                setScrollToId={setScrollToId}
             />
         )
 }

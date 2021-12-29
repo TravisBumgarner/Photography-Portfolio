@@ -148,9 +148,10 @@ type PhotoProps = {
     filteredPhotoIds: string[]
     selectedFilteredPhotoIndex: number
     setSelectedFilteredPhotoIndex: React.Dispatch<React.SetStateAction<number>>
+    setScrollToId: React.Dispatch<React.SetStateAction<number>>
 }
 
-const Photo = ({ photos, filteredPhotoIds, selectedFilteredPhotoIndex, setSelectedFilteredPhotoIndex }: PhotoProps) => {
+const Photo = ({ photos, filteredPhotoIds, selectedFilteredPhotoIndex, setSelectedFilteredPhotoIndex, setScrollToId }: PhotoProps) => {
     const [isLoading, setIsLoading] = React.useState(true)
     const [showMetadata, toggleShowMetadata] = React.useState(true)
     React.useEffect(() => setIsLoading(true), [])
@@ -178,6 +179,7 @@ const Photo = ({ photos, filteredPhotoIds, selectedFilteredPhotoIndex, setSelect
 
     const exitSinglePhotoView = () => {
         setSelectedFilteredPhotoIndex(undefined)
+        setScrollToId(selectedFilteredPhotoIndex)
     }
 
     const handleKeyPress = (event: KeyboardEvent) => {

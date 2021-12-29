@@ -5,10 +5,6 @@ import { FONT_FAMILY_HEADER, CONTENT_SPACING, HEADER_FONT_SIZES } from 'theme'
 
 type Props = { size: string, children: any }
 
-const sharedStyles = () => css`
-
-`
-
 const LargeHeader = styled.h1`
     font-weight: 700;
     font-family: ${FONT_FAMILY_HEADER};
