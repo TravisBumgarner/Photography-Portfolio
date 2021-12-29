@@ -40,10 +40,15 @@ const Portfolio = (
     // Used for scrolling
 
     React.useEffect(() => setIsTitlebarVisible(selectedFilteredPhotoIndex === undefined), [selectedFilteredPhotoIndex])
-
+    console.log(photos)
     const filterPhotoIds = () => {
         const filteredPhotoIds = Object.values(photos)
             .filter(photo => photo.gallery.slug == gallerySlug)
+            .sort((a, b) => {
+                const aDate = new Date(a.date_taken)
+                const bDate = new Date(b.date_taken)
+                return bDate.getTime() - aDate.getTime()
+            })
             .map(({ id }) => id)
         return filteredPhotoIds
     }
