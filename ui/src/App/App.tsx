@@ -10,6 +10,7 @@ import {
   ICON_FONT_SIZES,
   TRANSITION_SPEED,
   ICON_COLOR,
+  APP_BORDER
 } from "theme";
 import getData from "./content";
 
@@ -37,12 +38,26 @@ const NavigationGutter = styled.div`
   z-index: 998;
 `;
 
-const AppWrapper = styled.div`
-  padding: 0px 10px;
-  max-width: 1200px;
-  margin: 0px auto;
+const GridContainer = styled.div`
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  padding: ${APP_BORDER};
   box-sizing: border-box;
+  grid-template-columns: 100%;
+  grid-template-rows:  min-content 1fr;
 `;
+
+const GridItemTitleBar = styled.div`
+
+`
+const GridItemContent = styled.div`
+  box-sizing: border-box;
+  /* overflow-y: hidden; */
+  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+`
 
 const NavigationWrapper = styled.div`
   box-sizing: border-box;
@@ -56,23 +71,54 @@ const NavigationWrapper = styled.div`
     isNavigationVisible ? "0" : `-100vw`};
 `;
 
-const App = () => {
+const App = ({ match: {
+  params: { photoIdFromUrl }
+} },) => {
   const { galleries, backgroundPhotos, photos } = getData();
 
   const [isNavigationVisible, setIsNavigationVisible] = React.useState(false);
+  const [isTitlebarVisible, setIsTitlebarVisible] = React.useState(true);
 
   const toggleNavigation = () => {
     setIsNavigationVisible(!isNavigationVisible);
   };
-
   return (
     <>
       <GlobalStyle />
-      <AppWrapper>
-        <TitleBar
-          isNavigationVisible={isNavigationVisible}
-          toggleNavigation={toggleNavigation}
-        />
+      <GridContainer>
+        <GridItemTitleBar>
+          {isTitlebarVisible ? (<TitleBar
+            isNavigationVisible={isNavigationVisible}
+            toggleNavigation={toggleNavigation}
+          />) : ""}
+        </GridItemTitleBar>
+        <GridItemContent>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={(rest) => (
+                <Home backgroundPhotos={backgroundPhotos} {...rest} />
+              )}
+            />
+            <Route exact path="/about" component={About} />
+            <Route
+              path="/portfolio/:contentType/:gallerySlug/:photoIdFromUrl?"
+              render={(rest) => (
+                <Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} {...rest} />
+              )}
+            />
+            <Route
+              path="/error500"
+              render={(rest) => <Error value="500" {...rest} />}
+            />
+            <Route
+              path="/error404"
+              render={(rest) => <Error value="404" {...rest} />}
+            />
+            <Route render={(rest) => <Error value="404" {...rest} />} />
+          </Switch>
+        </GridItemContent>
         <NavigationWrapper isNavigationVisible={isNavigationVisible}>
           {isNavigationVisible && (
             <NavigationGutter onClick={toggleNavigation} />
@@ -87,34 +133,10 @@ const App = () => {
             size={ICON_FONT_SIZES.l}
           />
         </NavigationWrapper>
-        <Switch>
-          <Route
-            exact
-            path="/"
-            render={(rest) => (
-              <Home backgroundPhotos={backgroundPhotos} {...rest} />
-            )}
-          />
-          <Route exact path="/about" component={About} />
-          <Route
-            path="/portfolio/:contentType/:gallerySlug/:photoId?"
-            render={(rest) => (
-              <Portfolio photos={photos} galleries={galleries} {...rest} />
-            )}
-          />
-          <Route
-            path="/error500"
-            render={(rest) => <Error value="500" {...rest} />}
-          />
-          <Route
-            path="/error404"
-            render={(rest) => <Error value="404" {...rest} />}
-          />
-          <Route render={(rest) => <Error value="404" {...rest} />} />
-        </Switch>
-      </AppWrapper>
+      </GridContainer>
     </>
   );
 };
 
+export { APP_BORDER }
 export default App;

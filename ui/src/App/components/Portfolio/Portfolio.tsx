@@ -1,68 +1,95 @@
 import * as React from 'react'
-import styled from 'styled-components'
+import { RouteComponentProps } from 'react-router-dom';
 
 import { GalleryType, PhotoType } from 'sharedTypes'
-import { Gallery } from './components'
-import { PAGE_THEME } from 'theme'
-
-const ALL_GALLERY: GalleryType = {
-    content_type: 'snapshot',
-    slug: 'all',
-    title: 'All'
-}
-
-const PortfolioWrapper = styled(PAGE_THEME)``
+import {
+    Gallery,
+    Photo
+} from './components'
 
 type Props = {
     match: {
         params: {
             contentType: string
             gallerySlug: string
-            photoId: string
+            photoIdFromUrl: string
         }
     },
-    photos: PhotoType[],
+    photos: { [id: string]: PhotoType },
     galleries: GalleryType[],
-    history: any
+    history: RouteComponentProps,
+    setIsTitlebarVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const Portfolio = (
     {
         match: {
-            params: { contentType, gallerySlug, photoId }
+            params: { contentType, gallerySlug, photoIdFromUrl }
         },
         photos,
         galleries,
-        history
+        history,
+        setIsTitlebarVisible,
     }: Props
 ) => {
-    const [filteredPhotos, setFilteredPhotos] = React.useState<PhotoType[]>([])
+    const [filteredPhotoIds, setFilteredPhotoIds] = React.useState<string[]>([])
+    const [selectedFilteredPhotoIndex, setSelectedFilteredPhotoIndex] = React.useState<number | undefined>(undefined);
+    const [initialLoad, setInitialLoad] = React.useState(true)
+    // I couldn't figure out a more elegant way to load in photo IDs from the URL on initial load so we have this useState.
+    const [scrollToId, setScrollToId] = React.useState<number | undefined>(undefined)
+    // Used for scrolling
 
-    const filterPhotos = () => {
-        if (contentType === 'snapshot' && gallerySlug === 'all') {
-            const filteredPhotos = photos.filter(photo => photo.gallery.content_type == 'snapshot')
-            setFilteredPhotos(filteredPhotos)
-        } else {
-            const filteredPhotos = photos.filter(photo => photo.gallery.slug == gallerySlug)
-            setFilteredPhotos(filteredPhotos)
-        }
+    React.useEffect(() => setIsTitlebarVisible(selectedFilteredPhotoIndex === undefined), [selectedFilteredPhotoIndex])
+
+    const filterPhotoIds = () => {
+        const filteredPhotoIds = Object.values(photos)
+            .filter(photo => photo.gallery.slug == gallerySlug)
+            .map(({ id }) => id)
+        return filteredPhotoIds
     }
+    React.useEffect(() => {
+        const filteredPhotoIds = filterPhotoIds()
+        if (initialLoad && photoIdFromUrl && selectedFilteredPhotoIndex === undefined) {
+            setSelectedFilteredPhotoIndex(filteredPhotoIds.indexOf(photoIdFromUrl))
+            setInitialLoad(false)
+        }
+        setFilteredPhotoIds(filteredPhotoIds)
+        setScrollToId(undefined)
+    }, [gallerySlug])
 
-    React.useEffect(filterPhotos, [contentType, gallerySlug])
+    const handleUrlChange = () => {
+        if (initialLoad && photoIdFromUrl && selectedFilteredPhotoIndex === undefined) {
+            return
+        }
+        history.push(
+            `/portfolio/${galleryDetails.content_type}/${galleryDetails.slug}/${filteredPhotoIds[selectedFilteredPhotoIndex] || ''}`
+        )
+    };
+    React.useEffect(handleUrlChange, [filteredPhotoIds[selectedFilteredPhotoIndex]])
 
-    let galleryDetails = galleries.length && galleries.find(gallery => gallery.slug == gallerySlug)
-    galleryDetails = galleryDetails || ALL_GALLERY
+    const elementsRef = filteredPhotoIds.map(() => React.createRef())
+    const galleryDetails = galleries.length && galleries.find(gallery => gallery.slug == gallerySlug)
 
-    return (
-        <PortfolioWrapper>
+    return selectedFilteredPhotoIndex === undefined
+        ? (
             <Gallery
-                history={history}
-                photoId={photoId}
-                photos={filteredPhotos}
+                setSelectedFilteredPhotoIndex={setSelectedFilteredPhotoIndex}
+                photos={photos}
+                filteredPhotoIds={filteredPhotoIds}
                 galleryDetails={galleryDetails}
+                scrollToId={scrollToId}
+                elementsRef={elementsRef}
+                setScrollToId={setScrollToId}
             />
-        </PortfolioWrapper>
-    )
+        ) : (
+            < Photo
+                setSelectedFilteredPhotoIndex={setSelectedFilteredPhotoIndex}
+                selectedFilteredPhotoIndex={selectedFilteredPhotoIndex}
+                photos={photos}
+                filteredPhotoIds={filteredPhotoIds}
+                setScrollToId={setScrollToId}
+            />
+        )
 }
 
 export default Portfolio

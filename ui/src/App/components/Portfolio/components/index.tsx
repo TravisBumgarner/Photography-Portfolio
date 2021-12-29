@@ -1,3 +1,4 @@
-import Gallery from './Gallery/Gallery'
+import Gallery from './Gallery'
+import Photo from './Photo'
 
-export { Gallery }
+export { Gallery, Photo }

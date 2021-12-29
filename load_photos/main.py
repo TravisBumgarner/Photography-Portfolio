@@ -58,7 +58,7 @@ def main():
         if not os.path.isdir(dir):
             os.makedirs(dir)
 
-    photos = []
+    photos = {}
     categories = set([])
     galleries = {}
     locations = set([])
@@ -90,9 +90,9 @@ def main():
             locations.add(lightroom_keywords["Location"])
 
             categories.update(lightroom_keywords["Category"])
-
+            photo_id = str(uuid5(photos_namespace, f'{input_file_name} {exif_data["date_taken"]}'))
             photo = {
-                "id": str(uuid5(photos_namespace, f'{input_file_name} {exif_data["date_taken"]}')),
+                "id": photo_id,
                 "src": input_file_name,
                 "gallery": galleries[lightroom_keywords["Gallery"]],
                 "categories": lightroom_keywords["Category"],
@@ -113,7 +113,7 @@ def main():
                 "is_home_background": lightroom_keywords["IsBackgroundPhoto"],
             }
 
-            photos.append(photo)
+            photos[photo_id] = (photo)
         except Exception as e:
             print(e)
             print("Messed up on photo", input_file_name)

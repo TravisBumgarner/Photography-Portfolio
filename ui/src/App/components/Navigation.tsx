@@ -112,9 +112,6 @@ const Navigation = ({ galleries, toggleNavigation }: Props) => {
             <SubNavigationWrapper>
                 <Header size="medium">Snapshots</Header>
                 <ul>
-                    <LinkListItem key={'all'} onClick={toggleNavigation}>
-                        <InternalLink to={`/portfolio/snapshot/all`}>All</InternalLink>
-                    </LinkListItem>
                     {snapshotLinks}
                 </ul>
             </SubNavigationWrapper>

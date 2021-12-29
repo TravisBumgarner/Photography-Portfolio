@@ -2,9 +2,8 @@ import * as React from 'react'
 import styled from 'styled-components'
 
 import { Header, Text } from 'sharedComponents'
-import { PAGE_THEME } from 'theme'
 
-const ErrorWrapper = styled(PAGE_THEME)`
+const ErrorWrapper = styled.div`
     align-items: center;
     display: flex;
     justify-content: center;

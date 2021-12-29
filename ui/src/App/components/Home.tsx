@@ -3,12 +3,22 @@ import styled from "styled-components";
 
 import { useInterval } from "utilities";
 import { PhotoType } from "sharedTypes";
-import { PAGE_THEME } from "theme";
+import { APP_BORDER } from 'theme'
 
-const HomeWrapper = styled(PAGE_THEME)``;
+const HomeImageWrapper = styled.div`
+  width: calc(100vw - ${APP_BORDER} * 2);
+  height: calc(100vh - ${APP_BORDER} * 2);
+  box-sizing: border-box;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+`
 
 const HomeImage = styled.img`
-  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  justify-content: center;
 `;
 
 type Props = {
@@ -20,18 +30,17 @@ const Home = ({ backgroundPhotos }: Props) => {
 
   useInterval(() => setBackgroundImageIndex(backgroundImageIndex + 1), 4000);
   return (
-    <HomeWrapper>
+    <HomeImageWrapper>
       <HomeImage
         src={
           backgroundPhotos.length
-            ? `https://storage.googleapis.com/photo21/photos/large/${
-                backgroundPhotos[backgroundImageIndex % backgroundPhotos.length]
-                  .src
-              }`
+            ? `https://storage.googleapis.com/photo21/photos/large/${backgroundPhotos[backgroundImageIndex % backgroundPhotos.length]
+              .src
+            }`
             : ""
         }
       />
-    </HomeWrapper>
+    </HomeImageWrapper>
   );
 };
 
