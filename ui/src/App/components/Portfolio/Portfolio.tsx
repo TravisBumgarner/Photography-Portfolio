@@ -40,7 +40,6 @@ const Portfolio = (
     // Used for scrolling
 
     React.useEffect(() => setIsTitlebarVisible(selectedFilteredPhotoIndex === undefined), [selectedFilteredPhotoIndex])
-    console.log(photos)
     const filterPhotoIds = () => {
         const filteredPhotoIds = Object.values(photos)
             .filter(photo => photo.gallery.slug == gallerySlug)
