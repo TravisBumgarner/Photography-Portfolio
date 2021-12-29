@@ -3,11 +3,10 @@ import styled from "styled-components";
 
 import { useInterval } from "utilities";
 import { PhotoType } from "sharedTypes";
-import { APP_BORDER } from 'theme'
 
 const HomeImageWrapper = styled.div`
-  width: calc(100vw - ${APP_BORDER} * 2);
-  height: calc(100vh - ${APP_BORDER} * 2);
+  width: 100%;
+  height: 100%;
   box-sizing: border-box;
   display:flex;
   align-items: center;
