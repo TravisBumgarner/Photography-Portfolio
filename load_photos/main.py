@@ -50,7 +50,7 @@ def get_lightroom_keywords(full_path):
 
 
 def main():
-    INPUT_ROOT = os.path.abspath("./input_photos/large")
+    INPUT_ROOT = os.path.abspath("/Users/personalme/Desktop/Exports/large")
     OUTPUT_ROOT = os.path.abspath("../ui/src/App/content/")
     print(INPUT_ROOT + "\n\n\n")
 
@@ -63,16 +63,17 @@ def main():
     galleries = {}
     locations = set([])
 
+    print("Processing files")
     for input_file_name in os.listdir(INPUT_ROOT):
         try:
             input_full_path = os.path.join(INPUT_ROOT, input_file_name)
-            input_file_root, file_extension = input_file_name.split(".")
+            # input_file_root, file_extension = input_file_name.split(".")
 
-            if file_extension not in ["jpg", "jpeg"]:
-                print("    Skipping file: {}".format(input_file_name))
-                continue
-            else:
-                print("    Processing file: {}".format(input_file_name))
+            # if file_extension not in ["jpg", "jpeg"]:
+            #     print("    Skipping file: {}".format(input_file_name))
+            #     continue
+            # else:
+            print(".", end='')
 
             lightroom_keywords = get_lightroom_keywords(input_full_path)
 
