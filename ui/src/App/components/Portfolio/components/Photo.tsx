@@ -8,11 +8,12 @@ import { ICON_FONT_SIZES, ICON_COLOR, APP_BORDER } from "theme";
 
 const FILM = 'Film'
 const CONTROLS_WRAPPER_HEIGHT = '50px';
+const TOP_ROW = '20px';
 
 const CloseIcon = styled(FaTimes)`
     position: fixed;
     right: 20px;
-    top: 20px;
+    top: ${TOP_ROW};
     z-index: 999;
     fill: ${ICON_COLOR.initial};
 
@@ -59,13 +60,6 @@ const Spacer = styled(({ className }) => <span className={className}>//</span>)`
     font-weight: 700;
 `
 
-const PhotoWithMetadataWrapper = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-`
-console.log('appborder', APP_BORDER)
 const PhotoWrapper = styled.div`
     display: flex;
     justify-content: center;
@@ -92,12 +86,18 @@ const ControlsWrapper = styled.div`
 `
 
 const MetadataWrapper = styled.div`
-    width: 100%;
+    width: 80%;
+    margin: 0 10%;
     text-align: center;
     position: absolute;
-    bottom: ${CONTROLS_WRAPPER_HEIGHT};
+    top: ${TOP_ROW};
     left: 0;
-    background: rgba(255,255,255, 0.7);
+    background-color: rgba(255,255,255,0.7);
+    
+    & > * {
+        font-size: 14px;
+        padding: 0;
+    }
 `
 
 const StyledPhoto = styled.img`
@@ -131,13 +131,10 @@ const Metadata = ({ details }: { details: PhotoType }) => {
                     'Film Camera, N/A'
                 ) : (
                     <>
-                        <Header size="inline">Location </Header>
                         {location}
                         <Spacer />
-                        <Header size="inline">Gear </Header>
                         {camera_type.toLowerCase() === 'film' ? 'Film Camera' : gearString}
                         <Spacer />
-                        <Header size="inline">Conditions </Header>
                         {camera_type.toLowerCase() === 'film' ? 'N/A' : statsString}
                     </>
                 )}
@@ -155,7 +152,7 @@ type PhotoProps = {
 
 const Photo = ({ photos, filteredPhotoIds, selectedFilteredPhotoIndex, setSelectedFilteredPhotoIndex }: PhotoProps) => {
     const [isLoading, setIsLoading] = React.useState(true)
-    const [showMetadata, toggleShowMetadata] = React.useState(false)
+    const [showMetadata, toggleShowMetadata] = React.useState(true)
     React.useEffect(() => setIsLoading(true), [])
 
     const details = photos[filteredPhotoIds[selectedFilteredPhotoIndex]]
@@ -203,27 +200,25 @@ const Photo = ({ photos, filteredPhotoIds, selectedFilteredPhotoIndex, setSelect
     return (
         <div>
             <CloseIcon size={ICON_FONT_SIZES.l} onClick={exitSinglePhotoView} />
-            <PhotoWithMetadataWrapper>
-                {isLoading ? <LoadingIcon size="5em" /> : null}
-                <PhotoWrapper>
-                    <StyledPhoto
-                        onLoad={() => setIsLoading(false)}
-                        src={`https://storage.googleapis.com/photo21/photos/large/${details.src}`}
-                    />
-                </PhotoWrapper>
-                {!isLoading && showMetadata ? <Metadata details={details} /> : ''}
-                {!isLoading
-                    ? (
-                        <ControlsWrapper>
-                            <PreviousButton size={ICON_FONT_SIZES.l} onClick={() => getNextPhotoIndex('left')} />
-                            <MetadataButton onClick={() => toggleShowMetadata(!showMetadata)}>Toggle Metadata</MetadataButton>
-                            <NextButton size={ICON_FONT_SIZES.l} onClick={() => getNextPhotoIndex('right')} />
-                        </ControlsWrapper>
-                    )
-                    : ''
-                }
+            {isLoading ? <LoadingIcon size="5em" /> : null}
+            <PhotoWrapper>
+                <StyledPhoto
+                    onLoad={() => setIsLoading(false)}
+                    src={`https://storage.googleapis.com/photo21/photos/large/${details.src}`}
+                />
+            </PhotoWrapper>
+            {!isLoading && showMetadata ? <Metadata details={details} /> : ''}
+            {!isLoading
+                ? (
+                    <ControlsWrapper>
+                        <PreviousButton size={ICON_FONT_SIZES.l} onClick={() => getNextPhotoIndex('left')} />
+                        <MetadataButton onClick={() => toggleShowMetadata(!showMetadata)}>Toggle Metadata</MetadataButton>
+                        <NextButton size={ICON_FONT_SIZES.l} onClick={() => getNextPhotoIndex('right')} />
+                    </ControlsWrapper>
+                )
+                : ''
+            }
 
-            </PhotoWithMetadataWrapper>
         </div>
     )
 }

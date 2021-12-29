@@ -40,7 +40,7 @@ const About = () => {
                 <ContentSubWrapperRight>
                     <ContentSection>
                         <Header size="small">Location</Header>
-                        <Text>Boston, MA</Text>
+                        <Text>Remote, World</Text>
 
                         <Header size="small">Summary</Header>
                         <Text>

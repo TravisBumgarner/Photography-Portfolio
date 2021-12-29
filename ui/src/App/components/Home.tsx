@@ -6,8 +6,8 @@ import { PhotoType } from "sharedTypes";
 import { APP_BORDER } from 'theme'
 
 const HomeImageWrapper = styled.div`
-  width: calc(100% - ${APP_BORDER} * 2);
-  height: calc(100% - ${APP_BORDER} * 2);
+  width: calc(100vw - ${APP_BORDER} * 2);
+  height: calc(100vh - ${APP_BORDER} * 2);
   box-sizing: border-box;
   display:flex;
   align-items: center;
@@ -17,6 +17,8 @@ const HomeImageWrapper = styled.div`
 const HomeImage = styled.img`
   max-width: 100%;
   max-height: 100%;
+  display: flex;
+  justify-content: center;
 `;
 
 type Props = {

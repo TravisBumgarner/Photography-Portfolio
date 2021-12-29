@@ -36,17 +36,14 @@ const Portfolio = (
     const [initialLoad, setInitialLoad] = React.useState(true)
     // I couldn't figure out a more elegant way to load in photo IDs from the URL on initial load so we have this useState.
 
+    React.useEffect(() => setIsTitlebarVisible(selectedFilteredPhotoIndex === undefined), [selectedFilteredPhotoIndex])
+
     const filterPhotoIds = () => {
         const filteredPhotoIds = Object.values(photos)
             .filter(photo => photo.gallery.slug == gallerySlug)
             .map(({ id }) => id)
         return filteredPhotoIds
     }
-
-    React.useEffect(() => {
-        setIsTitlebarVisible(selectedFilteredPhotoIndex === undefined)
-    }, [selectedFilteredPhotoIndex])
-
     React.useEffect(() => {
         const filteredPhotoIds = filterPhotoIds()
         if (initialLoad && photoIdFromUrl && selectedFilteredPhotoIndex === undefined) {
