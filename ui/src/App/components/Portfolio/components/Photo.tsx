@@ -1,13 +1,13 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { FaCamera, FaTimes, FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa'
+import { FaTimes, FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa'
 
 import { Text, Header } from 'sharedComponents'
 import { PhotoType } from 'sharedTypes'
 import { ICON_FONT_SIZES, ICON_COLOR, APP_BORDER } from "theme";
 
 const FILM = 'Film'
-const CONTROLS_WRAPPER_HEIGHT = '50px';
+const CONTROLS_WRAPPER_HEIGHT = '3rem';
 const TOP_ROW = '20px';
 
 const CloseIcon = styled(FaTimes)`
@@ -45,14 +45,9 @@ const MetadataButton = styled.button`
     color: white;
     border: solid black;
     padding: 5px;
+    font-size: 1rem;
     cursor: pointer;
 `
-
-const LoadingIcon = styled(FaCamera)`
-    position: fixed;
-    top: calc(50vh - 2.5em);
-    left: calc(50vw - 2.5em);
-    `
 
 const Spacer = styled(({ className }) => <span className={className}>//</span>)`
     padding: 0 20px;
@@ -79,6 +74,7 @@ const ControlsWrapper = styled.div`
     padding: 10px;
     height: ${CONTROLS_WRAPPER_HEIGHT};
     box-sizing: border-box;
+    align-items: center;
 
     & > * {
         margin: 0 20px;
@@ -152,9 +148,7 @@ type PhotoProps = {
 }
 
 const Photo = ({ photos, filteredPhotoIds, selectedFilteredPhotoIndex, setSelectedFilteredPhotoIndex, setScrollToId }: PhotoProps) => {
-    const [isLoading, setIsLoading] = React.useState(true)
     const [showMetadata, toggleShowMetadata] = React.useState(true)
-    React.useEffect(() => setIsLoading(true), [])
 
     const details = photos[filteredPhotoIds[selectedFilteredPhotoIndex]]
 
@@ -202,25 +196,17 @@ const Photo = ({ photos, filteredPhotoIds, selectedFilteredPhotoIndex, setSelect
     return (
         <div>
             <CloseIcon size={ICON_FONT_SIZES.l} onClick={exitSinglePhotoView} />
-            {isLoading ? <LoadingIcon size="5em" /> : null}
             <PhotoWrapper>
                 <StyledPhoto
-                    onLoad={() => setIsLoading(false)}
                     src={`https://storage.googleapis.com/photo21/photos/large/${details.src}`}
                 />
             </PhotoWrapper>
-            {!isLoading && showMetadata ? <Metadata details={details} /> : ''}
-            {!isLoading
-                ? (
-                    <ControlsWrapper>
-                        <PreviousButton size={ICON_FONT_SIZES.l} onClick={() => getNextPhotoIndex('left')} />
-                        <MetadataButton onClick={() => toggleShowMetadata(!showMetadata)}>Toggle Metadata</MetadataButton>
-                        <NextButton size={ICON_FONT_SIZES.l} onClick={() => getNextPhotoIndex('right')} />
-                    </ControlsWrapper>
-                )
-                : ''
-            }
-
+            {showMetadata ? <Metadata details={details} /> : ''}
+            <ControlsWrapper>
+                <PreviousButton size={ICON_FONT_SIZES.l} onClick={() => getNextPhotoIndex('left')} />
+                <MetadataButton onClick={() => toggleShowMetadata(!showMetadata)}>Toggle Metadata</MetadataButton>
+                <NextButton size={ICON_FONT_SIZES.l} onClick={() => getNextPhotoIndex('right')} />
+            </ControlsWrapper>
         </div>
     )
 }
