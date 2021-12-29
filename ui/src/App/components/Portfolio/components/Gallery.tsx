@@ -58,7 +58,7 @@ type Props = {
 const Gallery = ({ photos, filteredPhotoIds, galleryDetails, setSelectedFilteredPhotoIndex, scrollToId, setScrollToId, elementsRef }: Props) => {
   React.useEffect(() => {
     if (elementsRef.length > 0 && scrollToId !== undefined) {
-      elementsRef[scrollToId].current.scrollIntoView()
+      elementsRef[scrollToId].current.scrollIntoView(true)
     }
   }, [elementsRef.length])
 

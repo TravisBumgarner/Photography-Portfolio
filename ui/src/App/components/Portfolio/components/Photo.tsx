@@ -178,8 +178,8 @@ const Photo = ({ photos, filteredPhotoIds, selectedFilteredPhotoIndex, setSelect
     }
 
     const exitSinglePhotoView = () => {
-        setSelectedFilteredPhotoIndex(undefined)
         setScrollToId(selectedFilteredPhotoIndex)
+        setSelectedFilteredPhotoIndex(undefined)
     }
 
     const handleKeyPress = (event: KeyboardEvent) => {

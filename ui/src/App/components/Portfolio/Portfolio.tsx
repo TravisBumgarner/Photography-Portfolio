@@ -70,7 +70,6 @@ const Portfolio = (
     const elementsRef = filteredPhotoIds.map(() => React.createRef())
     const galleryDetails = galleries.length && galleries.find(gallery => gallery.slug == gallerySlug)
 
-    console.log('scrolltoid', scrollToId)
     return selectedFilteredPhotoIndex === undefined
         ? (
             <Gallery
