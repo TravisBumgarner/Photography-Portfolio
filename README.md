@@ -51,8 +51,7 @@ IsBackgroundPhoto (Check for True)
 
 9. Navigate to https://console.cloud.google.com/
 10. Drag and drop `large` and `thumbnail` into GCS
-11. `gcloud config set project photo21-273400`
-12. `npm run deploy`
+11. `npm run deploy`
 
 
 

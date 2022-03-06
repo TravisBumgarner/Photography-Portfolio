@@ -46,35 +46,35 @@ const GalleryItem = styled.div`
 `
 
 type Props = {
-  galleryDetails: GalleryType
-  photos: { [id: string]: PhotoType }
-  filteredPhotoIds: string[]
-  setSelectedFilteredPhotoIndex: any
-  scrollToId: number
-  elementsRef: React.RefObject<any>[]
-  setScrollToId: React.Dispatch<React.SetStateAction<number>>
+    galleryDetails: GalleryType
+    photos: { [id: string]: PhotoType }
+    filteredPhotoIds: string[]
+    setSelectedFilteredPhotoIndex: any
+    scrollToId: number
+    elementsRef: React.RefObject<any>[]
+    setScrollToId: React.Dispatch<React.SetStateAction<number>>
 };
 
 const Gallery = ({ photos, filteredPhotoIds, galleryDetails, setSelectedFilteredPhotoIndex, scrollToId, setScrollToId, elementsRef }: Props) => {
-  React.useEffect(() => {
-    if (elementsRef.length > 0 && scrollToId !== undefined) {
-      elementsRef[scrollToId].current.scrollIntoView(true)
-    }
-  }, [elementsRef.length])
+    React.useEffect(() => {
+        if (elementsRef.length > 0 && scrollToId !== undefined) {
+            elementsRef[scrollToId].current.scrollIntoView(true)
+        }
+    }, [elementsRef.length])
 
-  return (
-    <>
-      <ProjectDescriptionWrapper>
-        <Header size="medium">{galleryDetails.title}</Header>
-      </ProjectDescriptionWrapper>
-      <GalleryWrapper>{
-        filteredPhotoIds.map(id => photos[id]).map((photo, index) => {
-          return (<GalleryItem key={photo.id} id={photo.id} ref={elementsRef[index]}>
-            <img src={`https://storage.googleapis.com/photo21/photos/thumbnail/${photo.src}`} onClick={() => setSelectedFilteredPhotoIndex(index)} />
-          </GalleryItem>)
-        })
-      }</GalleryWrapper>
-    </>)
+    return (
+        <>
+            <ProjectDescriptionWrapper>
+                <Header size="medium">{galleryDetails.title}</Header>
+            </ProjectDescriptionWrapper>
+            <GalleryWrapper>{
+                filteredPhotoIds.map(id => photos[id]).map((photo, index) => {
+                    return (<GalleryItem key={photo.id} id={photo.id} ref={elementsRef[index]}>
+                        <img src={`https://storage.googleapis.com/photo21-asdqwd/photos/thumbnail/${photo.src}`} onClick={() => setSelectedFilteredPhotoIndex(index)} />
+                    </GalleryItem>)
+                })
+            }</GalleryWrapper>
+        </>)
 };
 
 export default Gallery;

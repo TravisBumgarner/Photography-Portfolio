@@ -1,33 +1,33 @@
 {
-  "name": "ui",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "sd:fe": "webpack-dev-server --mode=development --config=webpack.js",
-    "bundle-ui": " rm -rf ./public; mkdir ./public; webpack --mode=production --config=webpack.js",
-    "precommit": "tsc --noEmit --skipLibCheck",
-    "deploy": "gcloud config set project photo21-273400 && gcloud builds submit --tag gcr.io/photo21-273400/frontend && gcloud run deploy frontend --image gcr.io/photo21-273400/frontend --platform managed --region us-east1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@sentry/browser": "^4.1.1",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-icons": "^3.1.0",
-    "react-router-dom": "^4.3.1",
-    "styled-components": "^4.0.0-beta.8",
-    "webpack-dev-server": "^4.6.0"
-  },
-  "devDependencies": {
-    "@types/react": "^17.0.37",
-    "@types/styled-components": "^5.1.15",
-    "eslint": "^8.3.0",
-    "html-webpack-plugin": "^5.5.0",
-    "ts-loader": "^9.2.6",
-    "typescript": "^4.5.2",
-    "webpack": "^5.64.4",
-    "webpack-cli": "^4.9.1"
-  }
+    "name": "ui",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "sd:fe": "webpack-dev-server --mode=development --config=webpack.js",
+        "bundle-ui": " rm -rf ./public; mkdir ./public; webpack --mode=production --config=webpack.js",
+        "precommit": "tsc --noEmit --skipLibCheck",
+        "deploy": "gcloud config set project root-270023 && gcloud builds submit --tag gcr.io/root-270023/photo20 && gcloud run deploy photo20 --image gcr.io/root-270023/photo20 --platform managed --region us-east1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@sentry/browser": "^4.1.1",
+        "react": "^16.12.0",
+        "react-dom": "^16.12.0",
+        "react-icons": "^3.1.0",
+        "react-router-dom": "^4.3.1",
+        "styled-components": "^4.0.0-beta.8",
+        "webpack-dev-server": "^4.6.0"
+    },
+    "devDependencies": {
+        "@types/react": "^17.0.37",
+        "@types/styled-components": "^5.1.15",
+        "eslint": "^8.3.0",
+        "html-webpack-plugin": "^5.5.0",
+        "ts-loader": "^9.2.6",
+        "typescript": "^4.5.2",
+        "webpack": "^5.64.4",
+        "webpack-cli": "^4.9.1"
+    }
 }

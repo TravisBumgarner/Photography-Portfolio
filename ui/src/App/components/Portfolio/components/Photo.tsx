@@ -202,7 +202,7 @@ const Photo = ({
       <CloseIcon size={ICON_FONT_SIZES.l} onClick={exitSinglePhotoView} />
       <PhotoWrapper>
         <StyledPhoto
-          src={`https://storage.googleapis.com/photo21/photos/large/${details.src}`}
+          src={`https://storage.googleapis.com/photo21-asdqwd/photos/large/${details.src}`}
         />
       </PhotoWrapper>
       <Metadata details={details} />

@@ -33,7 +33,7 @@ const Home = ({ backgroundPhotos }: Props) => {
       <HomeImage
         src={
           backgroundPhotos.length
-            ? `https://storage.googleapis.com/photo21/photos/large/${backgroundPhotos[backgroundImageIndex % backgroundPhotos.length]
+            ? `https://storage.googleapis.com/photo21-asdqwd/photos/large/${backgroundPhotos[backgroundImageIndex % backgroundPhotos.length]
               .src
             }`
             : ""
