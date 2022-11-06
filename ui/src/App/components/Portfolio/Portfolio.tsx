@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { RouteComponentProps } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 
 import { GalleryType, PhotoType } from 'sharedTypes'
 import {
@@ -8,27 +8,15 @@ import {
 } from './components'
 
 type Props = {
-    match: {
-        params: {
-            contentType: string
-            gallerySlug: string
-            photoIdFromUrl: string
-        }
-    },
     photos: { [id: string]: PhotoType },
     galleries: GalleryType[],
-    history: RouteComponentProps,
     setIsTitlebarVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const Portfolio = (
     {
-        match: {
-            params: { contentType, gallerySlug, photoIdFromUrl }
-        },
         photos,
         galleries,
-        history,
         setIsTitlebarVisible,
     }: Props
 ) => {
@@ -38,6 +26,10 @@ const Portfolio = (
     // I couldn't figure out a more elegant way to load in photo IDs from the URL on initial load so we have this useState.
     const [scrollToId, setScrollToId] = React.useState<number | undefined>(undefined)
     // Used for scrolling
+    const { contentType, gallerySlug, photoId } = useParams<{ contentType: string, gallerySlug: string, photoId: string }>();
+    const navigate = useNavigate();
+
+    console.log(gallerySlug, photoId)
 
     React.useEffect(() => setIsTitlebarVisible(selectedFilteredPhotoIndex === undefined), [selectedFilteredPhotoIndex])
     const filterPhotoIds = () => {
@@ -53,8 +45,8 @@ const Portfolio = (
     }
     React.useEffect(() => {
         const filteredPhotoIds = filterPhotoIds()
-        if (initialLoad && photoIdFromUrl && selectedFilteredPhotoIndex === undefined) {
-            setSelectedFilteredPhotoIndex(filteredPhotoIds.indexOf(photoIdFromUrl))
+        if (initialLoad && photoId && selectedFilteredPhotoIndex === undefined) {
+            setSelectedFilteredPhotoIndex(filteredPhotoIds.indexOf(photoId))
             setInitialLoad(false)
         }
         setFilteredPhotoIds(filteredPhotoIds)
@@ -62,10 +54,10 @@ const Portfolio = (
     }, [gallerySlug])
 
     const handleUrlChange = () => {
-        if (initialLoad && photoIdFromUrl && selectedFilteredPhotoIndex === undefined) {
+        if (initialLoad && photoId && selectedFilteredPhotoIndex === undefined) {
             return
         }
-        history.push(
+        navigate(
             `/portfolio/${galleryDetails.content_type}/${galleryDetails.slug}/${filteredPhotoIds[selectedFilteredPhotoIndex] || ''}`
         )
     };

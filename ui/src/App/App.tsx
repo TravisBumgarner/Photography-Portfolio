@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import { FaCaretRight } from "react-icons/fa";
 
@@ -71,9 +71,11 @@ const NavigationWrapper = styled.div`
     isNavigationVisible ? "0" : `-100vw`};
 `;
 
-const App = ({ match: {
-  params: { photoIdFromUrl }
-} },) => {
+const App = (
+  // { match: {
+  //   params: { photoIdFromUrl }
+  // } },
+) => {
   const { galleries, backgroundPhotos, photos } = getData();
 
   const [isNavigationVisible, setIsNavigationVisible] = React.useState(false);
@@ -93,31 +95,32 @@ const App = ({ match: {
           />) : ""}
         </GridItemTitleBar>
         <GridItemContent>
-          <Switch>
+          <Routes>
             <Route
-              exact
               path="/"
-              render={(rest) => (
-                <Home backgroundPhotos={backgroundPhotos} {...rest} />
-              )}
+              element={<Home backgroundPhotos={backgroundPhotos} />}
             />
-            <Route exact path="/about" component={About} />
+            <Route path="/about" element={<About />} />
             <Route
-              path="/portfolio/:contentType/:gallerySlug/:photoIdFromUrl?"
-              render={(rest) => (
-                <Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} {...rest} />
-              )}
+              path="/portfolio/:contentType/:gallerySlug"
+              element={
+                <Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} />
+              }
             />
+            <Route path="/portfolio/:contentType/:gallerySlug">
+              <Route index element={<Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} />} />
+              <Route path=":photoId" element={<Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} />} />
+            </Route>
             <Route
               path="/error500"
-              render={(rest) => <Error value="500" {...rest} />}
+              element={<Error value="500" />}
             />
             <Route
               path="/error404"
-              render={(rest) => <Error value="404" {...rest} />}
+              element={<Error value="404" />}
             />
-            <Route render={(rest) => <Error value="404" {...rest} />} />
-          </Switch>
+            <Route element={<Error value="404" />} />
+          </Routes>
         </GridItemContent>
         <NavigationWrapper isNavigationVisible={isNavigationVisible}>
           {isNavigationVisible && (
