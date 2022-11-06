@@ -22,3 +22,4 @@
 - [ ] Do I need public/index.html
 - [ ] Get rid of double quotes, semicolon
 - [ ] Add pre commit
+- [ ] Need to fix scroll to

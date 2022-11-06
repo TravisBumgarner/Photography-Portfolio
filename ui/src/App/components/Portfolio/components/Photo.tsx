@@ -5,6 +5,7 @@ import { FaTimes, FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 import { Text, Header } from "sharedComponents";
 import { PhotoType } from "types";
 import { ICON_FONT_SIZES, ICON_COLOR, APP_BORDER } from "theme";
+import { useCallback } from 'react';
 
 const FILM = "Film";
 const CONTROLS_WRAPPER_HEIGHT = "3rem";
@@ -37,16 +38,6 @@ const NextButton = styled(FaArrowCircleRight)`
   &:hover {
     fill: ${ICON_COLOR.hover};
   }
-`;
-
-const MetadataButton = styled.button`
-  border-radius: 5px;
-  background-color: black;
-  color: white;
-  border: solid black;
-  padding: 5px;
-  font-size: 1rem;
-  cursor: pointer;
 `;
 
 const Spacer = styled(({ className }) => <span className={className}>//</span>)`
@@ -144,7 +135,6 @@ type PhotoProps = {
   filteredPhotoIds: string[];
   selectedFilteredPhotoIndex: number;
   setSelectedFilteredPhotoIndex: Dispatch<SetStateAction<number>>;
-  setScrollToId: Dispatch<SetStateAction<number>>;
 };
 
 const Photo = ({
@@ -152,11 +142,10 @@ const Photo = ({
   filteredPhotoIds,
   selectedFilteredPhotoIndex,
   setSelectedFilteredPhotoIndex,
-  setScrollToId,
 }: PhotoProps) => {
   const details = photos[filteredPhotoIds[selectedFilteredPhotoIndex]];
 
-  const getNextPhotoIndex = (direction: "left" | "right") => {
+  const getNextPhotoIndex = useCallback((direction: "left" | "right") => {
     const first = 0;
     const last = filteredPhotoIds.length - 1;
     let next;
@@ -173,12 +162,11 @@ const Photo = ({
       }
     }
     setSelectedFilteredPhotoIndex(next);
-  };
+  }, [selectedFilteredPhotoIndex, filteredPhotoIds]);
 
   const exitSinglePhotoView = () => {
-    setScrollToId(selectedFilteredPhotoIndex);
     setSelectedFilteredPhotoIndex(undefined);
-  };
+  }
 
   const handleKeyPress = (event: KeyboardEvent) => {
     if (event.key === "ArrowLeft") {
