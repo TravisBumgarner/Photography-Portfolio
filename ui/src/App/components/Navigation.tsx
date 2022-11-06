@@ -1,10 +1,10 @@
-import * as React from 'react'
+import React, { ReactElement } from 'react'
 import { Link } from 'react-router-dom'
+import styled, { css } from 'styled-components'
 
 import { Header } from 'sharedComponents'
-import styled, { css } from 'styled-components'
 import { FONT_FAMILY_HEADER, CONTENT_SPACING, TEXT_FONT_SIZES } from 'theme'
-import { GalleryType } from 'sharedTypes'
+import { GalleryType } from 'types'
 
 const NavigationWrapper = styled.div`
     text-align: right;
@@ -58,8 +58,8 @@ type Props = {
 }
 
 const Navigation = ({ galleries, toggleNavigation }: Props) => {
-    const projectLinks: React.ReactElement[] = []
-    const snapshotLinks: React.ReactElement[] = []
+    const projectLinks: ReactElement[] = []
+    const snapshotLinks: ReactElement[] = []
 
     galleries.sort((a, b) => (a.title > b.title ? 1 : -1))
     galleries.map(({ title, content_type, slug }) => {
@@ -79,18 +79,6 @@ const Navigation = ({ galleries, toggleNavigation }: Props) => {
         {
             title: 'LinkedIn',
             route: 'https://www.linkedin.com/in/travisbumgarner/',
-        },
-        {
-            title: 'Twitter',
-            route: 'https://twitter.com/travis_the_makr/',
-        },
-        {
-            title: 'Instagram',
-            route: 'https://www.instagram.com/esafodos/',
-        },
-        {
-            title: 'Flickr',
-            route: 'https://www.flickr.com/people/esa_foto/',
         }
     ]
 

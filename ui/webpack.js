@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: "./src/index.tsx",
   output: {
-    filename: "app.bundle.js",
+    filename: "app.[contenthash].js",
     path: path.resolve(__dirname, "public"),
   },
   module: {
@@ -21,15 +21,13 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"],
     alias: {
       sharedComponents: path.resolve(__dirname, "src/sharedComponents/"),
-      sharedTypes: path.resolve(__dirname, "src/sharedTypes/index.ts"),
+      types: path.resolve(__dirname, "src/types.ts"),
       theme: path.resolve(__dirname, "src/theme.tsx"),
       utilities: path.resolve(__dirname, "src/utilities/"),
     },
   },
+  devtool: 'source-map',
   devServer: {
-    static: {
-      directory: path.join(__dirname, "public"),
-    },
     compress: true,
     port: 3000,
     hot: true,

@@ -1,8 +1,7 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { useInterval } from "utilities";
-import { PhotoType } from "sharedTypes";
+import { PhotoType } from "types";
 
 const HomeImageWrapper = styled.div`
   width: 100%;
@@ -25,9 +24,16 @@ type Props = {
 };
 
 const Home = ({ backgroundPhotos }: Props) => {
-  const [backgroundImageIndex, setBackgroundImageIndex] = React.useState(0);
+  const [backgroundImageIndex, setBackgroundImageIndex] = useState<number>(0);
 
-  useInterval(() => setBackgroundImageIndex(backgroundImageIndex + 1), 4000);
+  useEffect(() => {
+    const intervalId: NodeJS.Timeout = setInterval(() => {
+      setBackgroundImageIndex(prev => prev + 1)
+
+      return () => clearInterval(intervalId)
+    }, 4000)
+  }, [])
+
   return (
     <HomeImageWrapper>
       <HomeImage

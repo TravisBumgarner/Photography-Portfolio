@@ -11,11 +11,21 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "paths": {
-      "*": ["src/types/*"],
-      "sharedComponents": ["src/sharedComponents"],
-      "sharedTypes": ["src/sharedTypes/index.ts"],
-      "theme": ["src/theme.js"],
-      "utilities": ["src/utilities"]
+      "*": [
+        "src/types/*"
+      ],
+      "sharedComponents": [
+        "src/sharedComponents"
+      ],
+      "types": [
+        "src/types.ts"
+      ],
+      "theme": [
+        "src/theme.js"
+      ],
+      "utilities": [
+        "src/utilities"
+      ]
     }
   }
 }

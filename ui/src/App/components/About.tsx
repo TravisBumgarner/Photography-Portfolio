@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 import { Text, Header } from 'sharedComponents'
@@ -40,7 +40,7 @@ const About = () => {
                 <ContentSubWrapperRight>
                     <ContentSection>
                         <Header size="small">Location</Header>
-                        <Text>Remote, World</Text>
+                        <Text>Full Time Nomad</Text>
 
                         <Header size="small">Summary</Header>
                         <Text>

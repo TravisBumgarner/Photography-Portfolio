@@ -29,7 +29,7 @@ IsBackgroundPhoto (Check for True)
 2. Export Settings: (Check all 3)
 
   - `To Portfolio - Thumbnail`:
-    - Resize 500 pixels short side
+    - Resize 600 pixels short side
     - Quality: 100%
     - Sharpen for screen standard
     - Disable `Write Keywords as Lightroom Hierarchy`
