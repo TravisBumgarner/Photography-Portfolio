@@ -44,12 +44,11 @@ type ProcessedPhoto = {
     id: string,
     src: string,
     gallery: string
-    categories: [],
+    categories: string[],
     location: string
     contentType: string
     cameraType: string
-    make: string,
-    model: string
+    camera: string,
     lens: string,
     dateTaken: string,
     aperture: string,
@@ -62,6 +61,8 @@ type ProcessedPhoto = {
 const processHierarchicalSubject = (hierarchicalSubject: ParsedData['hierarchicalSubject']) => {
     // This function will cause failures further down the line with the lie of `as Record<LightroomKey, string>
     // In that case need to update Lightroom's Metadata
+
+
     const augmentedData = [...hierarchicalSubject]
     const isBackgroundPhotoIndex = augmentedData.indexOf('IsBackgroundPhoto')
     if (isBackgroundPhotoIndex > -1) {
@@ -106,17 +107,16 @@ const processFilm = () => {
 
 const processPhoto = async (file: string): Promise<ProcessedPhoto> => {
     const data: ParsedData = await exifr.parse(file, true)
-
+    console.log(data)
     const { Location, Gallery, ContentType, CameraType, IsBackgroundPhoto } = processHierarchicalSubject(data.hierarchicalSubject)
-
     // For when generating the metadata isn't the same as all the other image types.
     let metadataOverrides: Partial<ProcessedPhoto> = {}
-    switch (data.Make) {
+
+    switch (`${data.Make} - ${data.Model}`) {
         // Film Scanner
-        case 'NORITSU KOKI': {
+        case 'NORITSU KOKI - EZ Controller': {
             metadataOverrides = {
-                make: '',
-                model: '',
+                camera: '',
                 lens: '',
                 iso: '',
                 shutterSpeed: '',
@@ -126,17 +126,55 @@ const processPhoto = async (file: string): Promise<ProcessedPhoto> => {
             }
             break
         }
+        case 'SONY - DSLR-A290': {
+            metadataOverrides = {
+                camera: 'Sony A290'
+            }
+            break
+        }
+        case 'SONY - SLT-A55V': {
+            metadataOverrides = {
+                camera: 'Sony A55'
+            }
+            break
+        }
+        case 'SONY - DSC-RX100': {
+            metadataOverrides = {
+                camera: 'Sony RX100'
+            }
+            break
+        }
+        case 'NIKON CORPORATION - NIKON D5300':
+        case 'NIKON CORPORATION - NIKON D3400':
+        case 'NIKON CORPORATION - NIKON D7500': {
+            const modelToCamera: Record<string, string> = {
+                'NIKON D5300': 'Nikon D5300',
+                'NIKON D3400': 'Nikon D3400',
+                'NIKON D7500': 'Nikon D7500'
+            }
+
+            metadataOverrides = {
+                camera: modelToCamera[data.Model]
+            }
+            break
+        }
+        case 'Apple - iPhone 13 mini': {
+            metadataOverrides = {
+                camera: 'iPhone 13',
+                lens: ''
+            }
+            break
+        }
     }
-    
-    return {
+
+    const results = {
         id: generatePhotoId(data.RawFileName, data.DateCreated),
         src: data.RawFileName,
         location: Location,
         gallery: Gallery,
         contentType: ContentType,
         cameraType: CameraType,
-        make: data.Make,
-        model: data.Model,
+        camera: `${data.Make} - ${data.Model}`,
         lens: formatLens(data.Lens),
         iso: `${data.ISO}`,
         shutterSpeed: formatShutterSpeed(data.ExposureTime),
@@ -147,6 +185,8 @@ const processPhoto = async (file: string): Promise<ProcessedPhoto> => {
         dateTaken: data.DateCreated,
         ...metadataOverrides
     }
+
+    return results
 }
 
 type Gallery = {
@@ -155,19 +195,29 @@ type Gallery = {
     contentType: string
 }
 
-const processPhotos = () => {
+const VALID_EXTENSIONS = [
+    'jpg'
+]
+
+const processPhotos = async () => {
     const PHOTO_DIR = 'large'
 
     const photos = {}
     const galleries: Record<string, Gallery> = {}
     const locations: string[] = []
 
-    fs.readdir(PHOTO_DIR, (err, files) => {
-        files.forEach(async file => {
-            const result = await processPhoto(path.join(PHOTO_DIR, file))
-            console.log(result)
-        });
-    });
+    const files = fs.readdirSync(PHOTO_DIR)
+
+    for (let file of files) {
+        console.log(file)
+        const extension = file.split('.').slice(-1)[0]
+        if (!VALID_EXTENSIONS.includes(extension)) {
+            console.log('\tSkipping for invalid file type')
+            continue
+        }
+
+        const result = await processPhoto(path.join(PHOTO_DIR, file))
+    }
 }
 
 processPhotos()
