@@ -1,3 +1,8 @@
+# Setup
+
+1. [Install GCloud CLI](https://cloud.google.com/sdk/docs/install)  and `gcloud auth login`
+2. Now you can deploy
+
 # Lightroom
 
 1. Add Metadata to Photos:
@@ -51,7 +56,7 @@ IsBackgroundPhoto (Check for True)
 
 9. Navigate to https://console.cloud.google.com/
 10. Drag and drop `large` and `thumbnail` into GCS
-11. `npm run deploy`
+11. `yarn deploy`
 
 
 

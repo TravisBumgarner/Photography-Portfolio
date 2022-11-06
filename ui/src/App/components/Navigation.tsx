@@ -1,10 +1,14 @@
-import React, { ReactElement } from 'react'
-import { Link } from 'react-router-dom'
+import React, { ReactElement, useMemo } from 'react'
+import { Link, useMatch } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
 import { Header } from 'sharedComponents'
 import { FONT_FAMILY_HEADER, CONTENT_SPACING, TEXT_FONT_SIZES } from 'theme'
 import { GalleryType } from 'types'
+import { useState } from 'react'
+import { useEffect } from 'react'
+import { useRef } from 'react'
+import { useCallback } from 'react'
 
 const NavigationWrapper = styled.div`
     text-align: right;
@@ -58,22 +62,24 @@ type Props = {
 }
 
 const Navigation = ({ galleries, toggleNavigation }: Props) => {
-    const projectLinks: ReactElement[] = []
-    const snapshotLinks: ReactElement[] = []
+    const projectLinks = useRef<ReactElement[]>([])
+    const snapshotLinks = useRef<ReactElement[]>([])
 
-    galleries.sort((a, b) => (a.title > b.title ? 1 : -1))
-    galleries.map(({ title, content_type, slug }) => {
-        const link = (
-            <LinkListItem key={slug} onClick={toggleNavigation}>
-                <InternalLink to={`/portfolio/${content_type}/${slug}`}>{title}</InternalLink>
-            </LinkListItem>
-        )
-        if (content_type.toLowerCase() === 'project') {
-            projectLinks.push(link)
-        } else if (content_type.toLowerCase() === 'snapshot') {
-            snapshotLinks.push(link)
-        }
-    })
+    useMemo(() => {
+        galleries.sort((a, b) => (a.title > b.title ? 1 : -1))
+        galleries.map(({ title, content_type, slug }) => {
+            const link = (
+                <LinkListItem key={slug} onClick={toggleNavigation}>
+                    <InternalLink to={`/portfolio/${content_type}/${slug}`}>{title}</InternalLink>
+                </LinkListItem>
+            )
+            if (content_type.toLowerCase() === 'project') {
+                projectLinks.current.push(link)
+            } else if (content_type.toLowerCase() === 'snapshot') {
+                snapshotLinks.current.push(link)
+            }
+        })
+    }, [galleries])
 
     const socialSectionContent = [
         {
@@ -82,25 +88,25 @@ const Navigation = ({ galleries, toggleNavigation }: Props) => {
         }
     ]
 
-    const socialLinks = socialSectionContent.map(m => {
+    const socialLinks = useMemo(() => socialSectionContent.map(m => {
         return (
             <LinkListItem key={m.title} onClick={toggleNavigation}>
                 <ExternalLink target="_blank" href={m.route}>{m.title}</ExternalLink>
             </LinkListItem>
         )
-    })
+    }), [socialSectionContent])
 
     return (
         <NavigationWrapper>
             <SubNavigationWrapper>
                 <Header size="medium">Photo Essays</Header>
-                <ul>{projectLinks}</ul>
+                <ul>{projectLinks.current}</ul>
             </SubNavigationWrapper>
 
             <SubNavigationWrapper>
                 <Header size="medium">Snapshots</Header>
                 <ul>
-                    {snapshotLinks}
+                    {snapshotLinks.current}
                 </ul>
             </SubNavigationWrapper>
 

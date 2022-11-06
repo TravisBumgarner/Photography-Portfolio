@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
 
 import { Header, Text } from 'sharedComponents'
@@ -12,20 +12,22 @@ const ErrorWrapper = styled.div`
 `
 
 const Error = ({ value }: { value: '404' | '500' }) => {
-    let message
-    let header
-
-    switch (value) {
-        case "404":
-            header = 'Sorry!'
-            message = 'The page you were looking for was not found.'
-            break
-        default:
-        case "500":
-            header = 'Whoops!'
-            message = 'Something went wrong. This error has been reported. Please try again later.'
-            break
-    }
+    const { message, header } = useMemo(() => {
+        switch (value) {
+            case "404": {
+                return {
+                    header: 'Sorry!',
+                    message: 'The page you were looking for was not found.'
+                }
+            }
+            case "500": {
+                return {
+                    header: 'Whoops!',
+                    message: 'Something went wrong. This error has been reported. Please try again later.'
+                }
+            }
+        }
+    }, [value])
 
     return (
         <ErrorWrapper>

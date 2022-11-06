@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
 
 const TRANSITION_SPEED = 1
 const CONTENT_SPACING = {
@@ -37,12 +37,6 @@ const FONT_FAMILY_HEADER = "'Raleway', sans-serif;"
 const FONT_FAMILY_TEXT = "'Montserrat', sans-serif"
 
 const FONT_SIZE_INPUTS_AND_BUTTONS = 14
-
-const sizes = {
-    desktop: 992,
-    tablet: 768,
-    phone: 576
-}
 
 const GlobalStyle = createGlobalStyle`
     html {

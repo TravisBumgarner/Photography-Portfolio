@@ -2,8 +2,23 @@
 - [x] Upgrade React to 18
 - [ ] ~~Remove browser router?~~
 - [ ] Experiment with Lightroom Settings
-- [ ] Update package.json
+- [x] Update package.json
 - [x] Update Nav
 - [ ] Make code more performant
+    - [ ] Photo
+    - [ ] Gallery
+    - [ ] Portfolio
+    - [x] About
+    - [x] Home
+    - [x] Navigation
+    - [x] TitleBar
+    - [x] App
+    - [x] Error
+    - [x] Header
+    - [x] Text
+    - [x] theme
+    - [x] types
 - [ ] Load new photos
 - [ ] Do I need public/index.html
+- [ ] Get rid of double quotes, semicolon
+- [ ] Add pre commit

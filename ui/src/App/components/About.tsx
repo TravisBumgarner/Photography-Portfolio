@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Text, Header } from 'sharedComponents'
+import { List, Header } from 'sharedComponents'
 import { CONTENT_SPACING } from 'theme'
 
 const ContentSection = styled.div`
@@ -40,30 +40,32 @@ const About = () => {
                 <ContentSubWrapperRight>
                     <ContentSection>
                         <Header size="small">Location</Header>
-                        <Text>Full Time Nomad</Text>
+                        <List
+                            items={[
+                                'Full Time Nomad'
+                            ]}
+                        />
 
                         <Header size="small">Summary</Header>
-                        <Text>
-                            Software Engineer
-                            <br />
-                            Photographer
-                            <br />
-                            Maker
-                            <br />
-                            Designer
-                        </Text>
+                        <List
+                            items={[
+                                'Software Engineer',
+                                'Photographer',
+                                'Maker',
+                                'Designer'
+                            ]}
+                        />
 
                         <Header size="small">AWARDS & RECOGNITIONS</Header>
-                        <Text>
-                            2018 Noyes Museum of Art of Stockton University's RAW Exhibition
-                            <br />
-                            2017 1st Place BARPCV Photography Competition
-                            <br />
-                            2016 Front Page of National Geographic’s YourShot
-                            <br />
-                            2016 MIT Art Party
-                            <br />
-                        </Text>
+                        <List
+                            items={[
+                                '2018 Noyes Museum of Art of Stockton University\'s RAW Exhibition',
+                                '2017 1st Place BARPCV Photography Competition',
+                                '2016 Front Page of National Geographic\'s YourShot',
+                                '2016 MIT Art Party',
+                            ]}
+                        />
+
                     </ContentSection>
                 </ContentSubWrapperRight>
             </ContentWrapper>

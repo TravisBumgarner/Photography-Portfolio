@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import { Header } from "sharedComponents";
 import { CONTENT_SPACING, ICON_FONT_SIZES, TRANSITION_SPEED, ICON_COLOR, } from "theme";
 
-const TitleBarWrapper = styled.div`
-  display: flex;
+const TitleBarWrapper = styled.div<{ isTitlebarVisible: boolean }>`
+  display: ${({ isTitlebarVisible }) => isTitlebarVisible ? 'flex' : 'none'};
   justify-content: space-between;
 `;
 
@@ -38,11 +38,12 @@ const NavigationOpen = styled(({ isNavigationVisible, ...rest }) => (
 type Props = {
   toggleNavigation: () => void;
   isNavigationVisible: boolean;
+  isTitlebarVisible: boolean;
 };
 
-const TitleBar = ({ toggleNavigation, isNavigationVisible }: Props) => {
+const TitleBar = ({ toggleNavigation, isNavigationVisible, isTitlebarVisible }: Props) => {
   return (
-    <TitleBarWrapper>
+    <TitleBarWrapper isTitlebarVisible={isTitlebarVisible}>
       <InternalLink to="/">
         <Header size="large">Travis Bumgarner Photography</Header>
       </InternalLink>

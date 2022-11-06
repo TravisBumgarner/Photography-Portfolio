@@ -13,7 +13,7 @@ type PhotoType = {
   src: string;
   gallery: GalleryType;
   location: LocationType;
-  date_taken: string;
+  date_taken: string
   categories: CategoryType;
   camera_type: string;
   make: string;

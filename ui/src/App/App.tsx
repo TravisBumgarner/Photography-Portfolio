@@ -1,18 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo, useCallback } from 'react'
 import { Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import { FaCaretRight } from "react-icons/fa";
 
 import { Home, About, Portfolio, Navigation, TitleBar } from "./components";
 import { Error } from "sharedComponents";
-import {
-  GlobalStyle,
-  ICON_FONT_SIZES,
-  TRANSITION_SPEED,
-  ICON_COLOR,
-  APP_BORDER
-} from "theme";
-import getData from "./content";
+import { GlobalStyle, ICON_FONT_SIZES, TRANSITION_SPEED, ICON_COLOR, APP_BORDER } from "theme";
+import getContent from "./content";
 
 const NavigationClose = styled(({ isNavigationVisible, ...rest }) => (
   <FaCaretRight {...rest} />
@@ -48,18 +42,14 @@ const GridContainer = styled.div`
   grid-template-rows:  min-content 1fr;
 `;
 
-const GridItemTitleBar = styled.div`
-
-`
 const GridItemContent = styled.div`
   box-sizing: border-box;
-  /* overflow-y: hidden; */
   overflow-x: hidden;
   width: 100%;
   height: 100%;
 `
 
-const NavigationWrapper = styled.div`
+const NavigationWrapper = styled.div<{ isNavigationVisible: boolean }>`
   box-sizing: border-box;
   display: flex;
   position: fixed;
@@ -67,59 +57,38 @@ const NavigationWrapper = styled.div`
   top: 0;
   overflow: scroll;
   transition: right ${TRANSITION_SPEED}s;
-  right: ${({ isNavigationVisible }: { isNavigationVisible: boolean }) =>
-    isNavigationVisible ? "0" : `-100vw`};
+  right: ${({ isNavigationVisible }) => isNavigationVisible ? "0" : `-100vw`};
 `;
 
 const App = (
-  // { match: {
-  //   params: { photoIdFromUrl }
-  // } },
 ) => {
-  const { galleries, backgroundPhotos, photos } = getData();
+  const { galleries, backgroundPhotos, photos } = useMemo(() => getContent(), [])
 
   const [isNavigationVisible, setIsNavigationVisible] = useState(false);
   const [isTitlebarVisible, setIsTitlebarVisible] = useState(true);
 
-  const toggleNavigation = () => {
-    setIsNavigationVisible(!isNavigationVisible);
-  };
+  const toggleNavigation = useCallback(() => setIsNavigationVisible(prev => !prev), [])
+
   return (
     <>
       <GlobalStyle />
       <GridContainer>
-        <GridItemTitleBar>
-          {isTitlebarVisible ? (<TitleBar
-            isNavigationVisible={isNavigationVisible}
-            toggleNavigation={toggleNavigation}
-          />) : ""}
-        </GridItemTitleBar>
+        <TitleBar
+          isNavigationVisible={isNavigationVisible}
+          toggleNavigation={toggleNavigation}
+          isTitlebarVisible={isTitlebarVisible}
+        />
         <GridItemContent>
           <Routes>
-            <Route
-              path="/"
-              element={<Home backgroundPhotos={backgroundPhotos} />}
-            />
+            <Route path="/" element={<Home backgroundPhotos={backgroundPhotos} />} />
             <Route path="/about" element={<About />} />
-            <Route
-              path="/portfolio/:contentType/:gallerySlug"
-              element={
-                <Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} />
-              }
-            />
+            <Route path="/portfolio/:contentType/:gallerySlug" element={<Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} />} />
             <Route path="/portfolio/:contentType/:gallerySlug">
               <Route index element={<Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} />} />
               <Route path=":photoId" element={<Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} />} />
             </Route>
-            <Route
-              path="/error500"
-              element={<Error value="500" />}
-            />
-            <Route
-              path="/error404"
-              element={<Error value="404" />}
-            />
-            <Route element={<Error value="404" />} />
+            <Route path="/error500" element={<Error value="500" />} />
+            <Route path="*" element={<Error value="404" />} />
           </Routes>
         </GridItemContent>
         <NavigationWrapper isNavigationVisible={isNavigationVisible}>
