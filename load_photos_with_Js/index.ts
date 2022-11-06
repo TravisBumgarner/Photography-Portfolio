@@ -2,12 +2,14 @@ import fs from 'fs'
 import path from 'path'
 
 import exifr from 'exifr'
+import { v5 as uuidv5 } from 'uuid'
 
 type LightroomKey =
     | 'CameraType'
     | 'ContentType'
     | 'Gallery'
     | 'Location'
+    | 'IsBackgroundPhoto'
 
 type ParsedData = {
     DateCreated: string // '2022-04-13T10:43:36.589+02:00',
@@ -22,7 +24,7 @@ type ParsedData = {
     //     'Gallery|2022',
     //     'Location|France'
     // ],
-    hierarchicalSubject: `${LightroomKey}|${string}`[]
+    hierarchicalSubject: string[]
     Make: string //'Apple',
     Model: string // 'iPhone 13 mini',
     ExposureTime: number // 0.0008695652173913044,
@@ -54,24 +56,80 @@ type ProcessedPhoto = {
     shutterSpeed: string,
     iso: string,
     focalLength: string,
-    isHomeBackground: boolean
+    isBackgroundPhoto: string // '0' | '1'
 }
 
 const processHierarchicalSubject = (hierarchicalSubject: ParsedData['hierarchicalSubject']) => {
-    return hierarchicalSubject.reduce((accum, entry) => {
-        const [key, value] = entry.split('|')
-        accum[(key) as LightroomKey] = value
-        return accum
-    }, {} as Record<LightroomKey, string>)
+    // This function will cause failures further down the line with the lie of `as Record<LightroomKey, string>
+    // In that case need to update Lightroom's Metadata
+    const augmentedData = [...hierarchicalSubject]
+    const isBackgroundPhotoIndex = augmentedData.indexOf('IsBackgroundPhoto')
+    if (isBackgroundPhotoIndex > -1) {
+        augmentedData[isBackgroundPhotoIndex] = 'IsBackgroundPhoto|1'
+    } else {
+        augmentedData.push('IsBackgroundPhoto|0')
+    }
+
+    return augmentedData
+        .reduce((accum, entry) => {
+            const [key, value] = entry.split('|')
+            accum[(key) as LightroomKey] = value
+            return accum
+        }, {} as Record<LightroomKey, string>)
+}
+
+const generatePhotoId = (filename: string, date_taken: string) => {
+    const PHOTOS_NAMESPACE = 'deadbeef-beef-491e-99b0-da01ff1f3341';
+
+    return uuidv5(`${filename} ${date_taken}`, PHOTOS_NAMESPACE);
+}
+
+const formatShutterSpeed = (shutterSpeed: number) => {
+    if (shutterSpeed < 1) {
+        return `1/${1 / shutterSpeed}s`
+    } else {
+        return `${shutterSpeed}s`
+    }
+}
+
+const formatLens = (lens: string) => {
+    const lookup: Record<string, string> = {
+        'iPhone 13 mini back dual wide camera 5.1mm f/1.6': ''
+    }
+
+    return lookup[lens] || lens
+}
+
+const processFilm = () => {
+
 }
 
 const processPhoto = async (file: string): Promise<ProcessedPhoto> => {
     const data: ParsedData = await exifr.parse(file, true)
 
-    const { Location, Gallery, ContentType, CameraType } = processHierarchicalSubject(data.hierarchicalSubject)
+    const { Location, Gallery, ContentType, CameraType, IsBackgroundPhoto } = processHierarchicalSubject(data.hierarchicalSubject)
 
+    // For when generating the metadata isn't the same as all the other image types.
+    let metadataOverrides: Partial<ProcessedPhoto> = {}
+    switch (data.Make) {
+        // Film Scanner
+        case 'NORITSU KOKI': {
+            metadataOverrides = {
+                make: '',
+                model: '',
+                lens: '',
+                iso: '',
+                shutterSpeed: '',
+                aperture: '',
+                focalLength: '',
+                dateTaken: ''
+            }
+            break
+        }
+    }
+    
     return {
-        id: '',
+        id: generatePhotoId(data.RawFileName, data.DateCreated),
         src: data.RawFileName,
         location: Location,
         gallery: Gallery,
@@ -79,14 +137,15 @@ const processPhoto = async (file: string): Promise<ProcessedPhoto> => {
         cameraType: CameraType,
         make: data.Make,
         model: data.Model,
-        lens: data.Lens,
+        lens: formatLens(data.Lens),
         iso: `${data.ISO}`,
-        shutterSpeed: `${data.ExposureTime}`,
+        shutterSpeed: formatShutterSpeed(data.ExposureTime),
         aperture: `${data.FNumber}`,
-        isHomeBackground: false,
+        isBackgroundPhoto: IsBackgroundPhoto,
         focalLength: `${data.FocalLength}`,
         categories: [],
-        dateTaken: data.DateCreated
+        dateTaken: data.DateCreated,
+        ...metadataOverrides
     }
 }
 
