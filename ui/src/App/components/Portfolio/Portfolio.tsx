@@ -23,13 +23,9 @@ const Portfolio = (
     const [filteredPhotoIds, setFilteredPhotoIds] = useState<string[]>([])
     const [selectedFilteredPhotoIndex, setSelectedFilteredPhotoIndex] = useState<number | undefined>(undefined);
     const [initialLoad, setInitialLoad] = useState(true)
-    // I couldn't figure out a more elegant way to load in photo IDs from the URL on initial load so we have this useState.
-    const [scrollToId, setScrollToId] = useState<number | undefined>(undefined)
-    // Used for scrolling
-    const { contentType, gallerySlug, photoId } = useParams<{ contentType: string, gallerySlug: string, photoId: string }>();
+    const [scrollToPhotoId, setScrollToPhotoId] = useState<number | undefined>(undefined) // Used for loading ID on initial page load
+    const { gallerySlug, photoId } = useParams<{ contentType: string, gallerySlug: string, photoId: string }>();
     const navigate = useNavigate();
-
-    console.log(gallerySlug, photoId)
 
     useEffect(() => setIsTitlebarVisible(selectedFilteredPhotoIndex === undefined), [selectedFilteredPhotoIndex])
     const filterPhotoIds = () => {
@@ -50,7 +46,7 @@ const Portfolio = (
             setInitialLoad(false)
         }
         setFilteredPhotoIds(filteredPhotoIds)
-        setScrollToId(undefined)
+        setScrollToPhotoId(undefined)
     }, [gallerySlug])
 
     const handleUrlChange = () => {
@@ -73,9 +69,8 @@ const Portfolio = (
                 photos={photos}
                 filteredPhotoIds={filteredPhotoIds}
                 galleryDetails={galleryDetails}
-                scrollToId={scrollToId}
+                scrollToPhotoId={scrollToPhotoId}
                 elementsRef={elementsRef}
-                setScrollToId={setScrollToId}
             />
         ) : (
             < Photo
@@ -83,7 +78,7 @@ const Portfolio = (
                 selectedFilteredPhotoIndex={selectedFilteredPhotoIndex}
                 photos={photos}
                 filteredPhotoIds={filteredPhotoIds}
-                setScrollToId={setScrollToId}
+                setScrollToPhotoId={setScrollToPhotoId}
             />
         )
 }

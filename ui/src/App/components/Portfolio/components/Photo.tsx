@@ -144,7 +144,7 @@ type PhotoProps = {
   filteredPhotoIds: string[];
   selectedFilteredPhotoIndex: number;
   setSelectedFilteredPhotoIndex: Dispatch<SetStateAction<number>>;
-  setScrollToId: Dispatch<SetStateAction<number>>;
+  setScrollToPhotoId: Dispatch<SetStateAction<number>>;
 };
 
 const Photo = ({
@@ -152,7 +152,7 @@ const Photo = ({
   filteredPhotoIds,
   selectedFilteredPhotoIndex,
   setSelectedFilteredPhotoIndex,
-  setScrollToId,
+  setScrollToPhotoId,
 }: PhotoProps) => {
   const details = photos[filteredPhotoIds[selectedFilteredPhotoIndex]];
 
@@ -176,7 +176,7 @@ const Photo = ({
   };
 
   const exitSinglePhotoView = () => {
-    setScrollToId(selectedFilteredPhotoIndex);
+    setScrollToPhotoId(selectedFilteredPhotoIndex);
     setSelectedFilteredPhotoIndex(undefined);
   };
 
