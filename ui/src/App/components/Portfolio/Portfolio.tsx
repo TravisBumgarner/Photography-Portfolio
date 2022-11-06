@@ -2,10 +2,7 @@ import React, { Dispatch, SetStateAction, useState, useEffect, createRef } from 
 import { useParams, useNavigate } from 'react-router-dom';
 
 import { GalleryType, PhotoType } from 'types'
-import {
-    Gallery,
-    Photo
-} from './components'
+import { Gallery, Photo } from './components'
 
 type Props = {
     photos: { [id: string]: PhotoType },
@@ -13,12 +10,7 @@ type Props = {
     setIsTitlebarVisible: Dispatch<SetStateAction<boolean>>
 }
 
-const Portfolio = (
-    {
-        photos,
-        galleries,
-        setIsTitlebarVisible,
-    }: Props
+const Portfolio = ({ photos, galleries, setIsTitlebarVisible }: Props
 ) => {
     const [filteredPhotoIds, setFilteredPhotoIds] = useState<string[]>([])
     const [selectedFilteredPhotoIndex, setSelectedFilteredPhotoIndex] = useState<number | undefined>(undefined);

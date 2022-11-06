@@ -1,4 +1,4 @@
-import React, { useEffect, RefObject, Dispatch, SetStateAction } from "react";
+import React, { useEffect, RefObject } from "react";
 import styled from 'styled-components'
 
 import { Header } from "sharedComponents";

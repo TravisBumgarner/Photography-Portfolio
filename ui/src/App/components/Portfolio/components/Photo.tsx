@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useEffect } from 'react'
 import styled from "styled-components";
 import { FaTimes, FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 
-import { Text, Header } from "sharedComponents";
+import { Text } from "sharedComponents";
 import { PhotoType } from "types";
 import { ICON_FONT_SIZES, ICON_COLOR, APP_BORDER } from "theme";
 
@@ -37,16 +37,6 @@ const NextButton = styled(FaArrowCircleRight)`
   &:hover {
     fill: ${ICON_COLOR.hover};
   }
-`;
-
-const MetadataButton = styled.button`
-  border-radius: 5px;
-  background-color: black;
-  color: white;
-  border: solid black;
-  padding: 5px;
-  font-size: 1rem;
-  cursor: pointer;
 `;
 
 const Spacer = styled(({ className }) => <span className={className}>//</span>)`
