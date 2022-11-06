@@ -1,7 +1,7 @@
-import * as React from 'react'
-import { useLocation, useParams, useNavigate } from 'react-router-dom';
+import React, { Dispatch, SetStateAction, useState, useEffect, createRef } from 'react'
+import { useParams, useNavigate } from 'react-router-dom';
 
-import { GalleryType, PhotoType } from 'sharedTypes'
+import { GalleryType, PhotoType } from 'types'
 import {
     Gallery,
     Photo
@@ -10,7 +10,7 @@ import {
 type Props = {
     photos: { [id: string]: PhotoType },
     galleries: GalleryType[],
-    setIsTitlebarVisible: React.Dispatch<React.SetStateAction<boolean>>
+    setIsTitlebarVisible: Dispatch<SetStateAction<boolean>>
 }
 
 const Portfolio = (
@@ -20,18 +20,18 @@ const Portfolio = (
         setIsTitlebarVisible,
     }: Props
 ) => {
-    const [filteredPhotoIds, setFilteredPhotoIds] = React.useState<string[]>([])
-    const [selectedFilteredPhotoIndex, setSelectedFilteredPhotoIndex] = React.useState<number | undefined>(undefined);
-    const [initialLoad, setInitialLoad] = React.useState(true)
+    const [filteredPhotoIds, setFilteredPhotoIds] = useState<string[]>([])
+    const [selectedFilteredPhotoIndex, setSelectedFilteredPhotoIndex] = useState<number | undefined>(undefined);
+    const [initialLoad, setInitialLoad] = useState(true)
     // I couldn't figure out a more elegant way to load in photo IDs from the URL on initial load so we have this useState.
-    const [scrollToId, setScrollToId] = React.useState<number | undefined>(undefined)
+    const [scrollToId, setScrollToId] = useState<number | undefined>(undefined)
     // Used for scrolling
     const { contentType, gallerySlug, photoId } = useParams<{ contentType: string, gallerySlug: string, photoId: string }>();
     const navigate = useNavigate();
 
     console.log(gallerySlug, photoId)
 
-    React.useEffect(() => setIsTitlebarVisible(selectedFilteredPhotoIndex === undefined), [selectedFilteredPhotoIndex])
+    useEffect(() => setIsTitlebarVisible(selectedFilteredPhotoIndex === undefined), [selectedFilteredPhotoIndex])
     const filterPhotoIds = () => {
         const filteredPhotoIds = Object.values(photos)
             .filter(photo => photo.gallery.slug == gallerySlug)
@@ -43,7 +43,7 @@ const Portfolio = (
             .map(({ id }) => id)
         return filteredPhotoIds
     }
-    React.useEffect(() => {
+    useEffect(() => {
         const filteredPhotoIds = filterPhotoIds()
         if (initialLoad && photoId && selectedFilteredPhotoIndex === undefined) {
             setSelectedFilteredPhotoIndex(filteredPhotoIds.indexOf(photoId))
@@ -61,9 +61,9 @@ const Portfolio = (
             `/portfolio/${galleryDetails.content_type}/${galleryDetails.slug}/${filteredPhotoIds[selectedFilteredPhotoIndex] || ''}`
         )
     };
-    React.useEffect(handleUrlChange, [filteredPhotoIds[selectedFilteredPhotoIndex]])
+    useEffect(handleUrlChange, [filteredPhotoIds[selectedFilteredPhotoIndex]])
 
-    const elementsRef = filteredPhotoIds.map(() => React.createRef())
+    const elementsRef = filteredPhotoIds.map(() => createRef())
     const galleryDetails = galleries.length && galleries.find(gallery => gallery.slug == gallerySlug)
 
     return selectedFilteredPhotoIndex === undefined

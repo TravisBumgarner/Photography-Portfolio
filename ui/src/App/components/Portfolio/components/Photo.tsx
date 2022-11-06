@@ -1,9 +1,9 @@
-import * as React from "react";
+import React, { Dispatch, SetStateAction, useEffect } from 'react'
 import styled from "styled-components";
 import { FaTimes, FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 
 import { Text, Header } from "sharedComponents";
-import { PhotoType } from "sharedTypes";
+import { PhotoType } from "types";
 import { ICON_FONT_SIZES, ICON_COLOR, APP_BORDER } from "theme";
 
 const FILM = "Film";
@@ -143,8 +143,8 @@ type PhotoProps = {
   photos: { [id: string]: PhotoType };
   filteredPhotoIds: string[];
   selectedFilteredPhotoIndex: number;
-  setSelectedFilteredPhotoIndex: React.Dispatch<React.SetStateAction<number>>;
-  setScrollToId: React.Dispatch<React.SetStateAction<number>>;
+  setSelectedFilteredPhotoIndex: Dispatch<SetStateAction<number>>;
+  setScrollToId: Dispatch<SetStateAction<number>>;
 };
 
 const Photo = ({
@@ -190,7 +190,7 @@ const Photo = ({
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener("keydown", handleKeyPress);
     return () => {
       window.removeEventListener("keydown", handleKeyPress);

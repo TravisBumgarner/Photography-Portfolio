@@ -1,8 +1,8 @@
-import * as React from "react";
+import React, { useEffect, RefObject, Dispatch, SetStateAction } from "react";
 import styled from 'styled-components'
 
 import { Header } from "sharedComponents";
-import { PhotoType, GalleryType } from "sharedTypes";
+import { PhotoType, GalleryType } from "types";
 
 import { CONTENT_SPACING } from 'theme'
 
@@ -51,12 +51,12 @@ type Props = {
     filteredPhotoIds: string[]
     setSelectedFilteredPhotoIndex: any
     scrollToId: number
-    elementsRef: React.RefObject<any>[]
-    setScrollToId: React.Dispatch<React.SetStateAction<number>>
+    elementsRef: RefObject<any>[]
+    setScrollToId: Dispatch<SetStateAction<number>>
 };
 
 const Gallery = ({ photos, filteredPhotoIds, galleryDetails, setSelectedFilteredPhotoIndex, scrollToId, setScrollToId, elementsRef }: Props) => {
-    React.useEffect(() => {
+    useEffect(() => {
         if (elementsRef.length > 0 && scrollToId !== undefined) {
             elementsRef[scrollToId].current.scrollIntoView(true)
         }
@@ -74,7 +74,8 @@ const Gallery = ({ photos, filteredPhotoIds, galleryDetails, setSelectedFiltered
                     </GalleryItem>)
                 })
             }</GalleryWrapper>
-        </>)
+        </>
+    )
 };
 
 export default Gallery;

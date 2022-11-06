@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from 'react'
 import { Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import { FaCaretRight } from "react-icons/fa";
@@ -78,8 +78,8 @@ const App = (
 ) => {
   const { galleries, backgroundPhotos, photos } = getData();
 
-  const [isNavigationVisible, setIsNavigationVisible] = React.useState(false);
-  const [isTitlebarVisible, setIsTitlebarVisible] = React.useState(true);
+  const [isNavigationVisible, setIsNavigationVisible] = useState(false);
+  const [isTitlebarVisible, setIsTitlebarVisible] = useState(true);
 
   const toggleNavigation = () => {
     setIsNavigationVisible(!isNavigationVisible);

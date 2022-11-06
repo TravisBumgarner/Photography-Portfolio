@@ -1,10 +1,5 @@
 import output from "./output.json";
-import {
-  GalleryType,
-  PhotoType,
-  LocationType,
-  CategoryType,
-} from "sharedTypes";
+import { GalleryType, PhotoType, LocationType, CategoryType } from "types";
 
 type Data = {
   photos: { [id: string]: PhotoType };
