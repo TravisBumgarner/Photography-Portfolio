@@ -79,18 +79,6 @@ const Navigation = ({ galleries, toggleNavigation }: Props) => {
         {
             title: 'LinkedIn',
             route: 'https://www.linkedin.com/in/travisbumgarner/',
-        },
-        {
-            title: 'Twitter',
-            route: 'https://twitter.com/travis_the_makr/',
-        },
-        {
-            title: 'Instagram',
-            route: 'https://www.instagram.com/esafodos/',
-        },
-        {
-            title: 'Flickr',
-            route: 'https://www.flickr.com/people/esa_foto/',
         }
     ]
 
