@@ -35,6 +35,7 @@ IsBackgroundPhoto (Check for True)
     - Disable `Write Keywords as Lightroom Hierarchy`
     - output dir: `thumbnails`
   - `To Portfolio - Large`:
+    - Don't limit file size
     - Resize 2000 x 2000 pixels
     - Quality: 100%
     - Sharpen for screen standard
@@ -43,7 +44,7 @@ IsBackgroundPhoto (Check for True)
     - output dir: `large`
 
 3. Copy `large` directory to `./load_photos`
-4. `mkvirtualenv photo20` (Something is totally messed up here, ended up just using global python, ran outside of vscode)
+4. `mkvirtualenv photo20`
 5. `workon photo20`
 6. `brew install exempi`
 7. `pip3 install -r requirements.txt`

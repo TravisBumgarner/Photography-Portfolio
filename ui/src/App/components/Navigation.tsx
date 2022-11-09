@@ -53,27 +53,24 @@ const ExternalLink = styled.a`
 `
 
 type Props = {
-    galleries: GalleryType[],
+    galleries: Record<string, GalleryType>,
     toggleNavigation: () => void
 }
 
 const Navigation = ({ galleries, toggleNavigation }: Props) => {
-    const projectLinks: ReactElement[] = []
-    const snapshotLinks: ReactElement[] = []
+    const links: ReactElement[] = []
 
-    galleries.sort((a, b) => (a.title > b.title ? 1 : -1))
-    galleries.map(({ title, content_type, slug }) => {
-        const link = (
-            <LinkListItem key={slug} onClick={toggleNavigation}>
-                <InternalLink to={`/portfolio/${content_type}/${slug}`}>{title}</InternalLink>
-            </LinkListItem>
-        )
-        if (content_type.toLowerCase() === 'project') {
-            projectLinks.push(link)
-        } else if (content_type.toLowerCase() === 'snapshot') {
-            snapshotLinks.push(link)
-        }
-    })
+    Object
+        .values(galleries)
+        .sort((a, b) => (a.title > b.title ? 1 : -1))
+        .map(({ title, slug }) => {
+            const link = (
+                <LinkListItem key={slug} onClick={toggleNavigation}>
+                    <InternalLink to={`/${slug}`}>{title}</InternalLink>
+                </LinkListItem>
+            )
+            links.push(link)
+        })
 
     const socialSectionContent = [
         {
@@ -93,15 +90,8 @@ const Navigation = ({ galleries, toggleNavigation }: Props) => {
     return (
         <NavigationWrapper>
             <SubNavigationWrapper>
-                <Header size="medium">Photo Essays</Header>
-                <ul>{projectLinks}</ul>
-            </SubNavigationWrapper>
-
-            <SubNavigationWrapper>
-                <Header size="medium">Snapshots</Header>
-                <ul>
-                    {snapshotLinks}
-                </ul>
+                <Header size="medium">Galleries</Header>
+                <ul>{links}</ul>
             </SubNavigationWrapper>
 
             <SubNavigationWrapper>

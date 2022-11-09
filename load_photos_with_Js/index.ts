@@ -4,12 +4,91 @@ import path from 'path'
 import * as exifr from 'exifr'
 import { v5 as uuidv5 } from 'uuid'
 
-type LightroomKey =
-    | 'CameraType'
-    | 'ContentType'
-    | 'Gallery'
-    | 'Location'
-    | 'IsBackgroundPhoto'
+const PHOTO_DIR = 'large'
+
+const DEBUG = true // to get logs.
+
+
+
+type Gallery = {
+    title: string,
+    slug: string
+    // contentType: 'snapshot' | 'project'
+}
+
+// new Gallery Names are set in Lightroom
+const GALLERIES: Record<string, Gallery> = {
+    '2014 Snapshots': {
+        "title": "2014",
+        "slug": "2014",
+        // "contentType": "snapshot"
+    },
+    '2015 Snapshots': {
+        "title": "2015",
+        "slug": "2015",
+        // "contentType": "snapshot"
+    },
+    '2016 Snapshots': {
+        "title": "2016",
+        "slug": "2016",
+        // "contentType": "snapshot"
+    },
+    '2017 Snapshots': {
+        "title": "2017",
+        "slug": "2017",
+        // "contentType": "snapshot"
+    },
+    '2018 Snapshots': {
+        "title": "2018",
+        "slug": "2018",
+        // "contentType": "snapshot"
+    },
+    '2019 Snapshots': {
+        "title": "2019",
+        "slug": "2019",
+        // "contentType": "snapshot"
+    },
+    '2020 Snapshots': {
+        "title": "2020",
+        "slug": "2020",
+        // "contentType": "snapshot"
+    },
+    '2021 Snapshots': {
+        "title": "2021",
+        "slug": "2021",
+        // "contentType": "snapshot"
+    },
+    '2022 Snapshots': {
+        "title": "2022",
+        "slug": "2022",
+        // "contentType": "snapshot"
+    },
+    '2x3x4': {
+        "title": "2x3x4",
+        "slug": "2x3x4",
+        // "contentType": "project"
+    },
+    'hinds-and-trusty-wedding': {
+        "title": "Hinds & Trusty Wedding",
+        "slug": "hinds-and-trusty-wedding",
+        // "contentType": "project"
+    },
+    'architecture-of-mexico': {
+        "title": "Architecture of Mexico",
+        "slug": "architecture-of-mexico",
+        // "contentType": "project"
+    },
+    'the-vw-beetle-spectrum': {
+        "title": "The VW Beetle Spectrum",
+        "slug": "the-vw-beetle-spectrum",
+        // "contentType": "project"
+    },
+    'colors-of-penonome-panama': {
+        "title": "Colors of Penonom\u00e9 Panama",
+        "slug": "colors-of-penonome-panama",
+        // "contentType": "project"
+    },
+}
 
 type ParsedData = {
     DateTimeOriginal: string
@@ -48,14 +127,13 @@ enum SupportedCameras {
     'undefined - undefined' = 'undefined - undefined',
 }
 
-type ProcessedPhoto = {
+type Photo = {
     id: string,
     src: string,
     gallery: string
-    categories: string[],
     location: string
     contentType: string
-    cameraType: string
+    // cameraType: string
     camera: string,
     lens: string,
     dateTaken: string,
@@ -63,11 +141,19 @@ type ProcessedPhoto = {
     shutterSpeed: string,
     iso: string,
     focalLength: string,
-    isBackgroundPhoto: string // '0' | '1'
+    isBackgroundPhoto: boolean
 }
 
 
-const processHierarchicalSubject = (hierarchicalSubject: Sidecar['lr']['hierarchicalSubject'] | undefined): Record<LightroomKey, string> | null => {
+type LightroomMetadata = {
+    CameraType: string,
+    ContentType: string,
+    Gallery: string,
+    Location: string,
+    IsBackgroundPhoto: boolean,
+}
+
+const processHierarchicalSubject = (hierarchicalSubject: Sidecar['lr']['hierarchicalSubject'] | undefined): LightroomMetadata | null => {
     // This function will cause failures further down the line with the lie of `as Record<LightroomKey, string>
     // In that case need to update Lightroom's Metadata
     if (!hierarchicalSubject) return null
@@ -80,12 +166,18 @@ const processHierarchicalSubject = (hierarchicalSubject: Sidecar['lr']['hierarch
         augmentedData.push('IsBackgroundPhoto|0')
     }
 
-    return augmentedData
+    const partialKeys = augmentedData
+        .filter(key => !('IsBackgroundPhoto' === key)) // Process separately because it's not a <key, value>
         .reduce((accum, entry) => {
             const [key, value] = entry.split('|')
-            accum[(key) as LightroomKey] = value
+            accum[key] = value
             return accum
-        }, {} as Record<LightroomKey, string>)
+        }, {} as Record<string, string>)
+
+    return {
+        ...partialKeys,
+        IsBackgroundPhoto: 'IsBackgroundPhoto' in augmentedData
+    } as LightroomMetadata
 }
 
 const generatePhotoId = (filename: string, date_taken: string) => {
@@ -115,13 +207,13 @@ const formatLens = (possibleLenses: (undefined | string)[]) => {
     return lens || ''
 }
 
-const processPhoto = async (file: string): Promise<ProcessedPhoto | null> => {
+const processPhoto = async (file: string): Promise<Photo | null> => {
     let data: ParsedData
     const sidecar = await exifr.sidecar(file) as unknown as Sidecar
 
     try {
         data = await exifr.parse(file)
-        console.log(data)
+        if (DEBUG) console.log(data)
     } catch {
         return null
     }
@@ -133,9 +225,8 @@ const processPhoto = async (file: string): Promise<ProcessedPhoto | null> => {
     }
 
     const { Location, Gallery, ContentType, CameraType, IsBackgroundPhoto } = lightroomTags
-
     // For when generating the metadata isn't the same as all the other image types.
-    let metadataOverrides: Partial<ProcessedPhoto> = {}
+    let metadataOverrides: Partial<Photo> = {}
 
     const camera = `${data.Make} - ${data.Model}` as string as SupportedCameras // Switch case default will catch if this errors. 
 
@@ -162,7 +253,8 @@ const processPhoto = async (file: string): Promise<ProcessedPhoto | null> => {
         }
         case SupportedCameras['SONY - SLT-A55V']: {
             metadataOverrides = {
-                camera: 'Sony A55'
+                camera: 'Sony A55',
+                lens: data.LensModel === '----' ? '' : data.LensModel // Some lens used resulted in this.
             }
             break
         }
@@ -232,11 +324,11 @@ const processPhoto = async (file: string): Promise<ProcessedPhoto | null> => {
 
     const results = {
         id: generatePhotoId(data.RawFileName, data.DateTimeOriginal),
-        src: file,
+        src: file.replace(`${PHOTO_DIR}/`, ''),
         location: Location,
         gallery: Gallery,
         contentType: ContentType,
-        cameraType: CameraType,
+        // cameraType: CameraType,
         camera: `${data.Make} - ${data.Model}`,
         lens: formatLens([data.Lens, data.LensModel]),
         iso: data.ISO ? `ISO ${data.ISO}` : '',
@@ -244,7 +336,6 @@ const processPhoto = async (file: string): Promise<ProcessedPhoto | null> => {
         aperture: data.FNumber ? formatAperture(data.FNumber) : '',
         isBackgroundPhoto: IsBackgroundPhoto,
         focalLength: data.FocalLength ? `${data.FocalLength}mm` : '',
-        categories: [],
         dateTaken: data.DateTimeOriginal,
         ...metadataOverrides
     }
@@ -255,20 +346,11 @@ const processPhoto = async (file: string): Promise<ProcessedPhoto | null> => {
     return results
 }
 
-type Gallery = {
-    title: string,
-    slug: string,
-    contentType: string
-}
-
 const VALID_EXTENSIONS = ['jpg']
 
 const processPhotos = async () => {
-    const PHOTO_DIR = 'large'
-
-    const photos = {}
-    const galleries: Record<string, Gallery> = {}
-    const locations: string[] = []
+    const photos: Record<string, Photo> = {}
+    const galleries = GALLERIES
 
     const files = fs.readdirSync(PHOTO_DIR)
 
@@ -284,8 +366,12 @@ const processPhotos = async () => {
         if (result === null) console.log('skipping', file)
         else {
             console.log('\t', 'success')
+            photos[result.id] = result
+            if (DEBUG) console.log(result)
         }
     }
+    let data = JSON.stringify({ galleries, photos });
+    fs.writeFileSync('output.json', data);
 }
 
 processPhotos()

@@ -1,30 +1,24 @@
 type GalleryType = {
   title: string;
-  content_type: string;
   slug: string;
-};
-
-type CategoryType = string[];
-
-type LocationType = string;
+}
 
 type PhotoType = {
   id: string;
   src: string;
-  gallery: GalleryType;
-  location: LocationType;
-  date_taken: string;
-  categories: CategoryType;
-  camera_type: string;
-  make: string;
-  model: string;
+  gallery: string;
+  location: string;
+  dateTaken: string;
+  camera: string;
   lens: string;
-  shooting_mode: string;
   aperture: string;
-  shutter_speed: string;
+  shutterSpeed: string;
   iso: string;
-  focal_length: string;
-  is_home_background: boolean;
+  focalLength: string;
+  isBackgroundPhoto: boolean;
 };
 
-export { LocationType, CategoryType, GalleryType, PhotoType };
+export {
+  GalleryType,
+  PhotoType
+};

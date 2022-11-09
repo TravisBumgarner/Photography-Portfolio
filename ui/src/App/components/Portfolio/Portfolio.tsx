@@ -6,7 +6,7 @@ import { Gallery, Photo } from './components'
 
 type Props = {
     photos: { [id: string]: PhotoType },
-    galleries: GalleryType[],
+    galleries: Record<string, GalleryType>,
     setIsTitlebarVisible: Dispatch<SetStateAction<boolean>>
 }
 
@@ -22,10 +22,10 @@ const Portfolio = ({ photos, galleries, setIsTitlebarVisible }: Props
     useEffect(() => setIsTitlebarVisible(selectedFilteredPhotoIndex === undefined), [selectedFilteredPhotoIndex])
     const filterPhotoIds = () => {
         const filteredPhotoIds = Object.values(photos)
-            .filter(photo => photo.gallery.slug == gallerySlug)
+            .filter(photo => photo.gallery == gallerySlug)
             .sort((a, b) => {
-                const aDate = new Date(a.date_taken)
-                const bDate = new Date(b.date_taken)
+                const aDate = new Date(a.dateTaken)
+                const bDate = new Date(b.dateTaken)
                 return bDate.getTime() - aDate.getTime()
             })
             .map(({ id }) => id)
@@ -46,13 +46,13 @@ const Portfolio = ({ photos, galleries, setIsTitlebarVisible }: Props
             return
         }
         navigate(
-            `/portfolio/${galleryDetails.content_type}/${galleryDetails.slug}/${filteredPhotoIds[selectedFilteredPhotoIndex] || ''}`
+            `/${galleryDetails.slug}/${filteredPhotoIds[selectedFilteredPhotoIndex] || ''}`
         )
     };
     useEffect(handleUrlChange, [filteredPhotoIds[selectedFilteredPhotoIndex]])
 
     const elementsRef = filteredPhotoIds.map(() => createRef())
-    const galleryDetails = galleries.length && galleries.find(gallery => gallery.slug == gallerySlug)
+    const galleryDetails = galleries[gallerySlug]
 
     return selectedFilteredPhotoIndex === undefined
         ? (
