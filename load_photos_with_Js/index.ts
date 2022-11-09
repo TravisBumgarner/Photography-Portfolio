@@ -6,14 +6,11 @@ import { v5 as uuidv5 } from 'uuid'
 
 const PHOTO_DIR = 'large'
 
-const DEBUG = true // to get logs.
-
-
+const DEBUG = false // to get logs.
 
 type Gallery = {
     title: string,
     slug: string
-    // contentType: 'snapshot' | 'project'
 }
 
 // new Gallery Names are set in Lightroom
@@ -21,72 +18,58 @@ const GALLERIES: Record<string, Gallery> = {
     '2014 Snapshots': {
         "title": "2014",
         "slug": "2014",
-        // "contentType": "snapshot"
     },
     '2015 Snapshots': {
         "title": "2015",
         "slug": "2015",
-        // "contentType": "snapshot"
     },
     '2016 Snapshots': {
         "title": "2016",
         "slug": "2016",
-        // "contentType": "snapshot"
     },
     '2017 Snapshots': {
         "title": "2017",
         "slug": "2017",
-        // "contentType": "snapshot"
     },
     '2018 Snapshots': {
         "title": "2018",
         "slug": "2018",
-        // "contentType": "snapshot"
     },
     '2019 Snapshots': {
         "title": "2019",
         "slug": "2019",
-        // "contentType": "snapshot"
     },
     '2020 Snapshots': {
         "title": "2020",
         "slug": "2020",
-        // "contentType": "snapshot"
     },
     '2021 Snapshots': {
         "title": "2021",
         "slug": "2021",
-        // "contentType": "snapshot"
     },
     '2022 Snapshots': {
         "title": "2022",
         "slug": "2022",
-        // "contentType": "snapshot"
     },
     '2x3x4': {
         "title": "2x3x4",
         "slug": "2x3x4",
-        // "contentType": "project"
     },
     'hinds-and-trusty-wedding': {
         "title": "Hinds & Trusty Wedding",
         "slug": "hinds-and-trusty-wedding",
-        // "contentType": "project"
     },
     'architecture-of-mexico': {
         "title": "Architecture of Mexico",
         "slug": "architecture-of-mexico",
-        // "contentType": "project"
     },
     'the-vw-beetle-spectrum': {
         "title": "The VW Beetle Spectrum",
         "slug": "the-vw-beetle-spectrum",
-        // "contentType": "project"
     },
     'colors-of-penonome-panama': {
         "title": "Colors of Penonom\u00e9 Panama",
         "slug": "colors-of-penonome-panama",
-        // "contentType": "project"
     },
 }
 
@@ -132,8 +115,6 @@ type Photo = {
     src: string,
     gallery: string
     location: string
-    contentType: string
-    // cameraType: string
     camera: string,
     lens: string,
     dateTaken: string,
@@ -147,7 +128,6 @@ type Photo = {
 
 type LightroomMetadata = {
     CameraType: string,
-    ContentType: string,
     Gallery: string,
     Location: string,
     IsBackgroundPhoto: boolean,
@@ -202,7 +182,6 @@ const formatLens = (possibleLenses: (undefined | string)[]) => {
     // Lens has different name depending ont he camera.
 
     const lens = possibleLenses.filter(l => l !== undefined)[0]
-    // if (lens === undefined) throw new Error('Need new lens name')
 
     return lens || ''
 }
@@ -224,7 +203,7 @@ const processPhoto = async (file: string): Promise<Photo | null> => {
         return null
     }
 
-    const { Location, Gallery, ContentType, CameraType, IsBackgroundPhoto } = lightroomTags
+    const { Location, Gallery, IsBackgroundPhoto } = lightroomTags
     // For when generating the metadata isn't the same as all the other image types.
     let metadataOverrides: Partial<Photo> = {}
 
@@ -327,8 +306,6 @@ const processPhoto = async (file: string): Promise<Photo | null> => {
         src: file.replace(`${PHOTO_DIR}/`, ''),
         location: Location,
         gallery: Gallery,
-        contentType: ContentType,
-        // cameraType: CameraType,
         camera: `${data.Make} - ${data.Model}`,
         lens: formatLens([data.Lens, data.LensModel]),
         iso: data.ISO ? `ISO ${data.ISO}` : '',
