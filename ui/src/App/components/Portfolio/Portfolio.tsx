@@ -18,7 +18,6 @@ const Portfolio = ({ photos, galleries, setIsTitlebarVisible }: Props
     const [scrollToPhotoId, setScrollToPhotoId] = useState<number | undefined>(undefined) // Used for loading ID on initial page load
     const { gallerySlug, photoId } = useParams<{ contentType: string, gallerySlug: string, photoId: string }>();
     const navigate = useNavigate();
-
     useEffect(() => setIsTitlebarVisible(selectedFilteredPhotoIndex === undefined), [selectedFilteredPhotoIndex])
     const filterPhotoIds = () => {
         const filteredPhotoIds = Object.values(photos)
@@ -31,6 +30,7 @@ const Portfolio = ({ photos, galleries, setIsTitlebarVisible }: Props
             .map(({ id }) => id)
         return filteredPhotoIds
     }
+
     useEffect(() => {
         const filteredPhotoIds = filterPhotoIds()
         if (initialLoad && photoId && selectedFilteredPhotoIndex === undefined) {

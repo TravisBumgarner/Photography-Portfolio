@@ -15,40 +15,40 @@ type Gallery = {
 
 // new Gallery Names are set in Lightroom
 const GALLERIES: Record<string, Gallery> = {
-    '2014 Snapshots': {
-        "title": "2014",
+    '2014': {
+        "title": "2014 Snapshots",
         "slug": "2014",
     },
-    '2015 Snapshots': {
-        "title": "2015",
+    '2015': {
+        "title": "2015 Snapshots",
         "slug": "2015",
     },
-    '2016 Snapshots': {
-        "title": "2016",
+    '2016': {
+        "title": "2016 Snapshots",
         "slug": "2016",
     },
-    '2017 Snapshots': {
-        "title": "2017",
+    '2017': {
+        "title": "2017 Snapshots",
         "slug": "2017",
     },
-    '2018 Snapshots': {
-        "title": "2018",
+    '2018': {
+        "title": "2018 Snapshots",
         "slug": "2018",
     },
-    '2019 Snapshots': {
-        "title": "2019",
+    '2019': {
+        "title": "2019 Snapshots",
         "slug": "2019",
     },
-    '2020 Snapshots': {
-        "title": "2020",
+    '2020': {
+        "title": "2020 Snapshots",
         "slug": "2020",
     },
-    '2021 Snapshots': {
-        "title": "2021",
+    '2021': {
+        "title": "2021 Snapshots",
         "slug": "2021",
     },
-    '2022 Snapshots': {
-        "title": "2022",
+    '2022': {
+        "title": "2022 Snapshots",
         "slug": "2022",
     },
     '2x3x4': {
@@ -318,7 +318,7 @@ const processPhoto = async (file: string): Promise<Photo | null> => {
     }
     const missingKeys = Object.keys(results).filter((key: keyof typeof results) => results[key] === undefined)
     if (missingKeys.length > 0) {
-        console.log(`\tMissing values: ${JSON.stringify(missingKeys)}, they were probably not exported from Lightroom`)
+        console.log(`${file} Missing values: ${JSON.stringify(missingKeys)}, they were probably not exported from Lightroom`)
     }
     return results
 }
@@ -332,7 +332,6 @@ const processPhotos = async () => {
     const files = fs.readdirSync(PHOTO_DIR)
 
     for (let file of files) {
-        console.log(file)
         const extension = file.split('.').slice(-1)[0]
         if (!VALID_EXTENSIONS.includes(extension)) {
             console.log('\tSkipping for invalid file type')
@@ -342,7 +341,6 @@ const processPhotos = async () => {
         const result = await processPhoto(path.join(PHOTO_DIR, file))
         if (result === null) console.log('skipping', file)
         else {
-            console.log('\t', 'success')
             photos[result.id] = result
             if (DEBUG) console.log(result)
         }

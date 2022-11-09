@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import { FaCaretRight } from "react-icons/fa";
@@ -53,7 +53,6 @@ const GridItemTitleBar = styled.div`
 `
 const GridItemContent = styled.div`
   box-sizing: border-box;
-  /* overflow-y: hidden; */
   overflow-x: hidden;
   width: 100%;
   height: 100%;
@@ -72,9 +71,6 @@ const NavigationWrapper = styled.div`
 `;
 
 const App = (
-  // { match: {
-  //   params: { photoIdFromUrl }
-  // } },
 ) => {
   const { galleries, backgroundPhotos, photos } = getData();
 
@@ -101,13 +97,7 @@ const App = (
               element={<Home backgroundPhotos={backgroundPhotos} />}
             />
             <Route path="/about" element={<About />} />
-            <Route
-              path="/portfolio/:contentType/:gallerySlug"
-              element={
-                <Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} />
-              }
-            />
-            <Route path="/portfolio/:contentType/:gallerySlug">
+            <Route path="/:gallerySlug">
               <Route index element={<Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} />} />
               <Route path=":photoId" element={<Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} />} />
             </Route>
