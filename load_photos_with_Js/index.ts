@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import exifr from 'exifr'
+import * as exifr from 'exifr'
 import { v5 as uuidv5 } from 'uuid'
 
 type LightroomKey =
@@ -12,30 +12,24 @@ type LightroomKey =
     | 'IsBackgroundPhoto'
 
 type ParsedData = {
-    DateCreated: string // '2022-04-13T10:43:36.589+02:00',
-    // LensInfo: [1.5399999618512084, 5.1, 1.6, 2.4],
-    Lens: string // 'iPhone 13 mini back dual wide camera 5.1mm f/1.6',
-    // LensModel: 'iPhone 13 mini back dual wide camera 5.1mm f/1.6',
-    // PreservedFileName: '2022-04-13 10.43.36.jpg',
+    DateTimeOriginal: string // '2022-04-13T10:43:36.589+02:00',
+    Lens?: string // 'iPhone 13 mini back dual wide camera 5.1mm f/1.6',
+    LensModel?: string // '18.0-55.0 mm f/3.5-5.6'
     RawFileName: string //'2022-04-13 10.43.36.jpg',
-    // hierarchicalSubject: [
-    //     'CameraType|Digital',
-    //     'ContentType|snapshot',
-    //     'Gallery|2022',
-    //     'Location|France'
-    // ],
-    hierarchicalSubject: string[]
     Make: string //'Apple',
     Model: string // 'iPhone 13 mini',
     ExposureTime: number // 0.0008695652173913044,
     FNumber: number // 1.6,
     ExposureProgram: string // 'Normal program',
     ISO: number // 50,
-    // ExifVersion:  '2.3.2',
-    // ShutterSpeedValue: 10.167418,
-    // ApertureValue: 1.356144,
     FocalLength: number //5.1,
     // LensMake: 'Apple'
+}
+
+type Sidecar = {
+    lr: {
+        hierarchicalSubject: string[]
+    }
 }
 
 
@@ -58,10 +52,11 @@ type ProcessedPhoto = {
     isBackgroundPhoto: string // '0' | '1'
 }
 
-const processHierarchicalSubject = (hierarchicalSubject: ParsedData['hierarchicalSubject']) => {
+
+const processHierarchicalSubject = (hierarchicalSubject: Sidecar['lr']['hierarchicalSubject'] | undefined): Record<LightroomKey, string> | null => {
     // This function will cause failures further down the line with the lie of `as Record<LightroomKey, string>
     // In that case need to update Lightroom's Metadata
-
+    if (!hierarchicalSubject) return null
 
     const augmentedData = [...hierarchicalSubject]
     const isBackgroundPhotoIndex = augmentedData.indexOf('IsBackgroundPhoto')
@@ -93,22 +88,38 @@ const formatShutterSpeed = (shutterSpeed: number) => {
     }
 }
 
-const formatLens = (lens: string) => {
+const formatLens = (possibleLenses: (undefined | string)[]) => {
+    // Lens has different name depending ont he camera.
+
+    const lens = possibleLenses.filter(l => l !== undefined)[0]
+    // if (lens === undefined) throw new Error('Need new lens name')
+
     const lookup: Record<string, string> = {
         'iPhone 13 mini back dual wide camera 5.1mm f/1.6': ''
     }
 
-    return lookup[lens] || lens
+    return lens ? (lookup[lens] || lens) : ''
 }
 
-const processFilm = () => {
+const processPhoto = async (file: string): Promise<ProcessedPhoto | null> => {
+    let data: ParsedData
+    const sidecar = await exifr.sidecar(file) as unknown as Sidecar
 
-}
+    try {
+        data = await exifr.parse(file)
+        console.log(data)
+    } catch {
+        return null
+    }
 
-const processPhoto = async (file: string): Promise<ProcessedPhoto> => {
-    const data: ParsedData = await exifr.parse(file, true)
-    console.log(data)
-    const { Location, Gallery, ContentType, CameraType, IsBackgroundPhoto } = processHierarchicalSubject(data.hierarchicalSubject)
+    const lightroomTags = processHierarchicalSubject(sidecar.lr.hierarchicalSubject)
+    if (!lightroomTags) {
+        console.log('\tSkipping for no Lightroom tags')
+        return null
+    }
+
+    const { Location, Gallery, ContentType, CameraType, IsBackgroundPhoto } = lightroomTags
+
     // For when generating the metadata isn't the same as all the other image types.
     let metadataOverrides: Partial<ProcessedPhoto> = {}
 
@@ -168,22 +179,21 @@ const processPhoto = async (file: string): Promise<ProcessedPhoto> => {
     }
 
     const results = {
-        id: generatePhotoId(data.RawFileName, data.DateCreated),
-        src: data.RawFileName,
+        id: generatePhotoId(data.RawFileName, data.DateTimeOriginal),
+        src: file,
         location: Location,
         gallery: Gallery,
         contentType: ContentType,
         cameraType: CameraType,
         camera: `${data.Make} - ${data.Model}`,
-        lens: formatLens(data.Lens),
+        lens: formatLens([data.Lens, data.LensModel]),
         iso: `${data.ISO}`,
         shutterSpeed: formatShutterSpeed(data.ExposureTime),
         aperture: `${data.FNumber}`,
         isBackgroundPhoto: IsBackgroundPhoto,
         focalLength: `${data.FocalLength}`,
         categories: [],
-        dateTaken: data.DateCreated,
-        ...metadataOverrides
+        dateTaken: data.DateTimeOriginal,
     }
 
     return results
@@ -196,7 +206,8 @@ type Gallery = {
 }
 
 const VALID_EXTENSIONS = [
-    'jpg'
+    'jpg',
+    'png'
 ]
 
 const processPhotos = async () => {
@@ -217,6 +228,9 @@ const processPhotos = async () => {
         }
 
         const result = await processPhoto(path.join(PHOTO_DIR, file))
+        if (result === null) console.log('skipping', file)
+        else console.log('\t', 'success')
+        console.log('\t', JSON.stringify(result))
     }
 }
 
