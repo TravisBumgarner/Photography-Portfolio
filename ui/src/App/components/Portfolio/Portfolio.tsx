@@ -2,47 +2,35 @@ import React, { Dispatch, SetStateAction, useState, useEffect, createRef } from 
 import { useParams, useNavigate } from 'react-router-dom';
 
 import { GalleryType, PhotoType } from 'types'
-import {
-    Gallery,
-    Photo
-} from './components'
+import { Gallery, Photo } from './components'
 
 type Props = {
     photos: { [id: string]: PhotoType },
-    galleries: GalleryType[],
+    galleries: Record<string, GalleryType>,
     setIsTitlebarVisible: Dispatch<SetStateAction<boolean>>
 }
 
-const Portfolio = (
-    {
-        photos,
-        galleries,
-        setIsTitlebarVisible,
-    }: Props
+const Portfolio = ({ photos, galleries, setIsTitlebarVisible }: Props
 ) => {
     const [filteredPhotoIds, setFilteredPhotoIds] = useState<string[]>([])
     const [selectedFilteredPhotoIndex, setSelectedFilteredPhotoIndex] = useState<number | undefined>(undefined);
     const [initialLoad, setInitialLoad] = useState(true)
-    // I couldn't figure out a more elegant way to load in photo IDs from the URL on initial load so we have this useState.
-    const [scrollToId, setScrollToId] = useState<number | undefined>(undefined)
-    // Used for scrolling
-    const { contentType, gallerySlug, photoId } = useParams<{ contentType: string, gallerySlug: string, photoId: string }>();
+    const [scrollToPhotoId, setScrollToPhotoId] = useState<number | undefined>(undefined) // Used for loading ID on initial page load
+    const { gallerySlug, photoId } = useParams<{ contentType: string, gallerySlug: string, photoId: string }>();
     const navigate = useNavigate();
-
-    console.log(gallerySlug, photoId)
-
     useEffect(() => setIsTitlebarVisible(selectedFilteredPhotoIndex === undefined), [selectedFilteredPhotoIndex])
     const filterPhotoIds = () => {
         const filteredPhotoIds = Object.values(photos)
-            .filter(photo => photo.gallery.slug == gallerySlug)
+            .filter(photo => photo.gallery == gallerySlug)
             .sort((a, b) => {
-                const aDate = new Date(a.date_taken)
-                const bDate = new Date(b.date_taken)
+                const aDate = new Date(a.dateTaken)
+                const bDate = new Date(b.dateTaken)
                 return bDate.getTime() - aDate.getTime()
             })
             .map(({ id }) => id)
         return filteredPhotoIds
     }
+
     useEffect(() => {
         const filteredPhotoIds = filterPhotoIds()
         if (initialLoad && photoId && selectedFilteredPhotoIndex === undefined) {
@@ -50,7 +38,7 @@ const Portfolio = (
             setInitialLoad(false)
         }
         setFilteredPhotoIds(filteredPhotoIds)
-        setScrollToId(undefined)
+        setScrollToPhotoId(undefined)
     }, [gallerySlug])
 
     const handleUrlChange = () => {
@@ -58,13 +46,13 @@ const Portfolio = (
             return
         }
         navigate(
-            `/portfolio/${galleryDetails.content_type}/${galleryDetails.slug}/${filteredPhotoIds[selectedFilteredPhotoIndex] || ''}`
+            `/${galleryDetails.slug}/${filteredPhotoIds[selectedFilteredPhotoIndex] || ''}`
         )
     };
     useEffect(handleUrlChange, [filteredPhotoIds[selectedFilteredPhotoIndex]])
 
     const elementsRef = filteredPhotoIds.map(() => createRef())
-    const galleryDetails = galleries.length && galleries.find(gallery => gallery.slug == gallerySlug)
+    const galleryDetails = galleries[gallerySlug]
 
     return selectedFilteredPhotoIndex === undefined
         ? (
@@ -73,9 +61,8 @@ const Portfolio = (
                 photos={photos}
                 filteredPhotoIds={filteredPhotoIds}
                 galleryDetails={galleryDetails}
-                scrollToId={scrollToId}
+                scrollToPhotoId={scrollToPhotoId}
                 elementsRef={elementsRef}
-                setScrollToId={setScrollToId}
             />
         ) : (
             < Photo
@@ -83,7 +70,7 @@ const Portfolio = (
                 selectedFilteredPhotoIndex={selectedFilteredPhotoIndex}
                 photos={photos}
                 filteredPhotoIds={filteredPhotoIds}
-                setScrollToId={setScrollToId}
+                setScrollToPhotoId={setScrollToPhotoId}
             />
         )
 }

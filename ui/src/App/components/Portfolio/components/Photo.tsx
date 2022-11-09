@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useEffect } from 'react'
 import styled from "styled-components";
 import { FaTimes, FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 
-import { Text, Header } from "sharedComponents";
+import { Text } from "sharedComponents";
 import { PhotoType } from "types";
 import { ICON_FONT_SIZES, ICON_COLOR, APP_BORDER } from "theme";
 
@@ -37,16 +37,6 @@ const NextButton = styled(FaArrowCircleRight)`
   &:hover {
     fill: ${ICON_COLOR.hover};
   }
-`;
-
-const MetadataButton = styled.button`
-  border-radius: 5px;
-  background-color: black;
-  color: white;
-  border: solid black;
-  padding: 5px;
-  font-size: 1rem;
-  cursor: pointer;
 `;
 
 const Spacer = styled(({ className }) => <span className={className}>//</span>)`
@@ -103,37 +93,36 @@ const StyledPhoto = styled.img`
 
 const Metadata = ({ details }: { details: PhotoType }) => {
   const {
-    make,
-    model,
+    camera,
     aperture,
-    shutter_speed,
+    shutterSpeed,
     iso,
     lens,
-    focal_length,
+    focalLength,
     location,
-    camera_type,
   } = details;
 
-  const gearString = make || model || lens ? `${make} ${model} ${lens}` : "N/A";
+  const gearString = `${camera} ${lens}`;
   const statsString =
-    aperture || shutter_speed || iso || focal_length
-      ? `F${aperture} ${shutter_speed}" ${iso}ISO ${focal_length}mm`
+    aperture || shutterSpeed || iso || focalLength
+      ? `F${aperture} ${shutterSpeed}" ${iso}ISO ${focalLength}mm`
       : "N/A";
 
   return (
     <MetadataWrapper>
       <Text>
-        {camera_type === FILM ? (
-          "Film Camera, N/A"
-        ) : (
-          <>
-            {location}
-            <Spacer />
-            {camera_type.toLowerCase() === "film" ? "Film Camera" : gearString}
-            <Spacer />
-            {camera_type.toLowerCase() === "film" ? "N/A" : statsString}
-          </>
-        )}
+        <>
+          {location}
+          <Spacer />
+          {camera}
+          <Spacer />
+
+          {gearString.length > 0 ? gearString : ''}
+          {gearString.length > 0 ? <Spacer /> : ''}
+
+          {statsString.length > 0 ? statsString : ''}
+          {statsString.length > 0 ? <Spacer /> : ''}
+        </>
       </Text>
     </MetadataWrapper>
   );
@@ -144,7 +133,7 @@ type PhotoProps = {
   filteredPhotoIds: string[];
   selectedFilteredPhotoIndex: number;
   setSelectedFilteredPhotoIndex: Dispatch<SetStateAction<number>>;
-  setScrollToId: Dispatch<SetStateAction<number>>;
+  setScrollToPhotoId: Dispatch<SetStateAction<number>>;
 };
 
 const Photo = ({
@@ -152,7 +141,7 @@ const Photo = ({
   filteredPhotoIds,
   selectedFilteredPhotoIndex,
   setSelectedFilteredPhotoIndex,
-  setScrollToId,
+  setScrollToPhotoId,
 }: PhotoProps) => {
   const details = photos[filteredPhotoIds[selectedFilteredPhotoIndex]];
 
@@ -176,7 +165,7 @@ const Photo = ({
   };
 
   const exitSinglePhotoView = () => {
-    setScrollToId(selectedFilteredPhotoIndex);
+    setScrollToPhotoId(selectedFilteredPhotoIndex);
     setSelectedFilteredPhotoIndex(undefined);
   };
 

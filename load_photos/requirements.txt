@@ -1,5 +1,0 @@
-ExifRead==2.1.2
-python-slugify==4.0.0
-python-xmp-toolkit==2.0.1
-pytz==2019.3
-text-unidecode==1.3

@@ -1,9 +1,9 @@
-- [ ] Update Sentry
+- [x] Update Sentry
 - [x] Upgrade React to 18
 - [ ] ~~Remove browser router?~~
 - [ ] Experiment with Lightroom Settings
-- [ ] Update package.json
+- [x] Update package.json
 - [x] Update Nav
-- [ ] Make code more performant
 - [ ] Load new photos
-- [ ] Do I need public/index.html
+- [x] Do I need public/index.html
+- [ ] Load eslint

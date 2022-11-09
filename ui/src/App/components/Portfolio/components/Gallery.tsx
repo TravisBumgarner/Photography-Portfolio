@@ -1,4 +1,4 @@
-import React, { useEffect, RefObject, Dispatch, SetStateAction } from "react";
+import React, { useEffect, RefObject } from "react";
 import styled from 'styled-components'
 
 import { Header } from "sharedComponents";
@@ -50,15 +50,14 @@ type Props = {
     photos: { [id: string]: PhotoType }
     filteredPhotoIds: string[]
     setSelectedFilteredPhotoIndex: any
-    scrollToId: number
+    scrollToPhotoId: number
     elementsRef: RefObject<any>[]
-    setScrollToId: Dispatch<SetStateAction<number>>
 };
 
-const Gallery = ({ photos, filteredPhotoIds, galleryDetails, setSelectedFilteredPhotoIndex, scrollToId, setScrollToId, elementsRef }: Props) => {
+const Gallery = ({ photos, filteredPhotoIds, galleryDetails, setSelectedFilteredPhotoIndex, scrollToPhotoId, elementsRef }: Props) => {
     useEffect(() => {
-        if (elementsRef.length > 0 && scrollToId !== undefined) {
-            elementsRef[scrollToId].current.scrollIntoView(true)
+        if (elementsRef.length > 0 && scrollToPhotoId !== undefined) {
+            elementsRef[scrollToPhotoId].current.scrollIntoView(true)
         }
     }, [elementsRef.length])
 
