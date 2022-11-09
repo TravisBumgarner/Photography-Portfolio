@@ -49,7 +49,7 @@ IsBackgroundPhoto (Check for True)
 
 6. Navigate to https://console.cloud.google.com/
 7. Drag and drop `large` and `thumbnail` into GCS
-8. `npm run deploy`
+8. `yarn run deploy`
 
 
 
