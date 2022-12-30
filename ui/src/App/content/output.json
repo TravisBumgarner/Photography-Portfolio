@@ -110,7 +110,7 @@
             "iso": "ISO 50",
             "shutterSpeed": "1/2000s",
             "aperture": "ƒ/1.6",
-            "isBackgroundPhoto": false,
+            "isBackgroundPhoto": true,
             "focalLength": "5.1mm",
             "dateTaken": "2022-03-08T21:17:42.000Z"
         },
@@ -362,7 +362,7 @@
             "iso": "ISO 50",
             "shutterSpeed": "1/7400s",
             "aperture": "ƒ/1.6",
-            "isBackgroundPhoto": false,
+            "isBackgroundPhoto": true,
             "focalLength": "5.1mm",
             "dateTaken": "2022-09-15T21:11:00.000Z"
         },
@@ -5150,7 +5150,7 @@
             "iso": "ISO 5600",
             "shutterSpeed": "1/80s",
             "aperture": "ƒ/4.0",
-            "isBackgroundPhoto": false,
+            "isBackgroundPhoto": true,
             "focalLength": "120mm",
             "dateTaken": "2022-10-28T23:25:14.000Z"
         },
@@ -5570,7 +5570,7 @@
             "iso": "ISO 400",
             "shutterSpeed": "1/2500s",
             "aperture": "ƒ/11.0",
-            "isBackgroundPhoto": false,
+            "isBackgroundPhoto": true,
             "focalLength": "50mm",
             "dateTaken": "2021-10-15T17:45:30.000Z"
         },
@@ -7894,7 +7894,7 @@
             "iso": "ISO 62",
             "shutterSpeed": "1/1800s",
             "aperture": "ƒ/1.8",
-            "isBackgroundPhoto": false,
+            "isBackgroundPhoto": true,
             "focalLength": "4.44mm",
             "dateTaken": "2021-07-30T19:20:10.000Z"
         },
