@@ -25,7 +25,7 @@ type Props = {
 
 const Home = ({ backgroundPhotos }: Props) => {
   const [backgroundImageIndex, setBackgroundImageIndex] = useState<number>(0);
-
+  
   useEffect(() => {
     const intervalId: NodeJS.Timeout = setInterval(() => {
       setBackgroundImageIndex(prev => prev + 1)

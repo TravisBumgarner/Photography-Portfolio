@@ -2,9 +2,10 @@ import React, { Dispatch, SetStateAction, useEffect } from 'react'
 import styled from "styled-components";
 import { FaTimes, FaArrowCircleLeft, FaArrowCircleRight } from "react-icons/fa";
 
-import { Text } from "sharedComponents";
+import { Text, Header } from "sharedComponents";
 import { PhotoType } from "types";
 import { ICON_FONT_SIZES, ICON_COLOR, APP_BORDER } from "theme";
+import { useCallback } from 'react';
 
 const FILM = "Film";
 const CONTROLS_WRAPPER_HEIGHT = "3rem";
@@ -99,13 +100,13 @@ const Metadata = ({ details }: { details: PhotoType }) => {
     iso,
     lens,
     focalLength,
-    location,
+    location
   } = details;
 
-  const gearString = `${camera} ${lens}`;
+  const gearString = `${camera} ${lens}`
   const statsString =
     aperture || shutterSpeed || iso || focalLength
-      ? `F${aperture} ${shutterSpeed}" ${iso}ISO ${focalLength}mm`
+      ? `${aperture} ${shutterSpeed} ${iso} ${focalLength}`
       : "N/A";
 
   return (
@@ -114,14 +115,9 @@ const Metadata = ({ details }: { details: PhotoType }) => {
         <>
           {location}
           <Spacer />
-          {camera}
+          {gearString}
           <Spacer />
-
-          {gearString.length > 0 ? gearString : ''}
-          {gearString.length > 0 ? <Spacer /> : ''}
-
-          {statsString.length > 0 ? statsString : ''}
-          {statsString.length > 0 ? <Spacer /> : ''}
+          {statsString}
         </>
       </Text>
     </MetadataWrapper>
@@ -133,7 +129,6 @@ type PhotoProps = {
   filteredPhotoIds: string[];
   selectedFilteredPhotoIndex: number;
   setSelectedFilteredPhotoIndex: Dispatch<SetStateAction<number>>;
-  setScrollToPhotoId: Dispatch<SetStateAction<number>>;
 };
 
 const Photo = ({
@@ -141,11 +136,10 @@ const Photo = ({
   filteredPhotoIds,
   selectedFilteredPhotoIndex,
   setSelectedFilteredPhotoIndex,
-  setScrollToPhotoId,
 }: PhotoProps) => {
   const details = photos[filteredPhotoIds[selectedFilteredPhotoIndex]];
 
-  const getNextPhotoIndex = (direction: "left" | "right") => {
+  const getNextPhotoIndex = useCallback((direction: "left" | "right") => {
     const first = 0;
     const last = filteredPhotoIds.length - 1;
     let next;
@@ -162,12 +156,11 @@ const Photo = ({
       }
     }
     setSelectedFilteredPhotoIndex(next);
-  };
+  }, [selectedFilteredPhotoIndex, filteredPhotoIds]);
 
   const exitSinglePhotoView = () => {
-    setScrollToPhotoId(selectedFilteredPhotoIndex);
     setSelectedFilteredPhotoIndex(undefined);
-  };
+  }
 
   const handleKeyPress = (event: KeyboardEvent) => {
     if (event.key === "ArrowLeft") {

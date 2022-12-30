@@ -1,4 +1,4 @@
-import React, { useEffect, RefObject } from "react";
+import React, { useEffect, RefObject, Dispatch, SetStateAction } from "react";
 import styled from 'styled-components'
 
 import { Header } from "sharedComponents";
@@ -49,18 +49,10 @@ type Props = {
     galleryDetails: GalleryType
     photos: { [id: string]: PhotoType }
     filteredPhotoIds: string[]
-    setSelectedFilteredPhotoIndex: any
-    scrollToPhotoId: number
-    elementsRef: RefObject<any>[]
+    setSelectedFilteredPhotoIndex: (value: SetStateAction<number>) => void
 };
 
-const Gallery = ({ photos, filteredPhotoIds, galleryDetails, setSelectedFilteredPhotoIndex, scrollToPhotoId, elementsRef }: Props) => {
-    useEffect(() => {
-        if (elementsRef.length > 0 && scrollToPhotoId !== undefined) {
-            elementsRef[scrollToPhotoId].current.scrollIntoView(true)
-        }
-    }, [elementsRef.length])
-
+const Gallery = ({ photos, filteredPhotoIds, galleryDetails, setSelectedFilteredPhotoIndex }: Props) => {
     return (
         <>
             <ProjectDescriptionWrapper>
@@ -68,7 +60,7 @@ const Gallery = ({ photos, filteredPhotoIds, galleryDetails, setSelectedFiltered
             </ProjectDescriptionWrapper>
             <GalleryWrapper>{
                 filteredPhotoIds.map(id => photos[id]).map((photo, index) => {
-                    return (<GalleryItem key={photo.id} id={photo.id} ref={elementsRef[index]}>
+                    return (<GalleryItem key={photo.id} id={photo.id}>
                         <img src={`https://storage.googleapis.com/photo21-asdqwd/photos/thumbnail/${photo.src}`} onClick={() => setSelectedFilteredPhotoIndex(index)} />
                     </GalleryItem>)
                 })
