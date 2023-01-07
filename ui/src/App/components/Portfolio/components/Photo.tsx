@@ -1,35 +1,24 @@
-import React, { Dispatch, SetStateAction, useEffect } from 'react'
-import styled from "styled-components";
-import { FaTimes, FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import styled, { css } from "styled-components";
+import { FaTimes, FaArrowLeft, FaArrowRight, FaInfo } from "react-icons/fa";
 
 import { Text } from "sharedComponents";
 import { PhotoType } from "types";
 import { ICON_FONT_SIZES, ICON_COLOR, APP_BORDER } from "theme";
 import { useCallback } from 'react';
 
-const CloseIcon = styled(FaTimes)`
-  fill: ${ICON_COLOR.initial};
-
-  &:hover {
-    fill: ${ICON_COLOR.hover};
-  }
-`;
-
-const PreviousButton = styled(FaArrowLeft)`
-  fill: ${ICON_COLOR.initial};
-
-  &:hover {
-    fill: ${ICON_COLOR.hover};
-  }
-`;
-const NextButton = styled(FaArrowRight)`
+const IconCSS = css`
   fill: ${ICON_COLOR.initial};
   cursor: pointer;
 
-  &:hover {
-    fill: ${ICON_COLOR.hover};
-  }
-`;
+&:hover {
+  fill: ${ICON_COLOR.hover};
+}
+`
+const CloseIcon = styled(FaTimes)`${IconCSS}`;
+const PreviousButton = styled(FaArrowLeft)`${IconCSS}`;
+const NextButton = styled(FaArrowRight)`${IconCSS}`;
+const ToggleInfo = styled(FaInfo)`${IconCSS}`;
 
 const Spacer = styled(({ className }) => <span className={className}>//</span>)`
   padding: 0 20px;
@@ -128,6 +117,7 @@ const Photo = ({
   selectedFilteredPhotoIndex,
   setSelectedFilteredPhotoIndex,
 }: PhotoProps) => {
+  const [toggleInfo, setToggleInfo] = useState(false)
   const details = photos[filteredPhotoIds[selectedFilteredPhotoIndex]];
 
   const getNextPhotoIndex = useCallback((direction: "left" | "right") => {
@@ -176,8 +166,12 @@ const Photo = ({
         src={`https://storage.googleapis.com/photo21-asdqwd/photos/large/${details.src}`}
       />
       <MetadataAndControlsWrapper>
-        <Metadata details={details} />
+        {toggleInfo ? <Metadata details={details} /> : null}
         <ControlsWrapper>
+          <ToggleInfo
+            size={ICON_FONT_SIZES.l}
+            onClick={() => setToggleInfo(prev => !prev)}
+          />
           <PreviousButton
             size={ICON_FONT_SIZES.l}
             onClick={() => getNextPhotoIndex("left")}
