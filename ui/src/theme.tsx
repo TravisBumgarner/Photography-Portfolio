@@ -39,23 +39,13 @@ const FONT_FAMILY_TEXT = "'Montserrat', sans-serif"
 const FONT_SIZE_INPUTS_AND_BUTTONS = 14
 
 const GlobalStyle = createGlobalStyle`
-    html {
+    body {
         font-size: 18px;
+        margin: 0;
+        box-sizing: border-box;
         font-weight: 400;
     }
 
-    body {
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
-        background-attachment: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        position: absolute;
-        z-index: -1;
-    }
 `
 
 const APP_BORDER = '10px';

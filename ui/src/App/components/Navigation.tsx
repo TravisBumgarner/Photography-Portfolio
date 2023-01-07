@@ -21,6 +21,10 @@ const NavigationWrapper = styled.div`
 
 const SubNavigationWrapper = styled.div`
     margin: ${CONTENT_SPACING.m} 0;
+
+    :last-child {
+        margin-top: 2rem;
+    }
 `
 
 const LinkListItem = styled.li`
@@ -74,8 +78,16 @@ const Navigation = ({ galleries, toggleNavigation }: Props) => {
 
     const socialSectionContent = [
         {
-            title: 'LinkedIn',
+            title: 'Connect',
             route: 'https://www.linkedin.com/in/travisbumgarner/',
+        },
+        {
+            title: 'Egineering',
+            route: 'https://travisbumgarner.dev/',
+        },
+        {
+            title: 'Blog',
+            route: 'https://travisbumgarner.dev/',
         }
     ]
 
@@ -95,11 +107,8 @@ const Navigation = ({ galleries, toggleNavigation }: Props) => {
             </SubNavigationWrapper>
 
             <SubNavigationWrapper>
-                <Header size="medium">Connect</Header>
+                <Header size="medium">Misc</Header>
                 <ul>
-                    <LinkListItem key="about" onClick={toggleNavigation}>
-                        <InternalLink to="/about">About</InternalLink>
-                    </LinkListItem>
                     {socialLinks}
                 </ul>
             </SubNavigationWrapper>

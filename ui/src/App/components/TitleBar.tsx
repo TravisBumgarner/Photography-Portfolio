@@ -9,6 +9,7 @@ import { CONTENT_SPACING, ICON_FONT_SIZES, TRANSITION_SPEED, ICON_COLOR, } from 
 const TitleBarWrapper = styled.div<{ isTitlebarVisible: boolean }>`
   display: ${({ isTitlebarVisible }) => isTitlebarVisible ? 'flex' : 'none'};
   justify-content: space-between;
+  margin: 1rem;
 `;
 
 const InternalLink = styled(Link)`

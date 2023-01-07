@@ -33,18 +33,10 @@ const NavigationGutter = styled.div`
 `;
 
 const GridContainer = styled.div`
-  display: grid;
-  width: 100vw;
-  height: 100vh;
-  padding: ${APP_BORDER};
-  box-sizing: border-box;
-  grid-template-columns: 100%;
-  grid-template-rows:  min-content 1fr;
 `;
 
 const GridItemContent = styled.div`
   box-sizing: border-box;
-  overflow-x: hidden;
   width: 100%;
   height: 100%;
 `
@@ -81,7 +73,7 @@ const App = (
         <GridItemContent>
           <Routes>
             <Route path="/" element={<Home backgroundPhotos={backgroundPhotos} />} />
-            <Route path="/about" element={<About />} />
+            {/* <Route path="/about" element={<About />} /> */}
             <Route path="/:gallerySlug" element={<Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} />} />
             <Route path="/:gallerySlug">
               <Route index element={<Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} />} />

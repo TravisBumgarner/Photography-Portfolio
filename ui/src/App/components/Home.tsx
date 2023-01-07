@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 
 import { PhotoType } from "types";
 
-const HomeImageWrapper = styled.div`
-  width: 100%;
-  height: 100%;
+const HomeImageWrapper = styled.div<{ src: string }>`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
   box-sizing: border-box;
   display:flex;
   align-items: center;
   justify-content: center;
+  background-image: url(${props => props.src});
+  z-index: -1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
 `
-
-const HomeImage = styled.img`
-  max-width: 100%;
-  max-height: 100%;
-  display: flex;
-  justify-content: center;
-`;
 
 type Props = {
   backgroundPhotos: PhotoType[];
@@ -25,7 +27,7 @@ type Props = {
 
 const Home = ({ backgroundPhotos }: Props) => {
   const [backgroundImageIndex, setBackgroundImageIndex] = useState<number>(0);
-  
+
   useEffect(() => {
     const intervalId: NodeJS.Timeout = setInterval(() => {
       setBackgroundImageIndex(prev => prev + 1)
@@ -34,18 +36,13 @@ const Home = ({ backgroundPhotos }: Props) => {
     }, 4000)
   }, [])
 
+  const url = useMemo(() => {
+    return `https://storage.googleapis.com/photo21-asdqwd/photos/large/${encodeURIComponent(backgroundPhotos[backgroundImageIndex % backgroundPhotos.length].src)}`
+  }, [backgroundImageIndex])
+  console.log(url)
+
   return (
-    <HomeImageWrapper>
-      <HomeImage
-        src={
-          backgroundPhotos.length
-            ? `https://storage.googleapis.com/photo21-asdqwd/photos/large/${backgroundPhotos[backgroundImageIndex % backgroundPhotos.length]
-              .src
-            }`
-            : ""
-        }
-      />
-    </HomeImageWrapper>
+    <HomeImageWrapper src={url} />
   );
 };
 

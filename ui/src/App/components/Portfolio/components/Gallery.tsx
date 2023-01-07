@@ -7,43 +7,21 @@ import { PhotoType, GalleryType } from "types";
 import { CONTENT_SPACING } from 'theme'
 
 const ProjectDescriptionWrapper = styled.div`
-    margin: ${CONTENT_SPACING.m} 0;
+    margin: 1rem;
+`
+
+const Image = styled.img`
+    width: 100%;
+    margin-bottom: 1rem;
+    cursor: pointer;
 `
 
 const GalleryWrapper = styled.div`
-    display: flex;
-    flex-wrap: wrap;
+    column-count: 3;
+    margin: 1rem;
+    column-gap: 1rem;
 `
 
-const GalleryItem = styled.div`
-    position: relative;
-    flex-basis: calc(100% / 3 - 10px);
-    margin: 7.5px;
-    box-sizing: border-box;
-    cursor: pointer;
-
-    &:nth-child(3n){
-      margin-right: 0;
-    }
-
-    &:nth-child(3n + 1){
-      margin-left: 0;
-    }
-
-    &::before {
-        content: '';
-        display: block;
-        padding-top: 100%;
-    }
-
-    & > img {
-        position: absolute;
-        top: 0; left: 0;
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-    }
-`
 
 type Props = {
     galleryDetails: GalleryType
@@ -60,9 +38,9 @@ const Gallery = ({ photos, filteredPhotoIds, galleryDetails, setSelectedFiltered
             </ProjectDescriptionWrapper>
             <GalleryWrapper>{
                 filteredPhotoIds.map(id => photos[id]).map((photo, index) => {
-                    return (<GalleryItem key={photo.id} id={photo.id}>
-                        <img src={`https://storage.googleapis.com/photo21-asdqwd/photos/thumbnail/${photo.src}`} onClick={() => setSelectedFilteredPhotoIndex(index)} />
-                    </GalleryItem>)
+                    return (
+                        <Image key={photo.id} src={`https://storage.googleapis.com/photo21-asdqwd/photos/thumbnail/${photo.src}`} onClick={() => setSelectedFilteredPhotoIndex(index)} />
+                    )
                 })
             }</GalleryWrapper>
         </>
