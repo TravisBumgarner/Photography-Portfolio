@@ -87,7 +87,7 @@ const Navigation = ({ galleries, toggleNavigation }: Props) => {
         },
         {
             title: 'Blog',
-            route: 'https://travisbumgarner.dev/',
+            route: 'https://travisbumgarner.com/',
         }
     ]
 
