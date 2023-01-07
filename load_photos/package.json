@@ -2,8 +2,8 @@
   "name": "load_photos",
   "author": "Travis Bumgarner",
   "scripts": {
-    "sd-reload": "ts-node-dev ./index.ts",
-    "sd": "ts-node ./index.ts"
+    "start-hot": "ts-node-dev ./index.ts",
+    "start": "ts-node ./index.ts"
   },
   "keywords": [],
   "license": "ISC",
