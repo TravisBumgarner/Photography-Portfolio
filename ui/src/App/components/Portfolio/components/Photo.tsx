@@ -4,7 +4,7 @@ import { FaTimes, FaArrowLeft, FaArrowRight, FaInfo } from "react-icons/fa";
 
 import { Text } from "sharedComponents";
 import { PhotoType } from "types";
-import { ICON_FONT_SIZES, ICON_COLOR, APP_BORDER } from "theme";
+import { ICON_FONT_SIZES, ICON_COLOR, APP_BORDER, ONE_HUNDRED_VH } from "theme";
 import { useCallback } from 'react';
 
 const IconCSS = css`
@@ -116,8 +116,7 @@ const PhotoWrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 100vh;
-  width: 100vw;
+  ${ONE_HUNDRED_VH}
 `
 
 const Photo = ({

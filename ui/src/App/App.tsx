@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react'
+import React, { useState, useMemo, useCallback, useEffect } from 'react'
 import { Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import { FaCaretRight } from "react-icons/fa";
@@ -60,6 +60,16 @@ const App = (
   const [isTitlebarVisible, setIsTitlebarVisible] = useState(true);
 
   const toggleNavigation = useCallback(() => setIsNavigationVisible(prev => !prev), [])
+
+  useEffect(() => {
+    const documentHeight = () => {
+      const doc = document.documentElement
+      doc.style.setProperty('--doc-height', `${window.innerHeight}px`)
+    }
+    window.addEventListener('resize', documentHeight)
+    documentHeight()
+  }, [])
+
 
   return (
     <>

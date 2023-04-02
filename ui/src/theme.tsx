@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle, css } from 'styled-components'
 
 const TRANSITION_SPEED = 1
 const CONTENT_SPACING = {
@@ -39,6 +39,10 @@ const FONT_FAMILY_TEXT = "'Montserrat', sans-serif"
 const FONT_SIZE_INPUTS_AND_BUTTONS = 14
 
 const GlobalStyle = createGlobalStyle`
+    :root {
+        --doc-height: 100%;
+    }
+
     body {
         font-size: 18px;
         margin: 0;
@@ -49,6 +53,11 @@ const GlobalStyle = createGlobalStyle`
 `
 
 const APP_BORDER = '10px';
+
+const ONE_HUNDRED_VH = css`
+    height: 100vh; /* fallback for Js load */
+    height: var(--doc-height);
+`
 
 export {
     GlobalStyle,
@@ -61,5 +70,6 @@ export {
     TEXT_FONT_SIZES,
     ICON_FONT_SIZES,
     ICON_COLOR,
-    APP_BORDER
+    APP_BORDER,
+    ONE_HUNDRED_VH
 }
