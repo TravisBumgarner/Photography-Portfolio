@@ -39,8 +39,6 @@ const Home = ({ backgroundPhotos }: Props) => {
   const url = useMemo(() => {
     return `https://storage.googleapis.com/photo21-asdqwd/photos/large/${encodeURIComponent(backgroundPhotos[backgroundImageIndex % backgroundPhotos.length].src)}`
   }, [backgroundImageIndex])
-  console.log(url)
-
   return (
     <HomeImageWrapper src={url} />
   );
