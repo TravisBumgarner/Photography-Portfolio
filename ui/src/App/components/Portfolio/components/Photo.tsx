@@ -111,6 +111,15 @@ type PhotoProps = {
   setSelectedFilteredPhotoIndex: Dispatch<SetStateAction<number>>;
 };
 
+const PhotoWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+`
+
 const Photo = ({
   photos,
   filteredPhotoIds,
@@ -161,10 +170,12 @@ const Photo = ({
   }, [selectedFilteredPhotoIndex]);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', height: '100vh', width: '100vw' }}>
-      <StyledPhoto
-        src={`https://storage.googleapis.com/photo21-asdqwd/photos/large/${details.src}`}
-      />
+    <>
+      <PhotoWrapper>
+        <StyledPhoto
+          src={`https://storage.googleapis.com/photo21-asdqwd/photos/large/${details.src}`}
+        />
+      </PhotoWrapper>
       <MetadataAndControlsWrapper>
         {toggleInfo ? <Metadata details={details} /> : null}
         <ControlsWrapper>
@@ -183,7 +194,7 @@ const Photo = ({
           />
         </ControlsWrapper>
       </MetadataAndControlsWrapper>
-    </div>
+    </>
   );
 };
 
