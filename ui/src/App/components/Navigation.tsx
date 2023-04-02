@@ -82,11 +82,7 @@ const Navigation = ({ galleries, toggleNavigation }: Props) => {
             route: 'https://www.linkedin.com/in/travisbumgarner/',
         },
         {
-            title: 'Egineering',
-            route: 'https://travisbumgarner.dev/',
-        },
-        {
-            title: 'Blog',
+            title: 'Engineering & Blog',
             route: 'https://travisbumgarner.com/',
         }
     ]
