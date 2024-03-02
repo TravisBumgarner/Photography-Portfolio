@@ -80,17 +80,24 @@ const Navigation = ({ galleries, toggleNavigation }: Props) => {
         {
             title: 'Connect',
             route: 'https://www.linkedin.com/in/travisbumgarner/',
-        },
-        {
+            external: true,
+          },
+          {
             title: 'Engineering & Blog',
             route: 'https://travisbumgarner.com/',
+            external: true,
+          },
+          {
+            title: 'Awards & Recognition',
+            route: '/about',
+            external: false
         }
     ]
 
     const socialLinks = socialSectionContent.map(m => {
         return (
             <LinkListItem key={m.title} onClick={toggleNavigation}>
-                <ExternalLink target="_blank" href={m.route}>{m.title}</ExternalLink>
+                <ExternalLink target={m.external ? "_blank" : ''} href={m.route}>{m.title}</ExternalLink>
             </LinkListItem>
         )
     })

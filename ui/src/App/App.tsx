@@ -83,7 +83,7 @@ const App = (
         <GridItemContent>
           <Routes>
             <Route path="/" element={<Home backgroundPhotos={backgroundPhotos} />} />
-            {/* <Route path="/about" element={<About />} /> */}
+            <Route path="/about" element={<About />} />
             <Route path="/:gallerySlug" element={<Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} />} />
             <Route path="/:gallerySlug">
               <Route index element={<Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} />} />
