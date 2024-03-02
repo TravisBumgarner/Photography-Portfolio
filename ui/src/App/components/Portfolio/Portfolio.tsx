@@ -52,6 +52,10 @@ const Portfolio = ({ photos, galleries }: Props
 
   useEffect(handleUrlChange, [selectedFilteredPhotoIndex])
 
+  const onCloseCallback = useCallback((id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  },[])
+
   return (
     <>
       <Gallery
@@ -64,7 +68,8 @@ const Portfolio = ({ photos, galleries }: Props
         setSelectedFilteredPhotoIndex={setSelectedFilteredPhotoIndex}
         selectedFilteredPhotoIndex={selectedFilteredPhotoIndex}
         photos={photos}
-        filteredPhotoIds={filteredPhotoIds} 
+        filteredPhotoIds={filteredPhotoIds}
+        onCloseCallback={onCloseCallback}
         />
     </>
   )

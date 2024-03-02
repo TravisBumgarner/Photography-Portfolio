@@ -15,7 +15,7 @@ const Gallery = ({ photos, filteredPhotoIds, galleryDetails, setSelectedFiltered
   const Photos = useMemo(() => {
     return filteredPhotoIds.map(id => photos[id]).map((photo, index) => {
       return (
-        <Image key={photo.id} src={`https://storage.googleapis.com/photo21-asdqwd/photos/thumbnail/${photo.src}`} onClick={() => setSelectedFilteredPhotoIndex(index)} />
+        <Image id={photo.id} key={photo.id} src={`https://storage.googleapis.com/photo21-asdqwd/photos/thumbnail/${photo.src}`} onClick={() => setSelectedFilteredPhotoIndex(index)} />
       )
     })
   }, [filteredPhotoIds, photos, setSelectedFilteredPhotoIndex])

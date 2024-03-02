@@ -12,6 +12,7 @@ type PhotoProps = {
   filteredPhotoIds: string[];
   selectedFilteredPhotoIndex: number;
   setSelectedFilteredPhotoIndex: Dispatch<SetStateAction<number>>;
+  onCloseCallback: (id: string) => void;
 };
 
 const Photo = ({
@@ -19,6 +20,7 @@ const Photo = ({
   filteredPhotoIds,
   selectedFilteredPhotoIndex,
   setSelectedFilteredPhotoIndex,
+  onCloseCallback
 }: PhotoProps) => {
   const [toggleInfo, setToggleInfo] = useState(false)
   const details = photos[filteredPhotoIds[selectedFilteredPhotoIndex]];
@@ -44,6 +46,7 @@ const Photo = ({
 
   const exitSinglePhotoView = () => {
     setSelectedFilteredPhotoIndex(undefined);
+    onCloseCallback(details.id)
   }
 
   const handleKeyPress = (event: KeyboardEvent) => {
