@@ -5,45 +5,8 @@ import { FaCaretRight } from "react-icons/fa";
 
 import { Home, About, Portfolio, Navigation, TitleBar } from "./components";
 import { Error } from "sharedComponents";
-import { GlobalStyle, ICON_FONT_SIZES, TRANSITION_SPEED, ICON_COLOR, APP_BORDER } from "theme";
+import { GlobalStyle, ICON_FONT_SIZES, TRANSITION_SPEED, ICON_COLOR } from "theme";
 import getContent from "./content";
-
-
-
-const NavigationClose = styled(({ isNavigationVisible, ...rest }) => (
-  <FaCaretRight {...rest} />
-))`
-  position: absolute;
-  top: 20px;
-  left: 7px;
-  transition: opacity ${TRANSITION_SPEED}s;
-  opacity: ${(props) => (props.isNavigationVisible ? 1 : 0)};
-  z-index: 999;
-  fill: ${ICON_COLOR.initial};
-  cursor: pointer;
-
-  &:hover {
-    fill: ${ICON_COLOR.hover};
-  }
-`;
-
-const NavigationGutter = styled.div`
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 998;
-`;
-
-const NavigationWrapper = styled.div<{ isNavigationVisible: boolean }>`
-  box-sizing: border-box;
-  display: flex;
-  position: fixed;
-  z-index: 999;
-  top: 0;
-  overflow: scroll;
-  transition: right ${TRANSITION_SPEED}s;
-  right: ${({ isNavigationVisible }) => isNavigationVisible ? "0" : `-100vw`};
-`;
 
 const App = (
 ) => {
@@ -89,5 +52,40 @@ const App = (
   );
 };
 
-export { APP_BORDER }
+
+const NavigationClose = styled(({ isNavigationVisible, ...rest }) => (
+  <FaCaretRight {...rest} />
+))`
+  position: absolute;
+  top: 20px;
+  left: 7px;
+  transition: opacity ${TRANSITION_SPEED}s;
+  opacity: ${(props) => (props.isNavigationVisible ? 1 : 0)};
+  z-index: 999;
+  fill: ${ICON_COLOR.initial};
+  cursor: pointer;
+
+  &:hover {
+    fill: ${ICON_COLOR.hover};
+  }
+`;
+
+const NavigationGutter = styled.div`
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 998;
+`;
+
+const NavigationWrapper = styled.div<{ isNavigationVisible: boolean }>`
+  box-sizing: border-box;
+  display: flex;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  overflow: scroll;
+  transition: right ${TRANSITION_SPEED}s;
+  right: ${({ isNavigationVisible }) => isNavigationVisible ? "0" : `-100vw`};
+`;
+
 export default App;

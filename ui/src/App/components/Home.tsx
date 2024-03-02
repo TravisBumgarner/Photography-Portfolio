@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
-import { ONE_HUNDRED_VH } from "theme";
 
 import { PhotoType } from "types";
 
@@ -9,7 +8,7 @@ const HomeImageWrapper = styled.div<{ src: string }>`
   left: 0;
   top: 0;
   width: 100vw;
-  ${ONE_HUNDRED_VH}
+  height: 100vh;
   box-sizing: border-box;
   display:flex;
   align-items: center;

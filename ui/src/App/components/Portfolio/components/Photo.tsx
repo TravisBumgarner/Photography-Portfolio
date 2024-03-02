@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 
 import Metadata from './Metadata';
 import { PhotoType } from "types";
-import { ICON_FONT_SIZES, ICON_COLOR, ONE_HUNDRED_VH } from "theme";
+import { ICON_FONT_SIZES, ICON_COLOR } from "theme";
 
 type PhotoProps = {
   photos: { [id: string]: PhotoType };
@@ -47,13 +47,10 @@ const Photo = ({
   }
 
   const handleKeyPress = (event: KeyboardEvent) => {
-    console.log(event.key)
     if (event.key === "ArrowLeft") {
       getNextPhotoIndex("left");
     } else if (event.key === "ArrowRight") {
       getNextPhotoIndex("right");
-    } else if (event.key === "Escape") {
-      exitSinglePhotoView();
     }
   };
 
@@ -69,7 +66,7 @@ const Photo = ({
   return (
     <>
       <OverflowHidden />
-      <Modal isOpen={!!setSelectedFilteredPhotoIndex} style={modalCSS}>
+      <Modal isOpen={!!setSelectedFilteredPhotoIndex} style={modalCSS} onRequestClose={exitSinglePhotoView}>
         <PhotoWrapper>
           <StyledPhoto
             src={`https://storage.googleapis.com/photo21-asdqwd/photos/large/${details.src}`}
@@ -161,7 +158,8 @@ const PhotoWrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  ${ONE_HUNDRED_VH}
+  width: 100%;
+  height: 100%;
 `
 
 const StyledPhoto = styled.img`

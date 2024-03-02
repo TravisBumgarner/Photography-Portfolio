@@ -6,56 +6,6 @@ import { Header } from 'sharedComponents'
 import { FONT_FAMILY_HEADER, CONTENT_SPACING, TEXT_FONT_SIZES } from 'theme'
 import { GalleryType } from 'types'
 
-const NavigationWrapper = styled.div`
-    text-align: right;
-    z-index: 999;
-    padding: ${CONTENT_SPACING.l};
-    border-left: 5px solid black;
-    height: 100vh;
-    box-sizing: border-box;
-    flex-direction: column;
-    width: 350px;
-    background-color: rgba(255, 255, 255, 1);
-    overflow: auto;
-`
-
-const SubNavigationWrapper = styled.div`
-    margin: ${CONTENT_SPACING.m} 0;
-
-    :last-child {
-        margin-top: 2rem;
-    }
-`
-
-const LinkListItem = styled.li`
-    margin: ${CONTENT_SPACING.s} 0;
-
-    &:hover {
-        border-left: 5px solid rgb(74, 207, 160);
-    }
-`
-
-const sharedStyles = css`
-    text-decoration: none;
-    font-family: ${FONT_FAMILY_HEADER};
-    font-size: ${TEXT_FONT_SIZES.m};
-    color: black;
-    width: 100%;
-    display: inline-block;
-
-    &:visited {
-        color: black;
-    }
-`
-
-const InternalLink = styled(Link)`
-    ${sharedStyles}
-`
-
-const ExternalLink = styled.a`
-    ${sharedStyles}
-`
-
 type Props = {
     galleries: Record<string, GalleryType>,
     toggleNavigation: () => void
@@ -118,5 +68,57 @@ const Navigation = ({ galleries, toggleNavigation }: Props) => {
         </NavigationWrapper>
     )
 }
+
+
+const NavigationWrapper = styled.div`
+    text-align: right;
+    z-index: 999;
+    padding: ${CONTENT_SPACING.l};
+    border-left: 5px solid black;
+    height: 100vh;
+    box-sizing: border-box;
+    flex-direction: column;
+    width: 350px;
+    background-color: rgba(255, 255, 255, 1);
+    overflow: auto;
+`
+
+const SubNavigationWrapper = styled.div`
+    margin: ${CONTENT_SPACING.m} 0;
+
+    :last-child {
+        margin-top: 2rem;
+    }
+`
+
+const LinkListItem = styled.li`
+    margin: ${CONTENT_SPACING.s} 0;
+
+    &:hover {
+        border-left: 5px solid rgb(74, 207, 160);
+    }
+`
+
+const sharedStyles = css`
+    text-decoration: none;
+    font-family: ${FONT_FAMILY_HEADER};
+    font-size: ${TEXT_FONT_SIZES.m};
+    color: black;
+    width: 100%;
+    display: inline-block;
+
+    &:visited {
+        color: black;
+    }
+`
+
+const InternalLink = styled(Link)`
+    ${sharedStyles}
+`
+
+const ExternalLink = styled.a`
+    ${sharedStyles}
+`
+
 
 export default Navigation
