@@ -4,73 +4,29 @@ import styled from 'styled-components'
 import { List, Header } from 'sharedComponents'
 import { CONTENT_SPACING } from 'theme'
 
-const ContentSection = styled.div`
-    flex: 1;
-`
-
 const ContentWrapper = styled.div`
     display: flex;
-`
-
-const ContentSubWrapperLeft = styled.div`
-    max-width: 300px;
-    box-sizing: border-box;
-    padding-right: ${CONTENT_SPACING.m};
-`
-
-const ContentSubWrapperRight = styled.div`
-    padding-left: ${CONTENT_SPACING.m};
-    flex-grow: 1;
-`
-
-const Portrait = styled.img`
-    width: 100%;
-    height: auto;
-    margin-top: ${CONTENT_SPACING.xs};
+    margin: 1rem;
+    flex-direction: column;
 `
 
 const About = () => {
-    return (
-        <>
-            <Header size="medium">About</Header>
-            <ContentWrapper>
-                <ContentSubWrapperLeft>
-                    <Portrait src="https://storage.googleapis.com/photo21-asdqwd/travis.jpg" />
-                </ContentSubWrapperLeft>
-                <ContentSubWrapperRight>
-                    <ContentSection>
-                        <Header size="small">Location</Header>
-                        <List
-                            items={[
-                                'Full Time Nomad'
-                            ]}
-                        />
+  return (
+    <ContentWrapper>
+          <Header size="large">AWARDS & RECOGNITIONS</Header>
+          <List
+            items={[
+              '2023 Black Box Gallery - Color Burst',
+              '2023 Praxis Gallery - The Portrait Exhibition',
+              '2018 Noyes Museum of Art of Stockton University - RAW Exhibition',
+              '2017 1st Place BARPCV Photography Competition',
+              '2016 Front Page of National Geographic\'s YourShot',
+              '2016 MIT Art Party',
+            ]}
+          />
 
-                        <Header size="small">Summary</Header>
-                        <List
-                            items={[
-                                'Software Engineer',
-                                'Photographer',
-                                'Maker',
-                                'Designer'
-                            ]}
-                        />
-
-                        <Header size="small">AWARDS & RECOGNITIONS</Header>
-                        <List
-                            items={[
-                                '2018 Noyes Museum of Art of Stockton University\'s RAW Exhibition',
-                                '2017 1st Place BARPCV Photography Competition',
-                                '2016 Front Page of National Geographic\'s YourShot',
-                                '2016 MIT Art Party',
-                            ]}
-                        />
-
-                    </ContentSection>
-                </ContentSubWrapperRight>
-            </ContentWrapper>
-        </>
-    )
+    </ContentWrapper>
+  )
 }
 
 export default About
