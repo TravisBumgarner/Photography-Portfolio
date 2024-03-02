@@ -50,8 +50,6 @@ const App = (
   const { galleries, backgroundPhotos, photos } = useMemo(() => getContent(), [])
 
   const [isNavigationVisible, setIsNavigationVisible] = useState(false);
-  const [isTitlebarVisible, setIsTitlebarVisible] = useState(true);
-
   const toggleNavigation = useCallback(() => setIsNavigationVisible(prev => !prev), [])
 
   return (
@@ -60,15 +58,14 @@ const App = (
       <TitleBar
         isNavigationVisible={isNavigationVisible}
         toggleNavigation={toggleNavigation}
-        isTitlebarVisible={isTitlebarVisible}
       />
       <Routes>
         <Route path="/" element={<Home backgroundPhotos={backgroundPhotos} />} />
         <Route path="/about" element={<About />} />
-        <Route path="/:gallerySlug" element={<Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} />} />
+        <Route path="/:gallerySlug" element={<Portfolio photos={photos} galleries={galleries} />} />
         <Route path="/:gallerySlug">
-          <Route index element={<Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} />} />
-          <Route path=":photoId" element={<Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} />} />
+          <Route index element={<Portfolio photos={photos} galleries={galleries} />} />
+          <Route path=":photoId" element={<Portfolio photos={photos} galleries={galleries} />} />
         </Route>
         <Route path="/error500" element={<Error value="500" />} />
         <Route path="*" element={<Error value="404" />} />

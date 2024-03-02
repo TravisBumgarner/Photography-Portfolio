@@ -8,18 +8,15 @@ import { Gallery, Photo } from './components'
 type Props = {
   photos: { [id: string]: PhotoType },
   galleries: Record<string, GalleryType>,
-  setIsTitlebarVisible: Dispatch<SetStateAction<boolean>>
 }
 
-const Portfolio = ({ photos, galleries, setIsTitlebarVisible }: Props
+const Portfolio = ({ photos, galleries }: Props
 ) => {
   const [filteredPhotoIds, setFilteredPhotoIds] = useState<string[]>([])
   const [selectedFilteredPhotoIndex, setSelectedFilteredPhotoIndex] = useState<number | undefined>(undefined);
   const [initialLoad, setInitialLoad] = useState(true) // Use for Initial Load of photo ID from URL
   const { gallerySlug, photoId } = useParams<{ gallerySlug: string, photoId: string }>();
   const navigate = useNavigate();
-
-  useEffect(() => setIsTitlebarVisible(selectedFilteredPhotoIndex === undefined), [selectedFilteredPhotoIndex])
 
   const filterPhotoIds = useCallback(() => {
     const filteredPhotoIds = Object.values(photos)
