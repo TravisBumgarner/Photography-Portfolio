@@ -16,7 +16,7 @@ const NavigationWrapper = styled.div`
     flex-direction: column;
     width: 350px;
     background-color: rgba(255, 255, 255, 1);
-    overflow: scroll;
+    overflow: auto;
 `
 
 const SubNavigationWrapper = styled.div`
