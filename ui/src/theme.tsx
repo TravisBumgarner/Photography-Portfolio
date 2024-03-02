@@ -52,13 +52,6 @@ const GlobalStyle = createGlobalStyle`
 
 `
 
-const APP_BORDER = '10px';
-
-const ONE_HUNDRED_VH = css`
-    height: 100vh; /* fallback for Js load */
-    height: var(--doc-height);
-`
-
 export {
     GlobalStyle,
     FONT_FAMILY_TEXT,
@@ -70,6 +63,4 @@ export {
     TEXT_FONT_SIZES,
     ICON_FONT_SIZES,
     ICON_COLOR,
-    APP_BORDER,
-    ONE_HUNDRED_VH
 }

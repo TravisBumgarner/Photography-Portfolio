@@ -1,10 +1,35 @@
-import React, { useEffect, RefObject, Dispatch, SetStateAction } from "react";
+import React, { SetStateAction, useMemo } from "react";
 import styled from 'styled-components'
 
 import { Header } from "sharedComponents";
 import { PhotoType, GalleryType } from "types";
 
-import { CONTENT_SPACING } from 'theme'
+type Props = {
+  galleryDetails: GalleryType
+  photos: { [id: string]: PhotoType }
+  filteredPhotoIds: string[]
+  setSelectedFilteredPhotoIndex: (value: SetStateAction<number>) => void
+};
+
+const Gallery = ({ photos, filteredPhotoIds, galleryDetails, setSelectedFilteredPhotoIndex }: Props) => {
+  const Photos = useMemo(() => {
+    return filteredPhotoIds.map(id => photos[id]).map((photo, index) => {
+      return (
+        <Image id={photo.id} key={photo.id} src={`https://storage.googleapis.com/photo21-asdqwd/photos/thumbnail/${photo.src}`} onClick={() => setSelectedFilteredPhotoIndex(index)} />
+      )
+    })
+  }, [filteredPhotoIds, photos, setSelectedFilteredPhotoIndex])
+
+
+  return (
+    <>
+      <ProjectDescriptionWrapper>
+        <Header size="medium">{galleryDetails.title}</Header>
+      </ProjectDescriptionWrapper>
+      <GalleryWrapper>{Photos}</GalleryWrapper>
+    </>
+  )
+};
 
 const ProjectDescriptionWrapper = styled.div`
     margin: 1rem;
@@ -22,29 +47,5 @@ const GalleryWrapper = styled.div`
     column-gap: 1rem;
 `
 
-
-type Props = {
-    galleryDetails: GalleryType
-    photos: { [id: string]: PhotoType }
-    filteredPhotoIds: string[]
-    setSelectedFilteredPhotoIndex: (value: SetStateAction<number>) => void
-};
-
-const Gallery = ({ photos, filteredPhotoIds, galleryDetails, setSelectedFilteredPhotoIndex }: Props) => {
-    return (
-        <>
-            <ProjectDescriptionWrapper>
-                <Header size="medium">{galleryDetails.title}</Header>
-            </ProjectDescriptionWrapper>
-            <GalleryWrapper>{
-                filteredPhotoIds.map(id => photos[id]).map((photo, index) => {
-                    return (
-                        <Image key={photo.id} src={`https://storage.googleapis.com/photo21-asdqwd/photos/thumbnail/${photo.src}`} onClick={() => setSelectedFilteredPhotoIndex(index)} />
-                    )
-                })
-            }</GalleryWrapper>
-        </>
-    )
-};
 
 export default Gallery;

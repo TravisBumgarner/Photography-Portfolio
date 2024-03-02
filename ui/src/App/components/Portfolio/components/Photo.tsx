@@ -1,129 +1,26 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import styled, { css } from "styled-components";
+import React, { Dispatch, SetStateAction, useEffect, useState, useCallback } from 'react'
+import styled, { createGlobalStyle, css } from "styled-components";
 import { FaTimes, FaArrowLeft, FaArrowRight, FaInfo } from "react-icons/fa";
+import Modal from 'react-modal';
 
-import { Text } from "sharedComponents";
+import Metadata from './Metadata';
 import { PhotoType } from "types";
-import { ICON_FONT_SIZES, ICON_COLOR, APP_BORDER, ONE_HUNDRED_VH } from "theme";
-import { useCallback } from 'react';
-
-const IconCSS = css`
-  fill: ${ICON_COLOR.initial};
-  cursor: pointer;
-
-&:hover {
-  fill: ${ICON_COLOR.hover};
-}
-`
-const CloseIcon = styled(FaTimes)`${IconCSS}`;
-const PreviousButton = styled(FaArrowLeft)`${IconCSS}`;
-const NextButton = styled(FaArrowRight)`${IconCSS}`;
-const ToggleInfo = styled(FaInfo)`${IconCSS}`;
-
-const Spacer = styled(({ className }) => <span className={className}>//</span>)`
-  padding: 0 20px;
-  display: inline-block;
-  font-weight: 700;
-`;
-
-const MetadataAndControlsWrapper = styled.div`
-  display: flex;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  justify-content: center;
-  box-sizing: border-box;
-  align-items: center;
-
-  svg {
-    padding-left: 0.5rem;
-  }
-`;
-
-const ControlsWrapper = styled.div`
-  background-color: white;
-  border-radius: 0.5rem;
-  margin: 0 0.5rem 0.5rem;
-  padding: 0.5rem;
-  background-color: rgba(255, 255, 255, 0.7);
-  height: 1.5rem;
-`
-
-const MetadataWrapper = styled.div`
-  border-radius: 0.5rem;
-  margin: 0 0.25rem 0.25rem;
-  padding: 0.5rem;
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0.7);
-  height: 1.5rem;
-
-  & > * {
-    font-size: 14px;
-    padding: 0;
-  }
-`;
-
-const StyledPhoto = styled.img`
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  padding: 1rem;
-  box-sizing: border-box;
-  aspect-ratio: inherit;
-`;
-
-const Metadata = ({ details }: { details: PhotoType }) => {
-  const {
-    camera,
-    aperture,
-    shutterSpeed,
-    iso,
-    lens,
-    focalLength,
-    location
-  } = details;
-
-  const gearString = `${camera} ${lens}`
-  const statsString =
-    aperture || shutterSpeed || iso || focalLength
-      ? `${aperture} ${shutterSpeed} ${iso} ${focalLength}`
-      : "N/A";
-
-  return (
-    <MetadataWrapper>
-      <Text>
-        <>
-          {location}
-          <Spacer />
-          {gearString}
-          <Spacer />
-          {statsString}
-        </>
-      </Text>
-    </MetadataWrapper>
-  );
-};
+import { ICON_FONT_SIZES, ICON_COLOR } from "theme";
 
 type PhotoProps = {
   photos: { [id: string]: PhotoType };
   filteredPhotoIds: string[];
   selectedFilteredPhotoIndex: number;
   setSelectedFilteredPhotoIndex: Dispatch<SetStateAction<number>>;
+  onCloseCallback: (id: string) => void;
 };
-
-const PhotoWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  ${ONE_HUNDRED_VH}
-`
 
 const Photo = ({
   photos,
   filteredPhotoIds,
   selectedFilteredPhotoIndex,
   setSelectedFilteredPhotoIndex,
+  onCloseCallback
 }: PhotoProps) => {
   const [toggleInfo, setToggleInfo] = useState(false)
   const details = photos[filteredPhotoIds[selectedFilteredPhotoIndex]];
@@ -149,6 +46,7 @@ const Photo = ({
 
   const exitSinglePhotoView = () => {
     setSelectedFilteredPhotoIndex(undefined);
+    onCloseCallback(details.id)
   }
 
   const handleKeyPress = (event: KeyboardEvent) => {
@@ -156,8 +54,6 @@ const Photo = ({
       getNextPhotoIndex("left");
     } else if (event.key === "ArrowRight") {
       getNextPhotoIndex("right");
-    } else if (event.key === "Escape") {
-      exitSinglePhotoView();
     }
   };
 
@@ -168,33 +64,116 @@ const Photo = ({
     };
   }, [selectedFilteredPhotoIndex]);
 
+  if (!details) return null
+
   return (
     <>
-      <PhotoWrapper>
-        <StyledPhoto
-          src={`https://storage.googleapis.com/photo21-asdqwd/photos/large/${details.src}`}
-        />
-      </PhotoWrapper>
-      <MetadataAndControlsWrapper>
-        {toggleInfo ? <Metadata details={details} /> : null}
-        <ControlsWrapper>
-          <ToggleInfo
-            size={ICON_FONT_SIZES.l}
-            onClick={() => setToggleInfo(prev => !prev)}
+      <OverflowHidden />
+      <Modal isOpen={!!setSelectedFilteredPhotoIndex} style={modalCSS} onRequestClose={exitSinglePhotoView}>
+        <PhotoWrapper>
+          <StyledPhoto
+            src={`https://storage.googleapis.com/photo21-asdqwd/photos/large/${details.src}`}
           />
-          <PreviousButton
-            size={ICON_FONT_SIZES.l}
-            onClick={() => getNextPhotoIndex("left")}
-          />
-          <CloseIcon size={ICON_FONT_SIZES.l} onClick={exitSinglePhotoView} />
-          <NextButton
-            size={ICON_FONT_SIZES.l}
-            onClick={() => getNextPhotoIndex("right")}
-          />
-        </ControlsWrapper>
-      </MetadataAndControlsWrapper>
+        </PhotoWrapper>
+        <MetadataAndControlsWrapper>
+          {toggleInfo ? <Metadata details={details} /> : null}
+          <ControlsWrapper>
+            <ToggleInfo
+              size={ICON_FONT_SIZES.l}
+              onClick={() => setToggleInfo(prev => !prev)}
+            />
+            <PreviousButton
+              size={ICON_FONT_SIZES.l}
+              onClick={() => getNextPhotoIndex("left")}
+            />
+            <CloseIcon size={ICON_FONT_SIZES.l} onClick={exitSinglePhotoView} />
+            <NextButton
+              size={ICON_FONT_SIZES.l}
+              onClick={() => getNextPhotoIndex("right")}
+            />
+          </ControlsWrapper>
+        </MetadataAndControlsWrapper>
+      </Modal>
     </>
   );
 };
+
+const OverflowHidden = createGlobalStyle`
+  body {
+    overflow: hidden;
+  }
+`;
+
+const modalCSS = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    border: 0,
+    width: '100%',
+    height: '100%',
+    padding: '1rem',
+  },
+};
+
+const IconCSS = css`
+  fill: ${ICON_COLOR.initial};
+  cursor: pointer;
+
+&:hover {
+  fill: ${ICON_COLOR.hover};
+}
+`
+const CloseIcon = styled(FaTimes)`${IconCSS}`;
+const PreviousButton = styled(FaArrowLeft)`${IconCSS}`;
+const NextButton = styled(FaArrowRight)`${IconCSS}`;
+const ToggleInfo = styled(FaInfo)`${IconCSS}`;
+
+
+const MetadataAndControlsWrapper = styled.div`
+  display: flex;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  justify-content: center;
+  box-sizing: border-box;
+  align-items: center;
+
+  svg {
+    padding-left: 0.5rem;
+  }
+`;
+
+const ControlsWrapper = styled.div`
+  background-color: white;
+  border-radius: 0.5rem;
+  margin: 0 0.5rem 0.5rem;
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.7);
+  height: 1.5rem;
+`
+
+const PhotoWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+`
+
+const StyledPhoto = styled.img`
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  padding: 1rem;
+  box-sizing: border-box;
+  aspect-ratio: inherit;
+  user-select: none;
+`;
+
 
 export default Photo;

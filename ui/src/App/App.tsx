@@ -5,8 +5,53 @@ import { FaCaretRight } from "react-icons/fa";
 
 import { Home, About, Portfolio, Navigation, TitleBar } from "./components";
 import { Error } from "sharedComponents";
-import { GlobalStyle, ICON_FONT_SIZES, TRANSITION_SPEED, ICON_COLOR, APP_BORDER } from "theme";
+import { GlobalStyle, ICON_FONT_SIZES, TRANSITION_SPEED, ICON_COLOR } from "theme";
 import getContent from "./content";
+
+const App = (
+) => {
+  const { galleries, backgroundPhotos, photos } = useMemo(() => getContent(), [])
+
+  const [isNavigationVisible, setIsNavigationVisible] = useState(false);
+  const toggleNavigation = useCallback(() => setIsNavigationVisible(prev => !prev), [])
+
+  return (
+    <>
+      <GlobalStyle />
+      <TitleBar
+        isNavigationVisible={isNavigationVisible}
+        toggleNavigation={toggleNavigation}
+      />
+      <Routes>
+        <Route path="/" element={<Home backgroundPhotos={backgroundPhotos} />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/:gallerySlug" element={<Portfolio photos={photos} galleries={galleries} />} />
+        <Route path="/:gallerySlug">
+          <Route index element={<Portfolio photos={photos} galleries={galleries} />} />
+          <Route path=":photoId" element={<Portfolio photos={photos} galleries={galleries} />} />
+        </Route>
+        <Route path="/error500" element={<Error value="500" />} />
+        <Route path="*" element={<Error value="404" />} />
+      </Routes>
+      <NavigationWrapper isNavigationVisible={isNavigationVisible}>
+        {isNavigationVisible && (
+          <NavigationGutter onClick={toggleNavigation} />
+        )}
+        <Navigation
+          galleries={galleries}
+          toggleNavigation={toggleNavigation}
+        />
+        <NavigationClose
+          isNavigationVisible={isNavigationVisible}
+          onClick={toggleNavigation}
+          size={ICON_FONT_SIZES.l}
+        />
+      </NavigationWrapper>
+
+    </>
+  );
+};
+
 
 const NavigationClose = styled(({ isNavigationVisible, ...rest }) => (
   <FaCaretRight {...rest} />
@@ -32,15 +77,6 @@ const NavigationGutter = styled.div`
   z-index: 998;
 `;
 
-const GridContainer = styled.div`
-`;
-
-const GridItemContent = styled.div`
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-`
-
 const NavigationWrapper = styled.div<{ isNavigationVisible: boolean }>`
   box-sizing: border-box;
   display: flex;
@@ -52,65 +88,4 @@ const NavigationWrapper = styled.div<{ isNavigationVisible: boolean }>`
   right: ${({ isNavigationVisible }) => isNavigationVisible ? "0" : `-100vw`};
 `;
 
-const App = (
-) => {
-  const { galleries, backgroundPhotos, photos } = useMemo(() => getContent(), [])
-
-  const [isNavigationVisible, setIsNavigationVisible] = useState(false);
-  const [isTitlebarVisible, setIsTitlebarVisible] = useState(true);
-
-  const toggleNavigation = useCallback(() => setIsNavigationVisible(prev => !prev), [])
-
-  useEffect(() => {
-    const documentHeight = () => {
-      const doc = document.documentElement
-      doc.style.setProperty('--doc-height', `${window.innerHeight}px`)
-    }
-    window.addEventListener('resize', documentHeight)
-    documentHeight()
-  }, [])
-
-
-  return (
-    <>
-      <GlobalStyle />
-      <GridContainer>
-        <TitleBar
-          isNavigationVisible={isNavigationVisible}
-          toggleNavigation={toggleNavigation}
-          isTitlebarVisible={isTitlebarVisible}
-        />
-        <GridItemContent>
-          <Routes>
-            <Route path="/" element={<Home backgroundPhotos={backgroundPhotos} />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/:gallerySlug" element={<Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} />} />
-            <Route path="/:gallerySlug">
-              <Route index element={<Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} />} />
-              <Route path=":photoId" element={<Portfolio setIsTitlebarVisible={setIsTitlebarVisible} photos={photos} galleries={galleries} />} />
-            </Route>
-            <Route path="/error500" element={<Error value="500" />} />
-            <Route path="*" element={<Error value="404" />} />
-          </Routes>
-        </GridItemContent>
-        <NavigationWrapper isNavigationVisible={isNavigationVisible}>
-          {isNavigationVisible && (
-            <NavigationGutter onClick={toggleNavigation} />
-          )}
-          <Navigation
-            galleries={galleries}
-            toggleNavigation={toggleNavigation}
-          />
-          <NavigationClose
-            isNavigationVisible={isNavigationVisible}
-            onClick={toggleNavigation}
-            size={ICON_FONT_SIZES.l}
-          />
-        </NavigationWrapper>
-      </GridContainer>
-    </>
-  );
-};
-
-export { APP_BORDER }
 export default App;

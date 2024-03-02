@@ -6,8 +6,28 @@ import { Link } from "react-router-dom";
 import { Header } from "sharedComponents";
 import { CONTENT_SPACING, ICON_FONT_SIZES, TRANSITION_SPEED, ICON_COLOR, } from "theme";
 
-const TitleBarWrapper = styled.div<{ isTitlebarVisible: boolean }>`
-  display: ${({ isTitlebarVisible }) => isTitlebarVisible ? 'flex' : 'none'};
+type Props = {
+  toggleNavigation: () => void;
+  isNavigationVisible: boolean;
+};
+
+const TitleBar = ({ toggleNavigation, isNavigationVisible }: Props) => {
+  return (
+    <TitleBarWrapper>
+      <InternalLink to="/">
+        <Header size="large">Travis Bumgarner Photography</Header>
+      </InternalLink>
+      <NavigationOpen
+        isNavigationVisible={isNavigationVisible}
+        onClick={toggleNavigation}
+        size={ICON_FONT_SIZES.l}
+      />
+    </TitleBarWrapper>
+  );
+};
+
+const TitleBarWrapper = styled.div`
+  display: flex;
   justify-content: space-between;
   margin: 1rem;
 `;
@@ -35,26 +55,5 @@ const NavigationOpen = styled(({ isNavigationVisible, ...rest }) => (
     fill: ${ICON_COLOR.hover};
   }
 `;
-
-type Props = {
-  toggleNavigation: () => void;
-  isNavigationVisible: boolean;
-  isTitlebarVisible: boolean;
-};
-
-const TitleBar = ({ toggleNavigation, isNavigationVisible, isTitlebarVisible }: Props) => {
-  return (
-    <TitleBarWrapper isTitlebarVisible={isTitlebarVisible}>
-      <InternalLink to="/">
-        <Header size="large">Travis Bumgarner Photography</Header>
-      </InternalLink>
-      <NavigationOpen
-        isNavigationVisible={isNavigationVisible}
-        onClick={toggleNavigation}
-        size={ICON_FONT_SIZES.l}
-      />
-    </TitleBarWrapper>
-  );
-};
 
 export default TitleBar;
