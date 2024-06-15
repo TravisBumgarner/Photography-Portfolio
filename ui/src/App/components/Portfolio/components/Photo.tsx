@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useState, useCallback } from 'react'
 import styled, { createGlobalStyle, css } from "styled-components";
-import { FaTimes, FaArrowLeft, FaArrowRight, FaInfo } from "react-icons/fa";
+import { FaTimes, FaArrowLeft, FaArrowRight, FaInfo, FaDownload } from "react-icons/fa";
 import Modal from 'react-modal';
 
 import Metadata from './Metadata';
@@ -13,6 +13,7 @@ type PhotoProps = {
   selectedFilteredPhotoIndex: number;
   setSelectedFilteredPhotoIndex: Dispatch<SetStateAction<number>>;
   onCloseCallback: (id: string) => void;
+  downloadingEnabled: boolean;
 };
 
 const Photo = ({
@@ -20,7 +21,8 @@ const Photo = ({
   filteredPhotoIds,
   selectedFilteredPhotoIndex,
   setSelectedFilteredPhotoIndex,
-  onCloseCallback
+  onCloseCallback,
+  downloadingEnabled,
 }: PhotoProps) => {
   const [toggleInfo, setToggleInfo] = useState(false)
   const details = photos[filteredPhotoIds[selectedFilteredPhotoIndex]];
@@ -57,6 +59,15 @@ const Photo = ({
     }
   };
 
+  const downloadPhoto = () => {
+    const downloadLink = document.createElement('a');
+    downloadLink.href = `https://storage.googleapis.com/photo21-asdqwd/photos/large/${details.src}`;;
+    downloadLink.download = details.src;
+    document.body.append(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
+
   useEffect(() => {
     window.addEventListener("keydown", handleKeyPress);
     return () => {
@@ -91,9 +102,13 @@ const Photo = ({
               size={ICON_FONT_SIZES.l}
               onClick={() => getNextPhotoIndex("right")}
             />
+            {downloadingEnabled && <DownloadButton
+              size={ICON_FONT_SIZES.l}
+              onClick={downloadPhoto}
+            />}
           </ControlsWrapper>
         </MetadataAndControlsWrapper>
-      </Modal>
+      </Modal >
     </>
   );
 };
@@ -131,6 +146,7 @@ const CloseIcon = styled(FaTimes)`${IconCSS}`;
 const PreviousButton = styled(FaArrowLeft)`${IconCSS}`;
 const NextButton = styled(FaArrowRight)`${IconCSS}`;
 const ToggleInfo = styled(FaInfo)`${IconCSS}`;
+const DownloadButton = styled(FaDownload)`${IconCSS}`;
 
 
 const MetadataAndControlsWrapper = styled.div`

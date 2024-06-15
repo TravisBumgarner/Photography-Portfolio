@@ -20,7 +20,7 @@ const PRIVATE_GALLERIES: Data = {
   photos: {
     "3522ef02-6e11-52e2-b261-a3d6846adf74": {
       "id": "3522ef02-6e11-52e2-b261-a3d6846adf74",
-      "src": "DSC01411.jpg",
+      "src": "Screenshot%202024-06-15%20at%204.57.58%E2%80%AFPM.png",
       "location": "Mexico",
       "gallery": "abc123",
       "camera": "Sony RX100",
@@ -151,6 +151,7 @@ const Portfolio = () => {
         photos={photos}
         filteredPhotoIds={filteredPhotoIds}
         onCloseCallback={onCloseCallback}
+        downloadingEnabled={true}
       />
     </>
   )
