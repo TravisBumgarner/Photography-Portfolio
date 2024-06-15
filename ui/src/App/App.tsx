@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import { FaCaretRight } from "react-icons/fa";
 
-import { Home, About, Portfolio, Navigation, TitleBar } from "./components";
+import { Home, About, Portfolio, Navigation, TitleBar, Private } from "./components";
 import { Error } from "sharedComponents";
 import { GlobalStyle, ICON_FONT_SIZES, TRANSITION_SPEED, ICON_COLOR } from "theme";
 import getContent from "./content";
@@ -25,6 +25,11 @@ const App = (
       <Routes>
         <Route path="/" element={<Home backgroundPhotos={backgroundPhotos} />} />
         <Route path="/about" element={<About />} />
+        {/* <Route path="/private/:gallerySlug" element={<Private />} /> */}
+        <Route path="/private/:privateGallerySlug">
+          <Route index element={<Private />} />
+          <Route path=":photoId" element={<Private />} />
+        </Route>
         <Route path="/:gallerySlug" element={<Portfolio photos={photos} galleries={galleries} />} />
         <Route path="/:gallerySlug">
           <Route index element={<Portfolio photos={photos} galleries={galleries} />} />
