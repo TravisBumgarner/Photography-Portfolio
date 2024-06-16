@@ -1,72 +1,74 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
 import { Header } from 'sharedComponents'
 import { FONT_FAMILY_HEADER, CONTENT_SPACING, TEXT_FONT_SIZES } from 'theme'
 import { GalleryType } from 'types'
+import { context } from '../context'
 
 type Props = {
-    galleries: Record<string, GalleryType>,
-    toggleNavigation: () => void
+  toggleNavigation: () => void
 }
 
-const Navigation = ({ galleries, toggleNavigation }: Props) => {
-    const links: ReactElement[] = []
+const Navigation = ({ toggleNavigation }: Props) => {
+  const { state: { galleries } } = useContext(context)
 
-    Object
-        .values(galleries)
-        .sort((a, b) => (a.title > b.title ? 1 : -1))
-        .map(({ title, slug }) => {
-            const link = (
-                <LinkListItem key={slug} onClick={toggleNavigation}>
-                    <InternalLink to={`/${slug}`}>{title}</InternalLink>
-                </LinkListItem>
-            )
-            links.push(link)
-        })
+  const links: ReactElement[] = []
 
-    const socialSectionContent = [
-        {
-            title: 'Connect',
-            route: 'https://www.linkedin.com/in/travisbumgarner/',
-            external: true,
-          },
-          {
-            title: 'Engineering & Blog',
-            route: 'https://travisbumgarner.com/',
-            external: true,
-          },
-          {
-            title: 'Awards & Recognition',
-            route: '/about',
-            external: false
-        }
-    ]
-
-    const socialLinks = socialSectionContent.map(m => {
-        return (
-            <LinkListItem key={m.title} onClick={toggleNavigation}>
-                <ExternalLink target={m.external ? "_blank" : ''} href={m.route}>{m.title}</ExternalLink>
-            </LinkListItem>
-        )
+  Object
+    .values(galleries)
+    .sort((a, b) => (a.title > b.title ? 1 : -1))
+    .map(({ title, slug }) => {
+      const link = (
+        <LinkListItem key={slug} onClick={toggleNavigation}>
+          <InternalLink to={`/${slug}`}>{title}</InternalLink>
+        </LinkListItem>
+      )
+      links.push(link)
     })
 
-    return (
-        <NavigationWrapper>
-            <SubNavigationWrapper>
-                <Header size="medium">Galleries</Header>
-                <ul>{links}</ul>
-            </SubNavigationWrapper>
+  const socialSectionContent = [
+    {
+      title: 'Connect',
+      route: 'https://www.linkedin.com/in/travisbumgarner/',
+      external: true,
+    },
+    {
+      title: 'Engineering & Blog',
+      route: 'https://travisbumgarner.com/',
+      external: true,
+    },
+    {
+      title: 'Awards & Recognition',
+      route: '/about',
+      external: false
+    }
+  ]
 
-            <SubNavigationWrapper>
-                <Header size="medium">Misc</Header>
-                <ul>
-                    {socialLinks}
-                </ul>
-            </SubNavigationWrapper>
-        </NavigationWrapper>
+  const socialLinks = socialSectionContent.map(m => {
+    return (
+      <LinkListItem key={m.title} onClick={toggleNavigation}>
+        <ExternalLink target={m.external ? "_blank" : ''} href={m.route}>{m.title}</ExternalLink>
+      </LinkListItem>
     )
+  })
+
+  return (
+    <NavigationWrapper>
+      <SubNavigationWrapper>
+        <Header size="medium">Galleries</Header>
+        <ul>{links}</ul>
+      </SubNavigationWrapper>
+
+      <SubNavigationWrapper>
+        <Header size="medium">Misc</Header>
+        <ul>
+          {socialLinks}
+        </ul>
+      </SubNavigationWrapper>
+    </NavigationWrapper>
+  )
 }
 
 

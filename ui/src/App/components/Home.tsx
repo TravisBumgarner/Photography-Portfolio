@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 
 import { PhotoType } from "types";
+import { context } from "../context";
 
 const HomeImageWrapper = styled.div<{ src: string }>`
   position: absolute;
@@ -21,11 +22,8 @@ const HomeImageWrapper = styled.div<{ src: string }>`
   background-attachment: fixed;
 `
 
-type Props = {
-  backgroundPhotos: PhotoType[];
-};
-
-const Home = ({ backgroundPhotos }: Props) => {
+const Home = () => {
+  const { state: { backgroundPhotos } } = useContext(context)
   const [backgroundImageIndex, setBackgroundImageIndex] = useState<number>(0);
 
   useEffect(() => {
