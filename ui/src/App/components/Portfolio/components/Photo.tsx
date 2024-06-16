@@ -84,33 +84,44 @@ const Photo = ({
     <>
       <OverflowHidden />
       <Modal isOpen={!!setSelectedFilteredPhotoIndex} style={modalCSS} onRequestClose={exitSinglePhotoView}>
+        <ControlsTopWrapper>
+          <CloseIcon size={ICON_FONT_SIZES.l} onClick={exitSinglePhotoView} />
+        </ControlsTopWrapper>
         <PhotoWrapper>
           <StyledPhoto
             src={getPhotoUrl({ isThumbnail: false, privateGalleryId: privateGallery ? gallerySlug : undefined, photoSrc: details.src })}
           />
         </PhotoWrapper>
-        <MetadataAndControlsWrapper>
+        <MetadataAndControlsBottomWrapper>
           {toggleInfo ? <Metadata details={details} /> : null}
           <ControlsWrapper>
-            <ToggleInfo
-              size={ICON_FONT_SIZES.l}
-              onClick={() => setToggleInfo(prev => !prev)}
-            />
-            <PreviousButton
-              size={ICON_FONT_SIZES.l}
-              onClick={() => getNextPhotoIndex("left")}
-            />
-            <CloseIcon size={ICON_FONT_SIZES.l} onClick={exitSinglePhotoView} />
-            <NextButton
-              size={ICON_FONT_SIZES.l}
-              onClick={() => getNextPhotoIndex("right")}
-            />
-            {privateGallery && <DownloadButton
-              size={ICON_FONT_SIZES.l}
-              onClick={downloadPhoto}
-            />}
+            <div>
+              <ToggleInfo
+                size={ICON_FONT_SIZES.l}
+                onClick={() => setToggleInfo(prev => !prev)}
+              />
+            </div>
+            <div>
+              <PreviousButton
+                style={{ marginRight: '2rem' }}
+                size={ICON_FONT_SIZES.xl}
+                onClick={() => getNextPhotoIndex("left")}
+              />
+              <NextButton
+                style={{ marginLeft: '2rem' }}
+
+                size={ICON_FONT_SIZES.xl}
+                onClick={() => getNextPhotoIndex("right")}
+              />
+            </div>
+            <div>
+              {privateGallery && <DownloadButton
+                size={ICON_FONT_SIZES.l}
+                onClick={downloadPhoto}
+              />}
+            </div>
           </ControlsWrapper>
-        </MetadataAndControlsWrapper>
+        </MetadataAndControlsBottomWrapper>
       </Modal >
     </>
   );
@@ -152,18 +163,23 @@ const ToggleInfo = styled(FaInfo)`${IconCSS}`;
 const DownloadButton = styled(FaDownload)`${IconCSS}`;
 
 
-const MetadataAndControlsWrapper = styled.div`
+const MetadataAndControlsBottomWrapper = styled.div`
   display: flex;
   position: fixed;
-  bottom: 1rem;
-  right: 1rem;
+  bottom: 0;
+  left: 0;
+  right: 0;
   justify-content: center;
   box-sizing: border-box;
   align-items: center;
+  flex-direction: column;
+  padding: 2rem;
+`;
 
-  svg {
-    padding-left: 0.5rem;
-  }
+const ControlsTopWrapper = styled.div`
+  position: fixed;
+  right: 2rem;
+  top: 2rem;
 `;
 
 const ControlsWrapper = styled.div`
@@ -173,6 +189,10 @@ const ControlsWrapper = styled.div`
   padding: 0.5rem;
   background-color: rgba(255, 255, 255, 0.7);
   height: 1.5rem;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 `
 
 const PhotoWrapper = styled.div`

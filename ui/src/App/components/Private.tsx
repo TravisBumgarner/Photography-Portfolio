@@ -21,7 +21,7 @@ const Portfolio = () => {
       .sort((a, b) => {
         const aDate = new Date(a.dateTaken)
         const bDate = new Date(b.dateTaken)
-        return bDate.getTime() - aDate.getTime()
+        return aDate.getTime() - bDate.getTime()
       })
       .map(({ id }) => id)
     return filteredPhotoIds
