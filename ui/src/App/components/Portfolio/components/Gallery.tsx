@@ -16,8 +16,9 @@ type Props = {
 const Gallery = ({ photos, filteredPhotoIds, galleryDetails, setSelectedFilteredPhotoIndex, privateGallery }: Props) => {
   const Photos = useMemo(() => {
     return filteredPhotoIds.map(id => photos[id]).map((photo, index) => {
+      const url = getPhotoUrl({ isThumbnail: true, photoSrc: photo.src, privateGalleryId: privateGallery ? photo.gallery : undefined })
       return (
-        <Image id={photo.id} key={photo.id} src={getPhotoUrl({ isThumbnail: true, photoSrc: photo.src, privateGalleryId: privateGallery ? photo.gallery : undefined })} onClick={() => setSelectedFilteredPhotoIndex(index)} />
+        <Image id={photo.id} style={{ backgroundImage: `url(${url})` }} key={photo.id} onClick={() => setSelectedFilteredPhotoIndex(index)} />
       )
     })
   }, [filteredPhotoIds, photos, setSelectedFilteredPhotoIndex, privateGallery])
@@ -37,16 +38,20 @@ const ProjectDescriptionWrapper = styled.div`
     margin: 1rem;
 `
 
-const Image = styled.img`
+const Image = styled.div`
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     width: 100%;
-    margin-bottom: 1rem;
+    padding-bottom: 100%;
     cursor: pointer;
-`
+`;
 
 const GalleryWrapper = styled.div`
-    column-count: 3;
+display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
     margin: 1rem;
-    column-gap: 1rem;
 `
 
 
