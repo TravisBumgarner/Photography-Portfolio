@@ -24,7 +24,6 @@ const HomeImageWrapper = styled.div<{ src: string }>`
 
 const Home = () => {
   const { state: { backgroundPhotos } } = useContext(context)
-  console.log(backgroundPhotos)
   const [backgroundImageIndex, setBackgroundImageIndex] = useState<number>(0);
 
   useEffect(() => {
