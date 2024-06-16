@@ -143,9 +143,8 @@ type LightroomMetadata = {
 const processHierarchicalSubject = (hierarchicalSubject: Sidecar['lr']['hierarchicalSubject'] | undefined): LightroomMetadata | null => {
     // This function will cause failures further down the line with the lie of `as Record<LightroomKey, string>
     // In that case need to update Lightroom's Metadata
-    console.log(hierarchicalSubject)
+
     if (!hierarchicalSubject) return null
-    console.log('hierarchicalSubject', typeof hierarchicalSubject)
     const partialKeys = hierarchicalSubject
         .filter(key => !('IsBackgroundPhoto' === key)) // Process separately because it's not a <key, value>
         .reduce((accum, entry) => {
