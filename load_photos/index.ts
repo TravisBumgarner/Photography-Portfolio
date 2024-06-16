@@ -5,6 +5,7 @@ import * as exifr from 'exifr'
 import { v5 as uuidv5 } from 'uuid'
 
 const PHOTO_DIR = 'large'
+const MODE = 'private' // Change to `all` to include all photos in the gallery, including background photos.
 
 const DEBUG = false // to get logs.
 
@@ -13,7 +14,7 @@ type Gallery = {
     slug: string
 }
 
-// new Gallery Names are set in Lightroom
+// new Gallery IDs are set in Lightroom
 const GALLERIES: Record<string, Gallery> = {
     '2014': {
         "title": "2014 Snapshots",
@@ -70,6 +71,10 @@ const GALLERIES: Record<string, Gallery> = {
     'colors-of-penonome-panama': {
         "title": "Colors of Penonom\u00e9 Panama",
         "slug": "colors-of-penonome-panama",
+    },
+    'ricky-and-tif': {
+        "title": "Ricky and Tif's Wedding",
+        "slug": "ricky-and-tif",
     },
 }
 
@@ -138,7 +143,7 @@ const processHierarchicalSubject = (hierarchicalSubject: Sidecar['lr']['hierarch
     // In that case need to update Lightroom's Metadata
     console.log(hierarchicalSubject)
     if (!hierarchicalSubject) return null
-
+    console.log('hierarchicalSubject', typeof hierarchicalSubject)
     const partialKeys = hierarchicalSubject
         .filter(key => !('IsBackgroundPhoto' === key)) // Process separately because it's not a <key, value>
         .reduce((accum, entry) => {
@@ -190,7 +195,9 @@ const processPhoto = async (file: string): Promise<Photo | null> => {
         return null
     }
 
-    const lightroomTags = processHierarchicalSubject(sidecar.lr.hierarchicalSubject)
+    const hierarchicalSubject = Array.isArray(sidecar.lr.hierarchicalSubject) ? sidecar.lr.hierarchicalSubject : [sidecar.lr.hierarchicalSubject]
+
+    const lightroomTags = processHierarchicalSubject(hierarchicalSubject)
     if (!lightroomTags) {
         console.log('\tSkipping for no Lightroom tags')
         return null
@@ -318,7 +325,7 @@ const processPhoto = async (file: string): Promise<Photo | null> => {
 
 const VALID_EXTENSIONS = ['jpg']
 
-const processPhotos = async () => {
+const processPhotos = async (mode: 'all' | 'private') => {
     const photos: Record<string, Photo> = {}
     const galleries = GALLERIES
 
@@ -338,8 +345,21 @@ const processPhotos = async () => {
             if (DEBUG) console.log(result)
         }
     }
-    let data = JSON.stringify({ galleries, photos });
+
+    let data
+    if (mode === 'all') {
+        data = JSON.stringify({ galleries, photos });
+    } else {
+        const galleryIds = new Set([...Object.values(photos).map(photo => photo.gallery)])
+        if (galleryIds.size !== 1) {
+            throw new Error('Only one gallery allowed for private photos')
+        }
+
+        const galleryId = galleryIds.values().next().value
+
+        data = JSON.stringify({ gallery: galleries[galleryId], photos })
+    }
     fs.writeFileSync('output.json', data);
 }
 
-processPhotos()
+processPhotos(MODE)
