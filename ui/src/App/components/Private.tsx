@@ -1,28 +1,31 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { Gallery, Photo } from './components'
-import { context } from '../../context';
+import { Gallery, Photo } from './Portfolio/components'
+import { context } from '../context';
 
 const Portfolio = () => {
-  const { state: { photos, galleries } } = useContext(context)
   const [filteredPhotoIds, setFilteredPhotoIds] = useState<string[]>([])
+  const { state: { privateGalleries } } = useContext(context)
   const [selectedFilteredPhotoIndex, setSelectedFilteredPhotoIndex] = useState<number | undefined>(undefined);
   const [initialLoad, setInitialLoad] = useState(true) // Use for Initial Load of photo ID from URL
-  const { gallerySlug, photoId } = useParams<{ gallerySlug: string, photoId: string }>();
+  const { privateGallerySlug, photoId } = useParams<{ privateGallerySlug: string, photoId: string }>();
   const navigate = useNavigate();
+
+  const galleryDetails = privateGalleries[privateGallerySlug].gallery
+  const photos = privateGalleries[privateGallerySlug].photos
 
   const filterPhotoIds = useCallback(() => {
     const filteredPhotoIds = Object.values(photos)
-      .filter(photo => photo.gallery == gallerySlug)
+      .filter(photo => photo.gallery == privateGallerySlug)
       .sort((a, b) => {
         const aDate = new Date(a.dateTaken)
         const bDate = new Date(b.dateTaken)
-        return bDate.getTime() - aDate.getTime()
+        return aDate.getTime() - bDate.getTime()
       })
       .map(({ id }) => id)
     return filteredPhotoIds
-  }, [photos, gallerySlug])
+  }, [photos, privateGallerySlug])
 
   useEffect(() => {
     const filteredPhotoIds = filterPhotoIds()
@@ -31,18 +34,16 @@ const Portfolio = () => {
       setInitialLoad(false)
     }
     setFilteredPhotoIds(filteredPhotoIds)
-  }, [gallerySlug])
-
-  const galleryDetails = galleries[gallerySlug]
+  }, [privateGallerySlug])
 
   const handleUrlChange = useCallback(() => {
     if (initialLoad && photoId && selectedFilteredPhotoIndex === undefined) {
       return
     }
     navigate(
-      `/${galleryDetails.slug}/${filteredPhotoIds[selectedFilteredPhotoIndex] || ''}`
+      `/private/${privateGallerySlug}/${filteredPhotoIds[selectedFilteredPhotoIndex] || ''}`
     )
-  }, [initialLoad, photoId, selectedFilteredPhotoIndex, galleryDetails]);
+  }, [initialLoad, photoId, selectedFilteredPhotoIndex, privateGallerySlug]);
 
   useEffect(handleUrlChange, [selectedFilteredPhotoIndex])
 
@@ -57,7 +58,7 @@ const Portfolio = () => {
         photos={photos}
         filteredPhotoIds={filteredPhotoIds}
         galleryDetails={galleryDetails}
-        privateGallery={false}
+        privateGallery={true}
       />
       <Photo
         setSelectedFilteredPhotoIndex={setSelectedFilteredPhotoIndex}
@@ -65,7 +66,7 @@ const Portfolio = () => {
         photos={photos}
         filteredPhotoIds={filteredPhotoIds}
         onCloseCallback={onCloseCallback}
-        privateGallery={false}
+        privateGallery={true}
         gallerySlug={galleryDetails.slug}
       />
     </>

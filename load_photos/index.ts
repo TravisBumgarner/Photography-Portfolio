@@ -1,10 +1,10 @@
 import fs from 'fs'
 import path from 'path'
-
 import * as exifr from 'exifr'
 import { v5 as uuidv5 } from 'uuid'
 
 const PHOTO_DIR = 'large'
+const MODE = 'private' // Change to `all` to include all photos in the gallery, including background photos.
 
 const DEBUG = false // to get logs.
 
@@ -13,8 +13,8 @@ type Gallery = {
     slug: string
 }
 
-// new Gallery Names are set in Lightroom
-const GALLERIES: Record<string, Gallery> = {
+// new Gallery IDs are set in Lightroom
+const PUBLIC_GALLERIES: Record<string, Gallery> = {
     '2014': {
         "title": "2014 Snapshots",
         "slug": "2014",
@@ -70,6 +70,13 @@ const GALLERIES: Record<string, Gallery> = {
     'colors-of-penonome-panama': {
         "title": "Colors of Penonom\u00e9 Panama",
         "slug": "colors-of-penonome-panama",
+    },
+}
+
+const PRIVATE_GALLERIES: Record<string, Gallery> = {
+    'ricky-and-tif': {
+        "title": "Ricky and Tif's Wedding",
+        "slug": "ricky-and-tif",
     },
 }
 
@@ -136,9 +143,8 @@ type LightroomMetadata = {
 const processHierarchicalSubject = (hierarchicalSubject: Sidecar['lr']['hierarchicalSubject'] | undefined): LightroomMetadata | null => {
     // This function will cause failures further down the line with the lie of `as Record<LightroomKey, string>
     // In that case need to update Lightroom's Metadata
-    console.log(hierarchicalSubject)
-    if (!hierarchicalSubject) return null
 
+    if (!hierarchicalSubject) return null
     const partialKeys = hierarchicalSubject
         .filter(key => !('IsBackgroundPhoto' === key)) // Process separately because it's not a <key, value>
         .reduce((accum, entry) => {
@@ -190,7 +196,9 @@ const processPhoto = async (file: string): Promise<Photo | null> => {
         return null
     }
 
-    const lightroomTags = processHierarchicalSubject(sidecar.lr.hierarchicalSubject)
+    const hierarchicalSubject = Array.isArray(sidecar.lr.hierarchicalSubject) ? sidecar.lr.hierarchicalSubject : [sidecar.lr.hierarchicalSubject]
+
+    const lightroomTags = processHierarchicalSubject(hierarchicalSubject)
     if (!lightroomTags) {
         console.log('\tSkipping for no Lightroom tags')
         return null
@@ -296,7 +304,7 @@ const processPhoto = async (file: string): Promise<Photo | null> => {
 
     const results = {
         id: generatePhotoId(data.RawFileName, data.DateTimeOriginal),
-        src: file.replace(`${PHOTO_DIR}/`, ''),
+        src: file.replace(path.normalize(PHOTO_DIR) + path.sep, ''),
         location: Location,
         gallery: Gallery,
         camera: `${data.Make} - ${data.Model}`,
@@ -318,9 +326,8 @@ const processPhoto = async (file: string): Promise<Photo | null> => {
 
 const VALID_EXTENSIONS = ['jpg']
 
-const processPhotos = async () => {
+const processPhotos = async (mode: 'all' | 'private') => {
     const photos: Record<string, Photo> = {}
-    const galleries = GALLERIES
 
     const files = fs.readdirSync(PHOTO_DIR)
 
@@ -338,8 +345,22 @@ const processPhotos = async () => {
             if (DEBUG) console.log(result)
         }
     }
-    let data = JSON.stringify({ galleries, photos });
-    fs.writeFileSync('output.json', data);
+
+    if (mode === 'all') {
+        const data = JSON.stringify({ galleries: PUBLIC_GALLERIES, photos });
+        fs.writeFileSync('output.json', data);
+    } else {
+        const galleryIds = new Set([...Object.values(photos).map(photo => photo.gallery)])
+        if (galleryIds.size !== 1) {
+            throw new Error('Only one gallery allowed for private photos')
+        }
+
+        const galleryId = galleryIds.values().next().value
+
+        const data = JSON.stringify({ gallery: PRIVATE_GALLERIES[galleryId], photos })
+        fs.writeFileSync(`${galleryId}.json`, data);
+
+    }
 }
 
-processPhotos()
+processPhotos(MODE)

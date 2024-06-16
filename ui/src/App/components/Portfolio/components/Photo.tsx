@@ -1,11 +1,12 @@
 import React, { Dispatch, SetStateAction, useEffect, useState, useCallback } from 'react'
 import styled, { createGlobalStyle, css } from "styled-components";
-import { FaTimes, FaArrowLeft, FaArrowRight, FaInfo } from "react-icons/fa";
+import { FaTimes, FaArrowLeft, FaArrowRight, FaInfo, FaDownload } from "react-icons/fa";
 import Modal from 'react-modal';
 
 import Metadata from './Metadata';
 import { PhotoType } from "types";
 import { ICON_FONT_SIZES, ICON_COLOR } from "theme";
+import { getPhotoUrl } from '../../../utils';
 
 type PhotoProps = {
   photos: { [id: string]: PhotoType };
@@ -13,6 +14,8 @@ type PhotoProps = {
   selectedFilteredPhotoIndex: number;
   setSelectedFilteredPhotoIndex: Dispatch<SetStateAction<number>>;
   onCloseCallback: (id: string) => void;
+  privateGallery: boolean;
+  gallerySlug: string;
 };
 
 const Photo = ({
@@ -20,7 +23,9 @@ const Photo = ({
   filteredPhotoIds,
   selectedFilteredPhotoIndex,
   setSelectedFilteredPhotoIndex,
-  onCloseCallback
+  onCloseCallback,
+  privateGallery,
+  gallerySlug
 }: PhotoProps) => {
   const [toggleInfo, setToggleInfo] = useState(false)
   const details = photos[filteredPhotoIds[selectedFilteredPhotoIndex]];
@@ -57,6 +62,15 @@ const Photo = ({
     }
   };
 
+  const downloadPhoto = () => {
+    const downloadLink = document.createElement('a');
+    downloadLink.href = getPhotoUrl({ isThumbnail: false, privateGalleryId: privateGallery ? gallerySlug : undefined, photoSrc: details.src })
+    downloadLink.download = details.src;
+    document.body.append(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
+
   useEffect(() => {
     window.addEventListener("keydown", handleKeyPress);
     return () => {
@@ -70,30 +84,45 @@ const Photo = ({
     <>
       <OverflowHidden />
       <Modal isOpen={!!setSelectedFilteredPhotoIndex} style={modalCSS} onRequestClose={exitSinglePhotoView}>
+        <ControlsTopWrapper>
+          <CloseIcon size={ICON_FONT_SIZES.l} onClick={exitSinglePhotoView} />
+        </ControlsTopWrapper>
         <PhotoWrapper>
           <StyledPhoto
-            src={`https://storage.googleapis.com/photo21-asdqwd/photos/large/${details.src}`}
+            src={getPhotoUrl({ isThumbnail: false, privateGalleryId: privateGallery ? gallerySlug : undefined, photoSrc: details.src })}
           />
         </PhotoWrapper>
-        <MetadataAndControlsWrapper>
+        <MetadataAndControlsBottomWrapper>
           {toggleInfo ? <Metadata details={details} /> : null}
           <ControlsWrapper>
-            <ToggleInfo
-              size={ICON_FONT_SIZES.l}
-              onClick={() => setToggleInfo(prev => !prev)}
-            />
-            <PreviousButton
-              size={ICON_FONT_SIZES.l}
-              onClick={() => getNextPhotoIndex("left")}
-            />
-            <CloseIcon size={ICON_FONT_SIZES.l} onClick={exitSinglePhotoView} />
-            <NextButton
-              size={ICON_FONT_SIZES.l}
-              onClick={() => getNextPhotoIndex("right")}
-            />
+            <div>
+              <ToggleInfo
+                size={ICON_FONT_SIZES.l}
+                onClick={() => setToggleInfo(prev => !prev)}
+              />
+            </div>
+            <div>
+              <PreviousButton
+                style={{ marginRight: '2rem' }}
+                size={ICON_FONT_SIZES.xl}
+                onClick={() => getNextPhotoIndex("left")}
+              />
+              <NextButton
+                style={{ marginLeft: '2rem' }}
+
+                size={ICON_FONT_SIZES.xl}
+                onClick={() => getNextPhotoIndex("right")}
+              />
+            </div>
+            <div>
+              {privateGallery && <DownloadButton
+                size={ICON_FONT_SIZES.l}
+                onClick={downloadPhoto}
+              />}
+            </div>
           </ControlsWrapper>
-        </MetadataAndControlsWrapper>
-      </Modal>
+        </MetadataAndControlsBottomWrapper>
+      </Modal >
     </>
   );
 };
@@ -131,20 +160,26 @@ const CloseIcon = styled(FaTimes)`${IconCSS}`;
 const PreviousButton = styled(FaArrowLeft)`${IconCSS}`;
 const NextButton = styled(FaArrowRight)`${IconCSS}`;
 const ToggleInfo = styled(FaInfo)`${IconCSS}`;
+const DownloadButton = styled(FaDownload)`${IconCSS}`;
 
 
-const MetadataAndControlsWrapper = styled.div`
+const MetadataAndControlsBottomWrapper = styled.div`
   display: flex;
   position: fixed;
-  bottom: 1rem;
-  right: 1rem;
+  bottom: 0;
+  left: 0;
+  right: 0;
   justify-content: center;
   box-sizing: border-box;
   align-items: center;
+  flex-direction: column;
+  padding: 2rem;
+`;
 
-  svg {
-    padding-left: 0.5rem;
-  }
+const ControlsTopWrapper = styled.div`
+  position: fixed;
+  right: 2rem;
+  top: 2rem;
 `;
 
 const ControlsWrapper = styled.div`
@@ -154,6 +189,10 @@ const ControlsWrapper = styled.div`
   padding: 0.5rem;
   background-color: rgba(255, 255, 255, 0.7);
   height: 1.5rem;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 `
 
 const PhotoWrapper = styled.div`

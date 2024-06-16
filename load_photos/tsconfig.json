@@ -1,21 +1,25 @@
 {
-    "compilerOptions": {
-        "resolveJsonModule": true,
-        "baseUrl": ".",
-        "paths": {
-            "*": [
-                "types/*"
-            ]
-        },
-        "module": "commonjs",
-        "noImplicitAny": true,
-        "removeComments": true,
-        "preserveConstEnums": true,
-        "sourceMap": true,
-        "strictNullChecks": true,
-        "esModuleInterop": true,
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "*": [
+        "types/*"
+      ]
     },
-    "exclude": [
-        "node_modules"
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "lib": [
+      "es2016",
+      "dom"
     ]
-  }
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

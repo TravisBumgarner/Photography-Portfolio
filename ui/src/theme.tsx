@@ -30,7 +30,8 @@ const ICON_COLOR = {
 const ICON_FONT_SIZES = {
     s: '1.0rem',
     m: '1.2rem',
-    l: '1.5rem'
+    l: '1.5rem',
+    xl: '2.0rem'
 }
 
 const FONT_FAMILY_HEADER = "'Raleway', sans-serif;"
