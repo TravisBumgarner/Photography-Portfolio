@@ -53,12 +53,12 @@ const context = createContext({
 
 const ResultsContext = ({ children }: { children: JSX.Element }) => {
   const [state, dispatch] = useReducer(reducer, EMPTY_STATE)
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
     setIsLoading(true)
     const { galleries, backgroundPhotos, photos } = getContent()
-    console.log('hydrating')
+
     dispatch({ type: 'HYDRATE_PHOTOS', payload: { photos, backgroundPhotos, galleries } })
     setIsLoading(false)
   }, [])

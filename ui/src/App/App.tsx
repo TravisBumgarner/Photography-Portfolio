@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect, useContext } from 'react'
+import React, { useState, useCallback } from 'react'
 import { Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import { FaCaretRight } from "react-icons/fa";
@@ -6,7 +6,7 @@ import { FaCaretRight } from "react-icons/fa";
 import { Home, About, Portfolio, Navigation, TitleBar } from "./components";
 import { Error } from "sharedComponents";
 import { GlobalStyle, ICON_FONT_SIZES, TRANSITION_SPEED, ICON_COLOR } from "theme";
-import Context, { context } from './context'
+import Context from './context'
 
 
 
@@ -14,8 +14,7 @@ const App = (
 ) => {
   const [isNavigationVisible, setIsNavigationVisible] = useState(false);
   const toggleNavigation = useCallback(() => setIsNavigationVisible(prev => !prev), [])
-  const { state, dispatch } = useContext(context)
-  console.log(state)
+
   return (
     <>
       <GlobalStyle />
@@ -24,24 +23,22 @@ const App = (
         toggleNavigation={toggleNavigation}
       />
       <Routes>
-        {/* <Route path="/" element={<Home backgroundPhotos={backgroundPhotos} />} />
+        <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/:gallerySlug" element={<Portfolio photos={photos} galleries={galleries} />} />
         <Route path="/:gallerySlug">
-          <Route index element={<Portfolio photos={photos} galleries={galleries} />} />
-          <Route path=":photoId" element={<Portfolio photos={photos} galleries={galleries} />} />
+          <Route index element={<Portfolio />} />
+          <Route path=":photoId" element={<Portfolio />} />
         </Route>
         <Route path="/error500" element={<Error value="500" />} />
-        <Route path="*" element={<Error value="404" />} /> */}
+        <Route path="*" element={<Error value="404" />} />
       </Routes>
       <NavigationWrapper isNavigationVisible={isNavigationVisible}>
         {isNavigationVisible && (
           <NavigationGutter onClick={toggleNavigation} />
         )}
-        {/* <Navigation
-          // galleries={galleries}
+        <Navigation
           toggleNavigation={toggleNavigation}
-        /> */}
+        />
         <NavigationClose
           isNavigationVisible={isNavigationVisible}
           onClick={toggleNavigation}

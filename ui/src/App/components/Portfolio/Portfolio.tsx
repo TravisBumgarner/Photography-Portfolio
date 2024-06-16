@@ -1,17 +1,13 @@
-import React, { Dispatch, SetStateAction, useState, useEffect, useCallback } from 'react'
+import React, { Dispatch, SetStateAction, useState, useEffect, useCallback, useContext } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 
 import { GalleryType, PhotoType } from 'types'
 import { Gallery, Photo } from './components'
+import { context } from '../../context';
 
-type Props = {
-  photos: { [id: string]: PhotoType },
-  galleries: Record<string, GalleryType>,
-}
-
-const Portfolio = ({ photos, galleries }: Props
-) => {
+const Portfolio = () => {
+  const { state: { photos, galleries } } = useContext(context)
   const [filteredPhotoIds, setFilteredPhotoIds] = useState<string[]>([])
   const [selectedFilteredPhotoIndex, setSelectedFilteredPhotoIndex] = useState<number | undefined>(undefined);
   const [initialLoad, setInitialLoad] = useState(true) // Use for Initial Load of photo ID from URL
@@ -53,8 +49,8 @@ const Portfolio = ({ photos, galleries }: Props
   useEffect(handleUrlChange, [selectedFilteredPhotoIndex])
 
   const onCloseCallback = useCallback((id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'auto'})
-  },[])
+    document.getElementById(id)?.scrollIntoView({ behavior: 'auto' })
+  }, [])
 
   return (
     <>
@@ -70,7 +66,7 @@ const Portfolio = ({ photos, galleries }: Props
         photos={photos}
         filteredPhotoIds={filteredPhotoIds}
         onCloseCallback={onCloseCallback}
-        />
+      />
     </>
   )
 }
