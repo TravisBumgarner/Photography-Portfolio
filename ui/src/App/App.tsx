@@ -25,7 +25,7 @@ const App = (
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/private/:gallerySlug">
+        <Route path="/private/:privateGallerySlug">
           <Route index element={<Private />} />
           <Route path=":photoId" element={<Private />} />
         </Route>

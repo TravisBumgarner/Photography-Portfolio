@@ -1,9 +1,9 @@
-type GalleryType = {
+export type GalleryType = {
   title: string;
   slug: string;
 }
 
-type PhotoType = {
+export type PhotoType = {
   id: string;
   src: string;
   gallery: string;
@@ -18,7 +18,10 @@ type PhotoType = {
   isBackgroundPhoto: boolean;
 };
 
-export {
-  GalleryType,
-  PhotoType
-};
+export type PrivateGallery = {
+  gallery: GalleryType;
+  photos: {
+    [id: string]: PhotoType
+  }
+}
+

@@ -1,11 +1,7 @@
 import output from "./output.json";
-import { GalleryType, PhotoType } from "types";
-import rickyAndTiff from "./rickyAndTiff.json";
+import { GalleryType, PhotoType, PrivateGallery } from "types";
+import rickyAndTif from "./ricky-and-tif.json";
 
-type PrivateGallery = {
-  gallery: GalleryType;
-  photos: Record<string, PhotoType>;
-}
 
 type Data = {
   photos: Record<string, PhotoType>;
@@ -24,7 +20,7 @@ const getData = (): Data => {
     galleries: output.galleries,
     backgroundPhotos,
     privateGalleries: {
-      rickyAndTiff
+      'ricky-and-tif': rickyAndTif
     }
   };
 };
