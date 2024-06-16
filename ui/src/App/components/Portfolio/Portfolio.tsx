@@ -1,8 +1,6 @@
-import React, { Dispatch, SetStateAction, useState, useEffect, useCallback, useContext } from 'react'
+import React, { useState, useEffect, useCallback, useContext } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
-import Modal from 'react-modal';
 
-import { GalleryType, PhotoType } from 'types'
 import { Gallery, Photo } from './components'
 import { context } from '../../context';
 
