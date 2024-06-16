@@ -6,6 +6,7 @@ import Modal from 'react-modal';
 import Metadata from './Metadata';
 import { PhotoType } from "types";
 import { ICON_FONT_SIZES, ICON_COLOR } from "theme";
+import { getPhotoUrl } from '../../../utils';
 
 type PhotoProps = {
   photos: { [id: string]: PhotoType };
@@ -13,7 +14,8 @@ type PhotoProps = {
   selectedFilteredPhotoIndex: number;
   setSelectedFilteredPhotoIndex: Dispatch<SetStateAction<number>>;
   onCloseCallback: (id: string) => void;
-  downloadingEnabled: boolean;
+  privateGallery: boolean;
+  gallerySlug: string;
 };
 
 const Photo = ({
@@ -22,7 +24,8 @@ const Photo = ({
   selectedFilteredPhotoIndex,
   setSelectedFilteredPhotoIndex,
   onCloseCallback,
-  downloadingEnabled,
+  privateGallery,
+  gallerySlug
 }: PhotoProps) => {
   const [toggleInfo, setToggleInfo] = useState(false)
   const details = photos[filteredPhotoIds[selectedFilteredPhotoIndex]];
@@ -61,7 +64,7 @@ const Photo = ({
 
   const downloadPhoto = () => {
     const downloadLink = document.createElement('a');
-    downloadLink.href = `https://storage.googleapis.com/photo21-asdqwd/photos/large/${details.src}`;;
+    downloadLink.href = getPhotoUrl({ isThumbnail: false, privateGalleryId: privateGallery ? gallerySlug : undefined, photoSrc: details.src })
     downloadLink.download = details.src;
     document.body.append(downloadLink);
     downloadLink.click();
@@ -83,7 +86,7 @@ const Photo = ({
       <Modal isOpen={!!setSelectedFilteredPhotoIndex} style={modalCSS} onRequestClose={exitSinglePhotoView}>
         <PhotoWrapper>
           <StyledPhoto
-            src={`https://storage.googleapis.com/photo21-asdqwd/photos/large/${details.src}`}
+            src={getPhotoUrl({ isThumbnail: false, privateGalleryId: privateGallery ? gallerySlug : undefined, photoSrc: details.src })}
           />
         </PhotoWrapper>
         <MetadataAndControlsWrapper>
@@ -102,7 +105,7 @@ const Photo = ({
               size={ICON_FONT_SIZES.l}
               onClick={() => getNextPhotoIndex("right")}
             />
-            {downloadingEnabled && <DownloadButton
+            {privateGallery && <DownloadButton
               size={ICON_FONT_SIZES.l}
               onClick={downloadPhoto}
             />}

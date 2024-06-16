@@ -20,6 +20,7 @@ IsHomepage
 Gallery
 - 2x3x4
 - 2018
+- Galleries can also be private. 
 Location
 - CountryNameHere
 CameraType
@@ -49,10 +50,13 @@ IsBackgroundPhoto (Check for True)
 
 3. Copy `large` directory to `./load_photos`
 4. `yarn` Install dependencies
+5. If gallery is private, change `MODE` in index.ts
 5. `yarn start` run script
 6. Navigate to https://console.cloud.google.com/
 7. Drag and drop `large` and `thumbnail` into GCS
-11. `yarn deploy` `ui`
+8. (For private photos only) Run `gsutil -m setmeta -h "Content-Disposition:attachment" gs://photo21-asdqwd/photos/[private-gallery-id]/large/*`
+9. Copy output of `load_photos` to `ui/src/App/content/` and update index.ts in that dir.
+10. `yarn deploy` `ui`
 
 
 

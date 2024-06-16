@@ -57,6 +57,7 @@ const Portfolio = () => {
         photos={photos}
         filteredPhotoIds={filteredPhotoIds}
         galleryDetails={galleryDetails}
+        privateGallery={false}
       />
       <Photo
         setSelectedFilteredPhotoIndex={setSelectedFilteredPhotoIndex}
@@ -64,7 +65,8 @@ const Portfolio = () => {
         photos={photos}
         filteredPhotoIds={filteredPhotoIds}
         onCloseCallback={onCloseCallback}
-        downloadingEnabled={false}
+        privateGallery={false}
+        gallerySlug={galleryDetails.slug}
       />
     </>
   )

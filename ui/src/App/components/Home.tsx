@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { PhotoType } from "types";
 import { context } from "../context";
+import { getPhotoUrl } from "../utils";
 
 const HomeImageWrapper = styled.div<{ src: string }>`
   position: absolute;
@@ -35,7 +36,7 @@ const Home = () => {
   }, [])
 
   const url = useMemo(() => {
-    return `https://storage.googleapis.com/photo21-asdqwd/photos/large/${encodeURIComponent(backgroundPhotos[backgroundImageIndex % backgroundPhotos.length].src)}`
+    return getPhotoUrl({ isThumbnail: false, photoSrc: backgroundPhotos[backgroundImageIndex % backgroundPhotos.length].src })
   }, [backgroundImageIndex])
   return (
     <HomeImageWrapper src={url} />
