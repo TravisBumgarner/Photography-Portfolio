@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from 'react'
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 import { Link, useNavigate, useParams } from 'react-router-dom'
@@ -38,7 +38,6 @@ const Gallery = ({ privateGallery }: Props) => {
 
   useEffect(() => {
     if (previouslySelectedPhotoId) {
-      document.getElementById(previouslySelectedPhotoId)?.scrollIntoView()
       dispatch({
         type: 'BACK_TO_GALLERY',
         payload: {
@@ -93,8 +92,8 @@ const Gallery = ({ privateGallery }: Props) => {
 
       const url = getPhotoUrl({ isThumbnail: true, photoSrc: photo.src, privateGalleryId: privateGallery ? photo.gallery : undefined })
       return (
-        <Link to={`/${gallerySlug}/${photoId}`} key={photo.id}>
-          <Image id={photo.id} style={{ backgroundImage: `url(${url})` }} />
+        <Link id={photo.id} to={`/${gallerySlug}/${photoId}`} key={photo.id}>
+          <LazyImage url={url} />
         </Link>
       )
     }
@@ -117,13 +116,14 @@ const ProjectDescriptionWrapper = styled.div`
     margin: 1rem;
 `
 
-const Image = styled.div`
+const Image = styled.div<{ url: string }>`
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
     padding-bottom: 100%;
     cursor: pointer;
+    background-image: url(${({ url }) => url});
 `
 
 const GalleryWrapper = styled.div`
@@ -132,5 +132,35 @@ display: grid;
     gap: 1rem;
     margin: 1rem;
 `
+
+const LazyImage = ({ url }: { url: string }) => {
+  const [isVisible, setIsVisible] = useState(false)
+  const imageRef = useRef(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+          observer.disconnect()
+        }
+      },
+      {
+        rootMargin: '100px'
+      }
+    )
+
+    if (imageRef.current) {
+      observer.observe(imageRef.current)
+    }
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [url])
+
+  return <Image ref={imageRef} url= {isVisible ? url : ''} />
+}
 
 export default Gallery
