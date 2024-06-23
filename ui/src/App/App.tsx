@@ -1,19 +1,18 @@
-import React, { useCallback, useState } from 'react';
-import { FaCaretRight } from "react-icons/fa";
-import { Route, Routes } from "react-router-dom";
-import styled from "styled-components";
+import React, { useCallback, useState } from 'react'
+import { FaCaretRight } from 'react-icons/fa'
+import { Route, Routes } from 'react-router-dom'
+import styled from 'styled-components'
 
-import { Error } from "sharedComponents";
-import { GlobalStyle, ICON_COLOR, ICON_FONT_SIZES, TRANSITION_SPEED } from "theme";
-import { About, Home, Navigation, Portfolio, Private, TitleBar } from "./components";
-import Context from './context';
-
-
+import { Error } from 'sharedComponents'
+import { GlobalStyle, ICON_COLOR, ICON_FONT_SIZES, TRANSITION_SPEED } from '../theme'
+import { About, Home, Navigation, Photo, TitleBar } from './components'
+import Gallery from './components/Gallery'
+import Context from './context'
 
 const App = (
 ) => {
-  const [isNavigationVisible, setIsNavigationVisible] = useState(false);
-  const toggleNavigation = useCallback(() => setIsNavigationVisible(prev => !prev), [])
+  const [isNavigationVisible, setIsNavigationVisible] = useState(false)
+  const toggleNavigation = useCallback(() => { setIsNavigationVisible(prev => !prev) }, [])
 
   return (
     <>
@@ -25,13 +24,13 @@ const App = (
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/private/:privateGallerySlug">
-          <Route index element={<Private />} />
-          <Route path=":photoId" element={<Private />} />
+        <Route path="/private/:gallerySlug">
+          <Route index element={<Gallery privateGallery={true} />} />
+          <Route path=":photoId" element={<Photo privateGallery={true} />} />
         </Route>
         <Route path="/:gallerySlug">
-          <Route index element={<Portfolio />} />
-          <Route path=":photoId" element={<Portfolio />} />
+          <Route index element={<Gallery privateGallery={false} />} />
+          <Route path=":photoSlug" element={<Photo privateGallery={false} />} />
         </Route>
         <Route path="/error500" element={<Error value="500" />} />
         <Route path="*" element={<Error value="404" />} />
@@ -51,9 +50,8 @@ const App = (
       </NavigationWrapper>
 
     </>
-  );
-};
-
+  )
+}
 
 const NavigationClose = styled(({ isNavigationVisible, ...rest }) => (
   <FaCaretRight {...rest} />
@@ -70,14 +68,14 @@ const NavigationClose = styled(({ isNavigationVisible, ...rest }) => (
   &:hover {
     fill: ${ICON_COLOR.hover};
   }
-`;
+`
 
 const NavigationGutter = styled.div`
   position: fixed;
   left: 0;
   top: 0;
   z-index: 998;
-`;
+`
 
 const NavigationWrapper = styled.div<{ isNavigationVisible: boolean }>`
   box-sizing: border-box;
@@ -87,8 +85,8 @@ const NavigationWrapper = styled.div<{ isNavigationVisible: boolean }>`
   top: 0;
   overflow: scroll;
   transition: right ${TRANSITION_SPEED}s;
-  right: ${({ isNavigationVisible }) => isNavigationVisible ? "0" : `-100vw`};
-`;
+  right: ${({ isNavigationVisible }) => isNavigationVisible ? '0' : '-100vw'};
+`
 
 const WrappedApp = () => {
   return (
@@ -98,4 +96,4 @@ const WrappedApp = () => {
   )
 }
 
-export default WrappedApp;
+export default WrappedApp

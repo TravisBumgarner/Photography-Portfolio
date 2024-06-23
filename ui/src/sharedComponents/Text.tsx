@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { CONTENT_SPACING, FONT_FAMILY_TEXT, TEXT_FONT_SIZES } from 'theme'
+import { CONTENT_SPACING, FONT_FAMILY_TEXT, TEXT_FONT_SIZES } from '../theme'
 
 const DefaultText = styled.p`
     font-family: ${FONT_FAMILY_TEXT};
@@ -22,7 +22,7 @@ const MediumText = styled(DefaultText)`
     font-size: ${TEXT_FONT_SIZES.m};
 `
 
-type Props = {
+interface Props {
   children: any
 }
 

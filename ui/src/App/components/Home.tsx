@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
-import styled from "styled-components";
+import React, { useContext, useEffect, useMemo, useState } from 'react'
+import styled from 'styled-components'
 
-import { context } from "../context";
-import { getPhotoUrl } from "../utils";
+import { context } from '../context'
+import { getPhotoUrl } from '../utils'
 
 const HomeImageWrapper = styled.div<{ src: string }>`
   position: absolute;
@@ -24,22 +24,22 @@ const HomeImageWrapper = styled.div<{ src: string }>`
 
 const Home = () => {
   const { state: { backgroundPhotos } } = useContext(context)
-  const [backgroundImageIndex, setBackgroundImageIndex] = useState<number>(0);
+  const [backgroundImageIndex, setBackgroundImageIndex] = useState<number>(0)
 
   useEffect(() => {
     const intervalId: NodeJS.Timeout = setInterval(() => {
       setBackgroundImageIndex(prev => prev + 1)
 
-      return () => clearInterval(intervalId)
+      return () => { clearInterval(intervalId) }
     }, 4000)
   }, [])
 
   const url = useMemo(() => {
     return getPhotoUrl({ isThumbnail: false, photoSrc: backgroundPhotos[backgroundImageIndex % backgroundPhotos.length].src })
-  }, [backgroundImageIndex])
+  }, [backgroundImageIndex, backgroundPhotos])
   return (
     <HomeImageWrapper src={url} />
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

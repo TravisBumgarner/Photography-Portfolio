@@ -10,6 +10,7 @@
     "baseUrl": ".",
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "strictNullChecks": true,
     "paths": {
       "*": [
         "src/types/*"
@@ -21,7 +22,7 @@
         "src/types.ts"
       ],
       "theme": [
-        "src/theme.js"
+        "src/theme.tsx"
       ],
       "utilities": [
         "src/utilities"

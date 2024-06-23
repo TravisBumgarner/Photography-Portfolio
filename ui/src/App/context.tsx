@@ -3,17 +3,20 @@ import React, {
   useEffect,
   useReducer,
   useState,
-  type Dispatch,
-} from 'react';
-import { GalleryType, PhotoType, PrivateGallery } from 'types';
+  type Dispatch
+} from 'react'
+import { type GalleryType, type PhotoType, type PrivateGallery } from 'types'
 
-import getContent from "./content";
+import getContent from './content'
 
 export interface State {
-  photos: Record<string, PhotoType>;
-  galleries: Record<string, GalleryType>;
-  backgroundPhotos: PhotoType[];
+  photos: Record<string, PhotoType>
+  galleries: Record<string, GalleryType>
+  backgroundPhotos: PhotoType[]
   privateGalleries: Record<string, PrivateGallery>
+  selectedGalleryPhotoIds: string[] | null
+  previouslySelectedPhotoId: string | null
+  loadedGalleryId: string | null
 }
 
 const EMPTY_STATE: State = {
@@ -21,33 +24,55 @@ const EMPTY_STATE: State = {
   galleries: {},
   backgroundPhotos: [],
   privateGalleries: {},
+  selectedGalleryPhotoIds: null,
+  previouslySelectedPhotoId: null,
+  loadedGalleryId: null
+}
+
+interface SetSelectedGalleryPhotoIds {
+  type: 'SET_SELECTED_GALLERY_PHOTO_IDS'
+  payload: {
+    selectedGalleryPhotoIds: string[]
+    loadedGalleryId: string | null
+  }
 }
 
 interface HydratePhotos {
   type: 'HYDRATE_PHOTOS'
   payload: {
-    photos: Record<string, PhotoType>;
-    galleries: Record<string, GalleryType>;
-    backgroundPhotos: PhotoType[];
+    photos: Record<string, PhotoType>
+    galleries: Record<string, GalleryType>
+    backgroundPhotos: PhotoType[]
     privateGalleries: Record<string, PrivateGallery>
   }
 }
 
-export type Action = HydratePhotos
+interface SetPreviouslySelectedPhotoId {
+  type: 'BACK_TO_GALLERY'
+  payload: {
+    previouslySelectedPhotoId: string | null
+  }
+}
+
+export type Action = HydratePhotos | SetSelectedGalleryPhotoIds | SetPreviouslySelectedPhotoId
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'HYDRATE_PHOTOS': {
       return { ...state, ...action.payload }
     }
-    default:
-      throw new Error('Unexpected action')
+    case 'SET_SELECTED_GALLERY_PHOTO_IDS': {
+      return { ...state, selectedGalleryPhotoIds: action.payload.selectedGalleryPhotoIds, loadedGalleryId: action.payload.loadedGalleryId }
+    }
+    case 'BACK_TO_GALLERY': {
+      return { ...state, previouslySelectedPhotoId: action.payload.previouslySelectedPhotoId, selectedGalleryPhotoIds: null }
+    }
   }
 }
 
 const context = createContext({
   state: EMPTY_STATE,
-  dispatch: () => { },
+  dispatch: () => { }
 } as {
   state: State
   dispatch: Dispatch<Action>
@@ -75,5 +100,4 @@ const ResultsContext = ({ children }: { children: JSX.Element }) => {
 }
 
 export default ResultsContext
-export { context };
-
+export { context }
