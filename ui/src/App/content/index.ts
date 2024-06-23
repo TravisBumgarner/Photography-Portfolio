@@ -1,5 +1,5 @@
-import output from "./output.json";
 import { GalleryType, PhotoType, PrivateGallery } from "types";
+import output from "./output.json";
 import rickyAndTif from "./ricky-and-tif.json";
 
 

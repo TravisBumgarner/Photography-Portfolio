@@ -1,10 +1,10 @@
-import React from 'react'
-import styled from "styled-components";
+import React from 'react';
 import { FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 import { Header } from "sharedComponents";
-import { CONTENT_SPACING, ICON_FONT_SIZES, TRANSITION_SPEED, ICON_COLOR, } from "theme";
+import { CONTENT_SPACING, ICON_COLOR, ICON_FONT_SIZES, TRANSITION_SPEED, } from "theme";
 
 type Props = {
   toggleNavigation: () => void;

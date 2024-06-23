@@ -1,12 +1,12 @@
-import React, { Dispatch, SetStateAction, useEffect, useState, useCallback } from 'react'
-import styled, { createGlobalStyle, css } from "styled-components";
-import { FaTimes, FaArrowLeft, FaArrowRight, FaInfo, FaDownload } from "react-icons/fa";
+import React, { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
+import { FaArrowLeft, FaArrowRight, FaDownload, FaInfo, FaTimes } from "react-icons/fa";
 import Modal from 'react-modal';
+import styled, { createGlobalStyle, css } from "styled-components";
 
-import Metadata from './Metadata';
+import { ICON_COLOR, ICON_FONT_SIZES } from "theme";
 import { PhotoType } from "types";
-import { ICON_FONT_SIZES, ICON_COLOR } from "theme";
 import { getPhotoUrl } from '../../../utils';
+import Metadata from './Metadata';
 
 type PhotoProps = {
   photos: { [id: string]: PhotoType };

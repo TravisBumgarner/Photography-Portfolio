@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
 import { Header } from 'sharedComponents'
-import { FONT_FAMILY_HEADER, CONTENT_SPACING, TEXT_FONT_SIZES } from 'theme'
-import { GalleryType } from 'types'
+import { CONTENT_SPACING, FONT_FAMILY_HEADER, TEXT_FONT_SIZES } from 'theme'
 import { context } from '../context'
 
 type Props = {

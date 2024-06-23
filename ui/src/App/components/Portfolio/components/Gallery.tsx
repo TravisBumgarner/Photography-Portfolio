@@ -1,9 +1,9 @@
 import React, { SetStateAction, useMemo } from "react";
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 import { Header } from "sharedComponents";
-import { PhotoType, GalleryType } from "types";
-import { getPhotoUrl } from '../../../utils'
+import { GalleryType, PhotoType } from "types";
+import { getPhotoUrl } from '../../../utils';
 
 type Props = {
   galleryDetails: GalleryType

@@ -1,11 +1,9 @@
 import Error from './Error'
-import Text from './Text'
 import Header from './Header'
 import List from './List'
+import Text from './Text'
 
 export {
-    Error,
-    Text,
-    Header,
-    List
+  Error, Header,
+  List, Text
 }

@@ -12,29 +12,29 @@ const ErrorWrapper = styled.div`
 `
 
 const Error = ({ value }: { value: '404' | '500' }) => {
-    const { message, header } = useMemo(() => {
-        switch (value) {
-            case "404": {
-                return {
-                    header: 'Sorry!',
-                    message: 'The page you were looking for was not found.'
-                }
-            }
-            case "500": {
-                return {
-                    header: 'Whoops!',
-                    message: 'Something went wrong. This error has been reported. Please try again later.'
-                }
-            }
+  const { message, header } = useMemo(() => {
+    switch (value) {
+      case "404": {
+        return {
+          header: 'Sorry!',
+          message: 'The page you were looking for was not found.'
         }
-    }, [value])
+      }
+      case "500": {
+        return {
+          header: 'Whoops!',
+          message: 'Something went wrong. This error has been reported. Please try again later.'
+        }
+      }
+    }
+  }, [value])
 
-    return (
-        <ErrorWrapper>
-            <Header size="medium">{header}</Header>
-            <Text>{message}</Text>
-        </ErrorWrapper>
-    )
+  return (
+    <ErrorWrapper>
+      <Header size="medium">{header}</Header>
+      <Text>{message}</Text>
+    </ErrorWrapper>
+  )
 }
 
 export default Error
