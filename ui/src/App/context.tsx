@@ -62,7 +62,6 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, ...action.payload }
     }
     case 'SET_SELECTED_GALLERY_PHOTO_IDS': {
-      console.log('state update', action.payload.selectedGalleryPhotoIds.length)
       return { ...state, selectedGalleryPhotoIds: action.payload.selectedGalleryPhotoIds, loadedGalleryId: action.payload.loadedGalleryId }
     }
     case 'BACK_TO_GALLERY': {

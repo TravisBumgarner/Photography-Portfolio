@@ -56,7 +56,6 @@ const Gallery = ({ privateGallery }: Props) => {
     }
 
     if (!privateGallery) {
-      console.log('setting selected gallery photo ids', gallerySlug)
       dispatch({
         type: 'SET_SELECTED_GALLERY_PHOTO_IDS',
         payload: {
@@ -65,7 +64,6 @@ const Gallery = ({ privateGallery }: Props) => {
         }
       })
     } else {
-      console.log('setting selected private gallery photo ids', gallerySlug)
       dispatch({
         type: 'SET_SELECTED_GALLERY_PHOTO_IDS',
         payload: {
@@ -84,12 +82,14 @@ const Gallery = ({ privateGallery }: Props) => {
   ])
 
   const Photos = useMemo(() => {
-    if (!selectedGalleryPhotoIds || !gallerySlug || gallerySlug !== loadedGalleryId) return null
+    if (
+      !selectedGalleryPhotoIds ||
+      !gallerySlug ||
+      gallerySlug !== loadedGalleryId // prevent race condition where photoIds are ready before gallery is loaded
+    ) return null
 
     return selectedGalleryPhotoIds.map((photoId) => {
-      // console.log('privategallery', privateGallery, photos, photoId, photos[photoId])
       const photo = privateGallery ? privateGalleries[gallerySlug].photos[photoId] : photos[photoId]
-      // console.log('found photo', photo)
 
       const url = getPhotoUrl({ isThumbnail: true, photoSrc: photo.src, privateGalleryId: privateGallery ? photo.gallery : undefined })
       return (
