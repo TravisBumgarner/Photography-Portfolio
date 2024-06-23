@@ -38,6 +38,8 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": "off",
     "import/no-unresolved": "error",
     "@typescript-eslint/indent": "off",
+    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
+    'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
     "@typescript-eslint/space-before-function-paren": "off",
     "unused-imports/no-unused-vars": [
       "warn",

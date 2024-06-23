@@ -14,6 +14,7 @@ export interface State {
   galleries: Record<string, GalleryType>;
   backgroundPhotos: PhotoType[];
   privateGalleries: Record<string, PrivateGallery>
+  selectedGalleryPhotoIds: string[] | null;
 }
 
 const EMPTY_STATE: State = {
@@ -21,7 +22,16 @@ const EMPTY_STATE: State = {
   galleries: {},
   backgroundPhotos: [],
   privateGalleries: {},
+  selectedGalleryPhotoIds: null,
 }
+
+interface setSelectedGalleryPhotoIds {
+  type: 'SET_SELECTED_GALLERY_PHOTO_IDS'
+  payload: {
+    selectedGalleryPhotoIds: string[]
+  }
+}
+
 
 interface HydratePhotos {
   type: 'HYDRATE_PHOTOS'
@@ -33,15 +43,17 @@ interface HydratePhotos {
   }
 }
 
-export type Action = HydratePhotos
+export type Action = HydratePhotos | setSelectedGalleryPhotoIds
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'HYDRATE_PHOTOS': {
       return { ...state, ...action.payload }
     }
-    default:
-      throw new Error('Unexpected action')
+    case 'SET_SELECTED_GALLERY_PHOTO_IDS': {
+      console.log('state update', action)
+      return { ...state, selectedGalleryPhotoIds: action.payload.selectedGalleryPhotoIds }
+    }
   }
 }
 

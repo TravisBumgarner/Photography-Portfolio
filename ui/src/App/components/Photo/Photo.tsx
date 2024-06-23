@@ -1,68 +1,100 @@
-import React, { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { FaArrowLeft, FaArrowRight, FaDownload, FaInfo, FaTimes } from "react-icons/fa";
 import Modal from 'react-modal';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled, { createGlobalStyle, css } from "styled-components";
 
 import { ICON_COLOR, ICON_FONT_SIZES } from "theme";
-import { PhotoType } from "types";
-import { getPhotoUrl } from '../../../utils';
-import Metadata from './Metadata';
+import { context } from '../../context';
+import { getPhotoUrl } from '../../utils';
+import Metadata from './components/Metadata';
 
 type PhotoProps = {
-  photos: { [id: string]: PhotoType };
-  filteredPhotoIds: string[];
-  selectedFilteredPhotoIndex: number;
-  setSelectedFilteredPhotoIndex: Dispatch<SetStateAction<number>>;
-  onCloseCallback: (id: string) => void;
+  // photos: { [id: string]: PhotoType };
+  // filteredPhotoIds: string[];
+  // selectedFilteredPhotoIndex: number;
+  // setSelectedFilteredPhotoIndex: Dispatch<SetStateAction<number>>;
+  // onCloseCallback: (id: string) => void;
   privateGallery: boolean;
-  gallerySlug: string;
+  // gallerySlug: string;
 };
 
 const Photo = ({
-  photos,
-  filteredPhotoIds,
-  selectedFilteredPhotoIndex,
-  setSelectedFilteredPhotoIndex,
-  onCloseCallback,
+  // photos,
+  // filteredPhotoIds,
+  // selectedFilteredPhotoIndex,
+  // setSelectedFilteredPhotoIndex,
+  // onCloseCallback
   privateGallery,
-  gallerySlug
+  // gallerySlug
 }: PhotoProps) => {
+  const { state: { photos, selectedGalleryPhotoIds }, dispatch } = useContext(context)
+  const { gallerySlug, photoSlug } = useParams<{ gallerySlug: string, photoSlug: string }>();
+
+  const details = photoSlug ? photos[photoSlug] : null;
   const [toggleInfo, setToggleInfo] = useState(false)
-  const details = photos[filteredPhotoIds[selectedFilteredPhotoIndex]];
+  const navigate = useNavigate();
+  console.log(selectedGalleryPhotoIds)
 
-  const getNextPhotoIndex = useCallback((direction: "left" | "right") => {
-    const first = 0;
-    const last = filteredPhotoIds.length - 1;
-    let next;
+  useEffect(() => {
+    if (!photoSlug) {
+      navigate('/')
+      return
+    };
 
-    if (direction === "left") {
-      next = selectedFilteredPhotoIndex - 1;
-      if (next < first) {
-        next = last;
-      }
-    } else {
-      next = selectedFilteredPhotoIndex + 1;
-      if (next > last) {
-        next = first;
-      }
+    // On initial load for a url, we need to set the selectedGalleryPhotoIds
+    if (!selectedGalleryPhotoIds) {
+      dispatch({
+        type: 'SET_SELECTED_GALLERY_PHOTO_IDS',
+        payload: {
+          selectedGalleryPhotoIds: Object
+            .values(photos)
+            .filter(({ gallery }) => gallery === gallerySlug)
+            .map(({ id }) => id)
+        }
+      })
     }
-    setSelectedFilteredPhotoIndex(next);
-  }, [selectedFilteredPhotoIndex, filteredPhotoIds]);
+  }, [photos, photoSlug, selectedGalleryPhotoIds, gallerySlug])
+
+  const getNextPhotoIndex = useCallback((direction: 'left' | 'right') => {
+    console.log('intro', selectedGalleryPhotoIds, photoSlug)
+    console.log('getNextPhotoIndex')
+    if (!photoSlug || !selectedGalleryPhotoIds) {
+      navigate('/')
+      return
+    };
+
+    const index = selectedGalleryPhotoIds.indexOf(photoSlug)
+    const nextIndex = direction === "left" ? index - 1 : index + 1;
+    const first = 0;
+    const last = selectedGalleryPhotoIds.length - 1;
+    if (nextIndex < first) {
+      console.log('first', selectedGalleryPhotoIds[first])
+      return selectedGalleryPhotoIds[last]
+    }
+    if (nextIndex > last) {
+      console.log('last', selectedGalleryPhotoIds[last])
+      return selectedGalleryPhotoIds[first]
+    }
+    console.log('nextIndex', selectedGalleryPhotoIds[nextIndex])
+    navigate(`/${gallerySlug}/${selectedGalleryPhotoIds[nextIndex]}`)
+
+  }, [selectedGalleryPhotoIds, photoSlug])
 
   const exitSinglePhotoView = () => {
-    setSelectedFilteredPhotoIndex(undefined);
-    onCloseCallback(details.id)
+    navigate(`/${gallerySlug}`)
   }
 
+
+
   const handleKeyPress = (event: KeyboardEvent) => {
-    if (event.key === "ArrowLeft") {
-      getNextPhotoIndex("left");
-    } else if (event.key === "ArrowRight") {
-      getNextPhotoIndex("right");
-    }
+    if (event.key === "ArrowLeft") getNextPhotoIndex("left");
+    if (event.key === "ArrowRight") getNextPhotoIndex("right");
   };
 
   const downloadPhoto = () => {
+    if (!details) return
+
     const downloadLink = document.createElement('a');
     downloadLink.href = getPhotoUrl({ isThumbnail: false, privateGalleryId: privateGallery ? gallerySlug : undefined, photoSrc: details.src })
     downloadLink.download = details.src;
@@ -76,14 +108,14 @@ const Photo = ({
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [selectedFilteredPhotoIndex]);
+  }, []);
 
   if (!details) return null
 
   return (
     <>
       <OverflowHidden />
-      <Modal isOpen={!!setSelectedFilteredPhotoIndex} style={modalCSS} onRequestClose={exitSinglePhotoView}>
+      <Modal isOpen={true} style={modalCSS} onRequestClose={exitSinglePhotoView}>
         <PhotoWrapper>
           <StyledPhoto
             src={getPhotoUrl({ isThumbnail: false, privateGalleryId: privateGallery ? gallerySlug : undefined, photoSrc: details.src })}
@@ -117,11 +149,13 @@ const Photo = ({
               />
             </ControlsSectionWrapper>
             <ControlsSectionWrapper>
-              <CloseIcon size={ICON_FONT_SIZES.l} onClick={exitSinglePhotoView} />
+              <Link to={`/${gallerySlug}`}>
+                <CloseIcon size={ICON_FONT_SIZES.l} />
+              </Link>
             </ControlsSectionWrapper>
           </ControlsWrapper>
         </MetadataAndControlsBottomWrapper>
-      </Modal >
+      </Modal>
     </>
   );
 };

@@ -10,6 +10,7 @@
     "baseUrl": ".",
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "strictNullChecks": true,
     "paths": {
       "*": [
         "src/types/*"

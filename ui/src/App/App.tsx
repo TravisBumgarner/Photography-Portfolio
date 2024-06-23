@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import { Error } from "sharedComponents";
 import { GlobalStyle, ICON_COLOR, ICON_FONT_SIZES, TRANSITION_SPEED } from "theme";
-import { About, Home, Navigation, Portfolio, Private, TitleBar } from "./components";
+import { About, Home, Navigation, Photo, Portfolio, Private, TitleBar } from "./components";
 import Context from './context';
 
 
@@ -27,11 +27,11 @@ const App = (
         <Route path="/about" element={<About />} />
         <Route path="/private/:privateGallerySlug">
           <Route index element={<Private />} />
-          <Route path=":photoId" element={<Private />} />
+          <Route path=":photoId" element={<Photo privateGallery={true} />} />
         </Route>
         <Route path="/:gallerySlug">
           <Route index element={<Portfolio />} />
-          <Route path=":photoId" element={<Portfolio />} />
+          <Route path=":photoSlug" element={<Photo privateGallery={false} />} />
         </Route>
         <Route path="/error500" element={<Error value="500" />} />
         <Route path="*" element={<Error value="404" />} />
