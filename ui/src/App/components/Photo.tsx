@@ -4,10 +4,12 @@ import Modal from 'react-modal'
 import { useNavigate, useParams } from 'react-router-dom'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
-import { ICON_COLOR, ICON_FONT_SIZES } from '../../../theme'
-import { context } from '../../context'
-import { getPhotoUrl } from '../../utils'
-import Metadata from './components/Metadata'
+import { ICON_COLOR, ICON_FONT_SIZES } from '../../theme'
+import { context } from '../context'
+import { getPhotoUrl } from '../utils'
+
+import { Text } from 'sharedComponents'
+import { type PhotoType } from 'types'
 
 interface PhotoProps {
   privateGallery: boolean
@@ -241,5 +243,58 @@ const StyledPhoto = styled.img`
   aspect-ratio: inherit;
   user-select: none;
 `
+
+const MetadataWrapper = styled.div`
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.7);
+  height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & > * {
+    font-size: 14px;
+    padding: 0;
+  }
+`
+
+const Spacer = styled(({ className }) => <span className={className}>||</span>)`
+  padding: 0 20px;
+  display: inline-block;
+  font-weight: 700;
+`
+
+const Metadata = ({ details }: { details: PhotoType }) => {
+  const {
+    camera,
+    aperture,
+    shutterSpeed,
+    iso,
+    lens,
+    focalLength,
+    location
+  } = details
+
+  const gearString = `${camera} ${lens}`
+  const statsString =
+    aperture || shutterSpeed || iso || focalLength
+      ? `${aperture} ${shutterSpeed} ${iso} ${focalLength}`
+      : 'N/A'
+
+  return (
+    <MetadataWrapper>
+      <Text>
+        <>
+          {location}
+          <Spacer />
+          {gearString}
+          <Spacer />
+          {statsString}
+        </>
+      </Text>
+    </MetadataWrapper>
+  )
+}
 
 export default Photo
