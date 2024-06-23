@@ -16,6 +16,7 @@ export interface State {
   privateGalleries: Record<string, PrivateGallery>
   selectedGalleryPhotoIds: string[] | null
   previouslySelectedPhotoId: string | null
+  loadedGalleryId: string | null
 }
 
 const EMPTY_STATE: State = {
@@ -24,13 +25,15 @@ const EMPTY_STATE: State = {
   backgroundPhotos: [],
   privateGalleries: {},
   selectedGalleryPhotoIds: null,
-  previouslySelectedPhotoId: null
+  previouslySelectedPhotoId: null,
+  loadedGalleryId: null
 }
 
 interface SetSelectedGalleryPhotoIds {
   type: 'SET_SELECTED_GALLERY_PHOTO_IDS'
   payload: {
     selectedGalleryPhotoIds: string[]
+    loadedGalleryId: string | null
   }
 }
 
@@ -45,7 +48,7 @@ interface HydratePhotos {
 }
 
 interface SetPreviouslySelectedPhotoId {
-  type: 'SET_PREVIOUSLY_SELECTED_PHOTO_ID'
+  type: 'BACK_TO_GALLERY'
   payload: {
     previouslySelectedPhotoId: string | null
   }
@@ -59,11 +62,11 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, ...action.payload }
     }
     case 'SET_SELECTED_GALLERY_PHOTO_IDS': {
-      console.log('state update', action)
-      return { ...state, selectedGalleryPhotoIds: action.payload.selectedGalleryPhotoIds }
+      console.log('state update', action.payload.selectedGalleryPhotoIds.length)
+      return { ...state, selectedGalleryPhotoIds: action.payload.selectedGalleryPhotoIds, loadedGalleryId: action.payload.loadedGalleryId }
     }
-    case 'SET_PREVIOUSLY_SELECTED_PHOTO_ID': {
-      return { ...state, previouslySelectedPhotoId: action.payload.previouslySelectedPhotoId }
+    case 'BACK_TO_GALLERY': {
+      return { ...state, previouslySelectedPhotoId: action.payload.previouslySelectedPhotoId, selectedGalleryPhotoIds: null }
     }
   }
 }

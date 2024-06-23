@@ -37,7 +37,8 @@ const Photo = ({
           selectedGalleryPhotoIds: Object
             .values(photos)
             .filter(({ gallery }) => gallery === gallerySlug)
-            .map(({ id }) => id)
+            .map(({ id }) => id),
+          loadedGalleryId: gallerySlug ?? null
         }
       })
     }
@@ -94,7 +95,7 @@ const Photo = ({
       return
     }
 
-    dispatch({ type: 'SET_PREVIOUSLY_SELECTED_PHOTO_ID', payload: { previouslySelectedPhotoId: photoSlug } })
+    dispatch({ type: 'BACK_TO_GALLERY', payload: { previouslySelectedPhotoId: photoSlug } })
     navigate(`/${gallerySlug}`)
   }
 

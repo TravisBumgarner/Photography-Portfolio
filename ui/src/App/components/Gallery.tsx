@@ -3,9 +3,9 @@ import styled from 'styled-components'
 
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Header } from 'sharedComponents'
-import { type PhotoType } from 'types'
-import { context } from '../../../context'
-import { getPhotoUrl } from '../../../utils'
+import { type PhotoType, type PrivateGallery } from 'types'
+import { context } from '../context'
+import { getPhotoUrl } from '../utils'
 
 interface Props {
   privateGallery: boolean
@@ -17,22 +17,30 @@ const getSelectedGalleryPhotoIdsByGalleryId = (galleryId: string, photos: PhotoT
     .sort((a, b) => {
       const aDate = new Date(a.dateTaken)
       const bDate = new Date(b.dateTaken)
-      return bDate.getTime() - aDate.getTime()
+      return aDate.getTime() - bDate.getTime()
     })
     .map(({ id }) => id)
 }
 
+const getSelectedPrivateGalleryPhotoIdsByGalleryId = (galleryId: string, privateGalleries: Record<string, PrivateGallery>) => {
+  return Object.values(privateGalleries[galleryId].photos).sort((a, b) => {
+    const aDate = new Date(a.dateTaken)
+    const bDate = new Date(b.dateTaken)
+    return aDate.getTime() - bDate.getTime()
+  })
+  .map(({ id }) => id)
+}
+
 const Gallery = ({ privateGallery }: Props) => {
   const { gallerySlug } = useParams<{ gallerySlug: string }>()
-  const { state: { galleries, photos, selectedGalleryPhotoIds, previouslySelectedPhotoId }, dispatch } = useContext(context)
+  const { state: { galleries, photos, selectedGalleryPhotoIds, previouslySelectedPhotoId, privateGalleries, loadedGalleryId }, dispatch } = useContext(context)
   const navigate = useNavigate()
 
   useEffect(() => {
-    console.log('previouslySelectedPhotoId', previouslySelectedPhotoId)
     if (previouslySelectedPhotoId) {
       document.getElementById(previouslySelectedPhotoId)?.scrollIntoView()
       dispatch({
-        type: 'SET_PREVIOUSLY_SELECTED_PHOTO_ID',
+        type: 'BACK_TO_GALLERY',
         payload: {
           previouslySelectedPhotoId: null
         }
@@ -47,24 +55,41 @@ const Gallery = ({ privateGallery }: Props) => {
       return
     }
 
-    dispatch({
-      type: 'SET_SELECTED_GALLERY_PHOTO_IDS',
-      payload: {
-        selectedGalleryPhotoIds: getSelectedGalleryPhotoIdsByGalleryId(gallerySlug, Object.values(photos))
-      }
-    })
+    if (!privateGallery) {
+      console.log('setting selected gallery photo ids', gallerySlug)
+      dispatch({
+        type: 'SET_SELECTED_GALLERY_PHOTO_IDS',
+        payload: {
+          selectedGalleryPhotoIds: getSelectedGalleryPhotoIdsByGalleryId(gallerySlug, Object.values(photos)),
+          loadedGalleryId: gallerySlug
+        }
+      })
+    } else {
+      console.log('setting selected private gallery photo ids', gallerySlug)
+      dispatch({
+        type: 'SET_SELECTED_GALLERY_PHOTO_IDS',
+        payload: {
+          selectedGalleryPhotoIds: getSelectedPrivateGalleryPhotoIdsByGalleryId(gallerySlug, privateGalleries),
+          loadedGalleryId: gallerySlug
+        }
+      })
+    }
   }, [
     dispatch,
     gallerySlug,
     photos,
-    navigate
+    navigate,
+    privateGalleries,
+    privateGallery
   ])
 
   const Photos = useMemo(() => {
-    if (!selectedGalleryPhotoIds || !gallerySlug) return null
+    if (!selectedGalleryPhotoIds || !gallerySlug || gallerySlug !== loadedGalleryId) return null
 
     return selectedGalleryPhotoIds.map((photoId) => {
-      const photo = photos[photoId]
+      // console.log('privategallery', privateGallery, photos, photoId, photos[photoId])
+      const photo = privateGallery ? privateGalleries[gallerySlug].photos[photoId] : photos[photoId]
+      // console.log('found photo', photo)
 
       const url = getPhotoUrl({ isThumbnail: true, photoSrc: photo.src, privateGalleryId: privateGallery ? photo.gallery : undefined })
       return (
@@ -74,14 +99,14 @@ const Gallery = ({ privateGallery }: Props) => {
       )
     }
     )
-  }, [selectedGalleryPhotoIds, photos, gallerySlug, privateGallery])
+  }, [selectedGalleryPhotoIds, photos, gallerySlug, privateGallery, privateGalleries, loadedGalleryId])
 
   if (!gallerySlug || !selectedGalleryPhotoIds) return <p>Something went wrong</p>
 
   return (
     <>
       <ProjectDescriptionWrapper>
-        <Header size="medium">{galleries[gallerySlug].title}</Header>
+        <Header size="medium">{privateGallery ? privateGalleries[gallerySlug].gallery.title : galleries[gallerySlug].title}</Header>
       </ProjectDescriptionWrapper>
       <GalleryWrapper>{Photos}</GalleryWrapper>
     </>

@@ -1,19 +1,18 @@
-import { GalleryType, PhotoType, PrivateGallery } from "types";
-import output from "./output.json";
-import rickyAndTif from "./ricky-and-tif.json";
+import { type GalleryType, type PhotoType, type PrivateGallery } from 'types'
+import output from './output.json'
+import rickyAndTif from './ricky-and-tif.json'
 
-
-type Data = {
-  photos: Record<string, PhotoType>;
-  galleries: Record<string, GalleryType>;
-  backgroundPhotos: PhotoType[];
+interface Data {
+  photos: Record<string, PhotoType>
+  galleries: Record<string, GalleryType>
+  backgroundPhotos: PhotoType[]
   privateGalleries: Record<string, PrivateGallery>
-};
+}
 
 const getData = (): Data => {
   const backgroundPhotos: PhotoType[] = Object.values(output.photos).filter(
     ({ isBackgroundPhoto }) => isBackgroundPhoto
-  );
+  )
 
   return {
     photos: output.photos,
@@ -22,7 +21,7 @@ const getData = (): Data => {
     privateGalleries: {
       'ricky-and-tif': rickyAndTif
     }
-  };
-};
+  }
+}
 
-export default getData;
+export default getData

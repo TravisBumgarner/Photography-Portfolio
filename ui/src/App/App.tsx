@@ -5,7 +5,8 @@ import styled from 'styled-components'
 
 import { Error } from 'sharedComponents'
 import { GlobalStyle, ICON_COLOR, ICON_FONT_SIZES, TRANSITION_SPEED } from '../theme'
-import { About, Home, Navigation, Photo, Portfolio, Private, TitleBar } from './components'
+import { About, Home, Navigation, Photo, TitleBar } from './components'
+import Gallery from './components/Gallery'
 import Context from './context'
 
 const App = (
@@ -23,12 +24,12 @@ const App = (
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/private/:privateGallerySlug">
-          <Route index element={<Private />} />
+        <Route path="/private/:gallerySlug">
+          <Route index element={<Gallery privateGallery={true} />} />
           <Route path=":photoId" element={<Photo privateGallery={true} />} />
         </Route>
         <Route path="/:gallerySlug">
-          <Route index element={<Portfolio />} />
+          <Route index element={<Gallery privateGallery={false} />} />
           <Route path=":photoSlug" element={<Photo privateGallery={false} />} />
         </Route>
         <Route path="/error500" element={<Error value="500" />} />
