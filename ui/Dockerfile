@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:16 AS builder
+FROM node:alpine AS builder
 WORKDIR /app
 COPY . .
 RUN yarn
