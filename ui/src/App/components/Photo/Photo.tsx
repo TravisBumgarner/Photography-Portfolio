@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { FaArrowLeft, FaArrowRight, FaDownload, FaInfo, FaTimes } from 'react-icons/fa'
 import Modal from 'react-modal'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
 import { ICON_COLOR, ICON_FONT_SIZES } from '../../../theme'
@@ -10,23 +10,11 @@ import { getPhotoUrl } from '../../utils'
 import Metadata from './components/Metadata'
 
 interface PhotoProps {
-  // photos: { [id: string]: PhotoType };
-  // filteredPhotoIds: string[];
-  // selectedFilteredPhotoIndex: number;
-  // setSelectedFilteredPhotoIndex: Dispatch<SetStateAction<number>>;
-  // onCloseCallback: (id: string) => void;
   privateGallery: boolean
-  // gallerySlug: string;
 }
 
 const Photo = ({
-  // photos,
-  // filteredPhotoIds,
-  // selectedFilteredPhotoIndex,
-  // setSelectedFilteredPhotoIndex,
-  // onCloseCallback
   privateGallery
-  // gallerySlug
 }: PhotoProps) => {
   const { state: { photos, selectedGalleryPhotoIds }, dispatch } = useContext(context)
   const { gallerySlug, photoSlug } = useParams<{ gallerySlug: string, photoSlug: string }>()
@@ -34,7 +22,6 @@ const Photo = ({
   const details = photoSlug ? photos[photoSlug] : null
   const [toggleInfo, setToggleInfo] = useState(false)
   const navigate = useNavigate()
-  console.log(selectedGalleryPhotoIds)
 
   useEffect(() => {
     if (!photoSlug) {
@@ -44,7 +31,6 @@ const Photo = ({
 
     // On initial load for a url, we need to set the selectedGalleryPhotoIds
     if (!selectedGalleryPhotoIds) {
-      console.log('updating selectedGalleryPhotoIds')
       dispatch({
         type: 'SET_SELECTED_GALLERY_PHOTO_IDS',
         payload: {
@@ -58,15 +44,12 @@ const Photo = ({
   }, [dispatch, photoSlug, photos, selectedGalleryPhotoIds, gallerySlug, navigate])
 
   const navigateToNextPhoto = useCallback((direction: 'left' | 'right') => {
-    console.log('intro', selectedGalleryPhotoIds, photoSlug)
-    console.log('navigateToNextPhoto')
     if (!photoSlug || !selectedGalleryPhotoIds) {
       navigate('/')
       return
     }
 
     const index = selectedGalleryPhotoIds.indexOf(photoSlug)
-    console.log('index', index)
 
     let nextIndex: number
     if (direction === 'left') {
@@ -78,13 +61,9 @@ const Photo = ({
       }
 
     const nextPhotoId = selectedGalleryPhotoIds[nextIndex]
-    console.log('nextphotoId', nextPhotoId)
 
     navigate(`/${gallerySlug}/${nextPhotoId}`)
   }, [selectedGalleryPhotoIds, photoSlug, gallerySlug, navigate])
-  const exitSinglePhotoView = () => {
-    navigate(`/${gallerySlug}`)
-  }
 
   const handleKeyPress = useCallback((event: KeyboardEvent) => {
     if (event.key === 'ArrowLeft') navigateToNextPhoto('left')
@@ -107,15 +86,24 @@ const Photo = ({
     return () => {
       window.removeEventListener('keydown', handleKeyPress)
     }
-  }, [
-    handleKeyPress])
+  }, [handleKeyPress])
+
+  const handleReturnToGallery = () => {
+    if (!photoSlug) {
+      navigate('/')
+      return
+    }
+
+    dispatch({ type: 'SET_PREVIOUSLY_SELECTED_PHOTO_ID', payload: { previouslySelectedPhotoId: photoSlug } })
+    navigate(`/${gallerySlug}`)
+  }
 
   if (!details) return null
 
   return (
     <>
       <OverflowHidden />
-      <Modal isOpen={true} style={modalCSS} onRequestClose={exitSinglePhotoView}>
+      <Modal isOpen={true} style={modalCSS} onRequestClose={handleReturnToGallery}>
         <PhotoWrapper>
           <StyledPhoto
             src={getPhotoUrl({ isThumbnail: false, privateGalleryId: privateGallery ? gallerySlug : undefined, photoSrc: details.src })}
@@ -149,9 +137,7 @@ const Photo = ({
               />
             </ControlsSectionWrapper>
             <ControlsSectionWrapper>
-              <Link to={`/${gallerySlug}`}>
-                <CloseIcon size={ICON_FONT_SIZES.l} />
-              </Link>
+              <CloseIcon size={ICON_FONT_SIZES.l} onClick={handleReturnToGallery} />
             </ControlsSectionWrapper>
           </ControlsWrapper>
         </MetadataAndControlsBottomWrapper>

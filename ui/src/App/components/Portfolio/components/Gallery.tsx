@@ -24,8 +24,22 @@ const getSelectedGalleryPhotoIdsByGalleryId = (galleryId: string, photos: PhotoT
 
 const Gallery = ({ privateGallery }: Props) => {
   const { gallerySlug } = useParams<{ gallerySlug: string }>()
-  const { state: { galleries, photos, selectedGalleryPhotoIds }, dispatch } = useContext(context)
+  const { state: { galleries, photos, selectedGalleryPhotoIds, previouslySelectedPhotoId }, dispatch } = useContext(context)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    console.log('previouslySelectedPhotoId', previouslySelectedPhotoId)
+    if (previouslySelectedPhotoId) {
+      document.getElementById(previouslySelectedPhotoId)?.scrollIntoView()
+      dispatch({
+        type: 'SET_PREVIOUSLY_SELECTED_PHOTO_ID',
+        payload: {
+          previouslySelectedPhotoId: null
+        }
+
+      })
+    }
+  }, [previouslySelectedPhotoId, dispatch])
 
   useEffect(() => {
     if (!gallerySlug) {
