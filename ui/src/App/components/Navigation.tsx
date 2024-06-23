@@ -30,6 +30,16 @@ const Navigation = ({ toggleNavigation }: Props) => {
 
   const socialSectionContent = [
     {
+      title: 'Awards & Recognition',
+      route: '/about',
+      external: false
+    },
+    {
+      title: 'Instagram',
+      route: 'https://www.instagram.com/cameracoffeewander/',
+      external: true,
+    },
+    {
       title: 'Connect',
       route: 'https://www.linkedin.com/in/travisbumgarner/',
       external: true,
@@ -39,11 +49,6 @@ const Navigation = ({ toggleNavigation }: Props) => {
       route: 'https://travisbumgarner.com/',
       external: true,
     },
-    {
-      title: 'Awards & Recognition',
-      route: '/about',
-      external: false
-    }
   ]
 
   const socialLinks = socialSectionContent.map(m => {
