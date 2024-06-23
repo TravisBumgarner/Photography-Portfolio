@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { CONTENT_SPACING, FONT_FAMILY_HEADER, HEADER_FONT_SIZES } from 'theme'
+import { CONTENT_SPACING, FONT_FAMILY_HEADER, HEADER_FONT_SIZES } from '../theme'
 
-type Props = { size: string, children: any }
+interface Props { size: string, children: any }
 
 const LargeHeader = styled.h1`
     font-weight: 700;

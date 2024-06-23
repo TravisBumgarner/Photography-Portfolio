@@ -20,7 +20,7 @@ const About = () => {
           '2018 Noyes Museum of Art of Stockton University - RAW Exhibition',
           '2017 1st Place BARPCV Photography Competition',
           '2016 Front Page of National Geographic\'s YourShot',
-          '2016 MIT Art Party',
+          '2016 MIT Art Party'
         ]}
       />
 

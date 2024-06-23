@@ -1,8 +1,8 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react'
+import styled from 'styled-components'
 
-import { Text } from "sharedComponents";
-import { PhotoType } from "types";
+import { Text } from 'sharedComponents'
+import { type PhotoType } from 'types'
 
 const MetadataWrapper = styled.div`
   border-radius: 0.5rem;
@@ -17,15 +17,13 @@ const MetadataWrapper = styled.div`
     font-size: 14px;
     padding: 0;
   }
-`;
+`
 
 const Spacer = styled(({ className }) => <span className={className}>//</span>)`
   padding: 0 20px;
   display: inline-block;
   font-weight: 700;
-`;
-
-
+`
 
 const Metadata = ({ details }: { details: PhotoType }) => {
   const {
@@ -36,13 +34,13 @@ const Metadata = ({ details }: { details: PhotoType }) => {
     lens,
     focalLength,
     location
-  } = details;
+  } = details
 
   const gearString = `${camera} ${lens}`
   const statsString =
     aperture || shutterSpeed || iso || focalLength
       ? `${aperture} ${shutterSpeed} ${iso} ${focalLength}`
-      : "N/A";
+      : 'N/A'
 
   return (
     <MetadataWrapper>
@@ -56,7 +54,7 @@ const Metadata = ({ details }: { details: PhotoType }) => {
         </>
       </Text>
     </MetadataWrapper>
-  );
-};
+  )
+}
 
 export default Metadata

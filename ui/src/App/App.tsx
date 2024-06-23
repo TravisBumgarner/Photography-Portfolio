@@ -1,19 +1,17 @@
-import React, { useCallback, useState } from 'react';
-import { FaCaretRight } from "react-icons/fa";
-import { Route, Routes } from "react-router-dom";
-import styled from "styled-components";
+import React, { useCallback, useState } from 'react'
+import { FaCaretRight } from 'react-icons/fa'
+import { Route, Routes } from 'react-router-dom'
+import styled from 'styled-components'
 
-import { Error } from "sharedComponents";
-import { GlobalStyle, ICON_COLOR, ICON_FONT_SIZES, TRANSITION_SPEED } from "theme";
-import { About, Home, Navigation, Photo, Portfolio, Private, TitleBar } from "./components";
-import Context from './context';
-
-
+import { Error } from 'sharedComponents'
+import { GlobalStyle, ICON_COLOR, ICON_FONT_SIZES, TRANSITION_SPEED } from '../theme'
+import { About, Home, Navigation, Photo, Portfolio, Private, TitleBar } from './components'
+import Context from './context'
 
 const App = (
 ) => {
-  const [isNavigationVisible, setIsNavigationVisible] = useState(false);
-  const toggleNavigation = useCallback(() => setIsNavigationVisible(prev => !prev), [])
+  const [isNavigationVisible, setIsNavigationVisible] = useState(false)
+  const toggleNavigation = useCallback(() => { setIsNavigationVisible(prev => !prev) }, [])
 
   return (
     <>
@@ -51,9 +49,8 @@ const App = (
       </NavigationWrapper>
 
     </>
-  );
-};
-
+  )
+}
 
 const NavigationClose = styled(({ isNavigationVisible, ...rest }) => (
   <FaCaretRight {...rest} />
@@ -70,14 +67,14 @@ const NavigationClose = styled(({ isNavigationVisible, ...rest }) => (
   &:hover {
     fill: ${ICON_COLOR.hover};
   }
-`;
+`
 
 const NavigationGutter = styled.div`
   position: fixed;
   left: 0;
   top: 0;
   z-index: 998;
-`;
+`
 
 const NavigationWrapper = styled.div<{ isNavigationVisible: boolean }>`
   box-sizing: border-box;
@@ -87,8 +84,8 @@ const NavigationWrapper = styled.div<{ isNavigationVisible: boolean }>`
   top: 0;
   overflow: scroll;
   transition: right ${TRANSITION_SPEED}s;
-  right: ${({ isNavigationVisible }) => isNavigationVisible ? "0" : `-100vw`};
-`;
+  right: ${({ isNavigationVisible }) => isNavigationVisible ? '0' : '-100vw'};
+`
 
 const WrappedApp = () => {
   return (
@@ -98,4 +95,4 @@ const WrappedApp = () => {
   )
 }
 
-export default WrappedApp;
+export default WrappedApp

@@ -1,31 +1,29 @@
-import React, { ReactElement, useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
 import { Header } from 'sharedComponents'
-import { CONTENT_SPACING, FONT_FAMILY_HEADER, TEXT_FONT_SIZES } from 'theme'
+import { CONTENT_SPACING, FONT_FAMILY_HEADER, TEXT_FONT_SIZES } from '../../theme'
 import { context } from '../context'
 
-type Props = {
+interface Props {
   toggleNavigation: () => void
 }
 
 const Navigation = ({ toggleNavigation }: Props) => {
   const { state: { galleries } } = useContext(context)
 
-  const links: ReactElement[] = []
-
-  Object
-    .values(galleries)
-    .sort((a, b) => (a.title > b.title ? 1 : -1))
-    .map(({ title, slug }) => {
-      const link = (
-        <LinkListItem key={slug} onClick={toggleNavigation}>
-          <InternalLink to={`/${slug}`}>{title}</InternalLink>
-        </LinkListItem>
-      )
-      links.push(link)
-    })
+  const links = useMemo(() => {
+    return Object.values(galleries)
+      .sort((a, b) => (a.title > b.title ? 1 : -1))
+      .map(({ title, slug }) => {
+        return (
+          <LinkListItem key={slug} onClick={toggleNavigation}>
+            <InternalLink to={`/${slug}`}>{title}</InternalLink>
+          </LinkListItem>
+        )
+      })
+  }, [galleries, toggleNavigation])
 
   const socialSectionContent = [
     {
@@ -36,24 +34,24 @@ const Navigation = ({ toggleNavigation }: Props) => {
     {
       title: 'Instagram',
       route: 'https://www.instagram.com/cameracoffeewander/',
-      external: true,
+      external: true
     },
     {
       title: 'Connect',
       route: 'https://www.linkedin.com/in/travisbumgarner/',
-      external: true,
+      external: true
     },
     {
       title: 'Engineering & Blog',
       route: 'https://travisbumgarner.com/',
-      external: true,
-    },
+      external: true
+    }
   ]
 
   const socialLinks = socialSectionContent.map(m => {
     return (
       <LinkListItem key={m.title} onClick={toggleNavigation}>
-        <ExternalLink target={m.external ? "_blank" : ''} href={m.route}>{m.title}</ExternalLink>
+        <ExternalLink target={m.external ? '_blank' : ''} href={m.route}>{m.title}</ExternalLink>
       </LinkListItem>
     )
   })
@@ -74,7 +72,6 @@ const Navigation = ({ toggleNavigation }: Props) => {
     </NavigationWrapper>
   )
 }
-
 
 const NavigationWrapper = styled.div`
     text-align: right;
@@ -125,6 +122,5 @@ const InternalLink = styled(Link)`
 const ExternalLink = styled.a`
     ${sharedStyles}
 `
-
 
 export default Navigation

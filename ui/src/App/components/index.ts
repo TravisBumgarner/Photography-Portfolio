@@ -7,4 +7,3 @@ import Private from './Private'
 import TitleBar from './TitleBar'
 
 export { About, Home, Navigation, Photo, Portfolio, Private, TitleBar }
-

@@ -13,7 +13,7 @@ interface Props {
 
 const getSelectedGalleryPhotoIdsByGalleryId = (galleryId: string, photos: PhotoType[]) => {
   return Object.values(photos)
-    .filter(photo => photo.gallery == galleryId)
+    .filter(photo => photo.gallery === galleryId)
     .sort((a, b) => {
       const aDate = new Date(a.dateTaken)
       const bDate = new Date(b.dateTaken)

@@ -1,11 +1,9 @@
-import React, { useCallback, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react'
 
-import { context } from '../../context';
-import { Gallery } from './components';
+import { Gallery } from './components'
 
 const Portfolio = () => {
-  const { state: { photos, galleries } } = useContext(context)
+  // const { state: { photos, galleries } } = useContext(context)
   // const [filteredPhotoIds, setFilteredPhotoIds] = useState<string[]>([])
   // const [selectedFilteredPhotoIndex, setSelectedFilteredPhotoIndex] = useState<number | undefined>(undefined);
   // const [initialLoad, setInitialLoad] = useState(true) // Use for Initial Load of photo ID from URL
@@ -46,9 +44,9 @@ const Portfolio = () => {
 
   // useEffect(handleUrlChange, [selectedFilteredPhotoIndex])
 
-  const onCloseCallback = useCallback((id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'auto' })
-  }, [])
+  // const onCloseCallback = useCallback((id: string) => {
+  //   document.getElementById(id)?.scrollIntoView({ behavior: 'auto' })
+  // }, [])
 
   return (
     <>

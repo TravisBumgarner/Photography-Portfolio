@@ -3,18 +3,18 @@ import React, {
   useEffect,
   useReducer,
   useState,
-  type Dispatch,
-} from 'react';
-import { GalleryType, PhotoType, PrivateGallery } from 'types';
+  type Dispatch
+} from 'react'
+import { type GalleryType, type PhotoType, type PrivateGallery } from 'types'
 
-import getContent from "./content";
+import getContent from './content'
 
 export interface State {
-  photos: Record<string, PhotoType>;
-  galleries: Record<string, GalleryType>;
-  backgroundPhotos: PhotoType[];
+  photos: Record<string, PhotoType>
+  galleries: Record<string, GalleryType>
+  backgroundPhotos: PhotoType[]
   privateGalleries: Record<string, PrivateGallery>
-  selectedGalleryPhotoIds: string[] | null;
+  selectedGalleryPhotoIds: string[] | null
 }
 
 const EMPTY_STATE: State = {
@@ -22,7 +22,7 @@ const EMPTY_STATE: State = {
   galleries: {},
   backgroundPhotos: [],
   privateGalleries: {},
-  selectedGalleryPhotoIds: null,
+  selectedGalleryPhotoIds: null
 }
 
 interface setSelectedGalleryPhotoIds {
@@ -32,13 +32,12 @@ interface setSelectedGalleryPhotoIds {
   }
 }
 
-
 interface HydratePhotos {
   type: 'HYDRATE_PHOTOS'
   payload: {
-    photos: Record<string, PhotoType>;
-    galleries: Record<string, GalleryType>;
-    backgroundPhotos: PhotoType[];
+    photos: Record<string, PhotoType>
+    galleries: Record<string, GalleryType>
+    backgroundPhotos: PhotoType[]
     privateGalleries: Record<string, PrivateGallery>
   }
 }
@@ -59,7 +58,7 @@ const reducer = (state: State, action: Action): State => {
 
 const context = createContext({
   state: EMPTY_STATE,
-  dispatch: () => { },
+  dispatch: () => { }
 } as {
   state: State
   dispatch: Dispatch<Action>
@@ -87,5 +86,4 @@ const ResultsContext = ({ children }: { children: JSX.Element }) => {
 }
 
 export default ResultsContext
-export { context };
-
+export { context }

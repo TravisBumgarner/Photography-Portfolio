@@ -22,7 +22,7 @@
         "src/types.ts"
       ],
       "theme": [
-        "src/theme.js"
+        "src/theme.tsx"
       ],
       "utilities": [
         "src/utilities"
