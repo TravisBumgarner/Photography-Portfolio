@@ -1,12 +1,12 @@
-import React, { useState, useCallback } from 'react'
-import { Routes, Route } from "react-router-dom";
-import styled from "styled-components";
+import React, { useCallback, useState } from 'react';
 import { FaCaretRight } from "react-icons/fa";
+import { Route, Routes } from "react-router-dom";
+import styled from "styled-components";
 
-import { Home, About, Portfolio, Navigation, TitleBar, Private } from "./components";
 import { Error } from "sharedComponents";
-import { GlobalStyle, ICON_FONT_SIZES, TRANSITION_SPEED, ICON_COLOR } from "theme";
-import Context from './context'
+import { GlobalStyle, ICON_COLOR, ICON_FONT_SIZES, TRANSITION_SPEED } from "theme";
+import { About, Home, Navigation, Portfolio, Private, TitleBar } from "./components";
+import Context from './context';
 
 
 

@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 
 
-import { FONT_FAMILY_TEXT, CONTENT_SPACING, TEXT_FONT_SIZES } from 'theme'
+import { CONTENT_SPACING, FONT_FAMILY_TEXT, TEXT_FONT_SIZES } from 'theme'
 
 
 
@@ -45,7 +45,7 @@ const ListItem = styled.li`
 
 type Props = {
 
-    items: string[]
+  items: string[]
 
 }
 
@@ -54,14 +54,14 @@ type Props = {
 
 const List = ({ items }: Props) => {
 
-    const ListItems = useMemo(() => items.map(child => <ListItem key={child}>{child}</ListItem>)
+  const ListItems = useMemo(() => items.map(child => <ListItem key={child}>{child}</ListItem>)
 
-        , [...items])
-
-
+    , [...items])
 
 
-    return <ul>{ListItems}</ul>
+
+
+  return <ul>{ListItems}</ul>
 
 }
 

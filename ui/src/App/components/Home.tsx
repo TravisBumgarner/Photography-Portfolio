@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
 
-import { PhotoType } from "types";
 import { context } from "../context";
 import { getPhotoUrl } from "../utils";
 

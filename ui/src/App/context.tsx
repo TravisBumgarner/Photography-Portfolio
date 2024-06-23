@@ -4,8 +4,8 @@ import React, {
   useReducer,
   useState,
   type Dispatch,
-} from 'react'
-import { GalleryType, PhotoType, PrivateGallery } from 'types'
+} from 'react';
+import { GalleryType, PhotoType, PrivateGallery } from 'types';
 
 import getContent from "./content";
 
@@ -75,4 +75,5 @@ const ResultsContext = ({ children }: { children: JSX.Element }) => {
 }
 
 export default ResultsContext
-export { context }
+export { context };
+

@@ -1,8 +1,8 @@
-import Home from './Home'
 import About from './About'
-import Portfolio from './Portfolio'
+import Home from './Home'
 import Navigation from './Navigation'
-import TitleBar from './TitleBar'
+import Portfolio from './Portfolio'
 import Private from './Private'
+import TitleBar from './TitleBar'
 
-export { Home, About, Portfolio, Navigation, TitleBar, Private }
+export { About, Home, Navigation, Portfolio, Private, TitleBar }

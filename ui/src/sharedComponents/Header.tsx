@@ -1,7 +1,7 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
-import { FONT_FAMILY_HEADER, CONTENT_SPACING, HEADER_FONT_SIZES } from 'theme'
+import { CONTENT_SPACING, FONT_FAMILY_HEADER, HEADER_FONT_SIZES } from 'theme'
 
 type Props = { size: string, children: any }
 
@@ -38,18 +38,18 @@ const InlineHeader = styled.span`
 `
 
 const Header = ({ size, children }: Props) => {
-    switch (size) {
-        case 'large':
-            return <LargeHeader>{children}</LargeHeader>
-        case 'medium':
-            return <MediumHeader>{children}</MediumHeader>
-        case 'small':
-            return <SmallHeader>{children}</SmallHeader>
-        case 'inline':
-            return <InlineHeader>{children}</InlineHeader>
-        default:
-            return <SmallHeader>{children}</SmallHeader>
-    }
+  switch (size) {
+    case 'large':
+      return <LargeHeader>{children}</LargeHeader>
+    case 'medium':
+      return <MediumHeader>{children}</MediumHeader>
+    case 'small':
+      return <SmallHeader>{children}</SmallHeader>
+    case 'inline':
+      return <InlineHeader>{children}</InlineHeader>
+    default:
+      return <SmallHeader>{children}</SmallHeader>
+  }
 }
 
 export default Header

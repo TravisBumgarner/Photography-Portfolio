@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react'
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { Gallery, Photo } from './components'
 import { context } from '../../context';
+import { Gallery, Photo } from './components';
 
 const Portfolio = () => {
   const { state: { photos, galleries } } = useContext(context)

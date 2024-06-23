@@ -1,8 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { List, Header } from 'sharedComponents'
-import { CONTENT_SPACING } from 'theme'
+import { Header, List } from 'sharedComponents'
 
 const ContentWrapper = styled.div`
     display: flex;
@@ -13,17 +12,17 @@ const ContentWrapper = styled.div`
 const About = () => {
   return (
     <ContentWrapper>
-          <Header size="large">AWARDS & RECOGNITIONS</Header>
-          <List
-            items={[
-              '2023 Black Box Gallery - Color Burst',
-              '2023 Praxis Gallery - The Portrait Exhibition',
-              '2018 Noyes Museum of Art of Stockton University - RAW Exhibition',
-              '2017 1st Place BARPCV Photography Competition',
-              '2016 Front Page of National Geographic\'s YourShot',
-              '2016 MIT Art Party',
-            ]}
-          />
+      <Header size="large">AWARDS & RECOGNITIONS</Header>
+      <List
+        items={[
+          '2023 Black Box Gallery - Color Burst',
+          '2023 Praxis Gallery - The Portrait Exhibition',
+          '2018 Noyes Museum of Art of Stockton University - RAW Exhibition',
+          '2017 1st Place BARPCV Photography Competition',
+          '2016 Front Page of National Geographic\'s YourShot',
+          '2016 MIT Art Party',
+        ]}
+      />
 
     </ContentWrapper>
   )
