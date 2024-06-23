@@ -201,7 +201,6 @@ const ControlsWrapper = styled.div`
   justify-content: space-between;
   display: flex;
   flex-direction: row;
-  max-width: 100%;
 `
 
 const PhotoWrapper = styled.div`
