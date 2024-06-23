@@ -84,9 +84,6 @@ const Photo = ({
     <>
       <OverflowHidden />
       <Modal isOpen={!!setSelectedFilteredPhotoIndex} style={modalCSS} onRequestClose={exitSinglePhotoView}>
-        <ControlsTopWrapper>
-          <CloseIcon size={ICON_FONT_SIZES.l} onClick={exitSinglePhotoView} />
-        </ControlsTopWrapper>
         <PhotoWrapper>
           <StyledPhoto
             src={getPhotoUrl({ isThumbnail: false, privateGalleryId: privateGallery ? gallerySlug : undefined, photoSrc: details.src })}
@@ -95,31 +92,33 @@ const Photo = ({
         <MetadataAndControlsBottomWrapper>
           {toggleInfo ? <Metadata details={details} /> : null}
           <ControlsWrapper>
-            <div>
-              <ToggleInfo
+            <ControlsSectionWrapper hideBackground={!privateGallery}>
+              {privateGallery && <DownloadButton
                 size={ICON_FONT_SIZES.l}
-                onClick={() => setToggleInfo(prev => !prev)}
-              />
-            </div>
-            <div>
+                onClick={downloadPhoto}
+              />}
+            </ControlsSectionWrapper>
+            <ControlsSectionWrapper>
               <PreviousButton
                 style={{ marginRight: '2rem' }}
                 size={ICON_FONT_SIZES.xl}
                 onClick={() => getNextPhotoIndex("left")}
               />
+              <ToggleInfo
+                size={ICON_FONT_SIZES.l}
+                onClick={() => setToggleInfo(prev => !prev)}
+              />
+
               <NextButton
                 style={{ marginLeft: '2rem' }}
 
                 size={ICON_FONT_SIZES.xl}
                 onClick={() => getNextPhotoIndex("right")}
               />
-            </div>
-            <div>
-              {privateGallery && <DownloadButton
-                size={ICON_FONT_SIZES.l}
-                onClick={downloadPhoto}
-              />}
-            </div>
+            </ControlsSectionWrapper>
+            <ControlsSectionWrapper>
+              <CloseIcon size={ICON_FONT_SIZES.l} onClick={exitSinglePhotoView} />
+            </ControlsSectionWrapper>
           </ControlsWrapper>
         </MetadataAndControlsBottomWrapper>
       </Modal >
@@ -173,26 +172,35 @@ const MetadataAndControlsBottomWrapper = styled.div`
   box-sizing: border-box;
   align-items: center;
   flex-direction: column;
-  padding: 2rem;
+  padding: 1.5rem;
 `;
 
-const ControlsTopWrapper = styled.div`
-  position: fixed;
-  right: 2rem;
-  top: 2rem;
+const ControlsSectionWrapper = styled.div<{ hideBackground?: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${({ hideBackground }) => hideBackground ? 'transparent' : 'rgba(255, 255, 255, 0.7)'};
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  height: 30px;
+
+  :first-child{
+    margin-right: 0.5rem;
+  
+  }
+  :last-child{
+    margin-left: 0.5rem;
+  
+  }
 `;
 
 const ControlsWrapper = styled.div`
-  background-color: white;
   border-radius: 0.5rem;
   margin: 0 0.5rem 0.5rem;
   padding: 0.5rem;
-  background-color: rgba(255, 255, 255, 0.7);
-  height: 1.5rem;
   justify-content: space-between;
   display: flex;
   flex-direction: row;
-  width: 100%;
 `
 
 const PhotoWrapper = styled.div`
