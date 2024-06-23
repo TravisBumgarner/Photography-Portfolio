@@ -6,11 +6,12 @@ import { PhotoType } from "types";
 
 const MetadataWrapper = styled.div`
   border-radius: 0.5rem;
-  margin: 0 0.25rem 0.25rem;
   padding: 0.5rem;
-  text-align: center;
   background-color: rgba(255, 255, 255, 0.7);
   height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   & > * {
     font-size: 14px;
