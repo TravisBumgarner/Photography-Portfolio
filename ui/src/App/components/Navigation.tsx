@@ -42,6 +42,11 @@ const Navigation = ({ toggleNavigation }: Props) => {
       external: true
     },
     {
+      title: 'Silly Side Projects',
+      route: 'https://sillysideprojects.com/',
+      external: true
+    },
+    {
       title: 'Engineering & Blog',
       route: 'https://travisbumgarner.com/',
       external: true
