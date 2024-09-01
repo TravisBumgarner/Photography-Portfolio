@@ -25,7 +25,12 @@ const Navigation = ({ toggleNavigation }: Props) => {
       })
   }, [galleries, toggleNavigation])
 
-  const socialSectionContent = [
+  const aboutContent = [
+    {
+      title: 'Store',
+      route: 'https://travisbumgarner.darkroom.com/',
+      external: true
+    },
     {
       title: 'Awards & Recognition',
       route: '/about',
@@ -40,7 +45,10 @@ const Navigation = ({ toggleNavigation }: Props) => {
       title: 'Connect',
       route: 'https://www.linkedin.com/in/travisbumgarner/',
       external: true
-    },
+    }
+  ]
+
+  const miscContent = [
     {
       title: 'Silly Side Projects',
       route: 'https://sillysideprojects.com/',
@@ -53,7 +61,15 @@ const Navigation = ({ toggleNavigation }: Props) => {
     }
   ]
 
-  const socialLinks = socialSectionContent.map(m => {
+  const aboutLinks = aboutContent.map(m => {
+    return (
+      <LinkListItem key={m.title} onClick={toggleNavigation}>
+        <ExternalLink target={m.external ? '_blank' : ''} href={m.route}>{m.title}</ExternalLink>
+      </LinkListItem>
+    )
+  })
+
+  const miscLinks = miscContent.map(m => {
     return (
       <LinkListItem key={m.title} onClick={toggleNavigation}>
         <ExternalLink target={m.external ? '_blank' : ''} href={m.route}>{m.title}</ExternalLink>
@@ -69,9 +85,16 @@ const Navigation = ({ toggleNavigation }: Props) => {
       </SubNavigationWrapper>
 
       <SubNavigationWrapper>
+        <Header size="medium">About</Header>
+        <ul>
+          {aboutLinks}
+        </ul>
+      </SubNavigationWrapper>
+
+      <SubNavigationWrapper>
         <Header size="medium">Misc</Header>
         <ul>
-          {socialLinks}
+          {miscLinks}
         </ul>
       </SubNavigationWrapper>
     </NavigationWrapper>
@@ -94,8 +117,9 @@ const NavigationWrapper = styled.div`
 const SubNavigationWrapper = styled.div`
     margin: ${CONTENT_SPACING.m} 0;
 
+    margin-bottom: 2rem;
     :last-child {
-        margin-top: 2rem;
+        margin-top: 0;
     }
 `
 
