@@ -1,7 +1,7 @@
 export type GalleryType = {
   title: string;
   slug: string;
-  previewId: string;
+  previewSrc: string;
 }
 
 export type PhotoType = {

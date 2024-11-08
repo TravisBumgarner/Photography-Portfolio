@@ -14,16 +14,16 @@ const HomeImageWrapper = styled.div`
 `
 
 const Home = () => {
-  const { state: {galleries, photos} } = useContext(context)
+  const { state: {galleries} } = useContext(context)
 
   return (
-    <HomeImageWrapper>{Object.values(galleries).map(({slug, title, previewId}) => {
+    <HomeImageWrapper>{Object.values(galleries).map(({slug, title, previewSrc}) => {
 
-      const url = getPhotoUrl({ isThumbnail: true, photoSrc: photos[previewId].src, privateGalleryId: undefined })
+      const url = getPhotoUrl({ isThumbnail: true, photoSrc: previewSrc, privateGalleryId: undefined })
       return (
         <Link style={{textDecoration: 'none', textAlign: 'center', color: 'black'}} id={slug} to={`/${slug}`} key={slug}>
-          <LazyImage url={url} />
           <Header size='h2'>{title}</Header>
+          <LazyImage url={url} />
         </Link>
       )
       })}

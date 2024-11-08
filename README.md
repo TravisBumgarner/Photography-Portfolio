@@ -32,7 +32,6 @@ Photos should match to one of the galleries listed in `lightroom-photo-tagging/m
 1. `yarn start` run script
 1. Navigate to https://console.cloud.google.com/
 1. Drag and drop `large` and `thumbnail` into GCS
-1. Copy output of `main-portfolio-metadata.ts` to `ui/src/App/content/` and update index.ts in that dir.
 1. `yarn deploy` `ui`
 
 
