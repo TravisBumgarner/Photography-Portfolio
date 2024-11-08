@@ -6,8 +6,7 @@ export type GalleryType = {
 export type PhotoType = {
   id: string;
   src: string;
-  gallery: string;
-  location: string;
+  galleryIds: string[];
   dateTaken: string;
   camera: string;
   lens: string;
@@ -15,7 +14,6 @@ export type PhotoType = {
   shutterSpeed: string;
   iso: string;
   focalLength: string;
-  isBackgroundPhoto: boolean;
 };
 
 export type PrivateGallery = {

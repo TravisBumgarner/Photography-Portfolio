@@ -23,22 +23,9 @@ const HomeImageWrapper = styled.div<{ src: string }>`
 `
 
 const Home = () => {
-  const { state: { backgroundPhotos } } = useContext(context)
-  const [backgroundImageIndex, setBackgroundImageIndex] = useState<number>(0)
 
-  useEffect(() => {
-    const intervalId: NodeJS.Timeout = setInterval(() => {
-      setBackgroundImageIndex(prev => prev + 1)
-
-      return () => { clearInterval(intervalId) }
-    }, 4000)
-  }, [])
-
-  const url = useMemo(() => {
-    return getPhotoUrl({ isThumbnail: false, photoSrc: backgroundPhotos[backgroundImageIndex % backgroundPhotos.length].src })
-  }, [backgroundImageIndex, backgroundPhotos])
   return (
-    <HomeImageWrapper src={url} />
+    <p>Better home soon,</p>
   )
 }
 

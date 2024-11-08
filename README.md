@@ -8,31 +8,10 @@
 1. Add Metadata to Photos:
 
 ```
-Categories
-- Nature
-- Street
-- Architecture
-- Black & White
-- Landscapes
-- Abstract
-- People
-IsHomepage
-Gallery
-- 2x3x4
-- 2018
-- Galleries can also be private. 
-Location
-- CountryNameHere
-CameraType
-- Digital
-- Analog
-ContentType
-- snapshot
-- project
-IsBackgroundPhoto (Check for True)
+Photos should match to one of the galleries listed in `lightroom-photo-tagging/main-portfolio-metadata.ts/TAG_TO_GALLERY_LOOKUP`
 ```
 
-2. Export Settings: (Check all 3)
+1. Export Settings: (Check all 3)
 
   - `To Portfolio - Thumbnail`:
     - Resize 600 pixels short side
@@ -48,15 +27,13 @@ IsBackgroundPhoto (Check for True)
     - Enable `Write Keywords as Lightroom Hierarchy`
     - output dir: `large`
 
-3. Copy `large` directory to `./load_photos`
-4. `yarn` Install dependencies
-5. If gallery is private, change `MODE` in index.ts
-5. `yarn start` run script
-6. Navigate to https://console.cloud.google.com/
-7. Drag and drop `large` and `thumbnail` into GCS
-8. (For private photos only) Run `gsutil -m setmeta -h "Content-Disposition:attachment" gs://photo21-asdqwd/photos/[private-gallery-id]/large/*`
-9. Copy output of `load_photos` to `ui/src/App/content/` and update index.ts in that dir.
-10. `yarn deploy` `ui`
+1. Copy `large` directory to `/Users/travisbumgarner/Desktop/large`
+1. `yarn` Install dependencies
+1. `yarn start` run script
+1. Navigate to https://console.cloud.google.com/
+1. Drag and drop `large` and `thumbnail` into GCS
+1. Copy output of `main-portfolio-metadata.ts` to `ui/src/App/content/` and update index.ts in that dir.
+1. `yarn deploy` `ui`
 
 
 

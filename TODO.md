@@ -1,0 +1,3 @@
+- [ ] Get import script working with new metadata
+- [ ] Remove background photos
+- [ ]
