@@ -6,6 +6,7 @@ import { Metadata } from './types'
 type Gallery = {
     title: string
     slug: string
+    previewId: string
 }
 
 const VALID_EXTENSIONS = ['.jpg']
@@ -24,32 +25,17 @@ const PUBLIC_GALLERIES_BY_TAG: Record<ValidSlugs, Gallery> = {
     [ValidSlugs.Mexico]: {
         title: 'Mexico',
         slug: ValidSlugs.Mexico,
+        previewId: 'c5dad9a4-d9eb-5989-862b-f3799dee76c3',
     },
     [ValidSlugs.Utah]: {
         title: 'Utah',
         slug: ValidSlugs.Utah,
+        previewId: 'f221c3e0-1beb-5351-a1d9-3026b9245702',
     },
 }
 
 const main = async (directoryPath: string) => {
     const errorsByFile: Record<string, string[]> = {}
-
-    // try {
-    //     const files = fs.readdirSync(directoryPath)
-
-    //     files.forEach(file => {
-    //         if (path.extname(file) === '.txt') {
-    //             try {
-    //                 fs.unlinkSync(path.join(directoryPath, file))
-    //                 console.log(`Deleted file: ${file}`)
-    //             } catch (err) {
-    //                 console.log(`Error deleting file: ${file}`)
-    //             }
-    //         }
-    //     })
-    // } catch (err) {
-    //     console.log('Unable to scan directory: ' + err)
-    // }
 
     const photos: Record<string, Metadata & { galleryIds: string[] }> = {}
 

@@ -3,29 +3,31 @@ import styled from 'styled-components'
 
 import { context } from '../context'
 import { getPhotoUrl } from '../utils'
+import { Link } from 'react-router-dom'
+import {Header, LazyImage} from 'sharedComponents'
 
-const HomeImageWrapper = styled.div<{ src: string }>`
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  box-sizing: border-box;
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  background-image: url(${props => props.src});
-  z-index: -1;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  background-attachment: fixed;
+const HomeImageWrapper = styled.div`
+  display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1rem;
 `
 
 const Home = () => {
+  const { state: {galleries, photos} } = useContext(context)
 
   return (
-    <p>Better home soon,</p>
+    <HomeImageWrapper>{Object.values(galleries).map(({slug, title, previewId}) => {
+
+      const url = getPhotoUrl({ isThumbnail: true, photoSrc: photos[previewId].src, privateGalleryId: undefined })
+      return (
+        <Link style={{textDecoration: 'none', textAlign: 'center', color: 'black'}} id={slug} to={`/${slug}`} key={slug}>
+          <LazyImage url={url} />
+          <Header size='h2'>{title}</Header>
+        </Link>
+      )
+      })}
+    </HomeImageWrapper>
   )
 }
 
