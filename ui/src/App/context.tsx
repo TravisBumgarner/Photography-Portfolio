@@ -12,7 +12,6 @@ import getContent from './content'
 export interface State {
   photos: Record<string, PhotoType>
   galleries: Record<string, GalleryType>
-  backgroundPhotos: PhotoType[]
   privateGalleries: Record<string, PrivateGallery>
   selectedGalleryPhotoIds: string[] | null
   previouslySelectedPhotoId: string | null
@@ -22,7 +21,6 @@ export interface State {
 const EMPTY_STATE: State = {
   photos: {},
   galleries: {},
-  backgroundPhotos: [],
   privateGalleries: {},
   selectedGalleryPhotoIds: null,
   previouslySelectedPhotoId: null,
@@ -42,7 +40,6 @@ interface HydratePhotos {
   payload: {
     photos: Record<string, PhotoType>
     galleries: Record<string, GalleryType>
-    backgroundPhotos: PhotoType[]
     privateGalleries: Record<string, PrivateGallery>
   }
 }
@@ -84,9 +81,9 @@ const ResultsContext = ({ children }: { children: JSX.Element }) => {
 
   useEffect(() => {
     setIsLoading(true)
-    const { galleries, backgroundPhotos, photos, privateGalleries } = getContent()
+    const { galleries, photos, privateGalleries } = getContent()
 
-    dispatch({ type: 'HYDRATE_PHOTOS', payload: { photos, backgroundPhotos, galleries, privateGalleries } })
+    dispatch({ type: 'HYDRATE_PHOTOS', payload: { photos, galleries, privateGalleries } })
     setIsLoading(false)
   }, [])
 

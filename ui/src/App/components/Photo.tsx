@@ -38,7 +38,7 @@ const Photo = ({
         payload: {
           selectedGalleryPhotoIds: Object
             .values(photos)
-            .filter(({ gallery }) => gallery === gallerySlug)
+            .filter(({ galleryIds }) => gallerySlug && galleryIds.includes(gallerySlug))
             .map(({ id }) => id),
           loadedGalleryId: gallerySlug ?? null
         }
@@ -273,7 +273,7 @@ const Metadata = ({ details }: { details: PhotoType }) => {
     iso,
     lens,
     focalLength,
-    location
+    // location
   } = details
 
   const gearString = `${camera} ${lens}`
@@ -286,7 +286,7 @@ const Metadata = ({ details }: { details: PhotoType }) => {
     <MetadataWrapper>
       <Text>
         <>
-          {location}
+          {/* {location} */}
           <Spacer />
           {gearString}
           <Spacer />

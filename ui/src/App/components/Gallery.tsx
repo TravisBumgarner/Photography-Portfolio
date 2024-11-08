@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { Header } from 'sharedComponents'
+import { Header, LazyImage } from 'sharedComponents'
 import { type PhotoType, type PrivateGallery } from 'types'
 import { context } from '../context'
 import { getPhotoUrl } from '../utils'
@@ -13,7 +13,7 @@ interface Props {
 
 const getSelectedGalleryPhotoIdsByGalleryId = (galleryId: string, photos: PhotoType[]) => {
   return Object.values(photos)
-    .filter(photo => photo.gallery === galleryId)
+    .filter(photo => photo.galleryIds.includes(galleryId))
     .sort((a, b) => {
       const aDate = new Date(a.dateTaken)
       const bDate = new Date(b.dateTaken)
@@ -90,7 +90,7 @@ const Gallery = ({ privateGallery }: Props) => {
     return selectedGalleryPhotoIds.map((photoId) => {
       const photo = privateGallery ? privateGalleries[gallerySlug].photos[photoId] : photos[photoId]
 
-      const url = getPhotoUrl({ isThumbnail: true, photoSrc: photo.src, privateGalleryId: privateGallery ? photo.gallery : undefined })
+      const url = getPhotoUrl({ isThumbnail: true, photoSrc: photo.src, privateGalleryId: undefined })
       return (
         <Link id={photo.id} to={`/${gallerySlug}/${photoId}`} key={photo.id}>
           <LazyImage url={url} />
@@ -116,15 +116,6 @@ const ProjectDescriptionWrapper = styled.div`
     margin: 1rem;
 `
 
-const Image = styled.div<{ url: string }>`
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
-    padding-bottom: 100%;
-    cursor: pointer;
-    background-image: url(${({ url }) => url});
-`
 
 const GalleryWrapper = styled.div`
 display: grid;
@@ -132,35 +123,5 @@ display: grid;
     gap: 1rem;
     margin: 1rem;
 `
-
-const LazyImage = ({ url }: { url: string }) => {
-  const [isVisible, setIsVisible] = useState(false)
-  const imageRef = useRef(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-          observer.disconnect()
-        }
-      },
-      {
-        rootMargin: '100px'
-      }
-    )
-
-    if (imageRef.current) {
-      observer.observe(imageRef.current)
-    }
-
-    return () => {
-      observer.disconnect()
-    }
-  }, [url])
-
-  return <Image ref={imageRef} url= {isVisible ? url : ''} />
-}
 
 export default Gallery

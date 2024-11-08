@@ -7,6 +7,11 @@
         "types/*"
       ]
     },
+    "lib": [
+      "ES2021",
+      "DOM"
+    ],
+    "target": "ES2022",
     "module": "commonjs",
     "noImplicitAny": true,
     "removeComments": true,
@@ -14,11 +19,10 @@
     "sourceMap": true,
     "strictNullChecks": true,
     "esModuleInterop": true,
-    "lib": [
-      "es2016",
-      "dom"
-    ]
   },
+  "include": [
+    "src/**/*.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

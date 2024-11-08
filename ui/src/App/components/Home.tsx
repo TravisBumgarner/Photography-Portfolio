@@ -3,42 +3,31 @@ import styled from 'styled-components'
 
 import { context } from '../context'
 import { getPhotoUrl } from '../utils'
+import { Link } from 'react-router-dom'
+import {Header, LazyImage} from 'sharedComponents'
 
-const HomeImageWrapper = styled.div<{ src: string }>`
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  box-sizing: border-box;
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  background-image: url(${props => props.src});
-  z-index: -1;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  background-attachment: fixed;
+const HomeImageWrapper = styled.div`
+  display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1rem;
 `
 
 const Home = () => {
-  const { state: { backgroundPhotos } } = useContext(context)
-  const [backgroundImageIndex, setBackgroundImageIndex] = useState<number>(0)
+  const { state: {galleries} } = useContext(context)
 
-  useEffect(() => {
-    const intervalId: NodeJS.Timeout = setInterval(() => {
-      setBackgroundImageIndex(prev => prev + 1)
-
-      return () => { clearInterval(intervalId) }
-    }, 4000)
-  }, [])
-
-  const url = useMemo(() => {
-    return getPhotoUrl({ isThumbnail: false, photoSrc: backgroundPhotos[backgroundImageIndex % backgroundPhotos.length].src })
-  }, [backgroundImageIndex, backgroundPhotos])
   return (
-    <HomeImageWrapper src={url} />
+    <HomeImageWrapper>{Object.values(galleries).map(({slug, title, previewSrc}) => {
+
+      const url = getPhotoUrl({ isThumbnail: true, photoSrc: previewSrc, privateGalleryId: undefined })
+      return (
+        <Link style={{textDecoration: 'none', textAlign: 'center', color: 'black'}} id={slug} to={`/${slug}`} key={slug}>
+          <Header size='h2'>{title}</Header>
+          <LazyImage url={url} />
+        </Link>
+      )
+      })}
+    </HomeImageWrapper>
   )
 }
 
