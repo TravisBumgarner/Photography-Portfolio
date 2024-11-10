@@ -59,6 +59,61 @@ const TAG_TO_GALLERY_LOOKUP: Record<string, ValidSlugs> = {
 
 // previewSrc is the ID of the photo to be used for the gallery preview on the home page.
 const PUBLIC_GALLERIES_BY_TAG: Record<ValidSlugs, Gallery> = {
+    [ValidSlugs.UtahColoradoNeveda]: {
+        title: 'Utah Colorado Nevada',
+        slug: ValidSlugs.UtahColoradoNeveda,
+        previewSrc: 'DJI_0114.jpg',
+    },
+    [ValidSlugs.Arizona]: {
+        title: 'Arizona',
+        slug: ValidSlugs.Arizona,
+        previewSrc: 'DSC_2189.jpg',
+    },
+    [ValidSlugs.ArchitectureOfMexico]: {
+        title: 'Architecture of Mexico',
+        slug: ValidSlugs.ArchitectureOfMexico,
+        previewSrc: 'DSC_0653.jpg',
+    },
+    [ValidSlugs.MontanaAndWyoming]: {
+        title: 'Montana and Wyoming',
+        slug: ValidSlugs.MontanaAndWyoming,
+        previewSrc: 'DSC_0377.jpg',
+    },
+    [ValidSlugs.ToritosDeTultepec]: {
+        title: 'Toritos de Tultepec',
+        slug: ValidSlugs.ToritosDeTultepec,
+        previewSrc: 'DSC_1435.jpg',
+    },
+    [ValidSlugs.MexicoSnapshots]: {
+        title: 'Mexico Snapshots',
+        slug: ValidSlugs.MexicoSnapshots,
+        previewSrc: 'DSC_6882.jpg',
+    },
+    [ValidSlugs.NegativeSpace]: {
+        title: 'Negative Space',
+        slug: ValidSlugs.NegativeSpace,
+        previewSrc: 'DSC_0711.jpg',
+    },
+    [ValidSlugs.WesternCanada]: {
+        title: 'Western Canada',
+        slug: ValidSlugs.WesternCanada,
+        previewSrc: 'DSC_5126.jpg',
+    },
+    [ValidSlugs.DayOfTheDead]: {
+        title: 'Day of the Dead',
+        slug: ValidSlugs.DayOfTheDead,
+        previewSrc: 'DSC_5739.jpg',
+    },
+    [ValidSlugs.Life]: {
+        title: 'Life',
+        slug: ValidSlugs.Life,
+        previewSrc: '000016240006.jpg',
+    },
+    [ValidSlugs.PacficNorthwest]: {
+        title: 'Pacific Northwest',
+        slug: ValidSlugs.PacficNorthwest,
+        previewSrc: 'PXL_20211012_193330508.jpg',
+    },
     [ValidSlugs.Alaska]: {
         title: 'Alaska',
         slug: ValidSlugs.Alaska,
@@ -69,85 +124,30 @@ const PUBLIC_GALLERIES_BY_TAG: Record<ValidSlugs, Gallery> = {
         slug: ValidSlugs.Animals,
         previewSrc: 'DSC_5028.jpg',
     },
-    [ValidSlugs.ArchitectureOfMexico]: {
-        title: 'Architecture of Mexico',
-        slug: ValidSlugs.ArchitectureOfMexico,
-        previewSrc: 'DSC_0653.jpg',
-    },
-    [ValidSlugs.Arizona]: {
-        title: 'Arizona',
-        slug: ValidSlugs.Arizona,
-        previewSrc: 'DSC_2189.jpg',
-    },
     [ValidSlugs.BajaCalifornia]: {
         title: 'Baja California',
         slug: ValidSlugs.BajaCalifornia,
         previewSrc: 'DSC_1494.jpg',
+    },
+    [ValidSlugs.WesternEurope]: {
+        title: 'Western Europe',
+        slug: ValidSlugs.WesternEurope,
+        previewSrc: 'DSC_0290.jpg',
     },
     [ValidSlugs.Boston]: {
         title: 'Boston',
         slug: ValidSlugs.Boston,
         previewSrc: 'DSC_0554.jpg',
     },
-    [ValidSlugs.DayOfTheDead]: {
-        title: 'Day of the Dead',
-        slug: ValidSlugs.DayOfTheDead,
-        previewSrc: 'DSC_5739.jpg',
-    },
     [ValidSlugs.Iceland]: {
         title: 'Iceland',
         slug: ValidSlugs.Iceland,
         previewSrc: 'DSC_1343.jpg',
     },
-    [ValidSlugs.Life]: {
-        title: 'Life',
-        slug: ValidSlugs.Life,
-        previewSrc: '000016240006.jpg',
-    },
-    [ValidSlugs.MexicoSnapshots]: {
-        title: 'Mexico Snapshots',
-        slug: ValidSlugs.MexicoSnapshots,
-        previewSrc: 'DSC_6882.jpg',
-    },
-    [ValidSlugs.MontanaAndWyoming]: {
-        title: 'Montana and Wyoming',
-        slug: ValidSlugs.MontanaAndWyoming,
-        previewSrc: 'DSC_0377.jpg',
-    },
-    [ValidSlugs.NegativeSpace]: {
-        title: 'Negative Space',
-        slug: ValidSlugs.NegativeSpace,
-        previewSrc: 'DSC_0711.jpg',
-    },
-    [ValidSlugs.PacficNorthwest]: {
-        title: 'Pacific Northwest',
-        slug: ValidSlugs.PacficNorthwest,
-        previewSrc: 'PXL_20211012_193330508.jpg',
-    },
     [ValidSlugs.PeruToGuatemala]: {
         title: 'Peru to Guatemala',
         slug: ValidSlugs.PeruToGuatemala,
         previewSrc: 'DSC08407.JPG',
-    },
-    [ValidSlugs.ToritosDeTultepec]: {
-        title: 'Toritos de Tultepec',
-        slug: ValidSlugs.ToritosDeTultepec,
-        previewSrc: 'DSC_1435.jpg',
-    },
-    [ValidSlugs.UtahColoradoNeveda]: {
-        title: 'Utah Colorado Nevada',
-        slug: ValidSlugs.UtahColoradoNeveda,
-        previewSrc: 'DJI_0114.jpg',
-    },
-    [ValidSlugs.WesternCanada]: {
-        title: 'Western Canada',
-        slug: ValidSlugs.WesternCanada,
-        previewSrc: 'DSC_5126.jpg',
-    },
-    [ValidSlugs.WesternEurope]: {
-        title: 'Western Europe',
-        slug: ValidSlugs.WesternEurope,
-        previewSrc: 'DSC_0290.jpg',
     },
 }
 const main = async (directoryPath: string) => {
