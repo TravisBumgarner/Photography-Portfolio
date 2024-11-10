@@ -60,7 +60,7 @@ const TAG_TO_GALLERY_LOOKUP: Record<string, ValidSlugs> = {
 // previewSrc is the ID of the photo to be used for the gallery preview on the home page.
 const PUBLIC_GALLERIES_BY_TAG: Record<ValidSlugs, Gallery> = {
     [ValidSlugs.UtahColoradoNeveda]: {
-        title: 'Utah Colorado Nevada',
+        title: 'Utah Colorado & Nevada',
         slug: ValidSlugs.UtahColoradoNeveda,
         previewSrc: 'DJI_0114.jpg',
     },
@@ -75,7 +75,7 @@ const PUBLIC_GALLERIES_BY_TAG: Record<ValidSlugs, Gallery> = {
         previewSrc: 'DSC_0653.jpg',
     },
     [ValidSlugs.MontanaAndWyoming]: {
-        title: 'Montana and Wyoming',
+        title: 'Montana & Wyoming',
         slug: ValidSlugs.MontanaAndWyoming,
         previewSrc: 'DSC_0377.jpg',
     },
@@ -145,15 +145,16 @@ const PUBLIC_GALLERIES_BY_TAG: Record<ValidSlugs, Gallery> = {
         previewSrc: 'DSC_1343.jpg',
     },
     [ValidSlugs.PeruToGuatemala]: {
-        title: 'Peru to Guatemala',
+        title: 'From Peru to Guatemala',
         slug: ValidSlugs.PeruToGuatemala,
-        previewSrc: 'DSC08407.JPG',
+        previewSrc: 'DSC08407.jpg',
     },
 }
 const main = async (directoryPath: string) => {
     const errorsByFile: Record<string, string[]> = {}
 
-    const photos: Record<string, Metadata & { galleryIds: string[] }> = {}
+    const photos: Record<string, Partial<Metadata> & { galleryIds: string[] }> =
+        {}
 
     try {
         const files = fs.readdirSync(directoryPath)
@@ -171,9 +172,14 @@ const main = async (directoryPath: string) => {
             const filePath = path.join(directoryPath, file)
             console.log('\t', filePath)
 
-            const metadata = await processPhoto(filePath)
+            const skipTitleAndDescriptionCheck = true
+            const metadata = await processPhoto(
+                filePath,
+                skipTitleAndDescriptionCheck
+            )
 
             if ('errors' in metadata) {
+                console.log('\tErrors:', metadata.errors)
                 errorsByFile[file] = metadata.errors
                 continue
             }
@@ -189,21 +195,30 @@ const main = async (directoryPath: string) => {
             }, [] as string[])
 
             if (galleryIds.length === 0) {
+                console.log(
+                    '\tNo valid galleries found for tags:',
+                    metadata.tags.join(',')
+                )
                 errorsByFile[file] = [
                     'No valid galleries found for tags:' +
                         metadata.tags.join(','),
                 ]
                 continue
             }
-
-            photos[metadata.id] = { ...metadata, galleryIds }
+            const { tags, ...metadataWithoutTags } = metadata // eslint-disable-line @typescript-eslint/no-unused-vars
+            console.log('\t\t', metadataWithoutTags)
+            photos[metadata.id] = { ...metadataWithoutTags, galleryIds }
+            // photos[metadata.id] = { ...metadata, galleryIds }
         }
 
         if (Object.keys(errorsByFile).length > 0) {
             console.log('Errors by file:')
             console.log(errorsByFile)
         } else {
-            console.log(photos)
+            console.log(
+                Object.values(photos).length,
+                'Photos processed successfully'
+            )
         }
 
         const data = JSON.stringify({

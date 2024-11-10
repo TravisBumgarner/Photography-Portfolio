@@ -7,7 +7,6 @@ import { Metadata, ParsedData, Sidecar, SupportedCameras } from './types'
 import path from 'path'
 import { PHOTO_DIR } from './main-portfolio-metadata'
 
-
 const formatShutterSpeed = (shutterSpeed: number) => {
     if (shutterSpeed < 1) {
         return `1/${1 / shutterSpeed}s`
@@ -18,6 +17,14 @@ const formatShutterSpeed = (shutterSpeed: number) => {
 
 const generatePhotoId = (filename: string, date_taken: string) => {
     const PHOTOS_NAMESPACE = 'deadbeef-beef-491e-99b0-da01ff1f3341'
+    console.log('inputs are', filename, date_taken)
+    if (filename.indexOf('FOTO') > -1) {
+        console.log(
+            'result',
+            filename,
+            uuidv5(`${filename} ${date_taken}`, PHOTOS_NAMESPACE)
+        )
+    }
 
     return uuidv5(`${filename} ${date_taken}`, PHOTOS_NAMESPACE)
 }
@@ -37,7 +44,8 @@ const formatLens = (possibleLenses: (undefined | string)[]) => {
 const VALID_EXTENSIONS = ['jpg']
 
 const processPhoto = async (
-    file: string
+    file: string,
+    skipTitleAndDescriptionCheck = false
 ): Promise<Metadata | { errors: string[] }> => {
     const extension = file.split('.').slice(-1)[0]
     if (!extension || !VALID_EXTENSIONS.includes(extension)) {
@@ -74,11 +82,15 @@ const processPhoto = async (
         ? sidecar.lr.hierarchicalSubject
         : [sidecar.lr.hierarchicalSubject]
 
-    if (!sidecar.dc.title) errors.push('Title')
-    if (!sidecar.dc.description) console.log('\t\tNo Description')
+    if (!sidecar.dc.title && !skipTitleAndDescriptionCheck) errors.push('Title')
+    if (!sidecar.dc.description && !skipTitleAndDescriptionCheck)
+        console.log('\t\tNo Description')
     if (tags.length === 0) errors.push('Tags')
 
-    if (!sidecar.dc.title || tags.length === 0) {
+    if (
+        (!sidecar.dc.title && !skipTitleAndDescriptionCheck) ||
+        tags.length === 0
+    ) {
         return { errors }
     }
 
@@ -95,11 +107,11 @@ const processPhoto = async (
         dateTaken: data.DateTimeOriginal
             ? format(data.DateTimeOriginal, 'MMMM yyyy')
             : 'REPLACE',
-        title: sidecar.dc.title.value,
+        title: sidecar.dc.title?.value || '',
         description: sidecar.dc.description?.value || '',
         tags,
         ...metadataOverrides,
-        id: generatePhotoId(data.RawFileName, data.DateTimeOriginal),
+        id: generatePhotoId(file, data.DateTimeOriginal),
     }
 }
 

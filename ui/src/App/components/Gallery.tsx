@@ -101,7 +101,7 @@ const Gallery = ({ privateGallery }: Props) => {
   }, [selectedGalleryPhotoIds, photos, gallerySlug, privateGallery, privateGalleries, loadedGalleryId])
 
   if (!gallerySlug || !selectedGalleryPhotoIds) return <p>Something went wrong</p>
-
+  console.log(selectedGalleryPhotoIds, gallerySlug)
   return (
     <>
       <ProjectDescriptionWrapper>
