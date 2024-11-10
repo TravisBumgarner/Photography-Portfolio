@@ -287,7 +287,7 @@ const Metadata = ({ details }: { details: PhotoType }) => {
       <Text>
         <>
           {/* {location} */}
-          <Spacer />
+          {/* <Spacer /> */}
           {gearString}
           <Spacer />
           {statsString}
