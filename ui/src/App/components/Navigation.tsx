@@ -11,19 +11,19 @@ interface Props {
 }
 
 const Navigation = ({ toggleNavigation }: Props) => {
-  // const { state: { galleries } } = useContext(context)
+  const { state: { galleries } } = useContext(context)
 
-  // const links = useMemo(() => {
-  //   return Object.values(galleries)
-  //     .sort((a, b) => (a.title > b.title ? 1 : -1))
-  //     .map(({ title, slug }) => {
-  //       return (
-  //         <LinkListItem key={slug} onClick={toggleNavigation}>
-  //           <InternalLink to={`/${slug}`}>{title}</InternalLink>
-  //         </LinkListItem>
-  //       )
-  //     })
-  // }, [galleries, toggleNavigation])
+  const links = useMemo(() => {
+    return Object.values(galleries)
+      .sort((a, b) => (a.title > b.title ? 1 : -1))
+      .map(({ title, slug }) => {
+        return (
+          <LinkListItem key={slug} onClick={toggleNavigation}>
+            <InternalLink to={`/${slug}`}>{title}</InternalLink>
+          </LinkListItem>
+        )
+      })
+  }, [galleries, toggleNavigation])
 
   const aboutContent = [
     {
@@ -79,10 +79,10 @@ const Navigation = ({ toggleNavigation }: Props) => {
 
   return (
     <NavigationWrapper>
-      {/* <SubNavigationWrapper>
+      <SubNavigationWrapper>
         <Header size="medium">Galleries</Header>
         <ul>{links}</ul>
-      </SubNavigationWrapper> */}
+      </SubNavigationWrapper>
 
       <SubNavigationWrapper>
         <Header size="medium">About</Header>
