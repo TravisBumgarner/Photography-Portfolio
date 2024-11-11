@@ -4,12 +4,11 @@ import { submitContactForm } from './firebase';
 
 interface ImageToggleFormProps {
   images: string[];
-  onSubmit: (selectedImages: string[]) => void;
 }
 
 const NAME = v4()
 
-const ImageToggleForm: React.FC<ImageToggleFormProps> = ({ images, onSubmit }) => {
+const ImageToggleForm: React.FC<ImageToggleFormProps> = ({ images }) => {
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = React.useState(false)
 
