@@ -7,10 +7,14 @@ import { Link } from 'react-router-dom'
 import {Header, LazyImage} from 'sharedComponents'
 
 const HomeImageWrapper = styled.div`
-  display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin: 1rem;
+ display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `
 
 const Home = () => {
