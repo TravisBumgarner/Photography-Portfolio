@@ -1,10 +1,10 @@
 Photos to Go Through
+
+- [ ]  2024-10 (Let it marinate for a few months)
+- [ ]  2024-09 (Let it marinate for a few months)
+
 - [x] Move maker photos elsewhere
-
-- [ ]  2024-10
-- [ ]  2024-09
-
-- [ ] Double check every month below has been looked at. 
+- [x] Double check every month below has been looked at. 
 - [x]  2024-08
 - [x]  2024-07
 - [x]  2024-06
