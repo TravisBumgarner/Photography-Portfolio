@@ -35,15 +35,7 @@ const Home = () => {
           const blurHash = photos[previewId].blurHash;
 
           return (
-            <>
-              <Blurhash
-                hash={blurHash}
-                width={400}
-                height={300}
-                resolutionX={32}
-                resolutionY={32}
-                punch={1}
-              />
+            <div key={slug}>
               <Link
                 style={{
                   textDecoration: "none",
@@ -52,12 +44,12 @@ const Home = () => {
                 }}
                 id={slug}
                 to={`/${slug}`}
-                key={slug}
+                
               >
                 <Header size="h2">{title}</Header>
-                <LazyImage url={url} />
+                <LazyImage url={url} blurHash={blurHash}/>
               </Link>
-            </>
+            </div>
           );
         }
       )}

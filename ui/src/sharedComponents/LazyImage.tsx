@@ -1,45 +1,54 @@
-import React, { useEffect, useRef, useState } from "react"
-import styled from "styled-components"
+import React, { useEffect, useRef, useState } from "react";
+import styled from "styled-components";
+import { BlurhashCanvas } from "react-blurhash";
 
-const LazyImage = ({ url }: { url: string }) => {
-    const [isVisible, setIsVisible] = useState(false)
-    const imageRef = useRef(null)
-  
-    useEffect(() => {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          const [entry] = entries
-          if (entry.isIntersecting) {
-            setIsVisible(true)
-            observer.disconnect()
-          }
-        },
-        {
-          rootMargin: '100px'
-        }
-      )
-  
-      if (imageRef.current) {
-        observer.observe(imageRef.current)
-      }
-  
-      return () => {
-        observer.disconnect()
-      }
-    }, [url])
-  
-    return <Image ref={imageRef} url= {isVisible ? url : ''} />
-  }
+const LazyImage = ({ url, blurHash }: { url: string; blurHash: string }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const imageRef = useRef<HTMLDivElement>(null);
 
-  const Image = styled.div<{ url: string }>`
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+  return (
+    <ImageWrapper ref={imageRef}>
+      {!isLoaded && (
+        <BlurhashCanvas
+          hash={blurHash}
+          width={500}
+          height={500}
+          punch={1}
+        />
+      )}
+      <Image
+        src={url}
+        onLoad={() => setIsLoaded(true)}
+        style={{ display: isLoaded ? "block" : "none" }}
+      />
+    </ImageWrapper>
+  );
+};
+
+
+
+const ImageWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    padding-bottom: 100%;
-    cursor: pointer;
-    background-image: url(${({ url }) => url});
-`
+    height: 100%;
+  }
+`;
 
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+`;
 
-  export default LazyImage
+export default LazyImage;
