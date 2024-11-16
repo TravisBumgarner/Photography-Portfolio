@@ -93,7 +93,7 @@ const Gallery = ({ privateGallery }: Props) => {
       const url = getPhotoUrl({ isThumbnail: true, photoSrc: photo.src, privateGalleryId: undefined })
       return (
         <Link id={photo.id} to={`/${gallerySlug}/${photoId}`} key={photo.id}>
-          <LazyImage url={url} blurHash={"REPLAC_ME"} />
+          <LazyImage url={url} blurHash={photo.blurHash} />
         </Link>
       )
     }
