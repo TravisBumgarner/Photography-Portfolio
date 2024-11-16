@@ -46,6 +46,31 @@ const Photo = ({
     }
   }, [dispatch, photoSlug, photos, selectedGalleryPhotoIds, gallerySlug, navigate])
 
+  const preLoadNeighboringPhotos = useCallback(() => {
+    if (!selectedGalleryPhotoIds || !photoSlug) return
+
+    const index = selectedGalleryPhotoIds.indexOf(photoSlug)
+    const previousIndex = index === 0 ? selectedGalleryPhotoIds.length - 1 : index - 1
+    const nextIndex = index === selectedGalleryPhotoIds.length - 1 ? 0 : index + 1
+
+    const previousPhoto = photos[selectedGalleryPhotoIds[previousIndex]]
+    const nextPhoto = photos[selectedGalleryPhotoIds[nextIndex]]
+
+    if (previousPhoto) {
+      const img = new Image()
+      img.src = getPhotoUrl({ isThumbnail: false, privateGalleryId: privateGallery ? gallerySlug : undefined, photoSrc: previousPhoto.src })
+    }
+
+    if (nextPhoto) {
+      const img = new Image()
+      img.src = getPhotoUrl({ isThumbnail: false, privateGalleryId: privateGallery ? gallerySlug : undefined, photoSrc: nextPhoto.src })
+    }
+  }, [selectedGalleryPhotoIds, photoSlug, photos, gallerySlug, privateGallery])
+
+  useEffect(() => {
+    preLoadNeighboringPhotos()
+  }, [preLoadNeighboringPhotos, photoSlug])
+
   const navigateToNextPhoto = useCallback((direction: 'left' | 'right') => {
     if (!photoSlug || !selectedGalleryPhotoIds) {
       navigate('/')
