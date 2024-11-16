@@ -46,10 +46,16 @@ const GlobalStyle = createGlobalStyle`
 
     body {
         font-size: 18px;
-        margin: 0;
+        margin: 4rem;
         box-sizing: border-box;
         font-weight: 400;
+
+        @media (max-width: 768px) {
+            margin: 1rem;
+        }
     }
+
+    
 
 `
 

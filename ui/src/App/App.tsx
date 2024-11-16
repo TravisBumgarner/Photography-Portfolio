@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { FaCaretRight } from 'react-icons/fa'
+import { FaTimes } from 'react-icons/fa'
 import { Route, Routes } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -54,11 +54,11 @@ const App = (
 }
 
 const NavigationClose = styled(({ isNavigationVisible, ...rest }) => (
-  <FaCaretRight {...rest} />
+  <FaTimes {...rest} />
 ))`
   position: absolute;
   top: 20px;
-  left: 7px;
+  right: 20px;
   transition: opacity ${TRANSITION_SPEED}s;
   opacity: ${(props) => (props.isNavigationVisible ? 1 : 0)};
   z-index: 999;

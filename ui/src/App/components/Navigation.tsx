@@ -2,8 +2,7 @@ import React, { useContext, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
-import { Header } from 'sharedComponents'
-import { CONTENT_SPACING, FONT_FAMILY_HEADER, TEXT_FONT_SIZES } from '../../theme'
+import { CONTENT_SPACING, FONT_FAMILY_HEADER, TEXT_FONT_SIZES, HEADER_FONT_SIZES } from '../../theme'
 import { context } from '../context'
 
 interface Props {
@@ -80,19 +79,19 @@ const Navigation = ({ toggleNavigation }: Props) => {
   return (
     <NavigationWrapper>
       <SubNavigationWrapper>
-        <Header size="medium">Galleries</Header>
+        <Header>GALLERIES</Header>
         <ul>{links}</ul>
       </SubNavigationWrapper>
 
       <SubNavigationWrapper>
-        <Header size="medium">About</Header>
+        <Header>ABOUT</Header>
         <ul>
           {aboutLinks}
         </ul>
       </SubNavigationWrapper>
 
       <SubNavigationWrapper>
-        <Header size="medium">Misc</Header>
+        <Header>MISC</Header>
         <ul>
           {miscLinks}
         </ul>
@@ -102,7 +101,6 @@ const Navigation = ({ toggleNavigation }: Props) => {
 }
 
 const NavigationWrapper = styled.div`
-    text-align: right;
     z-index: 999;
     padding: ${CONTENT_SPACING.l};
     border-left: 5px solid black;
@@ -124,11 +122,15 @@ const SubNavigationWrapper = styled.div`
 `
 
 const LinkListItem = styled.li`
-    margin: ${CONTENT_SPACING.s} 0;
-
+  a { 
+    font-weight: 300;
+    font-size: 0.8rem;
+  }
+    /* padding-left: ${CONTENT_SPACING.s}; */
+    /* border-left: 5px solid transparent;
     &:hover {
-        border-left: 5px solid rgb(74, 207, 160);
-    }
+        border-left-color: rgb(74, 207, 160);
+    } */
 `
 
 const sharedStyles = css`
@@ -142,6 +144,14 @@ const sharedStyles = css`
     &:visited {
         color: black;
     }
+`
+
+const Header = styled.h3`
+    font-weight: 700;
+    font-family: ${FONT_FAMILY_HEADER};
+    font-size: ${HEADER_FONT_SIZES.s};
+    margin-bottom: ${CONTENT_SPACING.s};
+    margin-top: ${CONTENT_SPACING.s};
 `
 
 const InternalLink = styled(Link)`

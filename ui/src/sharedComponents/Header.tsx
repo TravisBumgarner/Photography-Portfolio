@@ -14,15 +14,6 @@ const LargeHeader = styled.h1`
     font-size: ${HEADER_FONT_SIZES.l};
 `
 
-const MediumHeader = styled.h2`
-    font-weight: 700;
-    font-family: ${FONT_FAMILY_HEADER};
-    text-transform: uppercase;
-    margin-bottom: ${CONTENT_SPACING.m};
-    margin-top: ${CONTENT_SPACING.m};
-    font-size: ${HEADER_FONT_SIZES.m};
-`
-
 const SmallHeader = styled.h3`
     font-weight: 700;
     font-family: ${FONT_FAMILY_HEADER};
@@ -41,8 +32,6 @@ const Header = ({ size, children }: Props) => {
   switch (size) {
     case 'large':
       return <LargeHeader>{children}</LargeHeader>
-    case 'medium':
-      return <MediumHeader>{children}</MediumHeader>
     case 'small':
       return <SmallHeader>{children}</SmallHeader>
     case 'inline':

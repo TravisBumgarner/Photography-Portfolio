@@ -3,8 +3,7 @@ import { FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { Header } from "sharedComponents";
-import { CONTENT_SPACING, ICON_COLOR, ICON_FONT_SIZES, TRANSITION_SPEED, } from "theme";
+import { CONTENT_SPACING, ICON_COLOR, ICON_FONT_SIZES, TRANSITION_SPEED, HEADER_FONT_SIZES, FONT_FAMILY_HEADER } from "theme";
 
 type Props = {
   toggleNavigation: () => void;
@@ -15,7 +14,7 @@ const TitleBar = ({ toggleNavigation, isNavigationVisible }: Props) => {
   return (
     <TitleBarWrapper>
       <InternalLink to="/">
-        <Header size="large">Travis Bumgarner Photography</Header>
+        <Header>Travis Bumgarner Photography</Header>
       </InternalLink>
       <NavigationOpen
         isNavigationVisible={isNavigationVisible}
@@ -25,6 +24,16 @@ const TitleBar = ({ toggleNavigation, isNavigationVisible }: Props) => {
     </TitleBarWrapper>
   );
 };
+
+const Header = styled.h1`
+    font-weight: 700;
+    font-family: ${FONT_FAMILY_HEADER};
+    text-transform: uppercase;
+    margin-bottom: ${CONTENT_SPACING.l};
+    margin-top: ${CONTENT_SPACING.l};
+    font-size: ${HEADER_FONT_SIZES.m};
+`
+
 
 const TitleBarWrapper = styled.div`
   display: flex;
@@ -50,6 +59,7 @@ const NavigationOpen = styled(({ isNavigationVisible, ...rest }) => (
   transition: opacity ${TRANSITION_SPEED}s;
   opacity: ${(props) => (props.isNavigationVisible ? 0 : 1)};
   cursor: pointer;
+  margin-left: 1rem;
 
   &:hover {
     fill: ${ICON_COLOR.hover};
