@@ -90,7 +90,8 @@ const Photo = ({
 
     const nextPhotoId = selectedGalleryPhotoIds[nextIndex]
 
-    navigate(`/${gallerySlug}/${nextPhotoId}`)
+    // Improve back button so that it goes back to gallery instead of previous photo. 
+    navigate(`/${gallerySlug}/${nextPhotoId}`, { replace: true })
   }, [selectedGalleryPhotoIds, photoSlug, gallerySlug, navigate])
 
   const handleKeyPress = useCallback((event: KeyboardEvent) => {
