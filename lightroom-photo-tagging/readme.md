@@ -2,6 +2,12 @@
 
 App For Tagging Photos for Instagram by reading EXIF data from Adobe Lightroom
 
+# Local Setup
+
+1. Get bindings for HTML `canvas` to run in Node - (for Mac) `brew install pkg-config cairo pango libpng jpeg giflib librsvg`
+    1. Might need to rebuild canvas - `yarn rebuild canvas`
+1. Install yarn dependencies `yarn`
+
 # Adding New Photos
 
 1. Select potential photos by adding them to `01_Potential_Picks`

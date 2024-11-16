@@ -2,6 +2,7 @@ export type GalleryType = {
   title: string;
   slug: string;
   previewSrc: string;
+  previewId: string
 }
 
 export type PhotoType = {
@@ -15,6 +16,7 @@ export type PhotoType = {
   shutterSpeed: string;
   iso: string;
   focalLength: string;
+  blurHash: string;
 };
 
 export type PrivateGallery = {
