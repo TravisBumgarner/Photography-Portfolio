@@ -149,24 +149,22 @@ const Photo = ({
             </ControlsSectionWrapper>
             <ControlsSectionWrapper>
               <PreviousButton
-                style={{ marginRight: '2rem' }}
-                size={ICON_FONT_SIZES.xl}
+                // style={{ marginRight: '2rem' }}
+                size={ICON_FONT_SIZES.l}
                 onClick={() => { navigateToNextPhoto('left') }}
               />
-              <ToggleInfo
+              {/* <ToggleInfo
                 size={ICON_FONT_SIZES.l}
                 onClick={() => { setToggleInfo(prev => !prev) }}
-              />
+              /> */}
 
+              <CloseIcon style={{marginLeft: '1rem', marginRight: '1rem'}} size={ICON_FONT_SIZES.l} onClick={handleReturnToGallery} />
               <NextButton
-                style={{ marginLeft: '2rem' }}
+                // style={{ marginLeft: '2rem' }}
 
-                size={ICON_FONT_SIZES.xl}
+                size={ICON_FONT_SIZES.l}
                 onClick={() => { navigateToNextPhoto('right') }}
               />
-            </ControlsSectionWrapper>
-            <ControlsSectionWrapper>
-              <CloseIcon size={ICON_FONT_SIZES.l} onClick={handleReturnToGallery} />
             </ControlsSectionWrapper>
           </ControlsWrapper>
         </MetadataAndControlsBottomWrapper>
@@ -207,7 +205,7 @@ const IconCSS = css`
 const CloseIcon = styled(FaTimes)`${IconCSS}`
 const PreviousButton = styled(FaArrowLeft)`${IconCSS}`
 const NextButton = styled(FaArrowRight)`${IconCSS}`
-const ToggleInfo = styled(FaInfo)`${IconCSS}`
+// const ToggleInfo = styled(FaInfo)`${IconCSS}`
 const DownloadButton = styled(FaDownload)`${IconCSS}`
 
 const MetadataAndControlsBottomWrapper = styled.div`
@@ -218,7 +216,7 @@ const MetadataAndControlsBottomWrapper = styled.div`
   right: 0;
   justify-content: center;
   box-sizing: border-box;
-  align-items: center;
+  align-items: end;
   flex-direction: column;
   padding: 1.5rem;
 `
@@ -246,7 +244,7 @@ const ControlsWrapper = styled.div`
   border-radius: 0.5rem;
   margin: 0 0.5rem 0.5rem;
   padding: 0.5rem;
-  justify-content: space-between;
+  justify-content: end;
   display: flex;
   flex-direction: row;
 `
