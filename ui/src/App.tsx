@@ -4,16 +4,16 @@ import { Route, Routes } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { Error } from 'sharedComponents'
+import { About, Home, Navigation, Photo, TitleBar } from './components'
+import Gallery from './components/Gallery'
+import Context from './context'
 import {
   COLORS,
   CONTENT_SPACING,
   FONT_SIZES,
   GlobalStyle,
   TRANSITION_SPEED
-} from '../theme'
-import { About, Home, Navigation, Photo, TitleBar } from './components'
-import Gallery from './components/Gallery'
-import Context from './context'
+} from './theme'
 
 const App = () => {
   const [isNavigationVisible, setIsNavigationVisible] = useState(false)

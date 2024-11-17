@@ -4,8 +4,8 @@ import Modal from 'react-modal'
 import { useNavigate, useParams } from 'react-router-dom'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
-import { COLORS, CONTENT_SPACING, FONT_SIZES } from '../../theme'
 import { context } from '../context'
+import { COLORS, CONTENT_SPACING, FONT_SIZES } from '../theme'
 import { getPhotoUrl } from '../utils'
 
 interface PhotoProps {

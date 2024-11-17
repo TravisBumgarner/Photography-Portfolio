@@ -2,8 +2,8 @@ import React, { useContext, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
-import { COLORS, CONTENT_SPACING, FONT_SIZES } from '../../theme'
 import { context } from '../context'
+import { COLORS, CONTENT_SPACING, FONT_SIZES } from '../theme'
 
 interface Props {
   toggleNavigation: () => void

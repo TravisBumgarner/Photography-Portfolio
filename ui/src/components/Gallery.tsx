@@ -3,10 +3,10 @@ import styled from 'styled-components'
 
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { LazyImage, PageHeader } from 'sharedComponents'
+import { CONTENT_SPACING } from 'theme'
 import { type PhotoType, type PrivateGallery } from 'types'
 import { context } from '../context'
 import { getPhotoUrl } from '../utils'
-import { CONTENT_SPACING } from 'theme'
 
 interface Props {
   privateGallery: boolean
