@@ -138,7 +138,7 @@ const Photo = ({ privateGallery }: PhotoProps) => {
         <PhotoWrapper>
           <BlurImage
             // Without key react does some really bizarre stuff.
-            // key={details.id}
+            key={details.id}
             src={getPhotoUrl({
               isThumbnail: false,
               privateGalleryId: privateGallery ? gallerySlug : undefined,
