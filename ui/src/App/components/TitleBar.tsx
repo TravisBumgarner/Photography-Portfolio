@@ -1,14 +1,20 @@
-import React from 'react';
-import { FaBars } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import React from 'react'
+import { FaBars } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
-import { CONTENT_SPACING, ICON_COLOR, ICON_FONT_SIZES, TRANSITION_SPEED, HEADER_FONT_SIZES, FONT_FAMILY_HEADER } from "theme";
+import {
+  CONTENT_SPACING,
+  FONT_SIZES,
+  ICON_COLOR,
+  ICON_FONT_SIZE,
+  TRANSITION_SPEED
+} from 'theme'
 
-type Props = {
-  toggleNavigation: () => void;
-  isNavigationVisible: boolean;
-};
+interface Props {
+  toggleNavigation: () => void
+  isNavigationVisible: boolean
+}
 
 const TitleBar = ({ toggleNavigation, isNavigationVisible }: Props) => {
   return (
@@ -19,27 +25,25 @@ const TitleBar = ({ toggleNavigation, isNavigationVisible }: Props) => {
       <NavigationOpen
         isNavigationVisible={isNavigationVisible}
         onClick={toggleNavigation}
-        size={ICON_FONT_SIZES.l}
+        size={ICON_FONT_SIZE}
       />
     </TitleBarWrapper>
-  );
-};
+  )
+}
 
 const Header = styled.h1`
-    font-weight: 700;
-    font-family: ${FONT_FAMILY_HEADER};
-    text-transform: uppercase;
-    margin-bottom: ${CONTENT_SPACING.l};
-    margin-top: ${CONTENT_SPACING.l};
-    font-size: ${HEADER_FONT_SIZES.m};
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: ${CONTENT_SPACING.l};
+  margin-top: ${CONTENT_SPACING.l};
+  font-size: ${FONT_SIZES.MEDIUM};
 `
-
 
 const TitleBarWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 1rem;
-`;
+`
 
 const InternalLink = styled(Link)`
   text-decoration: none;
@@ -48,7 +52,7 @@ const InternalLink = styled(Link)`
   &:visited {
     color: black;
   }
-`;
+`
 
 const NavigationOpen = styled(({ isNavigationVisible, ...rest }) => (
   <FaBars {...rest} />
@@ -57,13 +61,13 @@ const NavigationOpen = styled(({ isNavigationVisible, ...rest }) => (
   padding-bottom: ${CONTENT_SPACING.l};
   padding-top: ${CONTENT_SPACING.l};
   transition: opacity ${TRANSITION_SPEED}s;
-  opacity: ${(props) => (props.isNavigationVisible ? 0 : 1)};
+  opacity: ${props => (props.isNavigationVisible ? 0 : 1)};
   cursor: pointer;
   margin-left: 1rem;
 
   &:hover {
     fill: ${ICON_COLOR.hover};
   }
-`;
+`
 
-export default TitleBar;
+export default TitleBar

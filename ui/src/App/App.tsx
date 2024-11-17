@@ -4,15 +4,21 @@ import { Route, Routes } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { Error } from 'sharedComponents'
-import { GlobalStyle, ICON_COLOR, ICON_FONT_SIZES, TRANSITION_SPEED } from '../theme'
+import {
+  GlobalStyle,
+  ICON_COLOR,
+  ICON_FONT_SIZE,
+  TRANSITION_SPEED
+} from '../theme'
 import { About, Home, Navigation, Photo, TitleBar } from './components'
 import Gallery from './components/Gallery'
 import Context from './context'
 
-const App = (
-) => {
+const App = () => {
   const [isNavigationVisible, setIsNavigationVisible] = useState(false)
-  const toggleNavigation = useCallback(() => { setIsNavigationVisible(prev => !prev) }, [])
+  const toggleNavigation = useCallback(() => {
+    setIsNavigationVisible(prev => !prev)
+  }, [])
 
   return (
     <>
@@ -36,19 +42,14 @@ const App = (
         <Route path="*" element={<Error value="404" />} />
       </Routes>
       <NavigationWrapper isNavigationVisible={isNavigationVisible}>
-        {isNavigationVisible && (
-          <NavigationGutter onClick={toggleNavigation} />
-        )}
-        <Navigation
-          toggleNavigation={toggleNavigation}
-        />
+        {isNavigationVisible && <NavigationGutter onClick={toggleNavigation} />}
+        <Navigation toggleNavigation={toggleNavigation} />
         <NavigationClose
           isNavigationVisible={isNavigationVisible}
           onClick={toggleNavigation}
-          size={ICON_FONT_SIZES.l}
+          size={ICON_FONT_SIZE}
         />
       </NavigationWrapper>
-
     </>
   )
 }
@@ -60,7 +61,7 @@ const NavigationClose = styled(({ isNavigationVisible, ...rest }) => (
   top: 20px;
   right: 20px;
   transition: opacity ${TRANSITION_SPEED}s;
-  opacity: ${(props) => (props.isNavigationVisible ? 1 : 0)};
+  opacity: ${props => (props.isNavigationVisible ? 1 : 0)};
   z-index: 999;
   fill: ${ICON_COLOR.initial};
   cursor: pointer;
@@ -85,7 +86,7 @@ const NavigationWrapper = styled.div<{ isNavigationVisible: boolean }>`
   top: 0;
   overflow: scroll;
   transition: right ${TRANSITION_SPEED}s;
-  right: ${({ isNavigationVisible }) => isNavigationVisible ? '0' : '-100vw'};
+  right: ${({ isNavigationVisible }) => (isNavigationVisible ? '0' : '-100vw')};
 `
 
 const WrappedApp = () => {

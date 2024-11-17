@@ -1,10 +1,10 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { FaArrowLeft, FaArrowRight, FaDownload, FaInfo, FaTimes } from 'react-icons/fa'
+import { FaArrowLeft, FaArrowRight, FaDownload, FaTimes } from 'react-icons/fa'
 import Modal from 'react-modal'
 import { useNavigate, useParams } from 'react-router-dom'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
-import { ICON_COLOR, ICON_FONT_SIZES } from '../../theme'
+import { ICON_COLOR, ICON_FONT_SIZE } from '../../theme'
 import { context } from '../context'
 import { getPhotoUrl } from '../utils'
 
@@ -15,11 +15,15 @@ interface PhotoProps {
   privateGallery: boolean
 }
 
-const Photo = ({
-  privateGallery
-}: PhotoProps) => {
-  const { state: { photos, selectedGalleryPhotoIds }, dispatch } = useContext(context)
-  const { gallerySlug, photoSlug } = useParams<{ gallerySlug: string, photoSlug: string }>()
+const Photo = ({ privateGallery }: PhotoProps) => {
+  const {
+    state: { photos, selectedGalleryPhotoIds },
+    dispatch
+  } = useContext(context)
+  const { gallerySlug, photoSlug } = useParams<{
+    gallerySlug: string
+    photoSlug: string
+  }>()
 
   const details = photoSlug ? photos[photoSlug] : null
   const [toggleInfo, setToggleInfo] = useState(false)
@@ -36,34 +40,53 @@ const Photo = ({
       dispatch({
         type: 'SET_SELECTED_GALLERY_PHOTO_IDS',
         payload: {
-          selectedGalleryPhotoIds: Object
-            .values(photos)
-            .filter(({ galleryIds }) => gallerySlug && galleryIds.includes(gallerySlug))
+          selectedGalleryPhotoIds: Object.values(photos)
+            .filter(
+              ({ galleryIds }) =>
+                gallerySlug && galleryIds.includes(gallerySlug)
+            )
             .map(({ id }) => id),
           loadedGalleryId: gallerySlug ?? null
         }
       })
     }
-  }, [dispatch, photoSlug, photos, selectedGalleryPhotoIds, gallerySlug, navigate])
+  }, [
+    dispatch,
+    photoSlug,
+    photos,
+    selectedGalleryPhotoIds,
+    gallerySlug,
+    navigate
+  ])
 
   const preLoadNeighboringPhotos = useCallback(() => {
     if (!selectedGalleryPhotoIds || !photoSlug) return
 
     const index = selectedGalleryPhotoIds.indexOf(photoSlug)
-    const previousIndex = index === 0 ? selectedGalleryPhotoIds.length - 1 : index - 1
-    const nextIndex = index === selectedGalleryPhotoIds.length - 1 ? 0 : index + 1
+    const previousIndex =
+      index === 0 ? selectedGalleryPhotoIds.length - 1 : index - 1
+    const nextIndex =
+      index === selectedGalleryPhotoIds.length - 1 ? 0 : index + 1
 
     const previousPhoto = photos[selectedGalleryPhotoIds[previousIndex]]
     const nextPhoto = photos[selectedGalleryPhotoIds[nextIndex]]
 
     if (previousPhoto) {
       const img = new Image()
-      img.src = getPhotoUrl({ isThumbnail: false, privateGalleryId: privateGallery ? gallerySlug : undefined, photoSrc: previousPhoto.src })
+      img.src = getPhotoUrl({
+        isThumbnail: false,
+        privateGalleryId: privateGallery ? gallerySlug : undefined,
+        photoSrc: previousPhoto.src
+      })
     }
 
     if (nextPhoto) {
       const img = new Image()
-      img.src = getPhotoUrl({ isThumbnail: false, privateGalleryId: privateGallery ? gallerySlug : undefined, photoSrc: nextPhoto.src })
+      img.src = getPhotoUrl({
+        isThumbnail: false,
+        privateGalleryId: privateGallery ? gallerySlug : undefined,
+        photoSrc: nextPhoto.src
+      })
     }
   }, [selectedGalleryPhotoIds, photoSlug, photos, gallerySlug, privateGallery])
 
@@ -71,39 +94,49 @@ const Photo = ({
     preLoadNeighboringPhotos()
   }, [preLoadNeighboringPhotos, photoSlug])
 
-  const navigateToNextPhoto = useCallback((direction: 'left' | 'right') => {
-    if (!photoSlug || !selectedGalleryPhotoIds) {
-      navigate('/')
-      return
-    }
+  const navigateToNextPhoto = useCallback(
+    (direction: 'left' | 'right') => {
+      if (!photoSlug || !selectedGalleryPhotoIds) {
+        navigate('/')
+        return
+      }
 
-    const index = selectedGalleryPhotoIds.indexOf(photoSlug)
+      const index = selectedGalleryPhotoIds.indexOf(photoSlug)
 
-    let nextIndex: number
-    if (direction === 'left') {
-      if (index === 0) nextIndex = selectedGalleryPhotoIds.length - 1
-      else nextIndex = index - 1
-    } else {
+      let nextIndex: number
+      if (direction === 'left') {
+        if (index === 0) nextIndex = selectedGalleryPhotoIds.length - 1
+        else nextIndex = index - 1
+      } else {
         if (index === selectedGalleryPhotoIds.length - 1) nextIndex = 0
         else nextIndex = index + 1
       }
 
-    const nextPhotoId = selectedGalleryPhotoIds[nextIndex]
+      const nextPhotoId = selectedGalleryPhotoIds[nextIndex]
 
-    // Improve back button so that it goes back to gallery instead of previous photo. 
-    navigate(`/${gallerySlug}/${nextPhotoId}`, { replace: true })
-  }, [selectedGalleryPhotoIds, photoSlug, gallerySlug, navigate])
+      // Improve back button so that it goes back to gallery instead of previous photo.
+      navigate(`/${gallerySlug}/${nextPhotoId}`, { replace: true })
+    },
+    [selectedGalleryPhotoIds, photoSlug, gallerySlug, navigate]
+  )
 
-  const handleKeyPress = useCallback((event: KeyboardEvent) => {
-    if (event.key === 'ArrowLeft') navigateToNextPhoto('left')
-    if (event.key === 'ArrowRight') navigateToNextPhoto('right')
-  }, [navigateToNextPhoto])
+  const handleKeyPress = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === 'ArrowLeft') navigateToNextPhoto('left')
+      if (event.key === 'ArrowRight') navigateToNextPhoto('right')
+    },
+    [navigateToNextPhoto]
+  )
 
   const downloadPhoto = () => {
     if (!details) return
 
     const downloadLink = document.createElement('a')
-    downloadLink.href = getPhotoUrl({ isThumbnail: false, privateGalleryId: privateGallery ? gallerySlug : undefined, photoSrc: details.src })
+    downloadLink.href = getPhotoUrl({
+      isThumbnail: false,
+      privateGalleryId: privateGallery ? gallerySlug : undefined,
+      photoSrc: details.src
+    })
     downloadLink.download = details.src
     document.body.append(downloadLink)
     downloadLink.click()
@@ -123,7 +156,10 @@ const Photo = ({
       return
     }
 
-    dispatch({ type: 'BACK_TO_GALLERY', payload: { previouslySelectedPhotoId: photoSlug } })
+    dispatch({
+      type: 'BACK_TO_GALLERY',
+      payload: { previouslySelectedPhotoId: photoSlug }
+    })
     navigate(`/${gallerySlug}`)
   }
 
@@ -132,38 +168,53 @@ const Photo = ({
   return (
     <>
       <OverflowHidden />
-      <Modal isOpen={true} style={modalCSS} onRequestClose={handleReturnToGallery}>
+      <Modal
+        isOpen={true}
+        style={modalCSS}
+        onRequestClose={handleReturnToGallery}
+      >
         <PhotoWrapper>
           <StyledPhoto
-            src={getPhotoUrl({ isThumbnail: false, privateGalleryId: privateGallery ? gallerySlug : undefined, photoSrc: details.src })}
+            src={getPhotoUrl({
+              isThumbnail: false,
+              privateGalleryId: privateGallery ? gallerySlug : undefined,
+              photoSrc: details.src
+            })}
           />
         </PhotoWrapper>
         <MetadataAndControlsBottomWrapper>
           {toggleInfo ? <Metadata details={details} /> : null}
           <ControlsWrapper>
             <ControlsSectionWrapper hideBackground={!privateGallery}>
-              {privateGallery && <DownloadButton
-                size={ICON_FONT_SIZES.l}
-                onClick={downloadPhoto}
-              />}
+              {privateGallery && (
+                <DownloadButton size={ICON_FONT_SIZE} onClick={downloadPhoto} />
+              )}
             </ControlsSectionWrapper>
             <ControlsSectionWrapper>
               <PreviousButton
                 // style={{ marginRight: '2rem' }}
-                size={ICON_FONT_SIZES.l}
-                onClick={() => { navigateToNextPhoto('left') }}
+                size={ICON_FONT_SIZE}
+                onClick={() => {
+                  navigateToNextPhoto('left')
+                }}
               />
               {/* <ToggleInfo
-                size={ICON_FONT_SIZES.l}
+                size={ICON_FONT_SIZE}
                 onClick={() => { setToggleInfo(prev => !prev) }}
               /> */}
 
-              <CloseIcon style={{marginLeft: '1rem', marginRight: '1rem'}} size={ICON_FONT_SIZES.l} onClick={handleReturnToGallery} />
+              <CloseIcon
+                style={{ marginLeft: '1rem', marginRight: '1rem' }}
+                size={ICON_FONT_SIZE}
+                onClick={handleReturnToGallery}
+              />
               <NextButton
                 // style={{ marginLeft: '2rem' }}
 
-                size={ICON_FONT_SIZES.l}
-                onClick={() => { navigateToNextPhoto('right') }}
+                size={ICON_FONT_SIZE}
+                onClick={() => {
+                  navigateToNextPhoto('right')
+                }}
               />
             </ControlsSectionWrapper>
           </ControlsWrapper>
@@ -198,15 +249,23 @@ const IconCSS = css`
   fill: ${ICON_COLOR.initial};
   cursor: pointer;
 
-&:hover {
-  fill: ${ICON_COLOR.hover};
-}
+  &:hover {
+    fill: ${ICON_COLOR.hover};
+  }
 `
-const CloseIcon = styled(FaTimes)`${IconCSS}`
-const PreviousButton = styled(FaArrowLeft)`${IconCSS}`
-const NextButton = styled(FaArrowRight)`${IconCSS}`
+const CloseIcon = styled(FaTimes)`
+  ${IconCSS}
+`
+const PreviousButton = styled(FaArrowLeft)`
+  ${IconCSS}
+`
+const NextButton = styled(FaArrowRight)`
+  ${IconCSS}
+`
 // const ToggleInfo = styled(FaInfo)`${IconCSS}`
-const DownloadButton = styled(FaDownload)`${IconCSS}`
+const DownloadButton = styled(FaDownload)`
+  ${IconCSS}
+`
 
 const MetadataAndControlsBottomWrapper = styled.div`
   display: flex;
@@ -225,18 +284,17 @@ const ControlsSectionWrapper = styled.div<{ hideBackground?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${({ hideBackground }) => hideBackground ? 'transparent' : 'rgba(255, 255, 255, 0.7)'};
+  background-color: ${({ hideBackground }) =>
+    hideBackground ? 'transparent' : 'rgba(255, 255, 255, 0.7)'};
   padding: 0.5rem;
   border-radius: 0.5rem;
   height: 30px;
 
-  :first-child{
+  :first-child {
     margin-right: 0.5rem;
-  
   }
-  :last-child{
+  :last-child {
     margin-left: 0.5rem;
-  
   }
 `
 
@@ -296,7 +354,7 @@ const Metadata = ({ details }: { details: PhotoType }) => {
     shutterSpeed,
     iso,
     lens,
-    focalLength,
+    focalLength
     // location
   } = details
 

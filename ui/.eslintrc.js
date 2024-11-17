@@ -63,7 +63,7 @@ module.exports = {
     },
     "import/resolver": {
       "typescript": {
-        "project": "tsconfig.json"
+        "project": "./ui/tsconfig.json"
       }
     }
   }
