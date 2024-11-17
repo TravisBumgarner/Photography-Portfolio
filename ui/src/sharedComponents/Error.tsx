@@ -2,14 +2,13 @@ import React, { useMemo } from 'react'
 import styled from 'styled-components'
 
 import { CONTENT_SPACING, FONT_SIZES } from 'theme'
+import { PageHeader } from './PageHeader'
 
 const ErrorWrapper = styled.div`
-  align-items: center;
   display: flex;
-  justify-content: center;
+  margin: ${CONTENT_SPACING.LARGE};
   flex-direction: column;
-  margin-top: 0;
-`
+  `
 
 const Error = ({ value }: { value: '404' | '500' }) => {
   const { message, header } = useMemo(() => {
@@ -32,7 +31,7 @@ const Error = ({ value }: { value: '404' | '500' }) => {
 
   return (
     <ErrorWrapper>
-      <Header>{header}</Header>
+      <PageHeader>{header}</PageHeader>
       <Text>{message}</Text>
     </ErrorWrapper>
   )
@@ -40,14 +39,6 @@ const Error = ({ value }: { value: '404' | '500' }) => {
 
 const Text = styled.p`
   font-size: ${FONT_SIZES.MEDIUM};
-`
-
-const Header = styled.h1`
-  font-weight: 700;
-  text-transform: uppercase;
-  margin-bottom: ${CONTENT_SPACING.LARGE};
-  margin-top: ${CONTENT_SPACING.LARGE};
-  font-size: ${FONT_SIZES.LARGE};
 `
 
 export default Error
