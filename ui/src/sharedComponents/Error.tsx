@@ -1,15 +1,14 @@
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
 
-import { Header, Text } from 'sharedComponents'
+import { CONTENT_SPACING, FONT_SIZES } from 'theme'
+import { PageHeader } from './PageHeader'
 
 const ErrorWrapper = styled.div`
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    margin-top: 0;
-`
+  display: flex;
+  margin: ${CONTENT_SPACING.LARGE};
+  flex-direction: column;
+  `
 
 const Error = ({ value }: { value: '404' | '500' }) => {
   const { message, header } = useMemo(() => {
@@ -23,7 +22,8 @@ const Error = ({ value }: { value: '404' | '500' }) => {
       case '500': {
         return {
           header: 'Whoops!',
-          message: 'Something went wrong. This error has been reported. Please try again later.'
+          message:
+            'Something went wrong. This error has been reported. Please try again later.'
         }
       }
     }
@@ -31,10 +31,14 @@ const Error = ({ value }: { value: '404' | '500' }) => {
 
   return (
     <ErrorWrapper>
-      <Header size="medium">{header}</Header>
+      <PageHeader>{header}</PageHeader>
       <Text>{message}</Text>
     </ErrorWrapper>
   )
 }
+
+const Text = styled.p`
+  font-size: ${FONT_SIZES.MEDIUM};
+`
 
 export default Error

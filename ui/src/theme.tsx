@@ -1,58 +1,51 @@
 import { createGlobalStyle } from 'styled-components'
 
-const TRANSITION_SPEED = 1
-const CONTENT_SPACING = {
-  xs: '0.125rem',
-  s: '0.25rem',
-  m: '0.5rem',
-  l: '1rem',
-  xl: '2rem',
-  xxl: '4rem',
-  xxxl: '8rem',
-  xxxxl: '16rem'
+export const TRANSITION_SPEED = 1
+export const CONTENT_SPACING = {
+  XSMALL: '0.125rem',
+  SMALL: '0.25rem',
+  MEDIUM: '0.5rem',
+  LARGE: '1rem',
+  XLARGE: '2rem',
+  XXLARGE: '4rem',
+  XXXLARGE: '8rem',
+  XXXXLARGE: '16rem'
 }
 
-const HEADER_FONT_SIZES = {
-  s: '1.0rem',
-  m: '1.2rem',
-  l: '1.5rem'
+export const FONT_SIZES = {
+  XSMALL: '0.7rem',
+  SMALL: '1.0rem',
+  MEDIUM: '1.2rem',
+  LARGE: '1.5rem',
+  XXLARGE: '4rem'
 }
 
-const TEXT_FONT_SIZES = {
-  m: '1.0rem'
+export const COLORS = {
+  GREEN: 'rgb(74, 207, 160)',
+  BLACK: 'rgb(0, 0, 0)'
 }
 
-const ICON_COLOR = {
-  initial: '#000',
-  hover: 'rgb(74, 207, 160)'
-}
-
-const ICON_FONT_SIZES = {
-  s: '1.0rem',
-  m: '1.2rem',
-  l: '1.5rem',
-  xl: '2.0rem'
-}
-
-const FONT_FAMILY_HEADER = "'Raleway', sans-serif;"
-const FONT_FAMILY_TEXT = "'Montserrat', sans-serif"
-
-const FONT_SIZE_INPUTS_AND_BUTTONS = 14
-
-const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
     :root {
         --doc-height: 100%;
     }
 
+    @font-face {
+      font-family: 'Satoshi';
+      src: url('/fonts/Satoshi-Variable.ttf') format('truetype');
+      font-weight: 100 900;
+      font-style: normal;
+    } 
+
     body {
         font-size: 18px;
-        margin: 0;
+        margin: 4rem;
         box-sizing: border-box;
         font-weight: 400;
+        font-family: 'Satoshi', sans-serif;
+
+        @media (max-width: 768px) {
+            margin: 1rem;
+        }
     }
-
 `
-
-export {
-  CONTENT_SPACING, FONT_FAMILY_HEADER, FONT_FAMILY_TEXT, FONT_SIZE_INPUTS_AND_BUTTONS, GlobalStyle, HEADER_FONT_SIZES, ICON_COLOR, ICON_FONT_SIZES, TEXT_FONT_SIZES, TRANSITION_SPEED
-}

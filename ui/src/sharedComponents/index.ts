@@ -1,11 +1,6 @@
 import Error from './Error'
-import Header from './Header'
+import LazyImage from './LazyImage'
 import List from './List'
-import Text from './Text'
-import LazyImage  from './LazyImage'
+import { PageHeader } from './PageHeader'
 
-export {
-  Error, Header,
-  List, Text,
-  LazyImage
-}
+export { Error, LazyImage, List, PageHeader }
