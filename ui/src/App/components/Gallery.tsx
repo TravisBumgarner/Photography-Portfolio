@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useMemo } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react'
 import styled from 'styled-components'
 
 import { Link, useNavigate, useParams } from 'react-router-dom'
@@ -6,16 +12,45 @@ import { LazyImage } from 'sharedComponents'
 import { CONTENT_SPACING, FONT_SIZES } from 'theme'
 import { type PhotoType, type PrivateGallery } from 'types'
 import { context } from '../context'
-import { getPhotoUrl } from '../utils'
+import { getPhotoUrl, useEffectDebugger } from '../utils'
+
+const PreviewPhoto = ({
+  photoId,
+  gallerySlug,
+  privateGallery
+}: {
+  photoId: string
+  gallerySlug: string
+  privateGallery: boolean
+}) => {
+  const {
+    state: { photos, privateGalleries }
+  } = useContext(context)
+
+  const { id, blurHash, src } = useMemo(() => {
+    return privateGallery
+      ? privateGalleries[gallerySlug].photos[photoId]
+      : photos[photoId]
+  }, [photoId, photos, privateGalleries, gallerySlug, privateGallery])
+
+  const url = getPhotoUrl({
+    isThumbnail: true,
+    photoSrc: src,
+    privateGalleryId: undefined
+  })
+
+  return (
+    <Link id={photoId} to={`/${gallerySlug}/${photoId}`} key={id}>
+      <LazyImage url={url} blurHash={blurHash} />
+    </Link>
+  )
+}
 
 interface Props {
   privateGallery: boolean
 }
 
-const getSelectedGalleryPhotoIdsByGalleryId = (
-  galleryId: string,
-  photos: PhotoType[]
-) => {
+const getPhotoIdsByGalleryId = (galleryId: string, photos: PhotoType[]) => {
   return Object.values(photos)
     .filter(photo => photo.galleryIds.includes(galleryId))
     .sort((a, b) => {
@@ -26,7 +61,7 @@ const getSelectedGalleryPhotoIdsByGalleryId = (
     .map(({ id }) => id)
 }
 
-const getSelectedPrivateGalleryPhotoIdsByGalleryId = (
+const getPhotoIdsByByPrivateGalleryId = (
   galleryId: string,
   privateGalleries: Record<string, PrivateGallery>
 ) => {
@@ -40,16 +75,11 @@ const getSelectedPrivateGalleryPhotoIdsByGalleryId = (
 }
 
 const Gallery = ({ privateGallery }: Props) => {
+  const [photoIds, setPhotoIds] = useState<string[]>([])
+
   const { gallerySlug } = useParams<{ gallerySlug: string }>()
   const {
-    state: {
-      galleries,
-      photos,
-      selectedGalleryPhotoIds,
-      previouslySelectedPhotoId,
-      privateGalleries,
-      loadedGalleryId
-    },
+    state: { galleries, photos, previouslySelectedPhotoId, privateGalleries },
     dispatch
   } = useContext(context)
   const navigate = useNavigate()
@@ -65,82 +95,35 @@ const Gallery = ({ privateGallery }: Props) => {
     }
   }, [previouslySelectedPhotoId, dispatch])
 
-  useEffect(() => {
+  const getPhotoIds = useCallback(() => {
+    // Function is not called if gallerySlug is undefined.
+    if (!privateGallery) {
+      return getPhotoIdsByGalleryId(gallerySlug!, Object.values(photos))
+    } else {
+      return getPhotoIdsByByPrivateGalleryId(gallerySlug!, privateGalleries)
+    }
+  }, [gallerySlug, photos, privateGallery, privateGalleries])
+
+  useEffectDebugger(() => {
     if (!gallerySlug) {
+      console.log('returning home.')
       navigate('/')
       return
     }
 
-    if (!privateGallery) {
-      dispatch({
-        type: 'SET_SELECTED_GALLERY_PHOTO_IDS',
-        payload: {
-          selectedGalleryPhotoIds: getSelectedGalleryPhotoIdsByGalleryId(
-            gallerySlug,
-            Object.values(photos)
-          ),
-          loadedGalleryId: gallerySlug
-        }
-      })
-    } else {
-      dispatch({
-        type: 'SET_SELECTED_GALLERY_PHOTO_IDS',
-        payload: {
-          selectedGalleryPhotoIds: getSelectedPrivateGalleryPhotoIdsByGalleryId(
-            gallerySlug,
-            privateGalleries
-          ),
-          loadedGalleryId: gallerySlug
-        }
-      })
+    // Note - the length check might not be correct. It is assumed this is how to make this more performant.
+    if (photoIds.length > 0) {
+      return
     }
-  }, [
-    dispatch,
-    gallerySlug,
-    photos,
-    navigate,
-    privateGalleries,
-    privateGallery
-  ])
+    console.log('why am I getting called.')
+    setPhotoIds(getPhotoIds())
+  }, [gallerySlug, photoIds.length, navigate, getPhotoIds])
 
-  const Photos = useMemo(() => {
-    if (
-      !selectedGalleryPhotoIds ||
-      !gallerySlug ||
-      gallerySlug !== loadedGalleryId // prevent race condition where photoIds are ready before gallery is loaded
-    ) {
-      return null
-    }
-
-    return selectedGalleryPhotoIds.map(photoId => {
-      const photo = privateGallery
-        ? privateGalleries[gallerySlug].photos[photoId]
-        : photos[photoId]
-
-      const url = getPhotoUrl({
-        isThumbnail: true,
-        photoSrc: photo.src,
-        privateGalleryId: undefined
-      })
-      return (
-        <Link id={photo.id} to={`/${gallerySlug}/${photoId}`} key={photo.id}>
-          <LazyImage url={url} blurHash={photo.blurHash} />
-        </Link>
-      )
-    })
-  }, [
-    selectedGalleryPhotoIds,
-    photos,
-    gallerySlug,
-    privateGallery,
-    privateGalleries,
-    loadedGalleryId
-  ])
-
-  if (!gallerySlug 
+  if (
+    !gallerySlug
     // Disabled the next line because it was erroring on hitting escape when looking at a photo, not sure why it was there.
-    //|| !selectedGalleryPhotoIds
-    ) {
+    // || !selectedGalleryPhotoIds
+  ) {
     return <p>Something went wrong</p>
   }
   return (
@@ -152,7 +135,16 @@ const Gallery = ({ privateGallery }: Props) => {
             : galleries[gallerySlug].title}
         </Header>
       </ProjectDescriptionWrapper>
-      <GalleryWrapper>{Photos}</GalleryWrapper>
+      <GalleryWrapper>
+        {photoIds?.map(photoId => (
+          <PreviewPhoto
+            gallerySlug={gallerySlug}
+            photoId={photoId}
+            privateGallery={privateGallery}
+            key={photoId}
+          />
+        ))}
+      </GalleryWrapper>
     </>
   )
 }
