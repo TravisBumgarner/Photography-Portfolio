@@ -15,18 +15,9 @@ const formatShutterSpeed = (shutterSpeed: number) => {
     }
 }
 
-const generatePhotoId = (filename: string, date_taken: string) => {
+export const generatePhotoId = (filename: string) => {
     const PHOTOS_NAMESPACE = 'deadbeef-beef-491e-99b0-da01ff1f3341'
-    console.log('inputs are', filename, date_taken)
-    if (filename.indexOf('FOTO') > -1) {
-        console.log(
-            'result',
-            filename,
-            uuidv5(`${filename} ${date_taken}`, PHOTOS_NAMESPACE)
-        )
-    }
-
-    return uuidv5(`${filename} ${date_taken}`, PHOTOS_NAMESPACE)
+    return uuidv5(filename, PHOTOS_NAMESPACE)
 }
 
 const formatAperture = (focalLength: number) => {
@@ -94,8 +85,10 @@ const processPhoto = async (
         return { errors }
     }
 
+    const src = file.replace(path.normalize(PHOTO_DIR) + path.sep, '')
+
     return {
-        src: file.replace(path.normalize(PHOTO_DIR) + path.sep, ''),
+        src,
         camera: `${data.Make} - ${data.Model}`,
         lens: formatLens([data.Lens, data.LensModel]),
         iso: data.ISO ? `ISO ${data.ISO}` : '',
@@ -111,7 +104,7 @@ const processPhoto = async (
         description: sidecar.dc.description?.value || '',
         tags,
         ...metadataOverrides,
-        id: generatePhotoId(file, data.DateTimeOriginal),
+        id: generatePhotoId(src),
     }
 }
 
