@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo } from 'react'
 import styled from 'styled-components'
 
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { LazyImage, PageHeader } from 'sharedComponents'
+import { BlurImage, PageHeader } from 'sharedComponents'
 import { CONTENT_SPACING } from 'theme'
 import { type PhotoType, type PrivateGallery } from 'types'
 import { context } from '../context'
@@ -117,14 +117,19 @@ const Gallery = ({ privateGallery }: Props) => {
         ? privateGalleries[gallerySlug].photos[photoId]
         : photos[photoId]
 
-      const url = getPhotoUrl({
+      const src = getPhotoUrl({
         isThumbnail: true,
         photoSrc: photo.src,
         privateGalleryId: undefined
       })
       return (
         <Link id={photo.id} to={`/${gallerySlug}/${photoId}`} key={photo.id}>
-          <LazyImage url={url} />
+          <BlurImage
+            blurHash={photo.blurHash}
+            src={src}
+            aspectRatio={photo.aspectRatio}
+            useSquareImage
+          />
         </Link>
       )
     })
