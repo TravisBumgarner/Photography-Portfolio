@@ -52,8 +52,12 @@ const GalleryPreview = ({
         id={slug}
         to={`/${slug}`}
       >
-        {/* <LazyImage url={url} /> */}
-        <BlurImage src={url} blurHash={blurHash} aspectRatio={aspectRatio} />
+        <BlurImage
+          useSquareImage
+          src={url}
+          blurHash={blurHash}
+          aspectRatio={aspectRatio}
+        />
         <Header>{title}</Header>
       </Link>
     </div>

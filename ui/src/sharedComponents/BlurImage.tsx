@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-// import { useInView } from 'react-intersection-observer'
+import styled from 'styled-components'
 import { useBlurhash } from '../hooks/useBlurhash'
 
 interface Props {
@@ -7,6 +7,7 @@ interface Props {
   // style: React.CSSProperties
   src: string
   aspectRatio: number
+  useSquareImage: boolean
 }
 
 // Uses browser-native `loading="lazy"` to lazy load images
@@ -14,13 +15,11 @@ interface Props {
 // Only renders the blurhash when the image hasn't loaded yet.
 // Removes the blob once the image has finished loading.
 
-// eslint-disable-next-line
-export const BlurImage = ({ blurHash, src }: Props) => {
+export const BlurImage = ({ blurHash, src, useSquareImage }: Props) => {
   const [isVisible, setIsVisible] = useState(false)
 
   const imgRef = useRef<HTMLImageElement>(null)
   const [imgLoaded, setImgLoaded] = useState(false)
-  //   const [ref, inView] = useInView({ rootMargin: '110%' })
   const blurUrl = useBlurhash(!imgLoaded && isVisible ? blurHash : null)
 
   useEffect(() => {
@@ -50,21 +49,34 @@ export const BlurImage = ({ blurHash, src }: Props) => {
     setImgLoaded(true)
   }, [])
 
-  const newStyle = blurUrl
-    ? {
-        // ...style,
-        backgroundImage: `url("${blurUrl}")`,
-        backgroundSize: '100% 100%'
-      }
-    : {}
-
   return (
-    <img
+    <StyledImage
+      $useSquareImage={useSquareImage}
+      $blurUrl={blurUrl}
       ref={imgRef}
-      src={src}
+      src={isVisible ? src : ''}
       loading="lazy"
       onLoad={handleOnLoad}
-      style={newStyle}
     />
   )
 }
+
+const StyledImage = styled.img<{
+  $blurUrl: string | null
+  $useSquareImage: boolean
+}>`
+  ${props =>
+    props.$blurUrl &&
+    `
+  background-image: url(${props.$blurUrl});
+  background-size: 100% 100%;
+  `}
+
+  ${props =>
+    props.$useSquareImage &&
+    `
+      object-fit: cover;
+      width: 100%;
+      aspect-ratio: 1 / 1; /* This maintains a 1:1 aspect ratio */
+    `}
+`
