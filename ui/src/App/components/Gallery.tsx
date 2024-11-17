@@ -6,6 +6,7 @@ import { LazyImage, PageHeader } from 'sharedComponents'
 import { type PhotoType, type PrivateGallery } from 'types'
 import { context } from '../context'
 import { getPhotoUrl } from '../utils'
+import { CONTENT_SPACING } from 'theme'
 
 interface Props {
   privateGallery: boolean
@@ -161,8 +162,8 @@ const ProjectDescriptionWrapper = styled.div`
 const GalleryWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  margin: 1rem;
+  gap: ${CONTENT_SPACING.XLARGE};
+  margin: ${CONTENT_SPACING.LARGE};
 `
 
 export default Gallery
