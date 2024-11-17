@@ -5,10 +5,10 @@ import styled from 'styled-components'
 
 import { Error } from 'sharedComponents'
 import {
+  COLORS,
   CONTENT_SPACING,
   FONT_SIZES,
   GlobalStyle,
-  ICON_COLOR,
   TRANSITION_SPEED
 } from '../theme'
 import { About, Home, Navigation, Photo, TitleBar } from './components'
@@ -62,11 +62,11 @@ const NavigationClose = styled(params => <FaTimes {...params} />)`
   transition: opacity ${TRANSITION_SPEED}s;
   opacity: ${props => (props.$isNavigationVisible ? 1 : 0)};
   z-index: 999;
-  fill: ${ICON_COLOR.initial};
+  fill: ${COLORS.BLACK};
   cursor: pointer;
 
   &:hover {
-    fill: ${ICON_COLOR.hover};
+    fill: ${COLORS.GREEN};
   }
 `
 

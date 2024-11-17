@@ -3,12 +3,7 @@ import { FaBars } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-import {
-  CONTENT_SPACING,
-  FONT_SIZES,
-  ICON_COLOR,
-  TRANSITION_SPEED
-} from 'theme'
+import { COLORS, CONTENT_SPACING, FONT_SIZES, TRANSITION_SPEED } from 'theme'
 
 interface Props {
   toggleNavigation: () => void
@@ -54,7 +49,7 @@ const InternalLink = styled(Link)`
 `
 
 const NavigationOpen = styled(params => <FaBars {...params} />)`
-  fill: ${ICON_COLOR.initial};
+  fill: ${COLORS.BLACK};
   padding-bottom: ${CONTENT_SPACING.LARGE};
   padding-top: ${CONTENT_SPACING.LARGE};
   transition: opacity ${TRANSITION_SPEED}s;
@@ -63,7 +58,7 @@ const NavigationOpen = styled(params => <FaBars {...params} />)`
   margin-left: 1rem;
 
   &:hover {
-    fill: ${ICON_COLOR.hover};
+    fill: ${COLORS.GREEN};
   }
 `
 

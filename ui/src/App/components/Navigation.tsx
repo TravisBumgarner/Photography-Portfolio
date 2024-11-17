@@ -2,7 +2,7 @@ import React, { useContext, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
-import { CONTENT_SPACING, FONT_SIZES } from '../../theme'
+import { COLORS, CONTENT_SPACING, FONT_SIZES } from '../../theme'
 import { context } from '../context'
 
 interface Props {
@@ -121,6 +121,20 @@ const SubNavigationWrapper = styled.div`
 `
 
 const LinkListItem = styled.li`
+  display: flex;
+  align-items: center;
+  padding: ${CONTENT_SPACING.SMALL} 0;
+
+  border-left: 5px solid transparent;
+  padding-left: ${CONTENT_SPACING.MEDIUM};
+
+  position: relative;
+  left: calc(-1 * (${CONTENT_SPACING.MEDIUM} + 5px));
+
+  &:hover {
+    border-left-color: ${COLORS.GREEN};
+  }
+
   a {
     font-weight: 300;
     font-size: ${FONT_SIZES.XSMALL};

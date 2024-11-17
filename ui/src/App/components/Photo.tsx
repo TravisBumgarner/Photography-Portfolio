@@ -4,7 +4,7 @@ import Modal from 'react-modal'
 import { useNavigate, useParams } from 'react-router-dom'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
-import { CONTENT_SPACING, FONT_SIZES, ICON_COLOR } from '../../theme'
+import { COLORS, CONTENT_SPACING, FONT_SIZES } from '../../theme'
 import { context } from '../context'
 import { getPhotoUrl } from '../utils'
 
@@ -205,11 +205,11 @@ const modalCSS = {
 }
 
 const IconCSS = css`
-  fill: ${ICON_COLOR.initial};
+  fill: ${COLORS.BLACK};
   cursor: pointer;
 
   &:hover {
-    fill: ${ICON_COLOR.hover};
+    fill: ${COLORS.GREEN};
   }
 `
 const CloseIcon = styled(FaTimes)`

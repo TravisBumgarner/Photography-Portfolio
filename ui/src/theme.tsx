@@ -20,9 +20,9 @@ export const FONT_SIZES = {
   XXLARGE: '4rem'
 }
 
-export const ICON_COLOR = {
-  initial: '#000',
-  hover: 'rgb(74, 207, 160)'
+export const COLORS = {
+  GREEN: 'rgb(74, 207, 160)',
+  BLACK: 'rgb(0, 0, 0)'
 }
 
 export const GlobalStyle = createGlobalStyle`
