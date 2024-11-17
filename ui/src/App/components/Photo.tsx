@@ -1,9 +1,10 @@
-import React, { useCallback, useContext, useEffect } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { FaArrowLeft, FaArrowRight, FaDownload, FaTimes } from 'react-icons/fa'
 import Modal from 'react-modal'
 import { useNavigate, useParams } from 'react-router-dom'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
+import { BlurhashCanvas } from 'react-blurhash'
 import { CONTENT_SPACING, FONT_SIZES, ICON_COLOR } from '../../theme'
 import { context } from '../context'
 import { getPhotoUrl } from '../utils'
@@ -20,6 +21,7 @@ const Photo = ({ privateGallery }: PhotoProps) => {
     state: { photos, selectedGalleryPhotoIds },
     dispatch
   } = useContext(context)
+  const [isLoaded, setIsLoaded] = useState(false)
   const { gallerySlug, photoSlug } = useParams<{
     gallerySlug: string
     photoSlug: string
@@ -173,13 +175,27 @@ const Photo = ({ privateGallery }: PhotoProps) => {
         style={modalCSS}
         onRequestClose={handleReturnToGallery}
       >
-        <PhotoWrapper>
+        <PhotoWrapper $aspectRatio={details.aspectRatio}>
+          {!isLoaded && (
+            <BlurhashCanvas
+              hash={details.blurHash}
+              // For reasons I don't understand, it's crazy difficult to make this thing responsive.
+              // So we set a really large width and height and then resize with css below with canvas{}
+              width={Math.round(3000 * details.aspectRatio)}
+              height={3000}
+              punch={1}
+            />
+          )}
           <StyledPhoto
             src={getPhotoUrl({
               isThumbnail: false,
               privateGalleryId: privateGallery ? gallerySlug : undefined,
               photoSrc: details.src
             })}
+            style={{ display: isLoaded ? 'block' : 'none' }}
+            onLoad={() => {
+              setIsLoaded(true)
+            }}
           />
         </PhotoWrapper>
         <MetadataAndControlsBottomWrapper>
@@ -308,20 +324,27 @@ const ControlsWrapper = styled.div`
   flex-direction: row;
 `
 
-const PhotoWrapper = styled.div`
+const PhotoWrapper = styled.div<{ $aspectRatio: number }>`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   width: 100%;
   height: 100%;
+  box-sizing: border-box;
+  padding: ${CONTENT_SPACING.LARGE};
+
+  canvas {
+    max-width: 100%;
+    max-height: 100%;
+    aspect-ratio: ${({ $aspectRatio }) => $aspectRatio};
+  }
 `
 
 const StyledPhoto = styled.img`
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  padding: ${CONTENT_SPACING.LARGE};
   box-sizing: border-box;
   aspect-ratio: inherit;
   user-select: none;

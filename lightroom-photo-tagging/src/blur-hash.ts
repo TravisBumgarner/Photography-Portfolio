@@ -14,8 +14,17 @@ const getImageData = (image: Image) => {
 
 export const encodeImageToBlurHash = async (
     imageUrl: string
-): Promise<string> => {
+): Promise<{ blurHash: string; aspectRatio: number }> => {
     const image = await loadImageNode(imageUrl)
     const imageData = getImageData(image)
-    return encode(imageData.data, imageData.width, imageData.height, 4, 4)
+    return {
+        blurHash: encode(
+            imageData.data,
+            imageData.width,
+            imageData.height,
+            4,
+            4
+        ),
+        aspectRatio: image.width / image.height,
+    }
 }

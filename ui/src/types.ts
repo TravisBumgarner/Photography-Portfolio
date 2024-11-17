@@ -17,6 +17,7 @@ export type PhotoType = {
   iso: string;
   focalLength: string;
   blurHash: string;
+  aspectRatio: number;
 };
 
 export type PrivateGallery = {

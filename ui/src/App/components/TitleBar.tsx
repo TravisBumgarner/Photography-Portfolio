@@ -22,7 +22,7 @@ const TitleBar = ({ toggleNavigation, isNavigationVisible }: Props) => {
         <Header>Travis Bumgarner Photography</Header>
       </InternalLink>
       <NavigationOpen
-        isNavigationVisible={isNavigationVisible}
+        $isNavigationVisible={isNavigationVisible}
         onClick={toggleNavigation}
         size={FONT_SIZES.LARGE}
       />
@@ -58,7 +58,7 @@ const NavigationOpen = styled(params => <FaBars {...params} />)`
   padding-bottom: ${CONTENT_SPACING.LARGE};
   padding-top: ${CONTENT_SPACING.LARGE};
   transition: opacity ${TRANSITION_SPEED}s;
-  opacity: ${props => (props.isNavigationVisible ? 0 : 1)};
+  opacity: ${props => (props.$isNavigationVisible ? 0 : 1)};
   cursor: pointer;
   margin-left: 1rem;
 

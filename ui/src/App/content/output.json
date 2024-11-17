@@ -1,81 +1,72 @@
 {
-  "galleries": {
-    "toritos-de-tultepec": {
-      "title": "Toritos de Tultepec",
-      "slug": "toritos-de-tultepec",
-      "previewSrc": "DSC_1435.jpg",
-      "previewId": "d65df10d-217a-5189-93fb-e440b355efb9"
+    "galleries": {
+        "toritos-de-tultepec": {
+            "title": "Toritos de Tultepec",
+            "slug": "toritos-de-tultepec",
+            "previewSrc": "DSC_1435.jpg",
+            "previewId": "d65df10d-217a-5189-93fb-e440b355efb9"
+        },
+        "peru-to-guatemala": {
+            "title": "From Peru to Guatemala",
+            "slug": "peru-to-guatemala",
+            "previewSrc": "DSC08407.jpg",
+            "previewId": "fc0ec781-2c88-5a22-8414-65916abebf70"
+        }
     },
-    "peru-to-guatemala": {
-      "title": "From Peru to Guatemala",
-      "slug": "peru-to-guatemala",
-      "previewSrc": "DSC08407.jpg",
-      "previewId": "fc0ec781-2c88-5a22-8414-65916abebf70"
-    },
-    "peru-to-guatemala2": {
-      "title": "From Peru to Guatemala",
-      "slug": "peru-to-guatemala",
-      "previewSrc": "DSC08407.jpg",
-      "previewId": "fc0ec781-2c88-5a22-8414-65916abebf70"
-    },
-    "peru-to-guatemala3": {
-      "title": "From Peru to Guatemala",
-      "slug": "peru-to-guatemala",
-      "previewSrc": "DSC08407.jpg",
-      "previewId": "fc0ec781-2c88-5a22-8414-65916abebf70"
-    },
-    "peru-to-guatemala4": {
-      "title": "From Peru to Guatemala",
-      "slug": "peru-to-guatemala",
-      "previewSrc": "DSC08407.jpg",
-      "previewId": "fc0ec781-2c88-5a22-8414-65916abebf70"
+    "photos": {
+        "fc0ec781-2c88-5a22-8414-65916abebf70": {
+            "src": "DSC08407.jpg",
+            "camera": "Sony RX100",
+            "lens": "10.4-37.1 mm f/1.8-4.9",
+            "iso": "ISO 200",
+            "shutterSpeed": "1/800s",
+            "aperture": "ƒ/8.0",
+            "focalLength": "10.4mm",
+            "dateTaken": "September 2015",
+            "title": "",
+            "description": "",
+            "id": "fc0ec781-2c88-5a22-8414-65916abebf70",
+            "galleryIds": [
+                "peru-to-guatemala"
+            ],
+            "blurHash": "UXI}-QofofWB~qRjWBWBIUM{WBj[oft7WBof",
+            "aspectRatio": 1.5003750937734435
+        },
+        "7201e005-3812-5e9a-b704-c0108f53c66b": {
+            "src": "DSC08841.jpg",
+            "camera": "Sony RX100",
+            "lens": "10.4-37.1 mm f/1.8-4.9",
+            "iso": "ISO 200",
+            "shutterSpeed": "1.3s",
+            "aperture": "ƒ/2.0",
+            "focalLength": "10.4mm",
+            "dateTaken": "September 2015",
+            "title": "",
+            "description": "",
+            "id": "7201e005-3812-5e9a-b704-c0108f53c66b",
+            "galleryIds": [
+                "peru-to-guatemala"
+            ],
+            "blurHash": "UW4:HDp1ozt6tptToxj[WHoyoea}aeV[WrkC",
+            "aspectRatio": 1.5003750937734435
+        },
+        "d65df10d-217a-5189-93fb-e440b355efb9": {
+            "src": "DSC_1435.jpg",
+            "camera": "Nikon Z5",
+            "lens": "NIKKOR Z 24-120mm f/4 S",
+            "iso": "ISO 125",
+            "shutterSpeed": "1/640s",
+            "aperture": "ƒ/4.5",
+            "focalLength": "120mm",
+            "dateTaken": "March 2024",
+            "title": "",
+            "description": "",
+            "id": "d65df10d-217a-5189-93fb-e440b355efb9",
+            "galleryIds": [
+                "toritos-de-tultepec"
+            ],
+            "blurHash": "UFI2vH0iko9^|HN^EhxY0O-n5T=vx@WB%0EN",
+            "aspectRatio": 0.6675
+        }
     }
-  },
-  "photos": {
-    "fc0ec781-2c88-5a22-8414-65916abebf70": {
-      "src": "DSC08407.jpg",
-      "camera": "Sony RX100",
-      "lens": "10.4-37.1 mm f/1.8-4.9",
-      "iso": "ISO 200",
-      "shutterSpeed": "1/800s",
-      "aperture": "ƒ/8.0",
-      "focalLength": "10.4mm",
-      "dateTaken": "September 2015",
-      "title": "",
-      "description": "",
-      "id": "fc0ec781-2c88-5a22-8414-65916abebf70",
-      "galleryIds": ["peru-to-guatemala"],
-      "blurHash": "UXI}-QofofWB~qRjWBWBIUM{WBj[oft7WBof"
-    },
-    "7201e005-3812-5e9a-b704-c0108f53c66b": {
-      "src": "DSC08841.jpg",
-      "camera": "Sony RX100",
-      "lens": "10.4-37.1 mm f/1.8-4.9",
-      "iso": "ISO 200",
-      "shutterSpeed": "1.3s",
-      "aperture": "ƒ/2.0",
-      "focalLength": "10.4mm",
-      "dateTaken": "September 2015",
-      "title": "",
-      "description": "",
-      "id": "7201e005-3812-5e9a-b704-c0108f53c66b",
-      "galleryIds": ["peru-to-guatemala"],
-      "blurHash": "UW4:HDp1ozt6tptToxj[WHoyoea}aeV[WrkC"
-    },
-    "d65df10d-217a-5189-93fb-e440b355efb9": {
-      "src": "DSC_1435.jpg",
-      "camera": "Nikon Z5",
-      "lens": "NIKKOR Z 24-120mm f/4 S",
-      "iso": "ISO 125",
-      "shutterSpeed": "1/640s",
-      "aperture": "ƒ/4.5",
-      "focalLength": "120mm",
-      "dateTaken": "March 2024",
-      "title": "",
-      "description": "",
-      "id": "d65df10d-217a-5189-93fb-e440b355efb9",
-      "galleryIds": ["toritos-de-tultepec"],
-      "blurHash": "UFI2vH0iko9^|HN^EhxY0O-n5T=vx@WB%0EN"
-    }
-  }
 }

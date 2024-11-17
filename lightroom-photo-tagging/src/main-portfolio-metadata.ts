@@ -12,7 +12,11 @@ const main = async (directoryPath: string) => {
 
     const photos: Record<
         string,
-        Partial<Metadata> & { galleryIds: string[]; blurHash: string }
+        Partial<Metadata> & {
+            galleryIds: string[]
+            blurHash: string
+            aspectRatio: number
+        }
     > = {}
 
     try {
@@ -66,11 +70,13 @@ const main = async (directoryPath: string) => {
             }
             const { tags, ...metadataWithoutTags } = metadata // eslint-disable-line @typescript-eslint/no-unused-vars
             console.log('\t\t', metadataWithoutTags)
-            const blurHash = await encodeImageToBlurHash(filePath)
+            const { aspectRatio, blurHash } =
+                await encodeImageToBlurHash(filePath)
             photos[metadata.id] = {
                 ...metadataWithoutTags,
                 galleryIds,
                 blurHash,
+                aspectRatio,
             }
             // photos[metadata.id] = { ...metadata, galleryIds }
         }
