@@ -137,7 +137,7 @@ const LinkListItem = styled.li`
 
   a {
     font-weight: 300;
-    font-size: ${FONT_SIZES.XSMALL};
+    font-size: ${FONT_SIZES.SMALL};
     color: rgba(0, 0, 0, 0.7);
   }
 `

@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
 
-import { Text } from 'sharedComponents'
 import { CONTENT_SPACING, FONT_SIZES } from 'theme'
 
 const ErrorWrapper = styled.div`
@@ -38,6 +37,10 @@ const Error = ({ value }: { value: '404' | '500' }) => {
     </ErrorWrapper>
   )
 }
+
+const Text = styled.p`
+  font-size: ${FONT_SIZES.MEDIUM};
+`
 
 const Header = styled.h1`
   font-weight: 700;

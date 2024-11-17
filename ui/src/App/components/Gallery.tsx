@@ -2,8 +2,7 @@ import React, { useContext, useEffect, useMemo } from 'react'
 import styled from 'styled-components'
 
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { LazyImage } from 'sharedComponents'
-import { CONTENT_SPACING, FONT_SIZES } from 'theme'
+import { LazyImage, PageHeader } from 'sharedComponents'
 import { type PhotoType, type PrivateGallery } from 'types'
 import { context } from '../context'
 import { getPhotoUrl } from '../utils'
@@ -144,11 +143,11 @@ const Gallery = ({ privateGallery }: Props) => {
   return (
     <>
       <ProjectDescriptionWrapper>
-        <Header>
+        <PageHeader>
           {privateGallery
             ? privateGalleries[gallerySlug].gallery.title
             : galleries[gallerySlug].title}
-        </Header>
+        </PageHeader>
       </ProjectDescriptionWrapper>
       <GalleryWrapper>{Photos}</GalleryWrapper>
     </>
@@ -164,13 +163,6 @@ const GalleryWrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   margin: 1rem;
-`
-
-const Header = styled.h2`
-  font-weight: 900;
-  margin-bottom: ${CONTENT_SPACING.XXLARGE};
-  margin-top: ${CONTENT_SPACING.XLARGE};
-  font-size: ${FONT_SIZES.XXLARGE};
 `
 
 export default Gallery

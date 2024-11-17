@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { List } from 'sharedComponents'
-import { CONTENT_SPACING, FONT_SIZES } from 'theme'
+import { List, PageHeader } from 'sharedComponents'
+import { CONTENT_SPACING } from 'theme'
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -13,9 +13,12 @@ const ContentWrapper = styled.div`
 const About = () => {
   return (
     <ContentWrapper>
-      <Header>AWARDS & RECOGNITIONS</Header>
+      <PageHeader>AWARDS & RECOGNITIONS</PageHeader>
       <List
         items={[
+          '2024 Master Class Selected',
+          '2024 March SA Monthly Contest Winner - Envelop',
+          '2023 April SA Monthly Contest Winner - Hard Light',
           '2023 Black Box Gallery - Color Burst',
           '2023 Praxis Gallery - The Portrait Exhibition',
           '2018 Noyes Museum of Art of Stockton University - RAW Exhibition',
@@ -27,13 +30,5 @@ const About = () => {
     </ContentWrapper>
   )
 }
-
-const Header = styled.h1`
-  font-weight: 700;
-  text-transform: uppercase;
-  margin-bottom: ${CONTENT_SPACING.LARGE};
-  margin-top: ${CONTENT_SPACING.LARGE};
-  font-size: ${FONT_SIZES.LARGE};
-`
 
 export default About
