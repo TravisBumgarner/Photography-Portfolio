@@ -4,7 +4,7 @@ import Modal from 'react-modal'
 import { useNavigate, useParams } from 'react-router-dom'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
-import { CONTENT_SPACING, ICON_COLOR, ICON_FONT_SIZE } from '../../theme'
+import { CONTENT_SPACING, FONT_SIZES, ICON_COLOR } from '../../theme'
 import { context } from '../context'
 import { getPhotoUrl } from '../utils'
 
@@ -187,18 +187,21 @@ const Photo = ({ privateGallery }: PhotoProps) => {
           <ControlsWrapper>
             <ControlsSectionWrapper hideBackground={!privateGallery}>
               {privateGallery && (
-                <DownloadButton size={ICON_FONT_SIZE} onClick={downloadPhoto} />
+                <DownloadButton
+                  size={FONT_SIZES.LARGE}
+                  onClick={downloadPhoto}
+                />
               )}
             </ControlsSectionWrapper>
             <ControlsSectionWrapper>
               <PreviousButton
-                size={ICON_FONT_SIZE}
+                size={FONT_SIZES.LARGE}
                 onClick={() => {
                   navigateToNextPhoto('left')
                 }}
               />
               {/* <ToggleInfo
-                size={ICON_FONT_SIZE}
+                size={FONT_SIZES.LARGE}
                 onClick={() => { setToggleInfo(prev => !prev) }}
               /> */}
 
@@ -207,11 +210,11 @@ const Photo = ({ privateGallery }: PhotoProps) => {
                   marginLeft: CONTENT_SPACING.LARGE,
                   marginRight: CONTENT_SPACING.LARGE
                 }}
-                size={ICON_FONT_SIZE}
+                size={FONT_SIZES.LARGE}
                 onClick={handleReturnToGallery}
               />
               <NextButton
-                size={ICON_FONT_SIZE}
+                size={FONT_SIZES.LARGE}
                 onClick={() => {
                   navigateToNextPhoto('right')
                 }}
@@ -270,14 +273,13 @@ const DownloadButton = styled(FaDownload)`
 const MetadataAndControlsBottomWrapper = styled.div`
   display: flex;
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: ${CONTENT_SPACING.LARGE};
+  left: ${CONTENT_SPACING.LARGE};
+  right: ${CONTENT_SPACING.LARGE};
   justify-content: center;
   box-sizing: border-box;
   align-items: end;
   flex-direction: column;
-  padding: ${CONTENT_SPACING.XLARGE};
 `
 
 const ControlsSectionWrapper = styled.div<{ hideBackground?: boolean }>`
@@ -300,8 +302,7 @@ const ControlsSectionWrapper = styled.div<{ hideBackground?: boolean }>`
 
 const ControlsWrapper = styled.div`
   border-radius: ${CONTENT_SPACING.MEDIUM};
-  margin: 0 ${CONTENT_SPACING.MEDIUM} ${CONTENT_SPACING.MEDIUM};
-  padding: ${CONTENT_SPACING.MEDIUM};
+  margin: ${CONTENT_SPACING.MEDIUM};
   justify-content: end;
   display: flex;
   flex-direction: row;

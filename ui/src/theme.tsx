@@ -25,8 +25,6 @@ export const ICON_COLOR = {
   hover: 'rgb(74, 207, 160)'
 }
 
-export const ICON_FONT_SIZE = '1.5rem'
-
 export const GlobalStyle = createGlobalStyle`
     :root {
         --doc-height: 100%;

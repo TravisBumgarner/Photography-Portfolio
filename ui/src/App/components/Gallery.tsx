@@ -169,7 +169,7 @@ const GalleryWrapper = styled.div`
 const Header = styled.h2`
   font-weight: 900;
   margin-bottom: ${CONTENT_SPACING.XXLARGE};
-  margin-top: ${CONTENT_SPACING.LARGE};
+  margin-top: ${CONTENT_SPACING.XLARGE};
   font-size: ${FONT_SIZES.XXLARGE};
 `
 

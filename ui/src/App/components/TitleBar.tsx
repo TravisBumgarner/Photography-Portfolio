@@ -7,7 +7,6 @@ import {
   CONTENT_SPACING,
   FONT_SIZES,
   ICON_COLOR,
-  ICON_FONT_SIZE,
   TRANSITION_SPEED
 } from 'theme'
 
@@ -25,7 +24,7 @@ const TitleBar = ({ toggleNavigation, isNavigationVisible }: Props) => {
       <NavigationOpen
         isNavigationVisible={isNavigationVisible}
         onClick={toggleNavigation}
-        size={ICON_FONT_SIZE}
+        size={FONT_SIZES.LARGE}
       />
     </TitleBarWrapper>
   )

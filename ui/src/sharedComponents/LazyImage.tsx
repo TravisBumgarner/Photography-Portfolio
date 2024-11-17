@@ -1,31 +1,26 @@
-import React, { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
-import { BlurhashCanvas } from "react-blurhash";
+import React, { useRef, useState } from 'react'
+import { BlurhashCanvas } from 'react-blurhash'
+import styled from 'styled-components'
 
 const LazyImage = ({ url, blurHash }: { url: string; blurHash: string }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const imageRef = useRef<HTMLDivElement>(null);
+  const [isLoaded, setIsLoaded] = useState(false)
+  const imageRef = useRef<HTMLDivElement>(null)
 
   return (
     <ImageWrapper ref={imageRef}>
       {!isLoaded && (
-        <BlurhashCanvas
-          hash={blurHash}
-          width={500}
-          height={500}
-          punch={1}
-        />
+        <BlurhashCanvas hash={blurHash} width={500} height={500} punch={1} />
       )}
       <Image
         src={url}
-        onLoad={() => setIsLoaded(true)}
-        style={{ display: isLoaded ? "block" : "none" }}
+        onLoad={() => {
+          setIsLoaded(true)
+        }}
+        style={{ display: isLoaded ? 'block' : 'none' }}
       />
     </ImageWrapper>
-  );
-};
-
-
+  )
+}
 
 const ImageWrapper = styled.div`
   position: relative;
@@ -39,7 +34,7 @@ const ImageWrapper = styled.div`
     width: 100%;
     height: 100%;
   }
-`;
+`
 
 const Image = styled.img`
   width: 100%;
@@ -49,6 +44,6 @@ const Image = styled.img`
   top: 0;
   left: 0;
   cursor: pointer;
-`;
+`
 
-export default LazyImage;
+export default LazyImage
