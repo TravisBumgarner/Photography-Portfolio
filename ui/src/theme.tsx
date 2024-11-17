@@ -2,17 +2,18 @@ import { createGlobalStyle } from 'styled-components'
 
 export const TRANSITION_SPEED = 1
 export const CONTENT_SPACING = {
-  xs: '0.125rem',
-  s: '0.25rem',
-  m: '0.5rem',
-  l: '1rem',
-  xl: '2rem',
-  xxl: '4rem',
-  xxxl: '8rem',
-  xxxxl: '16rem'
+  XSMALL: '0.125rem',
+  SMALL: '0.25rem',
+  MEDIUM: '0.5rem',
+  LARGE: '1rem',
+  XLARGE: '2rem',
+  XXLARGE: '4rem',
+  XXXLARGE: '8rem',
+  XXXXLARGE: '16rem'
 }
 
 export const FONT_SIZES = {
+  XSMALL: '0.7rem',
   SMALL: '1.0rem',
   MEDIUM: '1.2rem',
   LARGE: '1.5rem',
@@ -34,7 +35,7 @@ export const GlobalStyle = createGlobalStyle`
     @font-face {
       font-family: 'Satoshi';
       src: url('/fonts/Satoshi-Variable.ttf') format('truetype');
-      font-weight: normal;
+      font-weight: 100 900;
       font-style: normal;
     } 
 

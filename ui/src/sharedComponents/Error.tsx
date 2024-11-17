@@ -42,8 +42,8 @@ const Error = ({ value }: { value: '404' | '500' }) => {
 const Header = styled.h1`
   font-weight: 700;
   text-transform: uppercase;
-  margin-bottom: ${CONTENT_SPACING.l};
-  margin-top: ${CONTENT_SPACING.l};
+  margin-bottom: ${CONTENT_SPACING.LARGE};
+  margin-top: ${CONTENT_SPACING.LARGE};
   font-size: ${FONT_SIZES.LARGE};
 `
 

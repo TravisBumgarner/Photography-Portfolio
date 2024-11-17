@@ -10,8 +10,8 @@ import { getPhotoUrl } from '../utils'
 const HomeImageWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  margin: 1rem;
+  gap: ${CONTENT_SPACING.XLARGE};
+  margin: ${CONTENT_SPACING.LARGE};
 
   @media (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
@@ -58,8 +58,8 @@ const Home = () => {
 
 const Header = styled.h2`
   font-weight: 700;
-  margin-bottom: ${CONTENT_SPACING.m};
-  margin-top: ${CONTENT_SPACING.l};
+  margin-bottom: ${CONTENT_SPACING.MEDIUM};
+  margin-top: ${CONTENT_SPACING.LARGE};
   font-size: ${FONT_SIZES.SMALL};
   text-align: left;
 `

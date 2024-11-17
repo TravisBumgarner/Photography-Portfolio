@@ -6,7 +6,7 @@ import { CONTENT_SPACING, FONT_SIZES } from 'theme'
 
 const ContentWrapper = styled.div`
   display: flex;
-  margin: 1rem;
+  margin: ${CONTENT_SPACING.LARGE};
   flex-direction: column;
 `
 
@@ -31,8 +31,8 @@ const About = () => {
 const Header = styled.h1`
   font-weight: 700;
   text-transform: uppercase;
-  margin-bottom: ${CONTENT_SPACING.l};
-  margin-top: ${CONTENT_SPACING.l};
+  margin-bottom: ${CONTENT_SPACING.LARGE};
+  margin-top: ${CONTENT_SPACING.LARGE};
   font-size: ${FONT_SIZES.LARGE};
 `
 

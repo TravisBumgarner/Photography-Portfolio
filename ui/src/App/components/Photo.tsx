@@ -1,15 +1,15 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect } from 'react'
 import { FaArrowLeft, FaArrowRight, FaDownload, FaTimes } from 'react-icons/fa'
 import Modal from 'react-modal'
 import { useNavigate, useParams } from 'react-router-dom'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
-import { ICON_COLOR, ICON_FONT_SIZE } from '../../theme'
+import { CONTENT_SPACING, ICON_COLOR, ICON_FONT_SIZE } from '../../theme'
 import { context } from '../context'
 import { getPhotoUrl } from '../utils'
 
-import { Text } from 'sharedComponents'
-import { type PhotoType } from 'types'
+// import { Text } from 'sharedComponents'
+// import { type PhotoType } from 'types'
 
 interface PhotoProps {
   privateGallery: boolean
@@ -26,7 +26,7 @@ const Photo = ({ privateGallery }: PhotoProps) => {
   }>()
 
   const details = photoSlug ? photos[photoSlug] : null
-  const [toggleInfo, setToggleInfo] = useState(false)
+  // const [toggleInfo, setToggleInfo] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -183,7 +183,7 @@ const Photo = ({ privateGallery }: PhotoProps) => {
           />
         </PhotoWrapper>
         <MetadataAndControlsBottomWrapper>
-          {toggleInfo ? <Metadata details={details} /> : null}
+          {/* {toggleInfo ? <Metadata details={details} /> : null} */}
           <ControlsWrapper>
             <ControlsSectionWrapper hideBackground={!privateGallery}>
               {privateGallery && (
@@ -192,7 +192,6 @@ const Photo = ({ privateGallery }: PhotoProps) => {
             </ControlsSectionWrapper>
             <ControlsSectionWrapper>
               <PreviousButton
-                // style={{ marginRight: '2rem' }}
                 size={ICON_FONT_SIZE}
                 onClick={() => {
                   navigateToNextPhoto('left')
@@ -204,13 +203,14 @@ const Photo = ({ privateGallery }: PhotoProps) => {
               /> */}
 
               <CloseIcon
-                style={{ marginLeft: '1rem', marginRight: '1rem' }}
+                style={{
+                  marginLeft: CONTENT_SPACING.LARGE,
+                  marginRight: CONTENT_SPACING.LARGE
+                }}
                 size={ICON_FONT_SIZE}
                 onClick={handleReturnToGallery}
               />
               <NextButton
-                // style={{ marginLeft: '2rem' }}
-
                 size={ICON_FONT_SIZE}
                 onClick={() => {
                   navigateToNextPhoto('right')
@@ -241,7 +241,7 @@ const modalCSS = {
     border: 0,
     width: '100%',
     height: '100%',
-    padding: '1rem'
+    padding: CONTENT_SPACING.LARGE
   }
 }
 
@@ -277,7 +277,7 @@ const MetadataAndControlsBottomWrapper = styled.div`
   box-sizing: border-box;
   align-items: end;
   flex-direction: column;
-  padding: 1.5rem;
+  padding: ${CONTENT_SPACING.XLARGE};
 `
 
 const ControlsSectionWrapper = styled.div<{ hideBackground?: boolean }>`
@@ -286,22 +286,22 @@ const ControlsSectionWrapper = styled.div<{ hideBackground?: boolean }>`
   justify-content: center;
   background-color: ${({ hideBackground }) =>
     hideBackground ? 'transparent' : 'rgba(255, 255, 255, 0.7)'};
-  padding: 0.5rem;
-  border-radius: 0.5rem;
+  padding: ${CONTENT_SPACING.MEDIUM};
+  border-radius: ${CONTENT_SPACING.MEDIUM};
   height: 30px;
 
   :first-child {
-    margin-right: 0.5rem;
+    margin-right: ${CONTENT_SPACING.MEDIUM};
   }
   :last-child {
-    margin-left: 0.5rem;
+    margin-left: ${CONTENT_SPACING.MEDIUM};
   }
 `
 
 const ControlsWrapper = styled.div`
-  border-radius: 0.5rem;
-  margin: 0 0.5rem 0.5rem;
-  padding: 0.5rem;
+  border-radius: ${CONTENT_SPACING.MEDIUM};
+  margin: 0 ${CONTENT_SPACING.MEDIUM} ${CONTENT_SPACING.MEDIUM};
+  padding: ${CONTENT_SPACING.MEDIUM};
   justify-content: end;
   display: flex;
   flex-direction: row;
@@ -320,63 +320,63 @@ const StyledPhoto = styled.img`
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  padding: 1rem;
+  padding: ${CONTENT_SPACING.LARGE};
   box-sizing: border-box;
   aspect-ratio: inherit;
   user-select: none;
 `
 
-const MetadataWrapper = styled.div`
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  background-color: rgba(255, 255, 255, 0.7);
-  height: 1.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+// const MetadataWrapper = styled.div`
+//   border-radius: ${CONTENT_SPACING.MEDIUM};
+//   padding: ${CONTENT_SPACING.MEDIUM};
+//   background-color: rgba(255, 255, 255, 0.7);
+//   height: ${CONTENT_SPACING.XLARGE};
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
 
-  & > * {
-    font-size: 14px;
-    padding: 0;
-  }
-`
+//   & > * {
+//     font-size: 14px;
+//     padding: 0;
+//   }
+// `
 
-const Spacer = styled(({ className }) => <span className={className}>||</span>)`
-  padding: 0 20px;
-  display: inline-block;
-  font-weight: 700;
-`
+// const Spacer = styled(({ className }) => <span className={className}>||</span>)`
+//   padding: 0 20px;
+//   display: inline-block;
+//   font-weight: 700;
+// `
 
-const Metadata = ({ details }: { details: PhotoType }) => {
-  const {
-    camera,
-    aperture,
-    shutterSpeed,
-    iso,
-    lens,
-    focalLength
-    // location
-  } = details
+// const Metadata = ({ details }: { details: PhotoType }) => {
+//   const {
+//     camera,
+//     aperture,
+//     shutterSpeed,
+//     iso,
+//     lens,
+//     focalLength
+//     // location
+//   } = details
 
-  const gearString = `${camera} ${lens}`
-  const statsString =
-    aperture || shutterSpeed || iso || focalLength
-      ? `${aperture} ${shutterSpeed} ${iso} ${focalLength}`
-      : 'N/A'
+//   const gearString = `${camera} ${lens}`
+//   const statsString =
+//     aperture || shutterSpeed || iso || focalLength
+//       ? `${aperture} ${shutterSpeed} ${iso} ${focalLength}`
+//       : 'N/A'
 
-  return (
-    <MetadataWrapper>
-      <Text>
-        <>
-          {/* {location} */}
-          {/* <Spacer /> */}
-          {gearString}
-          <Spacer />
-          {statsString}
-        </>
-      </Text>
-    </MetadataWrapper>
-  )
-}
+//   return (
+//     <MetadataWrapper>
+//       <Text>
+//         <>
+//           {/* {location} */}
+//           {/* <Spacer /> */}
+//           {gearString}
+//           <Spacer />
+//           {statsString}
+//         </>
+//       </Text>
+//     </MetadataWrapper>
+//   )
+// }
 
 export default Photo

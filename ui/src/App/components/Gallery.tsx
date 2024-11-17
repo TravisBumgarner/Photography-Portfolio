@@ -156,21 +156,20 @@ const Gallery = ({ privateGallery }: Props) => {
 }
 
 const ProjectDescriptionWrapper = styled.div`
-  margin: 1rem;
+  margin: ${CONTENT_SPACING.LARGE};
 `
 
 const GalleryWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  margin: 1rem;
+  gap: ${CONTENT_SPACING.LARGE};
+  margin: ${CONTENT_SPACING.LARGE};
 `
 
 const Header = styled.h2`
   font-weight: 900;
-  text-transform: uppercase;
-  margin-bottom: ${CONTENT_SPACING.l};
-  margin-top: ${CONTENT_SPACING.l};
+  margin-bottom: ${CONTENT_SPACING.XXLARGE};
+  margin-top: ${CONTENT_SPACING.LARGE};
   font-size: ${FONT_SIZES.XXLARGE};
 `
 

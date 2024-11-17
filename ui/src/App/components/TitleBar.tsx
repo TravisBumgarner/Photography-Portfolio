@@ -34,15 +34,15 @@ const TitleBar = ({ toggleNavigation, isNavigationVisible }: Props) => {
 const Header = styled.h1`
   font-weight: 700;
   text-transform: uppercase;
-  margin-bottom: ${CONTENT_SPACING.l};
-  margin-top: ${CONTENT_SPACING.l};
+  margin-bottom: ${CONTENT_SPACING.LARGE};
+  margin-top: ${CONTENT_SPACING.LARGE};
   font-size: ${FONT_SIZES.MEDIUM};
 `
 
 const TitleBarWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 1rem;
+  margin: ${CONTENT_SPACING.LARGE};
 `
 
 const InternalLink = styled(Link)`
@@ -54,12 +54,10 @@ const InternalLink = styled(Link)`
   }
 `
 
-const NavigationOpen = styled(({ isNavigationVisible, ...rest }) => (
-  <FaBars {...rest} />
-))`
+const NavigationOpen = styled(params => <FaBars {...params} />)`
   fill: ${ICON_COLOR.initial};
-  padding-bottom: ${CONTENT_SPACING.l};
-  padding-top: ${CONTENT_SPACING.l};
+  padding-bottom: ${CONTENT_SPACING.LARGE};
+  padding-top: ${CONTENT_SPACING.LARGE};
   transition: opacity ${TRANSITION_SPEED}s;
   opacity: ${props => (props.isNavigationVisible ? 0 : 1)};
   cursor: pointer;

@@ -6,8 +6,8 @@ import { CONTENT_SPACING, FONT_SIZES } from '../theme'
 
 const ListItem = styled.li`
   line-height: 1.5;
-  padding-bottom: ${CONTENT_SPACING.xs};
-  padding-top: ${CONTENT_SPACING.xs};
+  padding-bottom: ${CONTENT_SPACING.XSMALL};
+  padding-top: ${CONTENT_SPACING.XSMALL};
   font-size: ${FONT_SIZES.MEDIUM};
 
   &:first-child {

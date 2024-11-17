@@ -104,7 +104,7 @@ const Navigation = ({ toggleNavigation }: Props) => {
 
 const NavigationWrapper = styled.div`
   z-index: 999;
-  padding: ${CONTENT_SPACING.l};
+  padding: ${CONTENT_SPACING.LARGE};
   border-left: 5px solid black;
   height: 100vh;
   box-sizing: border-box;
@@ -115,9 +115,9 @@ const NavigationWrapper = styled.div`
 `
 
 const SubNavigationWrapper = styled.div`
-  margin: ${CONTENT_SPACING.m} 0;
+  margin: ${CONTENT_SPACING.MEDIUM} 0;
 
-  margin-bottom: 2rem;
+  margin-bottom: ${CONTENT_SPACING.XLARGE};
   :last-child {
     margin-top: 0;
   }
@@ -126,13 +126,8 @@ const SubNavigationWrapper = styled.div`
 const LinkListItem = styled.li`
   a {
     font-weight: 300;
-    font-size: 0.8rem;
+    font-size: ${FONT_SIZES.XSMALL};
   }
-  /* padding-left: ${CONTENT_SPACING.s}; */
-  /* border-left: 5px solid transparent;
-    &:hover {
-        border-left-color: rgb(74, 207, 160);
-    } */
 `
 
 const sharedStyles = css`
@@ -150,8 +145,8 @@ const sharedStyles = css`
 const Header = styled.h3`
   font-weight: 700;
   font-size: ${FONT_SIZES.SMALL};
-  margin-bottom: ${CONTENT_SPACING.s};
-  margin-top: ${CONTENT_SPACING.s};
+  margin-bottom: ${CONTENT_SPACING.SMALL};
+  margin-top: ${CONTENT_SPACING.SMALL};
 `
 
 const InternalLink = styled(Link)`

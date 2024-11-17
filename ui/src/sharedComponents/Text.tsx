@@ -5,8 +5,8 @@ import { CONTENT_SPACING, FONT_SIZES } from '../theme'
 
 const DefaultText = styled.p`
   line-height: 1.5;
-  padding-bottom: ${CONTENT_SPACING.m};
-  padding-top: ${CONTENT_SPACING.m};
+  padding-bottom: ${CONTENT_SPACING.MEDIUM};
+  padding-top: ${CONTENT_SPACING.MEDIUM};
 
   &:first-child {
     margin: 0;
