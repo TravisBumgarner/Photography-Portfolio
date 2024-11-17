@@ -15,7 +15,12 @@ interface Props {
 // Only renders the blurhash when the image hasn't loaded yet.
 // Removes the blob once the image has finished loading.
 
-export const BlurImage = ({ blurHash, src, useSquareImage }: Props) => {
+export const BlurImage = ({
+  blurHash,
+  src,
+  useSquareImage,
+  aspectRatio
+}: Props) => {
   const [isVisible, setIsVisible] = useState(false)
 
   const imgRef = useRef<HTMLImageElement>(null)
@@ -52,6 +57,7 @@ export const BlurImage = ({ blurHash, src, useSquareImage }: Props) => {
   return (
     <StyledImage
       $useSquareImage={useSquareImage}
+      $aspectRatio={aspectRatio}
       $blurUrl={blurUrl}
       ref={imgRef}
       src={isVisible ? src : ''}
@@ -64,7 +70,11 @@ export const BlurImage = ({ blurHash, src, useSquareImage }: Props) => {
 const StyledImage = styled.img<{
   $blurUrl: string | null
   $useSquareImage: boolean
+  $aspectRatio: number
 }>`
+  ${props => (props.$aspectRatio > 1 ? 'width: 100%;' : 'height: 100%;')}
+  aspect-ratio: ${props => props.$aspectRatio};
+
   ${props =>
     props.$blurUrl &&
     `

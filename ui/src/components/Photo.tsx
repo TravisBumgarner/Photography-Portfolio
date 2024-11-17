@@ -4,6 +4,7 @@ import Modal from 'react-modal'
 import { useNavigate, useParams } from 'react-router-dom'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
+import { BlurImage } from 'sharedComponents'
 import { context } from '../context'
 import { COLORS, CONTENT_SPACING, FONT_SIZES } from '../theme'
 import { getPhotoUrl } from '../utils'
@@ -135,12 +136,17 @@ const Photo = ({ privateGallery }: PhotoProps) => {
         onRequestClose={handleReturnToGallery}
       >
         <PhotoWrapper>
-          <StyledPhoto
+          <BlurImage
+            // Without key react does some really bizarre stuff.
+            // key={details.id}
             src={getPhotoUrl({
               isThumbnail: false,
               privateGalleryId: privateGallery ? gallerySlug : undefined,
               photoSrc: details.src
             })}
+            aspectRatio={details.aspectRatio}
+            blurHash={details.blurHash}
+            useSquareImage={false}
           />
         </PhotoWrapper>
         <MetadataAndControlsBottomWrapper>
@@ -273,15 +279,6 @@ const PhotoWrapper = styled.div`
   height: 100%;
   box-sizing: border-box;
   padding: ${CONTENT_SPACING.LARGE};
-`
-
-const StyledPhoto = styled.img`
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  box-sizing: border-box;
-  aspect-ratio: inherit;
-  user-select: none;
 `
 
 // const MetadataWrapper = styled.div`
