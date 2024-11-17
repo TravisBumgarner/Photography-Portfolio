@@ -181,8 +181,8 @@ const Photo = ({ privateGallery }: PhotoProps) => {
               hash={details.blurHash}
               // For reasons I don't understand, it's crazy difficult to make this thing responsive.
               // So we set a really large width and height and then resize with css below with canvas{}
-              width={Math.round(3000 * details.aspectRatio)}
-              height={3000}
+              width={Math.round(500 * details.aspectRatio)}
+              height={500}
               punch={1}
             />
           )}
@@ -335,8 +335,8 @@ const PhotoWrapper = styled.div<{ $aspectRatio: number }>`
   padding: ${CONTENT_SPACING.LARGE};
 
   canvas {
-    max-width: 100%;
-    max-height: 100%;
+    ${({ $aspectRatio }) => $aspectRatio > 1 && 'width: 100%; height: auto;'}
+    ${({ $aspectRatio }) => $aspectRatio <= 1 && 'width: auto; height: 100%;'}
     aspect-ratio: ${({ $aspectRatio }) => $aspectRatio};
   }
 `

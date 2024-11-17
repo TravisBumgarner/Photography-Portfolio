@@ -137,10 +137,12 @@ const Gallery = ({ privateGallery }: Props) => {
     loadedGalleryId
   ])
 
-  if (!gallerySlug || !selectedGalleryPhotoIds) {
+  if (!gallerySlug 
+    // Disabled the next line because it was erroring on hitting escape when looking at a photo, not sure why it was there.
+    //|| !selectedGalleryPhotoIds
+    ) {
     return <p>Something went wrong</p>
   }
-  console.log(selectedGalleryPhotoIds, gallerySlug)
   return (
     <>
       <ProjectDescriptionWrapper>

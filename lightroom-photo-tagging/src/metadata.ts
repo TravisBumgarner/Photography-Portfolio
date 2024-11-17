@@ -16,7 +16,6 @@ const formatShutterSpeed = (shutterSpeed: number) => {
 }
 
 export const generatePhotoId = (filename: string) => {
-    console.log('taking in filename', filename)
     const PHOTOS_NAMESPACE = 'deadbeef-beef-491e-99b0-da01ff1f3341'
     return uuidv5(filename, PHOTOS_NAMESPACE)
 }

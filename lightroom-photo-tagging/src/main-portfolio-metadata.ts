@@ -70,8 +70,10 @@ const main = async (directoryPath: string) => {
             }
             const { tags, ...metadataWithoutTags } = metadata // eslint-disable-line @typescript-eslint/no-unused-vars
             console.log('\t\t', metadataWithoutTags)
-            const { aspectRatio, blurHash } =
-                await encodeImageToBlurHash(filePath)
+            const { aspectRatio, blurHash } = await encodeImageToBlurHash(
+                // Use thumbnail to speed up processing
+                filePath.replace('large', 'thumbnail')
+            )
             photos[metadata.id] = {
                 ...metadataWithoutTags,
                 galleryIds,
