@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useMemo } from 'react'
 import styled from 'styled-components'
 
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { LazyImage, PageHeader } from 'sharedComponents'
+import { BlurImage, PageHeader } from 'sharedComponents'
+import { CONTENT_SPACING } from 'theme'
 import { type PhotoType, type PrivateGallery } from 'types'
 import { context } from '../context'
 import { getPhotoUrl } from '../utils'
-import { CONTENT_SPACING } from 'theme'
 
 interface Props {
   privateGallery: boolean
@@ -117,14 +117,14 @@ const Gallery = ({ privateGallery }: Props) => {
         ? privateGalleries[gallerySlug].photos[photoId]
         : photos[photoId]
 
-      const url = getPhotoUrl({
+      const src = getPhotoUrl({
         isThumbnail: true,
         photoSrc: photo.src,
         privateGalleryId: undefined
       })
       return (
         <Link id={photo.id} to={`/${gallerySlug}/${photoId}`} key={photo.id}>
-          <LazyImage url={url} />
+          <BlurImage blurHash={photo.blurHash} src={src} useSquareImage />
         </Link>
       )
     })
@@ -140,7 +140,7 @@ const Gallery = ({ privateGallery }: Props) => {
   if (!gallerySlug || !selectedGalleryPhotoIds) {
     return <p>Something went wrong</p>
   }
-  console.log(selectedGalleryPhotoIds, gallerySlug)
+
   return (
     <>
       <ProjectDescriptionWrapper>
@@ -164,6 +164,10 @@ const GalleryWrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: ${CONTENT_SPACING.XLARGE};
   margin: ${CONTENT_SPACING.LARGE};
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `
 
 export default Gallery

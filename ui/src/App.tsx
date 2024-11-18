@@ -4,16 +4,16 @@ import { Route, Routes } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { Error } from 'sharedComponents'
+import { About, Home, Navigation, Photo, TitleBar } from './components'
+import Gallery from './components/Gallery'
+import Context from './context'
 import {
   COLORS,
   CONTENT_SPACING,
   FONT_SIZES,
   GlobalStyle,
   TRANSITION_SPEED
-} from '../theme'
-import { About, Home, Navigation, Photo, TitleBar } from './components'
-import Gallery from './components/Gallery'
-import Context from './context'
+} from './theme'
 
 const App = () => {
   const [isNavigationVisible, setIsNavigationVisible] = useState(false)
@@ -28,6 +28,15 @@ const App = () => {
         isNavigationVisible={isNavigationVisible}
         toggleNavigation={toggleNavigation}
       />
+      <NavigationWrapper $isNavigationVisible={isNavigationVisible}>
+        {isNavigationVisible && <NavigationGutter onClick={toggleNavigation} />}
+        <Navigation toggleNavigation={toggleNavigation} />
+        <NavigationClose
+          $isNavigationVisible={isNavigationVisible}
+          onClick={toggleNavigation}
+          size={FONT_SIZES.MEDIUM}
+        />
+      </NavigationWrapper>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -42,15 +51,6 @@ const App = () => {
         <Route path="/error500" element={<Error value="500" />} />
         <Route path="*" element={<Error value="404" />} />
       </Routes>
-      <NavigationWrapper $isNavigationVisible={isNavigationVisible}>
-        {isNavigationVisible && <NavigationGutter onClick={toggleNavigation} />}
-        <Navigation toggleNavigation={toggleNavigation} />
-        <NavigationClose
-          $isNavigationVisible={isNavigationVisible}
-          onClick={toggleNavigation}
-          size={FONT_SIZES.MEDIUM}
-        />
-      </NavigationWrapper>
     </>
   )
 }

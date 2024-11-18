@@ -4,8 +4,8 @@ import Modal from 'react-modal'
 import { useNavigate, useParams } from 'react-router-dom'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
-import { COLORS, CONTENT_SPACING, FONT_SIZES } from '../../theme'
 import { context } from '../context'
+import { COLORS, CONTENT_SPACING, FONT_SIZES } from '../theme'
 import { getPhotoUrl } from '../utils'
 
 interface PhotoProps {
@@ -88,6 +88,41 @@ const Photo = ({ privateGallery }: PhotoProps) => {
     },
     [navigateToNextPhoto]
   )
+
+  const preLoadNeighboringPhotos = useCallback(() => {
+    if (!selectedGalleryPhotoIds || !photoSlug) return
+
+    const index = selectedGalleryPhotoIds.indexOf(photoSlug)
+    const previousIndex =
+      index === 0 ? selectedGalleryPhotoIds.length - 1 : index - 1
+    const nextIndex =
+      index === selectedGalleryPhotoIds.length - 1 ? 0 : index + 1
+
+    const previousPhoto = photos[selectedGalleryPhotoIds[previousIndex]]
+    const nextPhoto = photos[selectedGalleryPhotoIds[nextIndex]]
+
+    if (previousPhoto) {
+      const img = new Image()
+      img.src = getPhotoUrl({
+        isThumbnail: false,
+        privateGalleryId: privateGallery ? gallerySlug : undefined,
+        photoSrc: previousPhoto.src
+      })
+    }
+
+    if (nextPhoto) {
+      const img = new Image()
+      img.src = getPhotoUrl({
+        isThumbnail: false,
+        privateGalleryId: privateGallery ? gallerySlug : undefined,
+        photoSrc: nextPhoto.src
+      })
+    }
+  }, [selectedGalleryPhotoIds, photoSlug, photos, gallerySlug, privateGallery])
+
+  useEffect(() => {
+    preLoadNeighboringPhotos()
+  }, [preLoadNeighboringPhotos])
 
   const downloadPhoto = () => {
     if (!details) return
