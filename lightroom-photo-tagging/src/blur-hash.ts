@@ -13,10 +13,16 @@ const getImageData = (image: Image) => {
 }
 
 export const encodeImageToBlurHash = async (
-    imageUrl: string
-): Promise<{ blurHash: string; aspectRatio: number }> => {
-    const image = await loadImageNode(imageUrl)
-    const imageData = getImageData(image)
+    filePath: string
+): Promise<{ blurHash: string; width: number; height: number }> => {
+    const image = await loadImageNode(filePath)
+
+    // faster processing by using a smaller image
+    const smallImage = await loadImageNode(
+        filePath.replace('large', 'thumbnail')
+    )
+
+    const imageData = getImageData(smallImage)
     return {
         blurHash: encode(
             imageData.data,
@@ -25,6 +31,7 @@ export const encodeImageToBlurHash = async (
             4,
             4
         ),
-        aspectRatio: image.width / image.height,
+        width: image.width,
+        height: image.height,
     }
 }

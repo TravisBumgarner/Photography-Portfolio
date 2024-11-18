@@ -17,7 +17,8 @@ export interface PhotoType {
   iso: string
   focalLength: string
   blurHash: string
-  aspectRatio: number
+  width: number
+  height: number
 }
 
 export interface PrivateGallery {

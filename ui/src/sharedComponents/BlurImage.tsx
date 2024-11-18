@@ -2,24 +2,24 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { useBlurhash } from '../hooks/useBlurhash'
 
+/* Note to future self - I could not get this to work for aspect ratios that weren't 1:1.
+ * Could be worth revisiting in the future.
+ **/
+
 interface Props {
   blurHash: string
-  // style: React.CSSProperties
   src: string
-  aspectRatio: number
+  width?: number
+  height?: number
   useSquareImage: boolean
 }
-
-// Uses browser-native `loading="lazy"` to lazy load images
-// Renders a blurhash value to a blob when it about to appear on screen.
-// Only renders the blurhash when the image hasn't loaded yet.
-// Removes the blob once the image has finished loading.
 
 export const BlurImage = ({
   blurHash,
   src,
   useSquareImage,
-  aspectRatio
+  width,
+  height
 }: Props) => {
   const [isVisible, setIsVisible] = useState(false)
 
@@ -57,7 +57,8 @@ export const BlurImage = ({
   return (
     <StyledImage
       $useSquareImage={useSquareImage}
-      $aspectRatio={aspectRatio}
+      width={width}
+      height={height}
       $blurUrl={blurUrl}
       ref={imgRef}
       src={isVisible ? src : ''}
@@ -70,23 +71,22 @@ export const BlurImage = ({
 const StyledImage = styled.img<{
   $blurUrl: string | null
   $useSquareImage: boolean
-  $aspectRatio: number
 }>`
-  ${props => (props.$aspectRatio > 1 ? 'width: 100%;' : 'height: 100%;')}
-  aspect-ratio: ${props => props.$aspectRatio};
-
   ${props =>
     props.$blurUrl &&
     `
-  background-image: url(${props.$blurUrl});
-  background-size: 100% 100%;
+      background-image: url(${props.$blurUrl});
+      background-size: contain;
+      background-repeat-no-repeat;
   `}
 
   ${props =>
-    props.$useSquareImage &&
-    `
+    props.$useSquareImage
+      ? `
       object-fit: cover;
       width: 100%;
       aspect-ratio: 1 / 1; /* This maintains a 1:1 aspect ratio */
+    `
+      : `
     `}
 `

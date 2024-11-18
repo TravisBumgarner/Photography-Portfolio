@@ -39,7 +39,7 @@ const GalleryPreview = ({
     privateGalleryId: undefined
   })
 
-  const { blurHash, aspectRatio } = photos[previewId]
+  const { blurHash } = photos[previewId]
 
   return (
     <div>
@@ -52,12 +52,7 @@ const GalleryPreview = ({
         id={slug}
         to={`/${slug}`}
       >
-        <BlurImage
-          useSquareImage
-          src={url}
-          blurHash={blurHash}
-          aspectRatio={aspectRatio}
-        />
+        <BlurImage useSquareImage src={url} blurHash={blurHash} />
         <Header>{title}</Header>
       </Link>
     </div>

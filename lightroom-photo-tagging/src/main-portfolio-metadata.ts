@@ -15,7 +15,8 @@ const main = async (directoryPath: string) => {
         Partial<Metadata> & {
             galleryIds: string[]
             blurHash: string
-            aspectRatio: number
+            width: number
+            height: number
         }
     > = {}
 
@@ -70,15 +71,14 @@ const main = async (directoryPath: string) => {
             }
             const { tags, ...metadataWithoutTags } = metadata // eslint-disable-line @typescript-eslint/no-unused-vars
             console.log('\t\t', metadataWithoutTags)
-            const { aspectRatio, blurHash } = await encodeImageToBlurHash(
-                // Use thumbnail to speed up processing
-                filePath.replace('large', 'thumbnail')
-            )
+            const { width, height, blurHash } =
+                await encodeImageToBlurHash(filePath)
             photos[metadata.id] = {
                 ...metadataWithoutTags,
                 galleryIds,
                 blurHash,
-                aspectRatio,
+                width,
+                height,
             }
             // photos[metadata.id] = { ...metadata, galleryIds }
         }
@@ -97,10 +97,10 @@ const main = async (directoryPath: string) => {
             galleries: PUBLIC_GALLERIES_BY_TAG,
             photos,
         })
-        fs.writeFileSync(
-            '/Users/travisbumgarner/Programming/Photography-Portfolio/ui/src/App/content/output.json',
-            data
-        )
+
+        const filePath =
+            '/Users/travisbumgarner/Programming/Photography-Portfolio/ui/src/content/output.json'
+        fs.writeFileSync(filePath, data)
     } catch (err) {
         console.log('Unable to scan directory: ' + err)
     }

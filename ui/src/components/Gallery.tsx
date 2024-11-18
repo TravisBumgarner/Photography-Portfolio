@@ -124,12 +124,7 @@ const Gallery = ({ privateGallery }: Props) => {
       })
       return (
         <Link id={photo.id} to={`/${gallerySlug}/${photoId}`} key={photo.id}>
-          <BlurImage
-            blurHash={photo.blurHash}
-            src={src}
-            aspectRatio={photo.aspectRatio}
-            useSquareImage
-          />
+          <BlurImage blurHash={photo.blurHash} src={src} useSquareImage />
         </Link>
       )
     })
@@ -145,7 +140,7 @@ const Gallery = ({ privateGallery }: Props) => {
   if (!gallerySlug || !selectedGalleryPhotoIds) {
     return <p>Something went wrong</p>
   }
-  console.log(selectedGalleryPhotoIds, gallerySlug)
+
   return (
     <>
       <ProjectDescriptionWrapper>
@@ -169,6 +164,10 @@ const GalleryWrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: ${CONTENT_SPACING.XLARGE};
   margin: ${CONTENT_SPACING.LARGE};
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `
 
 export default Gallery

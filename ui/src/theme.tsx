@@ -17,7 +17,8 @@ export const FONT_SIZES = {
   SMALL: '1.0rem',
   MEDIUM: '1.2rem',
   LARGE: '1.5rem',
-  XXLARGE: '4rem'
+  XLARGE: '2.5rem',
+  XXLARGE: '6rem'
 }
 
 export const COLORS = {
