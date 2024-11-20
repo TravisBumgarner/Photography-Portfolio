@@ -5,7 +5,8 @@ import { v5 as uuidv5 } from 'uuid'
 import metadataOverride from './metadataOverride'
 import { Metadata, ParsedData, Sidecar, SupportedCameras } from './types'
 import path from 'path'
-import { PHOTO_DIR } from './main-portfolio-metadata'
+
+const PHOTO_DIR = '/Users/travisbumgarner/Desktop/large'
 
 const formatShutterSpeed = (shutterSpeed: number) => {
     if (shutterSpeed < 1) {

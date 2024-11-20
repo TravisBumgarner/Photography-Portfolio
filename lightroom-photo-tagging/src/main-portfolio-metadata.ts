@@ -105,7 +105,7 @@ const main = async (directoryPath: string) => {
         console.log('Unable to scan directory: ' + err)
     }
 }
-// This is a bit lazy.
-export const PHOTO_DIR = '/Users/travisbumgarner/Desktop/large'
+
+const PHOTO_DIR = '/Users/travisbumgarner/Desktop/large'
 
 main(PHOTO_DIR)
