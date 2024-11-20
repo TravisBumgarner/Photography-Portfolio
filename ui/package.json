@@ -15,6 +15,7 @@
   "dependencies": {
     "@sentry/react": "^7.17.4",
     "@sentry/tracing": "^7.17.4",
+    "blurhash": "^2.0.5",
     "react": "^18.3.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
@@ -37,9 +38,9 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-unused-imports": "^3.2.0",
+    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "ts-loader": "^9.2.6",
-    "file-loader": "^6.2.0",
     "typescript": "^4.5.2",
     "webpack": "5.76",
     "webpack-cli": "^4.9.1"
