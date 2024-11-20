@@ -40,6 +40,11 @@ const KodakTMax400: Tags = {
     priority: ['#MadeWithKodak'],
 }
 
+const Ektar100: Tags = {
+    general: ['#ektar100', '#kodakektar100'],
+    priority: ['#MadeWithKodak'],
+}
+
 const FilmType = {
     FujifilmXtra400,
     KodakTMax400,
@@ -49,6 +54,7 @@ const FilmType = {
     LomographyPurple,
     Portra400,
     Portra800,
+    Ektar100
 }
 
 export default FilmType

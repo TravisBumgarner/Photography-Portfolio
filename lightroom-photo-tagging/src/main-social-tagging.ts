@@ -4,6 +4,9 @@ import processPhoto from './metadata'
 import lightroomTagsToInstragramTemplateString from './tags'
 import createTemplate from './template'
 
+const VALID_EXTENSIONS = ['.jpg']
+
+
 const main = async (directoryPath: string) => {
     const errorsByFile: Record<string, string[]> = {}
 
@@ -31,6 +34,14 @@ const main = async (directoryPath: string) => {
 
         console.log('Gathering tags...')
         for (const file of files) {
+            if (!VALID_EXTENSIONS.includes(path.extname(file))) {
+                console.log(
+                    '\tSkipping for invalid file type',
+                    path.extname(file)
+                )
+                continue
+            }
+
             const filePath = path.join(directoryPath, file)
             console.log('\t', filePath)
 
