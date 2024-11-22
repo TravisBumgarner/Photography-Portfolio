@@ -1,5 +1,3 @@
-import { createGlobalStyle } from 'styled-components'
-
 export const TRANSITION_SPEED = 1
 export const CONTENT_SPACING = {
   XSMALL: '0.125rem',
@@ -25,7 +23,3 @@ export const COLORS = {
   GREEN: 'rgb(74, 207, 160)',
   BLACK: 'rgb(0, 0, 0)'
 }
-
-// export const GlobalStyle = createGlobalStyle`
-    
-// `
