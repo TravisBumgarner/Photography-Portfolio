@@ -31,6 +31,10 @@ const Header = styled.h1`
   margin-bottom: ${CONTENT_SPACING.LARGE};
   margin-top: ${CONTENT_SPACING.LARGE};
   font-size: ${FONT_SIZES.MEDIUM};
+
+  &:hover {
+    color: ${COLORS.GREEN};
+  }
 `
 
 const TitleBarWrapper = styled.div`

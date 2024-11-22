@@ -2,9 +2,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { useBlurhash } from '../hooks/useBlurhash'
 
-const TRANSPARENT_PIXEL_IMAGE =
-  'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
-
 /* Note to future self - I could not get this to work for aspect ratios that weren't 1:1.
  * Could be worth revisiting in the future.
  **/
@@ -65,7 +62,7 @@ export const BlurImage = ({
       $blurUrl={blurUrl}
       ref={imgRef}
       // Fixes brief flickering of a broken image if using '' here.
-      src={isVisible ? src : TRANSPARENT_PIXEL_IMAGE}
+      {...(isVisible ? { src } : {})}
       loading="lazy"
       onLoad={handleOnLoad}
     />

@@ -4,16 +4,12 @@ import { Route, Routes } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { Error } from 'sharedComponents'
-import { About, Home, Navigation, Photo, TitleBar } from './components'
+import { About, Home, Navigation, TitleBar } from './components'
 import Gallery from './components/Gallery'
 import Context from './context'
-import {
-  COLORS,
-  CONTENT_SPACING,
-  FONT_SIZES,
-  GlobalStyle,
-  TRANSITION_SPEED
-} from './theme'
+import './index.css'
+
+import { COLORS, CONTENT_SPACING, FONT_SIZES, TRANSITION_SPEED } from './theme'
 
 const App = () => {
   const [isNavigationVisible, setIsNavigationVisible] = useState(false)
@@ -23,7 +19,6 @@ const App = () => {
 
   return (
     <>
-      <GlobalStyle />
       <TitleBar
         isNavigationVisible={isNavigationVisible}
         toggleNavigation={toggleNavigation}
@@ -42,11 +37,17 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/private/:gallerySlug">
           <Route index element={<Gallery privateGallery={true} />} />
-          <Route path=":photoId" element={<Photo privateGallery={true} />} />
+          <Route
+            path=":photoSlug"
+            element={<Gallery privateGallery={true} />}
+          />
         </Route>
         <Route path="/:gallerySlug">
           <Route index element={<Gallery privateGallery={false} />} />
-          <Route path=":photoSlug" element={<Photo privateGallery={false} />} />
+          <Route
+            path=":photoSlug"
+            element={<Gallery privateGallery={false} />}
+          />
         </Route>
         <Route path="/error500" element={<Error value="500" />} />
         <Route path="*" element={<Error value="404" />} />

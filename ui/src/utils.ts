@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef } from 'react'
 
 export const getPhotoUrl = ({
   isThumbnail,
@@ -6,7 +6,7 @@ export const getPhotoUrl = ({
   photoSrc
 }: {
   isThumbnail: boolean
-  privateGalleryId?: string
+  privateGalleryId?: string | null
   photoSrc: string
 }) => {
   let url = 'https://storage.googleapis.com/photo21-asdqwd/photos/'

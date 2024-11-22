@@ -126,14 +126,13 @@ const LinkListItem = styled.li`
   padding: ${CONTENT_SPACING.SMALL} 0;
 
   border-left: 5px solid transparent;
+  &:hover {
+    border-left-color: ${COLORS.GREEN};
+  }
   padding-left: ${CONTENT_SPACING.MEDIUM};
 
   position: relative;
   left: calc(-1 * (${CONTENT_SPACING.MEDIUM} + 5px));
-
-  &:hover {
-    border-left-color: ${COLORS.GREEN};
-  }
 
   a {
     font-weight: 300;

@@ -1,47 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { Link, Navigate, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { BlurImage, PageHeader } from 'sharedComponents'
 import { CONTENT_SPACING } from 'theme'
 import { type PhotoType, type PrivateGallery } from 'types'
 import { context } from '../context'
 import { getPhotoUrl } from '../utils'
+import PhotoModal from './PhotoModal'
 
 interface Props {
   privateGallery: boolean
-}
-
-interface PhotoPreviewProps {
-  photoId: string
-  privateGallery: boolean
-  gallerySlug: string
-}
-
-const PhotoPreview = ({
-  photoId,
-  privateGallery,
-  gallerySlug
-}: PhotoPreviewProps) => {
-  const {
-    state: { privateGalleries, photos }
-  } = useContext(context)
-
-  const photo = privateGallery
-    ? privateGalleries[gallerySlug].photos[photoId]
-    : photos[photoId]
-
-  const src = getPhotoUrl({
-    isThumbnail: true,
-    photoSrc: photo.src,
-    privateGalleryId: undefined
-  })
-
-  return (
-    <Link id={photo.id} to={`/${gallerySlug}/${photoId}`} key={photo.id}>
-      <BlurImage blurHash={photo.blurHash} src={src} useSquareImage />
-    </Link>
-  )
 }
 
 const getSelectedGalleryPhotoIdsByGalleryId = (
@@ -71,27 +40,81 @@ const getSelectedPrivateGalleryPhotoIdsByGalleryId = (
     .map(({ id }) => id)
 }
 
-const Gallery = ({ privateGallery }: Props) => {
-  const [selectedGalleryPhotoIds, setSelectedGalleryPhotoIds] = useState<
-    string[]
-  >([])
+interface PhotoPreviewProps {
+  photoId: string
+  privateGallery: boolean
+  gallerySlug: string
+  updateSelectedPhotoId: (photoId: string) => void
+}
 
-  const { gallerySlug } = useParams<{ gallerySlug: string }>()
+const PhotoPreview = ({
+  photoId,
+  privateGallery,
+  gallerySlug,
+  updateSelectedPhotoId
+}: PhotoPreviewProps) => {
   const {
-    state: { galleries, photos, previouslySelectedPhotoId, privateGalleries },
-    dispatch
+    state: { photos, privateGalleries }
   } = useContext(context)
 
+  const photo = privateGallery
+    ? privateGalleries[gallerySlug].photos[photoId]
+    : photos[photoId]
+
+  const src = getPhotoUrl({
+    isThumbnail: true,
+    photoSrc: photo.src,
+    privateGalleryId: undefined
+  })
+
+  const handleClick = useCallback(() => {
+    updateSelectedPhotoId(photoId)
+  }, [photoId, updateSelectedPhotoId])
+
+  return (
+    <Button id={photo.id} onClick={handleClick} key={photo.id}>
+      <BlurImage blurHash={photo.blurHash} src={src} useSquareImage />
+    </Button>
+  )
+}
+
+const Button = styled.button`
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-block;
+`
+
+const Gallery = ({ privateGallery }: Props) => {
+  const [selectedPhotoIds, setSelectedPhotoIds] = useState<string[]>([])
+  const [selectedPhotoId, setSelectedPhotoId] = useState<string | null>(null)
+
+  const navigate = useNavigate()
+
+  const {
+    state: { galleries, photos, privateGalleries }
+  } = useContext(context)
+
+  const { gallerySlug, photoSlug } = useParams<{
+    gallerySlug: string
+    photoSlug?: string
+  }>()
+
+  // Grab the photo id from the url and set it as the selectedPhotoId on first load.
   useEffect(() => {
-    if (previouslySelectedPhotoId) {
-      dispatch({
-        type: 'BACK_TO_GALLERY',
-        payload: {
-          previouslySelectedPhotoId: null
-        }
-      })
+    if (photoSlug) {
+      setSelectedPhotoId(photoSlug)
     }
-  }, [previouslySelectedPhotoId, dispatch])
+  }, [photoSlug])
+
+  useEffect(() => {
+    if (selectedPhotoId) {
+      navigate(`/${gallerySlug}/${selectedPhotoId}`)
+    } else {
+      navigate(`/${gallerySlug}`)
+    }
+  }, [selectedPhotoId, navigate, gallerySlug])
 
   useEffect(() => {
     if (!gallerySlug) return
@@ -108,8 +131,80 @@ const Gallery = ({ privateGallery }: Props) => {
         privateGalleries
       )
     }
-    setSelectedGalleryPhotoIds(newPhotoIds)
-  }, [gallerySlug, photos, privateGalleries, privateGallery])
+    setSelectedPhotoIds(newPhotoIds)
+  }, [gallerySlug, privateGallery, photos, privateGalleries])
+
+  const updateSelectedPhotoId = useCallback(
+    (photoId: string) => {
+      setSelectedPhotoId(photoId)
+    },
+    [setSelectedPhotoId]
+  )
+
+  const navigateToNextPhoto = useCallback(
+    (direction: 'left' | 'right') => {
+      if (!selectedPhotoId) return
+
+      const index = selectedPhotoIds.indexOf(selectedPhotoId)
+
+      let nextIndex: number
+      if (direction === 'left') {
+        if (index === 0) nextIndex = selectedPhotoIds.length - 1
+        else nextIndex = index - 1
+      } else {
+        if (index === selectedPhotoIds.length - 1) nextIndex = 0
+        else nextIndex = index + 1
+      }
+
+      const nextPhotoId = selectedPhotoIds[nextIndex]
+      setSelectedPhotoId(nextPhotoId)
+    },
+    [selectedPhotoId, selectedPhotoIds, setSelectedPhotoId]
+  )
+
+  const preLoadNeighboringPhotos = useCallback(() => {
+    if (!selectedPhotoIds || !selectedPhotoId) return
+
+    const index = selectedPhotoIds.indexOf(selectedPhotoId)
+    const previousIndex = index === 0 ? selectedPhotoIds.length - 1 : index - 1
+    const nextIndex = index === selectedPhotoIds.length - 1 ? 0 : index + 1
+
+    const previousPhoto = photos[selectedPhotoIds[previousIndex]]
+    const nextPhoto = photos[selectedPhotoIds[nextIndex]]
+
+    if (previousPhoto) {
+      const img = new Image()
+      img.src = getPhotoUrl({
+        isThumbnail: false,
+        privateGalleryId: privateGallery ? gallerySlug : undefined,
+        photoSrc: previousPhoto.src
+      })
+    }
+
+    if (nextPhoto) {
+      const img = new Image()
+      img.src = getPhotoUrl({
+        isThumbnail: false,
+        privateGalleryId: privateGallery ? gallerySlug : undefined,
+        photoSrc: nextPhoto.src
+      })
+    }
+  }, [selectedPhotoIds, selectedPhotoId, photos, gallerySlug, privateGallery])
+
+  useEffect(() => {
+    preLoadNeighboringPhotos()
+  }, [preLoadNeighboringPhotos])
+
+  const handleCloseModal = useCallback(() => {
+    if (selectedPhotoId) {
+      document.getElementById(selectedPhotoId)?.scrollIntoView({
+        behavior: 'auto',
+        block: 'center',
+        inline: 'center'
+      })
+    }
+    setSelectedPhotoId(null)
+  }, [setSelectedPhotoId, selectedPhotoId])
 
   if (!gallerySlug) {
     return <Navigate to="/" />
@@ -117,6 +212,12 @@ const Gallery = ({ privateGallery }: Props) => {
 
   return (
     <>
+      <PhotoModal
+        closeModal={handleCloseModal}
+        privateGallery={privateGallery}
+        navigateToNextPhoto={navigateToNextPhoto}
+        selectedPhotoId={selectedPhotoId}
+      />
       <ProjectDescriptionWrapper>
         <PageHeader>
           {privateGallery
@@ -125,12 +226,13 @@ const Gallery = ({ privateGallery }: Props) => {
         </PageHeader>
       </ProjectDescriptionWrapper>
       <GalleryWrapper>
-        {selectedGalleryPhotoIds.map(photoId => (
+        {selectedPhotoIds.map(photoId => (
           <PhotoPreview
             key={photoId}
             photoId={photoId}
             privateGallery={privateGallery}
             gallerySlug={gallerySlug}
+            updateSelectedPhotoId={updateSelectedPhotoId}
           />
         ))}
       </GalleryWrapper>

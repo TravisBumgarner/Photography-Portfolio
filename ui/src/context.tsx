@@ -13,26 +13,12 @@ export interface State {
   photos: Record<string, PhotoType>
   galleries: Record<string, GalleryType>
   privateGalleries: Record<string, PrivateGallery>
-  selectedGalleryPhotoIds: string[] | null
-  previouslySelectedPhotoId: string | null
-  loadedGalleryId: string | null
 }
 
 const EMPTY_STATE: State = {
   photos: {},
   galleries: {},
-  privateGalleries: {},
-  selectedGalleryPhotoIds: null,
-  previouslySelectedPhotoId: null,
-  loadedGalleryId: null
-}
-
-interface SetSelectedGalleryPhotoIds {
-  type: 'SET_SELECTED_GALLERY_PHOTO_IDS'
-  payload: {
-    selectedGalleryPhotoIds: string[]
-    loadedGalleryId: string | null
-  }
+  privateGalleries: {}
 }
 
 interface HydratePhotos {
@@ -44,32 +30,19 @@ interface HydratePhotos {
   }
 }
 
-interface SetPreviouslySelectedPhotoId {
-  type: 'BACK_TO_GALLERY'
-  payload: {
-    previouslySelectedPhotoId: string | null
-  }
-}
-
-export type Action = HydratePhotos | SetSelectedGalleryPhotoIds | SetPreviouslySelectedPhotoId
+export type Action = HydratePhotos
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'HYDRATE_PHOTOS': {
       return { ...state, ...action.payload }
     }
-    case 'SET_SELECTED_GALLERY_PHOTO_IDS': {
-      return { ...state, selectedGalleryPhotoIds: action.payload.selectedGalleryPhotoIds, loadedGalleryId: action.payload.loadedGalleryId }
-    }
-    case 'BACK_TO_GALLERY': {
-      return { ...state, previouslySelectedPhotoId: action.payload.previouslySelectedPhotoId, selectedGalleryPhotoIds: null }
-    }
   }
 }
 
 const context = createContext({
   state: EMPTY_STATE,
-  dispatch: () => { }
+  dispatch: () => {}
 } as {
   state: State
   dispatch: Dispatch<Action>
@@ -83,12 +56,15 @@ const ResultsContext = ({ children }: { children: JSX.Element }) => {
     setIsLoading(true)
     const { galleries, photos, privateGalleries } = getContent()
 
-    dispatch({ type: 'HYDRATE_PHOTOS', payload: { photos, galleries, privateGalleries } })
+    dispatch({
+      type: 'HYDRATE_PHOTOS',
+      payload: { photos, galleries, privateGalleries }
+    })
     setIsLoading(false)
   }, [])
 
   if (isLoading) {
-    return <p>Loading...</p>
+    return <></>
   }
 
   const { Provider } = context

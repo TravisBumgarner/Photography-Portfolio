@@ -1,5 +1,3 @@
-import { createGlobalStyle } from 'styled-components'
-
 export const TRANSITION_SPEED = 1
 export const CONTENT_SPACING = {
   XSMALL: '0.125rem',
@@ -25,28 +23,3 @@ export const COLORS = {
   GREEN: 'rgb(74, 207, 160)',
   BLACK: 'rgb(0, 0, 0)'
 }
-
-export const GlobalStyle = createGlobalStyle`
-    :root {
-        --doc-height: 100%;
-    }
-
-    @font-face {
-      font-family: 'Satoshi';
-      src: url('/fonts/Satoshi-Variable.ttf') format('truetype');
-      font-weight: 100 900;
-      font-style: normal;
-    } 
-
-    body {
-        font-size: 18px;
-        margin: 4rem;
-        box-sizing: border-box;
-        font-weight: 400;
-        font-family: 'Satoshi', sans-serif;
-
-        @media (max-width: 768px) {
-            margin: 1rem;
-        }
-    }
-`

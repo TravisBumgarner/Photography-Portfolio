@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { CONTENT_SPACING, FONT_SIZES } from 'theme'
+import { COLORS, CONTENT_SPACING, FONT_SIZES } from 'theme'
 import { context } from '../context'
 import { BlurImage } from '../sharedComponents'
 import { getPhotoUrl } from '../utils'
@@ -43,6 +43,10 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   text-align: center;
   color: black;
+
+  &:hover {
+    color: ${COLORS.GREEN};
+  }
 `
 
 const Header = styled.h2`
