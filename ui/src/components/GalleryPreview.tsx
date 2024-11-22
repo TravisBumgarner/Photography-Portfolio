@@ -42,7 +42,7 @@ const GalleryPreview = ({
 const StyledLink = styled(Link)`
   text-decoration: none;
   text-align: center;
-  color: black;
+  color: black;  
 `
 
 const Header = styled.h2`

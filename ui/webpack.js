@@ -14,6 +14,10 @@ module.exports = {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader']
       }
     ]
   },
@@ -35,14 +39,9 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/index.template.ejs',
-      favicon: './public/favicon.png',
+      template: './src/public/index.template.ejs',
+      favicon: './src/public/favicon.png',
       inject: 'body'
-    }),
-    new CopyWebpackPlugin({
-      patterns: [
-        { from: 'public/fonts', to: 'fonts' }
-      ]
     })
   ]
 }

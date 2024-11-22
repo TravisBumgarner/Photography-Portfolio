@@ -7,14 +7,9 @@ import { Error } from 'sharedComponents'
 import { About, Home, Navigation, TitleBar } from './components'
 import Gallery from './components/Gallery'
 import Context from './context'
+import './index.css'
 
-import {
-  COLORS,
-  CONTENT_SPACING,
-  FONT_SIZES,
-  GlobalStyle,
-  TRANSITION_SPEED
-} from './theme'
+import { COLORS, CONTENT_SPACING, FONT_SIZES, TRANSITION_SPEED } from './theme'
 
 const App = () => {
   const [isNavigationVisible, setIsNavigationVisible] = useState(false)
@@ -24,7 +19,6 @@ const App = () => {
 
   return (
     <>
-      <GlobalStyle />
       <TitleBar
         isNavigationVisible={isNavigationVisible}
         toggleNavigation={toggleNavigation}

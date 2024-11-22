@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { Navigate, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { BlurImage, PageHeader } from 'sharedComponents'
 import { CONTENT_SPACING } from 'theme'
 import { type PhotoType, type PrivateGallery } from 'types'
@@ -90,6 +90,8 @@ const Gallery = ({ privateGallery }: Props) => {
   const [selectedPhotoIds, setSelectedPhotoIds] = useState<string[]>([])
   const [selectedPhotoId, setSelectedPhotoId] = useState<string | null>(null)
 
+  const navigate = useNavigate()
+
   const {
     state: { galleries, photos, privateGalleries }
   } = useContext(context)
@@ -105,6 +107,14 @@ const Gallery = ({ privateGallery }: Props) => {
       setSelectedPhotoId(photoSlug)
     }
   }, [photoSlug])
+
+  useEffect(() => {
+    if (selectedPhotoId) {
+      navigate(`/${gallerySlug}/${selectedPhotoId}`)
+    } else {
+      navigate(`/${gallerySlug}`)
+    }
+  }, [selectedPhotoId, navigate, gallerySlug])
 
   useEffect(() => {
     if (!gallerySlug) return
