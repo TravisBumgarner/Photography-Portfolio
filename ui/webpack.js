@@ -35,8 +35,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.template.ejs',
-      favicon: './src/favicon.png',
+      template: './public/index.template.ejs',
+      favicon: './public/favicon.png',
       inject: 'body'
     }),
     new CopyWebpackPlugin({

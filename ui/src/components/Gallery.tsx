@@ -1,12 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { Link, Navigate, useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import { BlurImage, PageHeader } from 'sharedComponents'
 import { CONTENT_SPACING } from 'theme'
 import { type PhotoType, type PrivateGallery } from 'types'
 import { context } from '../context'
 import { getPhotoUrl } from '../utils'
+import PhotoModal from './PhotoModal'
 
 interface Props {
   privateGallery: boolean
@@ -16,12 +17,14 @@ interface PhotoPreviewProps {
   photoId: string
   privateGallery: boolean
   gallerySlug: string
+  updateSelectedPhotoId: (photoId: string) => void
 }
 
 const PhotoPreview = ({
   photoId,
   privateGallery,
-  gallerySlug
+  gallerySlug,
+  updateSelectedPhotoId
 }: PhotoPreviewProps) => {
   const {
     state: { privateGalleries, photos }
@@ -37,10 +40,15 @@ const PhotoPreview = ({
     privateGalleryId: undefined
   })
 
+  const handleClick = useCallback(() => {
+    updateSelectedPhotoId(photoId)
+  }, [photoId, updateSelectedPhotoId])
+
   return (
-    <Link id={photo.id} to={`/${gallerySlug}/${photoId}`} key={photo.id}>
+    // TODO - change div.
+    <div onClick={handleClick} key={photo.id}>
       <BlurImage blurHash={photo.blurHash} src={src} useSquareImage />
-    </Link>
+    </div>
   )
 }
 
@@ -72,26 +80,33 @@ const getSelectedPrivateGalleryPhotoIdsByGalleryId = (
 }
 
 const Gallery = ({ privateGallery }: Props) => {
-  const [selectedGalleryPhotoIds, setSelectedGalleryPhotoIds] = useState<
-    string[]
-  >([])
+  const [selectedPhotoIds, setSelectedPhotoIds] = useState<string[]>([])
+  const [selectedPhotoId, setSelectedPhotoId] = useState<string | null>(null)
 
-  const { gallerySlug } = useParams<{ gallerySlug: string }>()
+  const { gallerySlug, photoSlug } = useParams<{
+    gallerySlug: string
+    photoSlug?: string
+  }>()
   const {
-    state: { galleries, photos, previouslySelectedPhotoId, privateGalleries },
-    dispatch
+    state: {
+      galleries,
+      photos,
+      // previouslySelectedPhotoId,
+      privateGalleries
+    }
+    // dispatch
   } = useContext(context)
 
-  useEffect(() => {
-    if (previouslySelectedPhotoId) {
-      dispatch({
-        type: 'BACK_TO_GALLERY',
-        payload: {
-          previouslySelectedPhotoId: null
-        }
-      })
-    }
-  }, [previouslySelectedPhotoId, dispatch])
+  // useEffect(() => {
+  //   if (previouslySelectedPhotoId) {
+  //     dispatch({
+  //       type: 'BACK_TO_GALLERY',
+  //       payload: {
+  //         previouslySelectedPhotoId: null
+  //       }
+  //     })
+  //   }
+  // }, [previouslySelectedPhotoId, dispatch])
 
   useEffect(() => {
     if (!gallerySlug) return
@@ -108,15 +123,95 @@ const Gallery = ({ privateGallery }: Props) => {
         privateGalleries
       )
     }
-    setSelectedGalleryPhotoIds(newPhotoIds)
+    setSelectedPhotoIds(newPhotoIds)
   }, [gallerySlug, photos, privateGalleries, privateGallery])
+
+  const updateSelectedPhotoId = useCallback(
+    (photoId: string) => {
+      setSelectedPhotoId(photoId)
+    },
+    [setSelectedPhotoId]
+  )
+
+  const navigateToNextPhoto = useCallback(
+    (direction: 'left' | 'right') => {
+      // if (!photoSlug || !selectedGalleryPhotoIds) {
+      //   navigate('/')
+      //   return
+      // }
+
+      // No photo is selected so don't continue.
+      if (!selectedPhotoId) return
+
+      const index = selectedPhotoIds.indexOf(selectedPhotoId)
+
+      let nextIndex: number
+      if (direction === 'left') {
+        if (index === 0) nextIndex = selectedPhotoIds.length - 1
+        else nextIndex = index - 1
+      } else {
+        if (index === selectedPhotoIds.length - 1) nextIndex = 0
+        else nextIndex = index + 1
+      }
+
+      const nextPhotoId = selectedPhotoIds[nextIndex]
+      setSelectedPhotoId(nextPhotoId)
+      // // Improve back button so that it goes back to gallery instead of previous photo.
+      // navigate(`/${gallerySlug}/${nextPhotoId}`, { replace: true })
+    },
+    [selectedPhotoId, selectedPhotoIds, setSelectedPhotoId]
+  )
+
+  const preLoadNeighboringPhotos = useCallback(() => {
+    if (!selectedPhotoIds || !selectedPhotoId) return
+
+    const index = selectedPhotoIds.indexOf(selectedPhotoId)
+    const previousIndex = index === 0 ? selectedPhotoIds.length - 1 : index - 1
+    const nextIndex = index === selectedPhotoIds.length - 1 ? 0 : index + 1
+
+    const previousPhoto = photos[selectedPhotoIds[previousIndex]]
+    const nextPhoto = photos[selectedPhotoIds[nextIndex]]
+
+    if (previousPhoto) {
+      const img = new Image()
+      img.src = getPhotoUrl({
+        isThumbnail: false,
+        privateGalleryId: privateGallery ? gallerySlug : undefined,
+        photoSrc: previousPhoto.src
+      })
+    }
+
+    if (nextPhoto) {
+      const img = new Image()
+      img.src = getPhotoUrl({
+        isThumbnail: false,
+        privateGalleryId: privateGallery ? gallerySlug : undefined,
+        photoSrc: nextPhoto.src
+      })
+    }
+  }, [selectedPhotoIds, selectedPhotoId, photos, gallerySlug, privateGallery])
+
+  useEffect(() => {
+    preLoadNeighboringPhotos()
+  }, [preLoadNeighboringPhotos])
+
+  const handleCloseModal = useCallback(() => {
+    setSelectedPhotoId(null)
+  }, [setSelectedPhotoId])
 
   if (!gallerySlug) {
     return <Navigate to="/" />
   }
-
+  console.log('doot', selectedPhotoId)
   return (
     <>
+      <PhotoModal
+        closeModal={handleCloseModal}
+        privateGallery={privateGallery}
+        navigateToNextPhoto={navigateToNextPhoto}
+        isOpen={selectedPhotoId !== null}
+        selectedPhotoId={selectedPhotoId}
+      />
       <ProjectDescriptionWrapper>
         <PageHeader>
           {privateGallery
@@ -125,12 +220,13 @@ const Gallery = ({ privateGallery }: Props) => {
         </PageHeader>
       </ProjectDescriptionWrapper>
       <GalleryWrapper>
-        {selectedGalleryPhotoIds.map(photoId => (
+        {selectedPhotoIds.map(photoId => (
           <PhotoPreview
             key={photoId}
             photoId={photoId}
             privateGallery={privateGallery}
             gallerySlug={gallerySlug}
+            updateSelectedPhotoId={updateSelectedPhotoId}
           />
         ))}
       </GalleryWrapper>
