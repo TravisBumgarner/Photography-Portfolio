@@ -1,6 +1,6 @@
 const path = require('path')
-
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: './src/index.tsx',
@@ -38,6 +38,11 @@ module.exports = {
       template: './src/index.template.ejs',
       favicon: './src/favicon.png',
       inject: 'body'
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'public/fonts', to: 'fonts' }
+      ]
     })
   ]
 }
