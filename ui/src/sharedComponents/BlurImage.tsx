@@ -25,12 +25,6 @@ export const BlurImage = ({
 
   const imgRef = useRef<HTMLImageElement>(null)
   const [imgLoaded, setImgLoaded] = useState(false)
-  console.log(
-    'blurUrl',
-    !imgLoaded,
-    isVisible,
-    !imgLoaded && isVisible ? blurHash : null
-  )
   const blurUrl = useBlurhash(!imgLoaded && isVisible ? blurHash : null)
 
   useEffect(() => {

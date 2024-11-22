@@ -72,7 +72,7 @@ const PhotoPreview = ({
   }, [photoId, updateSelectedPhotoId])
 
   return (
-    <Button onClick={handleClick} key={photo.id}>
+    <Button id={photo.id} onClick={handleClick} key={photo.id}>
       <BlurImage blurHash={photo.blurHash} src={src} useSquareImage />
     </Button>
   )
@@ -101,9 +101,9 @@ const Gallery = ({ privateGallery }: Props) => {
     photoSlug?: string
   }>()
 
+  // Grab the photo id from the url and set it as the selectedPhotoId on first load.
   useEffect(() => {
     if (photoSlug) {
-      console.log('I should only fire on first page load.')
       setSelectedPhotoId(photoSlug)
     }
   }, [photoSlug])
@@ -132,7 +132,7 @@ const Gallery = ({ privateGallery }: Props) => {
       )
     }
     setSelectedPhotoIds(newPhotoIds)
-  }, [gallerySlug, privateGallery])
+  }, [gallerySlug, privateGallery, photos, privateGalleries])
 
   const updateSelectedPhotoId = useCallback(
     (photoId: string) => {
@@ -196,8 +196,15 @@ const Gallery = ({ privateGallery }: Props) => {
   }, [preLoadNeighboringPhotos])
 
   const handleCloseModal = useCallback(() => {
+    if (selectedPhotoId) {
+      document.getElementById(selectedPhotoId)?.scrollIntoView({
+        behavior: 'auto',
+        block: 'center',
+        inline: 'center'
+      })
+    }
     setSelectedPhotoId(null)
-  }, [setSelectedPhotoId])
+  }, [setSelectedPhotoId, selectedPhotoId])
 
   if (!gallerySlug) {
     return <Navigate to="/" />
