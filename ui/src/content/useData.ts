@@ -12,7 +12,7 @@ interface Data {
 export const useData = () => {
   const [data, setData] = useState<Data | null>(null)
   const [loading, setLoading] = useState(true)
-  
+
   useEffect(() => {
     setData({
       photos: output.photos,
@@ -21,5 +21,5 @@ export const useData = () => {
     })
   }, [])
 
-  return data
+  return {data, loading}
 }

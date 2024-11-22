@@ -23,7 +23,7 @@ const App = () => {
   }, [])
 
   if (loading) {
-    return <LoadingSpinner />
+    return <p>One sec</p>
   }
 
 
