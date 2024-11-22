@@ -10,7 +10,9 @@ interface Props {
 }
 
 const Navigation = ({ toggleNavigation }: Props) => {
-  const { state: { galleries } } = useContext(context)
+  const {
+    state: { galleries }
+  } = useContext(context)
 
   const links = useMemo(() => {
     return Object.values(galleries)

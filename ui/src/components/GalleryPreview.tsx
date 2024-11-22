@@ -2,9 +2,9 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { CONTENT_SPACING, FONT_SIZES } from 'theme'
+import { context } from '../context'
 import { BlurImage } from '../sharedComponents'
 import { getPhotoUrl } from '../utils'
-import { context } from '../context'
 
 const GalleryPreview = ({
   slug,
@@ -17,7 +17,9 @@ const GalleryPreview = ({
   previewSrc: string
   previewId: string
 }) => {
-  const {state: { photos }} = useContext(context)
+  const {
+    state: { photos }
+  } = useContext(context)
 
   const url = getPhotoUrl({
     isThumbnail: true,
@@ -30,8 +32,8 @@ const GalleryPreview = ({
   return (
     <div>
       <StyledLink id={slug} to={`/${slug}`}>
-        <Header>{title}</Header>
         <BlurImage useSquareImage src={url} blurHash={blurHash} />
+        <Header>{title}</Header>
       </StyledLink>
     </div>
   )

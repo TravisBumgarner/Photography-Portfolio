@@ -4,10 +4,10 @@ import styled from 'styled-components'
 import { Navigate, useParams } from 'react-router-dom'
 import { BlurImage, PageHeader } from 'sharedComponents'
 import { CONTENT_SPACING } from 'theme'
-import { PhotoType, PrivateGallery } from 'types'
+import { type PhotoType, type PrivateGallery } from 'types'
+import { context } from '../context'
 import { getPhotoUrl } from '../utils'
 import PhotoModal from './PhotoModal'
-import { context } from '../context'
 
 interface Props {
   privateGallery: boolean
@@ -54,7 +54,8 @@ const PhotoPreview = ({
   updateSelectedPhotoId
 }: PhotoPreviewProps) => {
   const {
-    state: { photos, privateGalleries }} = useContext(context)
+    state: { photos, privateGalleries }
+  } = useContext(context)
 
   const photo = privateGallery
     ? privateGalleries[gallerySlug].photos[photoId]
@@ -90,7 +91,8 @@ const Gallery = ({ privateGallery }: Props) => {
   const [selectedPhotoId, setSelectedPhotoId] = useState<string | null>(null)
 
   const {
-    state: { galleries, photos, privateGalleries }} = useContext(context)
+    state: { galleries, photos, privateGalleries }
+  } = useContext(context)
 
   const { gallerySlug, photoSlug } = useParams<{
     gallerySlug: string
@@ -109,9 +111,15 @@ const Gallery = ({ privateGallery }: Props) => {
 
     let newPhotoIds: string[] = []
     if (!privateGallery) {
-      newPhotoIds = getSelectedGalleryPhotoIdsByGalleryId(gallerySlug, Object.values(photos))
+      newPhotoIds = getSelectedGalleryPhotoIdsByGalleryId(
+        gallerySlug,
+        Object.values(photos)
+      )
     } else {
-      newPhotoIds = getSelectedPrivateGalleryPhotoIdsByGalleryId(gallerySlug, privateGalleries)
+      newPhotoIds = getSelectedPrivateGalleryPhotoIdsByGalleryId(
+        gallerySlug,
+        privateGalleries
+      )
     }
     setSelectedPhotoIds(newPhotoIds)
   }, [gallerySlug, privateGallery])
