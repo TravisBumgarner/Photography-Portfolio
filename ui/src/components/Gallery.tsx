@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useMemo } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, Navigate, useParams } from 'react-router-dom'
 import { BlurImage, PageHeader } from 'sharedComponents'
 import { CONTENT_SPACING } from 'theme'
 import { type PhotoType, type PrivateGallery } from 'types'
@@ -10,6 +10,38 @@ import { getPhotoUrl } from '../utils'
 
 interface Props {
   privateGallery: boolean
+}
+
+interface PhotoPreviewProps {
+  photoId: string
+  privateGallery: boolean
+  gallerySlug: string
+}
+
+const PhotoPreview = ({
+  photoId,
+  privateGallery,
+  gallerySlug
+}: PhotoPreviewProps) => {
+  const {
+    state: { privateGalleries, photos }
+  } = useContext(context)
+
+  const photo = privateGallery
+    ? privateGalleries[gallerySlug].photos[photoId]
+    : photos[photoId]
+
+  const src = getPhotoUrl({
+    isThumbnail: true,
+    photoSrc: photo.src,
+    privateGalleryId: undefined
+  })
+
+  return (
+    <Link id={photo.id} to={`/${gallerySlug}/${photoId}`} key={photo.id}>
+      <BlurImage blurHash={photo.blurHash} src={src} useSquareImage />
+    </Link>
+  )
 }
 
 const getSelectedGalleryPhotoIdsByGalleryId = (
@@ -40,19 +72,15 @@ const getSelectedPrivateGalleryPhotoIdsByGalleryId = (
 }
 
 const Gallery = ({ privateGallery }: Props) => {
+  const [selectedGalleryPhotoIds, setSelectedGalleryPhotoIds] = useState<
+    string[]
+  >([])
+
   const { gallerySlug } = useParams<{ gallerySlug: string }>()
   const {
-    state: {
-      galleries,
-      photos,
-      selectedGalleryPhotoIds,
-      previouslySelectedPhotoId,
-      privateGalleries,
-      loadedGalleryId
-    },
+    state: { galleries, photos, previouslySelectedPhotoId, privateGalleries },
     dispatch
   } = useContext(context)
-  const navigate = useNavigate()
 
   useEffect(() => {
     if (previouslySelectedPhotoId) {
@@ -66,79 +94,25 @@ const Gallery = ({ privateGallery }: Props) => {
   }, [previouslySelectedPhotoId, dispatch])
 
   useEffect(() => {
-    if (!gallerySlug) {
-      navigate('/')
-      return
-    }
+    if (!gallerySlug) return
 
+    let newPhotoIds: string[] = []
     if (!privateGallery) {
-      dispatch({
-        type: 'SET_SELECTED_GALLERY_PHOTO_IDS',
-        payload: {
-          selectedGalleryPhotoIds: getSelectedGalleryPhotoIdsByGalleryId(
-            gallerySlug,
-            Object.values(photos)
-          ),
-          loadedGalleryId: gallerySlug
-        }
-      })
-    } else {
-      dispatch({
-        type: 'SET_SELECTED_GALLERY_PHOTO_IDS',
-        payload: {
-          selectedGalleryPhotoIds: getSelectedPrivateGalleryPhotoIdsByGalleryId(
-            gallerySlug,
-            privateGalleries
-          ),
-          loadedGalleryId: gallerySlug
-        }
-      })
-    }
-  }, [
-    dispatch,
-    gallerySlug,
-    photos,
-    navigate,
-    privateGalleries,
-    privateGallery
-  ])
-
-  const Photos = useMemo(() => {
-    if (
-      !selectedGalleryPhotoIds ||
-      !gallerySlug ||
-      gallerySlug !== loadedGalleryId // prevent race condition where photoIds are ready before gallery is loaded
-    ) {
-      return null
-    }
-
-    return selectedGalleryPhotoIds.map(photoId => {
-      const photo = privateGallery
-        ? privateGalleries[gallerySlug].photos[photoId]
-        : photos[photoId]
-
-      const src = getPhotoUrl({
-        isThumbnail: true,
-        photoSrc: photo.src,
-        privateGalleryId: undefined
-      })
-      return (
-        <Link id={photo.id} to={`/${gallerySlug}/${photoId}`} key={photo.id}>
-          <BlurImage blurHash={photo.blurHash} src={src} useSquareImage />
-        </Link>
+      newPhotoIds = getSelectedGalleryPhotoIdsByGalleryId(
+        gallerySlug,
+        Object.values(photos)
       )
-    })
-  }, [
-    selectedGalleryPhotoIds,
-    photos,
-    gallerySlug,
-    privateGallery,
-    privateGalleries,
-    loadedGalleryId
-  ])
+    } else {
+      newPhotoIds = getSelectedPrivateGalleryPhotoIdsByGalleryId(
+        gallerySlug,
+        privateGalleries
+      )
+    }
+    setSelectedGalleryPhotoIds(newPhotoIds)
+  }, [gallerySlug, photos, privateGalleries, privateGallery])
 
-  if (!gallerySlug || !selectedGalleryPhotoIds) {
-    return <p>Something went wrong</p>
+  if (!gallerySlug) {
+    return <Navigate to="/" />
   }
 
   return (
@@ -150,7 +124,16 @@ const Gallery = ({ privateGallery }: Props) => {
             : galleries[gallerySlug].title}
         </PageHeader>
       </ProjectDescriptionWrapper>
-      <GalleryWrapper>{Photos}</GalleryWrapper>
+      <GalleryWrapper>
+        {selectedGalleryPhotoIds.map(photoId => (
+          <PhotoPreview
+            key={photoId}
+            photoId={photoId}
+            privateGallery={privateGallery}
+            gallerySlug={gallerySlug}
+          />
+        ))}
+      </GalleryWrapper>
     </>
   )
 }
