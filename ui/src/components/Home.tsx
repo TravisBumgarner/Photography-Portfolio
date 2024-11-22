@@ -1,11 +1,9 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 
-import { Link } from 'react-router-dom'
-import { CONTENT_SPACING, FONT_SIZES } from 'theme'
+import { CONTENT_SPACING } from 'theme'
 import { context } from '../context'
-import { BlurImage } from '../sharedComponents'
-import { getPhotoUrl } from '../utils'
+import GalleryPreview from './GalleryPreview'
 
 const HomeImageWrapper = styled.div`
   display: grid;
@@ -17,47 +15,6 @@ const HomeImageWrapper = styled.div`
     grid-template-columns: repeat(2, 1fr);
   }
 `
-
-const GalleryPreview = ({
-  slug,
-  title,
-  previewSrc,
-  previewId
-}: {
-  slug: string
-  title: string
-  previewSrc: string
-  previewId: string
-}) => {
-  const {
-    state: { photos }
-  } = useContext(context)
-
-  const url = getPhotoUrl({
-    isThumbnail: true,
-    photoSrc: previewSrc,
-    privateGalleryId: undefined
-  })
-
-  const { blurHash } = photos[previewId]
-
-  return (
-    <div>
-      <Link
-        style={{
-          textDecoration: 'none',
-          textAlign: 'center',
-          color: 'black'
-        }}
-        id={slug}
-        to={`/${slug}`}
-      >
-        <BlurImage useSquareImage src={url} blurHash={blurHash} />
-        <Header>{title}</Header>
-      </Link>
-    </div>
-  )
-}
 
 const Home = () => {
   const {
@@ -80,13 +37,5 @@ const Home = () => {
     </HomeImageWrapper>
   )
 }
-
-const Header = styled.h2`
-  font-weight: 700;
-  margin-bottom: ${CONTENT_SPACING.MEDIUM};
-  margin-top: ${CONTENT_SPACING.LARGE};
-  font-size: ${FONT_SIZES.SMALL};
-  text-align: left;
-`
 
 export default Home
