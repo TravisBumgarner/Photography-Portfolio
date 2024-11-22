@@ -3,7 +3,7 @@ import { FaArrowLeft, FaArrowRight, FaDownload, FaTimes } from 'react-icons/fa'
 import Modal from 'react-modal'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
-import { getData } from '../content'
+import { useData } from '../content/useData'
 import { COLORS, CONTENT_SPACING, FONT_SIZES } from '../theme'
 import { getPhotoUrl } from '../utils'
 
@@ -20,8 +20,7 @@ const PhotoModal = ({
   closeModal,
   selectedPhotoId
 }: PhotoProps) => {
-  // todo better home
-  const { photos } = getData()
+  const { photos } = useData()
 
   const details = selectedPhotoId ? photos[selectedPhotoId] : null
 
@@ -70,6 +69,7 @@ const PhotoModal = ({
         isOpen={selectedPhotoId !== null}
         style={modalCSS}
         onRequestClose={closeModal}
+        preventScroll
       >
         <PhotoWrapper>
           <StyledPhoto src={photoSrc} />
@@ -113,6 +113,7 @@ const PhotoModal = ({
   )
 }
 
+// Prevent scroll while Modal is open.
 const OverflowHidden = createGlobalStyle`
   body {
     overflow: hidden;

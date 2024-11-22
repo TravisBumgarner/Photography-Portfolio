@@ -2,8 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { CONTENT_SPACING } from 'theme'
-import { getData } from '../content'
 import GalleryPreview from './GalleryPreview'
+import { useData } from '../content/useData'
+
 const HomeImageWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -16,8 +17,7 @@ const HomeImageWrapper = styled.div`
 `
 
 const Home = () => {
-  // todo Find a better home
-  const { galleries } = getData()
+  const { galleries } = useData()
 
   return (
     <HomeImageWrapper>

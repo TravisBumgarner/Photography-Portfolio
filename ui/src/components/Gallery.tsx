@@ -4,16 +4,40 @@ import styled from 'styled-components'
 import { Navigate, useParams } from 'react-router-dom'
 import { BlurImage, PageHeader } from 'sharedComponents'
 import { CONTENT_SPACING } from 'theme'
-import {
-  getData,
-  getSelectedGalleryPhotoIdsByGalleryId,
-  getSelectedPrivateGalleryPhotoIdsByGalleryId
-} from '../content'
+import { PhotoType, PrivateGallery } from 'types'
+import { useData } from '../content/useData'
 import { getPhotoUrl } from '../utils'
 import PhotoModal from './PhotoModal'
 
 interface Props {
   privateGallery: boolean
+}
+
+const getSelectedGalleryPhotoIdsByGalleryId = (
+  galleryId: string,
+  photos: PhotoType[]
+) => {
+  return Object.values(photos)
+    .filter(photo => photo.galleryIds.includes(galleryId))
+    .sort((a, b) => {
+      const aDate = new Date(a.dateTaken)
+      const bDate = new Date(b.dateTaken)
+      return aDate.getTime() - bDate.getTime()
+    })
+    .map(({ id }) => id)
+}
+
+const getSelectedPrivateGalleryPhotoIdsByGalleryId = (
+  galleryId: string,
+  privateGalleries: Record<string, PrivateGallery>
+) => {
+  return Object.values(privateGalleries[galleryId].photos)
+    .sort((a, b) => {
+      const aDate = new Date(a.dateTaken)
+      const bDate = new Date(b.dateTaken)
+      return aDate.getTime() - bDate.getTime()
+    })
+    .map(({ id }) => id)
 }
 
 interface PhotoPreviewProps {
@@ -30,7 +54,7 @@ const PhotoPreview = ({
   updateSelectedPhotoId
 }: PhotoPreviewProps) => {
   // Find a better home.
-  const { photos, privateGalleries } = getData()
+  const { photos, privateGalleries } = useData()
 
   const photo = privateGallery
     ? privateGalleries[gallerySlug].photos[photoId]
@@ -65,8 +89,7 @@ const Gallery = ({ privateGallery }: Props) => {
   const [selectedPhotoIds, setSelectedPhotoIds] = useState<string[]>([])
   const [selectedPhotoId, setSelectedPhotoId] = useState<string | null>(null)
 
-  // Todo - find better home
-  const { photos, galleries, privateGalleries } = getData()
+  const { photos, galleries, privateGalleries } = useData()
 
   const { gallerySlug, photoSlug } = useParams<{
     gallerySlug: string
@@ -85,9 +108,9 @@ const Gallery = ({ privateGallery }: Props) => {
 
     let newPhotoIds: string[] = []
     if (!privateGallery) {
-      newPhotoIds = getSelectedGalleryPhotoIdsByGalleryId(gallerySlug)
+      newPhotoIds = getSelectedGalleryPhotoIdsByGalleryId(gallerySlug, Object.values(photos))
     } else {
-      newPhotoIds = getSelectedPrivateGalleryPhotoIdsByGalleryId(gallerySlug)
+      newPhotoIds = getSelectedPrivateGalleryPhotoIdsByGalleryId(gallerySlug, privateGalleries)
     }
     setSelectedPhotoIds(newPhotoIds)
   }, [gallerySlug, privateGallery])
@@ -160,7 +183,7 @@ const Gallery = ({ privateGallery }: Props) => {
   if (!gallerySlug) {
     return <Navigate to="/" />
   }
-  console.log('doot', selectedPhotoId)
+
   return (
     <>
       <PhotoModal

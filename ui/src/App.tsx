@@ -17,9 +17,15 @@ import {
 
 const App = () => {
   const [isNavigationVisible, setIsNavigationVisible] = useState(false)
+  const { data, loading } = useData()
   const toggleNavigation = useCallback(() => {
     setIsNavigationVisible(prev => !prev)
   }, [])
+
+  if (loading) {
+    return <LoadingSpinner />
+  }
+
 
   return (
     <>

@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
-import { getData } from '../content'
+import { useData } from '../content/useData'
 import { COLORS, CONTENT_SPACING, FONT_SIZES } from '../theme'
 
 interface Props {
@@ -10,8 +10,7 @@ interface Props {
 }
 
 const Navigation = ({ toggleNavigation }: Props) => {
-  const { galleries } = getData()
-  // todo better home
+  const { galleries } = useData()
 
   const links = useMemo(() => {
     return Object.values(galleries)

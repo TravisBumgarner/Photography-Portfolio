@@ -2,9 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { CONTENT_SPACING, FONT_SIZES } from 'theme'
-import { getData } from '../content'
 import { BlurImage } from '../sharedComponents'
 import { getPhotoUrl } from '../utils'
+import { useData } from '../content/useData'
 
 const GalleryPreview = ({
   slug,
@@ -18,7 +18,7 @@ const GalleryPreview = ({
   previewId: string
 }) => {
   // Todo better home.
-  const { photos } = getData()
+  const { photos } = useData()
 
   const url = getPhotoUrl({
     isThumbnail: true,
