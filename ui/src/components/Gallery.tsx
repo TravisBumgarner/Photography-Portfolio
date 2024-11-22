@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { Navigate, useParams } from 'react-router-dom'
 import { BlurImage, PageHeader } from 'sharedComponents'
 import { CONTENT_SPACING } from 'theme'
 import { PhotoType, PrivateGallery } from 'types'
-import { useData } from '../content/useData'
 import { getPhotoUrl } from '../utils'
 import PhotoModal from './PhotoModal'
+import { context } from '../context'
 
 interface Props {
   privateGallery: boolean
@@ -53,8 +53,8 @@ const PhotoPreview = ({
   gallerySlug,
   updateSelectedPhotoId
 }: PhotoPreviewProps) => {
-  // Find a better home.
-  const { photos, privateGalleries } = useData()
+  const {
+    state: { photos, privateGalleries }} = useContext(context)
 
   const photo = privateGallery
     ? privateGalleries[gallerySlug].photos[photoId]
@@ -89,7 +89,8 @@ const Gallery = ({ privateGallery }: Props) => {
   const [selectedPhotoIds, setSelectedPhotoIds] = useState<string[]>([])
   const [selectedPhotoId, setSelectedPhotoId] = useState<string | null>(null)
 
-  const { photos, galleries, privateGalleries } = useData()
+  const {
+    state: { galleries, photos, privateGalleries }} = useContext(context)
 
   const { gallerySlug, photoSlug } = useParams<{
     gallerySlug: string

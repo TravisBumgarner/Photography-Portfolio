@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { Error } from 'sharedComponents'
 import { About, Home, Navigation, TitleBar } from './components'
 import Gallery from './components/Gallery'
+import Context from './context'
 
 import {
   COLORS,
@@ -17,15 +18,9 @@ import {
 
 const App = () => {
   const [isNavigationVisible, setIsNavigationVisible] = useState(false)
-  const { data, loading } = useData()
   const toggleNavigation = useCallback(() => {
     setIsNavigationVisible(prev => !prev)
   }, [])
-
-  if (loading) {
-    return <p>One sec</p>
-  }
-
 
   return (
     <>
@@ -104,4 +99,12 @@ const NavigationWrapper = styled.div<{ $isNavigationVisible: boolean }>`
     -17.4px 0px 26.1px hsl(0deg 0% 72% / 0.53);
 `
 
-export default App
+const WrappedApp = () => {
+  return (
+    <Context>
+      <App />
+    </Context>
+  )
+}
+
+export default WrappedApp

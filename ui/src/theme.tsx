@@ -39,6 +39,7 @@ export const GlobalStyle = createGlobalStyle`
     } 
 
     body {
+        font-display: block;
         font-size: 18px;
         margin: 4rem;
         box-sizing: border-box;

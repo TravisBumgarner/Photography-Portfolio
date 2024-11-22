@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
-import { useData } from '../content/useData'
+import { context } from '../context'
 import { COLORS, CONTENT_SPACING, FONT_SIZES } from '../theme'
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const Navigation = ({ toggleNavigation }: Props) => {
-  const { galleries } = useData()
+  const { state: { galleries } } = useContext(context)
 
   const links = useMemo(() => {
     return Object.values(galleries)

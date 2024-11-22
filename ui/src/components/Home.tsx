@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 
 import { CONTENT_SPACING } from 'theme'
+import { context } from '../context'
 import GalleryPreview from './GalleryPreview'
-import { useData } from '../content/useData'
 
 const HomeImageWrapper = styled.div`
   display: grid;
@@ -17,7 +17,9 @@ const HomeImageWrapper = styled.div`
 `
 
 const Home = () => {
-  const { galleries } = useData()
+  const {
+    state: { galleries }
+  } = useContext(context)
 
   return (
     <HomeImageWrapper>

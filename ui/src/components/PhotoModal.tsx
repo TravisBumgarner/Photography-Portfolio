@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useContext, useEffect } from 'react'
 import { FaArrowLeft, FaArrowRight, FaDownload, FaTimes } from 'react-icons/fa'
 import Modal from 'react-modal'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
-import { useData } from '../content/useData'
+import { context } from '../context'
 import { COLORS, CONTENT_SPACING, FONT_SIZES } from '../theme'
 import { getPhotoUrl } from '../utils'
 
@@ -20,7 +20,9 @@ const PhotoModal = ({
   closeModal,
   selectedPhotoId
 }: PhotoProps) => {
-  const { photos } = useData()
+  const {
+    state: { photos }
+  } = useContext(context)
 
   const details = selectedPhotoId ? photos[selectedPhotoId] : null
 

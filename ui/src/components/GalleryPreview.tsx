@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { CONTENT_SPACING, FONT_SIZES } from 'theme'
 import { BlurImage } from '../sharedComponents'
 import { getPhotoUrl } from '../utils'
-import { useData } from '../content/useData'
+import { context } from '../context'
 
 const GalleryPreview = ({
   slug,
@@ -17,8 +17,7 @@ const GalleryPreview = ({
   previewSrc: string
   previewId: string
 }) => {
-  // Todo better home.
-  const { photos } = useData()
+  const {state: { photos }} = useContext(context)
 
   const url = getPhotoUrl({
     isThumbnail: true,
