@@ -8,6 +8,8 @@ interface Data {
   privateGalleries: Record<string, PrivateGallery>
 }
 
+// Todo - this whole file can be improved.
+
 const getData = (): Data => {
   return {
     photos: output.photos,
@@ -18,4 +20,29 @@ const getData = (): Data => {
   }
 }
 
-export default getData
+const getSelectedGalleryPhotoIdsByGalleryId = (galleryId: string) => {
+  return Object.values(getData().photos)
+    .filter(photo => photo.galleryIds.includes(galleryId))
+    .sort((a, b) => {
+      const aDate = new Date(a.dateTaken)
+      const bDate = new Date(b.dateTaken)
+      return aDate.getTime() - bDate.getTime()
+    })
+    .map(({ id }) => id)
+}
+
+const getSelectedPrivateGalleryPhotoIdsByGalleryId = (galleryId: string) => {
+  return Object.values(getData().privateGalleries[galleryId].photos)
+    .sort((a, b) => {
+      const aDate = new Date(a.dateTaken)
+      const bDate = new Date(b.dateTaken)
+      return aDate.getTime() - bDate.getTime()
+    })
+    .map(({ id }) => id)
+}
+
+export {
+  getData,
+  getSelectedGalleryPhotoIdsByGalleryId,
+  getSelectedPrivateGalleryPhotoIdsByGalleryId
+}

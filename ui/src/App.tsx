@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { Error } from 'sharedComponents'
 import { About, Home, Navigation, TitleBar } from './components'
 import Gallery from './components/Gallery'
-import Context from './context'
+
 import {
   COLORS,
   CONTENT_SPACING,
@@ -42,11 +42,17 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/private/:gallerySlug">
           <Route index element={<Gallery privateGallery={true} />} />
-          {/* <Route path=":photoId" element={<Photo privateGallery={true} />} /> */}
+          <Route
+            path=":photoSlug"
+            element={<Gallery privateGallery={true} />}
+          />
         </Route>
         <Route path="/:gallerySlug">
           <Route index element={<Gallery privateGallery={false} />} />
-          {/* <Route path=":photoSlug" element={<Photo privateGallery={false} />} /> */}
+          <Route
+            path=":photoSlug"
+            element={<Gallery privateGallery={false} />}
+          />
         </Route>
         <Route path="/error500" element={<Error value="500" />} />
         <Route path="*" element={<Error value="404" />} />
@@ -92,12 +98,4 @@ const NavigationWrapper = styled.div<{ $isNavigationVisible: boolean }>`
     -17.4px 0px 26.1px hsl(0deg 0% 72% / 0.53);
 `
 
-const WrappedApp = () => {
-  return (
-    <Context>
-      <App />
-    </Context>
-  )
-}
-
-export default WrappedApp
+export default App

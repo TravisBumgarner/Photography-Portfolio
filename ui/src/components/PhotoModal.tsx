@@ -1,9 +1,9 @@
-import React, { useCallback, useContext, useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { FaArrowLeft, FaArrowRight, FaDownload, FaTimes } from 'react-icons/fa'
 import Modal from 'react-modal'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
-import { context } from '../context'
+import { getData } from '../content'
 import { COLORS, CONTENT_SPACING, FONT_SIZES } from '../theme'
 import { getPhotoUrl } from '../utils'
 
@@ -11,7 +11,6 @@ interface PhotoProps {
   navigateToNextPhoto: (direction: 'left' | 'right') => void
   privateGallery: boolean
   closeModal: () => void
-  isOpen: boolean
   selectedPhotoId: string | null
 }
 
@@ -19,16 +18,10 @@ const PhotoModal = ({
   navigateToNextPhoto,
   privateGallery,
   closeModal,
-  isOpen,
   selectedPhotoId
 }: PhotoProps) => {
-  const {
-    state: { photos }
-  } = useContext(context)
-  // const { gallerySlug, photoSlug } = useParams<{
-  //   gallerySlug: string
-  //   photoSlug: string
-  // }>()
+  // todo better home
+  const { photos } = getData()
 
   const details = selectedPhotoId ? photos[selectedPhotoId] : null
 
@@ -73,7 +66,11 @@ const PhotoModal = ({
   return (
     <>
       <OverflowHidden />
-      <Modal isOpen={true} style={modalCSS} onRequestClose={closeModal}>
+      <Modal
+        isOpen={selectedPhotoId !== null}
+        style={modalCSS}
+        onRequestClose={closeModal}
+      >
         <PhotoWrapper>
           <StyledPhoto src={photoSrc} />
         </PhotoWrapper>

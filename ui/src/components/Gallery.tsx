@@ -1,11 +1,14 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { Navigate, useParams } from 'react-router-dom'
 import { BlurImage, PageHeader } from 'sharedComponents'
 import { CONTENT_SPACING } from 'theme'
-import { type PhotoType, type PrivateGallery } from 'types'
-import { context } from '../context'
+import {
+  getData,
+  getSelectedGalleryPhotoIdsByGalleryId,
+  getSelectedPrivateGalleryPhotoIdsByGalleryId
+} from '../content'
 import { getPhotoUrl } from '../utils'
 import PhotoModal from './PhotoModal'
 
@@ -26,9 +29,8 @@ const PhotoPreview = ({
   gallerySlug,
   updateSelectedPhotoId
 }: PhotoPreviewProps) => {
-  const {
-    state: { privateGalleries, photos }
-  } = useContext(context)
+  // Find a better home.
+  const { photos, privateGalleries } = getData()
 
   const photo = privateGallery
     ? privateGalleries[gallerySlug].photos[photoId]
@@ -45,86 +47,50 @@ const PhotoPreview = ({
   }, [photoId, updateSelectedPhotoId])
 
   return (
-    // TODO - change div.
-    <div onClick={handleClick} key={photo.id}>
+    <Button onClick={handleClick} key={photo.id}>
       <BlurImage blurHash={photo.blurHash} src={src} useSquareImage />
-    </div>
+    </Button>
   )
 }
 
-const getSelectedGalleryPhotoIdsByGalleryId = (
-  galleryId: string,
-  photos: PhotoType[]
-) => {
-  return Object.values(photos)
-    .filter(photo => photo.galleryIds.includes(galleryId))
-    .sort((a, b) => {
-      const aDate = new Date(a.dateTaken)
-      const bDate = new Date(b.dateTaken)
-      return aDate.getTime() - bDate.getTime()
-    })
-    .map(({ id }) => id)
-}
-
-const getSelectedPrivateGalleryPhotoIdsByGalleryId = (
-  galleryId: string,
-  privateGalleries: Record<string, PrivateGallery>
-) => {
-  return Object.values(privateGalleries[galleryId].photos)
-    .sort((a, b) => {
-      const aDate = new Date(a.dateTaken)
-      const bDate = new Date(b.dateTaken)
-      return aDate.getTime() - bDate.getTime()
-    })
-    .map(({ id }) => id)
-}
+const Button = styled.button`
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-block;
+`
 
 const Gallery = ({ privateGallery }: Props) => {
   const [selectedPhotoIds, setSelectedPhotoIds] = useState<string[]>([])
   const [selectedPhotoId, setSelectedPhotoId] = useState<string | null>(null)
 
+  // Todo - find better home
+  const { photos, galleries, privateGalleries } = getData()
+
   const { gallerySlug, photoSlug } = useParams<{
     gallerySlug: string
     photoSlug?: string
   }>()
-  const {
-    state: {
-      galleries,
-      photos,
-      // previouslySelectedPhotoId,
-      privateGalleries
-    }
-    // dispatch
-  } = useContext(context)
 
-  // useEffect(() => {
-  //   if (previouslySelectedPhotoId) {
-  //     dispatch({
-  //       type: 'BACK_TO_GALLERY',
-  //       payload: {
-  //         previouslySelectedPhotoId: null
-  //       }
-  //     })
-  //   }
-  // }, [previouslySelectedPhotoId, dispatch])
+  useEffect(() => {
+    if (photoSlug) {
+      console.log('I should only fire on first page load.')
+      setSelectedPhotoId(photoSlug)
+    }
+  }, [photoSlug])
 
   useEffect(() => {
     if (!gallerySlug) return
 
     let newPhotoIds: string[] = []
     if (!privateGallery) {
-      newPhotoIds = getSelectedGalleryPhotoIdsByGalleryId(
-        gallerySlug,
-        Object.values(photos)
-      )
+      newPhotoIds = getSelectedGalleryPhotoIdsByGalleryId(gallerySlug)
     } else {
-      newPhotoIds = getSelectedPrivateGalleryPhotoIdsByGalleryId(
-        gallerySlug,
-        privateGalleries
-      )
+      newPhotoIds = getSelectedPrivateGalleryPhotoIdsByGalleryId(gallerySlug)
     }
     setSelectedPhotoIds(newPhotoIds)
-  }, [gallerySlug, photos, privateGalleries, privateGallery])
+  }, [gallerySlug, privateGallery])
 
   const updateSelectedPhotoId = useCallback(
     (photoId: string) => {
@@ -135,12 +101,6 @@ const Gallery = ({ privateGallery }: Props) => {
 
   const navigateToNextPhoto = useCallback(
     (direction: 'left' | 'right') => {
-      // if (!photoSlug || !selectedGalleryPhotoIds) {
-      //   navigate('/')
-      //   return
-      // }
-
-      // No photo is selected so don't continue.
       if (!selectedPhotoId) return
 
       const index = selectedPhotoIds.indexOf(selectedPhotoId)
@@ -156,8 +116,6 @@ const Gallery = ({ privateGallery }: Props) => {
 
       const nextPhotoId = selectedPhotoIds[nextIndex]
       setSelectedPhotoId(nextPhotoId)
-      // // Improve back button so that it goes back to gallery instead of previous photo.
-      // navigate(`/${gallerySlug}/${nextPhotoId}`, { replace: true })
     },
     [selectedPhotoId, selectedPhotoIds, setSelectedPhotoId]
   )
@@ -209,7 +167,6 @@ const Gallery = ({ privateGallery }: Props) => {
         closeModal={handleCloseModal}
         privateGallery={privateGallery}
         navigateToNextPhoto={navigateToNextPhoto}
-        isOpen={selectedPhotoId !== null}
         selectedPhotoId={selectedPhotoId}
       />
       <ProjectDescriptionWrapper>

@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { CONTENT_SPACING, FONT_SIZES } from 'theme'
-import { context } from '../context'
+import { getData } from '../content'
 import { BlurImage } from '../sharedComponents'
 import { getPhotoUrl } from '../utils'
 
@@ -17,9 +17,8 @@ const GalleryPreview = ({
   previewSrc: string
   previewId: string
 }) => {
-  const {
-    state: { photos }
-  } = useContext(context)
+  // Todo better home.
+  const { photos } = getData()
 
   const url = getPhotoUrl({
     isThumbnail: true,
