@@ -20,6 +20,7 @@ export const FONT_SIZES = {
 }
 
 export const COLORS = {
-  GREEN: 'rgb(74, 207, 160)',
-  BLACK: 'rgb(0, 0, 0)'
+  PRIMARY: 'var(--color-primary)',
+  FOREGROUND: 'var(--color-foreground)',
+  BACKGROUND: 'var(--color-background)'
 }

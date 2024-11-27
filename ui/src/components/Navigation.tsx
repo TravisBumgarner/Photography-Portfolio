@@ -151,48 +151,50 @@ const Navigation = ({ toggleNavigation, isNavigationVisible }: Props) => {
   })
 
   return (
-    <NavigationWrapper
-      ref={navigationRef}
-      $isNavigationVisible={isNavigationVisible}
-      role="dialog"
-      aria-modal="true"
-      aria-label="Site navigation"
-      aria-hidden={!isNavigationVisible}
-    >
-      <SectionsWrapper>
-        <NavigationClose
-          $isNavigationVisible={true}
-          onClick={toggleNavigation}
-          aria-label="Close navigation"
-          role="button"
-          tabIndex={0}
-          onKeyDown={e => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault()
-              toggleNavigation()
-            }
-          }}
-        />
-        <Section>
-          <Header>GALLERIES</Header>
-          <ul>{links}</ul>
-        </Section>
+    <>
+      <NavigationWrapper
+        ref={navigationRef}
+        $isNavigationVisible={isNavigationVisible}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site navigation"
+        aria-hidden={!isNavigationVisible}
+      >
+        <SectionsWrapper>
+          <NavigationClose
+            $isNavigationVisible={isNavigationVisible}
+            onClick={toggleNavigation}
+            aria-label="Close navigation"
+            role="button"
+            tabIndex={0}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                toggleNavigation()
+              }
+            }}
+          />
+          <Section>
+            <Header>GALLERIES</Header>
+            <ul>{links}</ul>
+          </Section>
 
-        <Section>
-          <Header>ABOUT</Header>
-          <ul>{aboutLinks}</ul>
-        </Section>
+          <Section>
+            <Header>ABOUT</Header>
+            <ul>{aboutLinks}</ul>
+          </Section>
 
-        <Section>
-          <Header>MISC</Header>
-          <ul>{miscLinks}</ul>
-        </Section>
-      </SectionsWrapper>
+          <Section>
+            <Header>MISC</Header>
+            <ul>{miscLinks}</ul>
+          </Section>
+        </SectionsWrapper>
+      </NavigationWrapper>
       <NavigationGutter
         $isNavigationVisible={isNavigationVisible}
         onClick={toggleNavigation}
       />
-    </NavigationWrapper>
+    </>
   )
 }
 
@@ -203,10 +205,10 @@ const NavigationGutter = styled.nav<{ $isNavigationVisible: boolean }>`
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 998;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: color-mix(in srgb, ${COLORS.FOREGROUND} 20%, transparent);
   width: 100vw;
   height: 100vh;
+  z-index: 998;
 `
 
 const NavigationWrapper = styled.div<{ $isNavigationVisible: boolean }>`
@@ -216,7 +218,8 @@ const NavigationWrapper = styled.div<{ $isNavigationVisible: boolean }>`
   z-index: 999;
   top: 0;
   overflow: scroll;
-  transition: right ${TRANSITION_SPEED}s;
+  background-color: ${COLORS.BACKGROUND};
+  transition: right ${TRANSITION_SPEED}s, visibility ${TRANSITION_SPEED}s;
   visibility: ${({ $isNavigationVisible }) =>
     $isNavigationVisible ? 'visible' : 'hidden'};
   right: ${({ $isNavigationVisible }) =>
@@ -233,15 +236,15 @@ const NavigationClose = styled(params => <FaTimes {...params} />)`
   transition: opacity ${TRANSITION_SPEED}s;
   opacity: ${props => (props.$isNavigationVisible ? 1 : 0)};
   z-index: 999;
-  fill: ${COLORS.BLACK};
+  fill: ${COLORS.FOREGROUND};
   cursor: pointer;
 
   &:hover {
-    fill: ${COLORS.GREEN};
+    fill: ${COLORS.PRIMARY};
   }
 
   &:focus-visible {
-    outline: 2px solid ${COLORS.GREEN};
+    outline: 2px solid ${COLORS.PRIMARY};
     outline-offset: 2px;
   }
 `
@@ -253,11 +256,10 @@ const SectionsWrapper = styled.div`
   box-sizing: border-box;
   flex-direction: column;
   width: 300px;
-  background-color: rgba(255, 255, 255, 1);
   overflow: auto;
 `
 
-const Section = styled.div`
+const Section = styled.section`
   margin-bottom: ${CONTENT_SPACING.XLARGE};
   :last-child {
     margin-top: 0;
@@ -271,7 +273,7 @@ const LinkListItem = styled.li`
 
   border-left: 5px solid transparent;
   &:hover {
-    border-left-color: ${COLORS.GREEN};
+    border-left-color: ${COLORS.PRIMARY};
   }
   padding-left: ${CONTENT_SPACING.MEDIUM};
 
@@ -281,23 +283,23 @@ const LinkListItem = styled.li`
   a {
     font-weight: 300;
     font-size: ${FONT_SIZES.SMALL};
-    color: rgba(0, 0, 0, 0.7);
+    color: color-mix(in srgb, ${COLORS.FOREGROUND} 70%, transparent);
   }
 `
 
 const sharedStyles = css`
   text-decoration: none;
   font-size: ${FONT_SIZES.MEDIUM};
-  color: black;
+  color: ${COLORS.FOREGROUND};
   width: 100%;
   display: inline-block;
 
   &:visited {
-    color: black;
+    color: ${COLORS.FOREGROUND};
   }
 
   &:focus-visible {
-    outline: 2px solid ${COLORS.GREEN};
+    outline: 2px solid ${COLORS.PRIMARY};
     outline-offset: 2px;
   }
 `

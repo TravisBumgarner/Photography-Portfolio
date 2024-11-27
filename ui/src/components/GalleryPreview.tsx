@@ -42,10 +42,10 @@ const GalleryPreview = ({
 const StyledLink = styled(Link)`
   text-decoration: none;
   text-align: center;
-  color: black;
+  color: ${COLORS.BACKGROUND};
 
   &:hover {
-    color: ${COLORS.GREEN};
+    color: ${COLORS.PRIMARY};
   }
 `
 

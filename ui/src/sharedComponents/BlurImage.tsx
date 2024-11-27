@@ -76,6 +76,7 @@ const StyledImage = styled.img<{
   $blurUrl: string | null
   $useSquareImage: boolean
 }>`
+  display: block;
   ${props =>
     props.$blurUrl &&
     `

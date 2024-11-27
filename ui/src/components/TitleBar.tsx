@@ -42,7 +42,7 @@ const Header = styled.h1`
   font-size: ${FONT_SIZES.MEDIUM};
 
   &:hover {
-    color: ${COLORS.GREEN};
+    color: ${COLORS.PRIMARY};
   }
 `
 
@@ -54,15 +54,15 @@ const TitleBarWrapper = styled.div`
 
 const InternalLink = styled(Link)`
   text-decoration: none;
-  color: black;
+  color: ${COLORS.BACKGROUND};
 
   &:visited {
-    color: black;
+    color: ${COLORS.BACKGROUND};
   }
 `
 
 const NavigationOpen = styled(params => <FaBars {...params} />)`
-  fill: ${COLORS.BLACK};
+  fill: ${COLORS.FOREGROUND};
   padding-bottom: ${CONTENT_SPACING.LARGE};
   padding-top: ${CONTENT_SPACING.LARGE};
   transition: opacity ${TRANSITION_SPEED}s;
@@ -71,7 +71,7 @@ const NavigationOpen = styled(params => <FaBars {...params} />)`
   margin-left: 1rem;
 
   &:hover {
-    fill: ${COLORS.GREEN};
+    fill: ${COLORS.PRIMARY};
   }
 `
 

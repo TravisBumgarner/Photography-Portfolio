@@ -89,11 +89,13 @@ const PhotoModal = ({
             <ControlsSectionWrapper>
               <PreviousButton
                 size={FONT_SIZES.LARGE}
+                aria-label="Previous photo"
                 onClick={() => {
                   navigateToNextPhoto('left')
                 }}
               />
               <CloseIcon
+                aria-label="Close single photo view"
                 size={FONT_SIZES.LARGE}
                 onClick={closeModal}
                 style={{
@@ -103,6 +105,7 @@ const PhotoModal = ({
               />
               <NextButton
                 size={FONT_SIZES.LARGE}
+                aria-label="Next photo"
                 onClick={() => {
                   navigateToNextPhoto('right')
                 }}
@@ -130,18 +133,19 @@ const modalCSS = {
     bottom: 0,
     border: 0,
     padding: 0,
-    backgroundColor: '#ffffff',
+    borderRadius: 0,
+    backgroundColor: COLORS.BACKGROUND,
     width: '100%',
     height: '100%'
   }
 }
 
 const IconCSS = css`
-  fill: ${COLORS.BLACK};
+  fill: ${COLORS.FOREGROUND};
   cursor: pointer;
 
   &:hover {
-    fill: ${COLORS.GREEN};
+    fill: ${COLORS.PRIMARY};
   }
 `
 const CloseIcon = styled(FaTimes)`
@@ -175,7 +179,9 @@ const ControlsSectionWrapper = styled.div<{ hideBackground?: boolean }>`
   align-items: center;
   justify-content: center;
   background-color: ${({ hideBackground }) =>
-    hideBackground ? 'transparent' : 'rgba(255, 255, 255, 0.7)'};
+    hideBackground
+      ? 'transparent'
+      : `color-mix(in srgb, ${COLORS.BACKGROUND} 50%, transparent)`};
   padding: ${CONTENT_SPACING.MEDIUM};
   border-radius: ${CONTENT_SPACING.MEDIUM};
   height: 30px;
