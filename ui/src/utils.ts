@@ -62,4 +62,6 @@ export const focusFirstSiteElement = () => {
   )
   const firstElement = focusableElements[0] as HTMLElement
   firstElement?.focus()
+  // blur the first element to remove the focus outline
+  firstElement?.blur()
 }
