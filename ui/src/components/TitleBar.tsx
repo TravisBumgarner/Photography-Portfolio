@@ -17,6 +17,15 @@ const TitleBar = ({ toggleNavigation, isNavigationVisible }: Props) => {
         <Header>Travis Bumgarner Photography</Header>
       </InternalLink>
       <NavigationOpen
+        tabIndex={0}
+        role="button"
+        aria-label="Open navigation"
+        onKeyDown={e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            toggleNavigation()
+          }
+        }}
         $isNavigationVisible={isNavigationVisible}
         onClick={toggleNavigation}
         size={FONT_SIZES.LARGE}

@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useContext, useEffect, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
@@ -11,7 +11,45 @@ interface Props {
   isNavigationVisible: boolean
 }
 
+const ABOUT_CONTENT = [
+  {
+    title: 'Store',
+    route: 'https://travisbumgarner.darkroom.com/',
+    external: true
+  },
+  {
+    title: 'Instagram',
+    route: 'https://www.instagram.com/cameracoffeewander/',
+    external: true
+  },
+  {
+    title: 'Recognition',
+    route: '/about',
+    external: false
+  },
+  {
+    title: 'Contact',
+    route: 'https://www.linkedin.com/in/travisbumgarner/',
+    external: true
+  }
+]
+
+const MISC_CONTENT = [
+  {
+    title: 'Silly Side Projects',
+    route: 'https://sillysideprojects.com/',
+    external: true
+  },
+  {
+    title: 'Engineering & Blog',
+    route: 'https://travisbumgarner.com/',
+    external: true
+  }
+]
+
 const Navigation = ({ toggleNavigation, isNavigationVisible }: Props) => {
+  const navigationRef = useRef<HTMLDivElement>(null)
+
   const {
     state: { galleries }
   } = useContext(context)
@@ -28,68 +66,106 @@ const Navigation = ({ toggleNavigation, isNavigationVisible }: Props) => {
       })
   }, [galleries, toggleNavigation])
 
-  const aboutContent = [
-    {
-      title: 'Store',
-      route: 'https://travisbumgarner.darkroom.com/',
-      external: true
-    },
-    {
-      title: 'Instagram',
-      route: 'https://www.instagram.com/cameracoffeewander/',
-      external: true
-    },
-    {
-      title: 'Recognition',
-      route: '/about',
-      external: false
-    },
-    {
-      title: 'Contact',
-      route: 'https://www.linkedin.com/in/travisbumgarner/',
-      external: true
-    }
-  ]
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Handle Escape key
+      if (event.key === 'Escape' && isNavigationVisible) {
+        toggleNavigation()
+        return
+      }
 
-  const miscContent = [
-    {
-      title: 'Silly Side Projects',
-      route: 'https://sillysideprojects.com/',
-      external: true
-    },
-    {
-      title: 'Engineering & Blog',
-      route: 'https://travisbumgarner.com/',
-      external: true
-    }
-  ]
+      // Only handle Tab key if navigation is visible
+      if (!isNavigationVisible || !navigationRef.current) return
 
-  const aboutLinks = aboutContent.map(m => {
+      if (event.key === 'Tab') {
+        const focusableElements = navigationRef.current.querySelectorAll(
+          'a[href], button, [tabindex]:not([tabindex="-1"])'
+        )
+
+        const firstElement = focusableElements[0] as HTMLElement
+        const lastElement = focusableElements[
+          focusableElements.length - 1
+        ] as HTMLElement
+
+        if (event.shiftKey) {
+          if (document.activeElement === firstElement) {
+            event.preventDefault()
+            lastElement.focus()
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            event.preventDefault()
+            firstElement.focus()
+          }
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isNavigationVisible, toggleNavigation])
+
+  useEffect(() => {
+    if (isNavigationVisible && navigationRef.current) {
+      const firstGalleryLink = navigationRef.current.querySelector('a')
+      firstGalleryLink?.focus()
+    }
+  }, [isNavigationVisible])
+
+  const aboutLinks = ABOUT_CONTENT.map(m => {
     return (
       <LinkListItem key={m.title} onClick={toggleNavigation}>
-        <ExternalLink target={m.external ? '_blank' : ''} href={m.route}>
+        <ExternalLink
+          target={m.external ? '_blank' : ''}
+          href={m.route}
+          rel={m.external ? 'noopener noreferrer' : undefined}
+        >
           {m.title}
+          {m.external && <VisuallyHidden>(opens in new tab)</VisuallyHidden>}
         </ExternalLink>
       </LinkListItem>
     )
   })
 
-  const miscLinks = miscContent.map(m => {
+  const miscLinks = MISC_CONTENT.map(m => {
     return (
       <LinkListItem key={m.title} onClick={toggleNavigation}>
-        <ExternalLink target={m.external ? '_blank' : ''} href={m.route}>
+        <ExternalLink
+          target={m.external ? '_blank' : ''}
+          href={m.route}
+          rel={m.external ? 'noopener noreferrer' : undefined}
+        >
           {m.title}
+          {m.external && <VisuallyHidden>(opens in new tab)</VisuallyHidden>}
         </ExternalLink>
       </LinkListItem>
     )
   })
 
   return (
-    <NavigationWrapper $isNavigationVisible={isNavigationVisible}>
+    <NavigationWrapper
+      ref={navigationRef}
+      $isNavigationVisible={isNavigationVisible}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Site navigation"
+    >
       <SectionsWrapper>
         <NavigationClose
           $isNavigationVisible={true}
           onClick={toggleNavigation}
+          aria-label="Close navigation"
+          role="button"
+          tabIndex={0}
+          onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault()
+              toggleNavigation()
+            }
+          }}
         />
         <Section>
           <Header>GALLERIES</Header>
@@ -155,6 +231,11 @@ const NavigationClose = styled(params => <FaTimes {...params} />)`
   &:hover {
     fill: ${COLORS.GREEN};
   }
+
+  &:focus-visible {
+    outline: 2px solid ${COLORS.GREEN};
+    outline-offset: 2px;
+  }
 `
 
 const SectionsWrapper = styled.div`
@@ -206,6 +287,11 @@ const sharedStyles = css`
   &:visited {
     color: black;
   }
+
+  &:focus-visible {
+    outline: 2px solid ${COLORS.GREEN};
+    outline-offset: 2px;
+  }
 `
 
 const Header = styled.h3`
@@ -220,6 +306,18 @@ const InternalLink = styled(Link)`
 
 const ExternalLink = styled.a`
   ${sharedStyles}
+`
+
+const VisuallyHidden = styled.span`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 `
 
 export default Navigation
