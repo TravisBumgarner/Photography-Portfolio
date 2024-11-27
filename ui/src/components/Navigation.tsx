@@ -2,14 +2,16 @@ import React, { useContext, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
+import { FaTimes } from 'react-icons/fa'
 import { context } from '../context'
-import { COLORS, CONTENT_SPACING, FONT_SIZES } from '../theme'
+import { COLORS, CONTENT_SPACING, FONT_SIZES, TRANSITION_SPEED } from '../theme'
 
 interface Props {
   toggleNavigation: () => void
+  isNavigationVisible: boolean
 }
 
-const Navigation = ({ toggleNavigation }: Props) => {
+const Navigation = ({ toggleNavigation, isNavigationVisible }: Props) => {
   const {
     state: { galleries }
   } = useContext(context)
@@ -83,26 +85,79 @@ const Navigation = ({ toggleNavigation }: Props) => {
   })
 
   return (
-    <NavigationWrapper>
-      <SubNavigationWrapper>
-        <Header>GALLERIES</Header>
-        <ul>{links}</ul>
-      </SubNavigationWrapper>
+    <NavigationWrapper $isNavigationVisible={isNavigationVisible}>
+      <SectionsWrapper>
+        <NavigationClose
+          $isNavigationVisible={true}
+          onClick={toggleNavigation}
+        />
+        <Section>
+          <Header>GALLERIES</Header>
+          <ul>{links}</ul>
+        </Section>
 
-      <SubNavigationWrapper>
-        <Header>ABOUT</Header>
-        <ul>{aboutLinks}</ul>
-      </SubNavigationWrapper>
+        <Section>
+          <Header>ABOUT</Header>
+          <ul>{aboutLinks}</ul>
+        </Section>
 
-      <SubNavigationWrapper>
-        <Header>MISC</Header>
-        <ul>{miscLinks}</ul>
-      </SubNavigationWrapper>
+        <Section>
+          <Header>MISC</Header>
+          <ul>{miscLinks}</ul>
+        </Section>
+      </SectionsWrapper>
+      <NavigationGutter
+        $isNavigationVisible={isNavigationVisible}
+        onClick={toggleNavigation}
+      />
     </NavigationWrapper>
   )
 }
 
-const NavigationWrapper = styled.div`
+const NavigationGutter = styled.div<{ $isNavigationVisible: boolean }>`
+  transition: opacity ${TRANSITION_SPEED}s;
+  opacity: ${props => (props.$isNavigationVisible ? 1 : 0)};
+  visibility: ${props => (props.$isNavigationVisible ? 'visible' : 'hidden')};
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 998;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+`
+
+const NavigationWrapper = styled.div<{ $isNavigationVisible: boolean }>`
+  box-sizing: border-box;
+  display: flex;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  overflow: scroll;
+  transition: right ${TRANSITION_SPEED}s;
+  right: ${({ $isNavigationVisible }) =>
+    $isNavigationVisible ? '0' : '-100vw'};
+
+  box-shadow: -1px 0px 1.5px hsl(0deg 0% 72% / 0),
+    -17.4px 0px 26.1px hsl(0deg 0% 72% / 0.53);
+`
+
+const NavigationClose = styled(params => <FaTimes {...params} />)`
+  position: absolute;
+  top: ${CONTENT_SPACING.XLARGE};
+  right: ${CONTENT_SPACING.XLARGE};
+  transition: opacity ${TRANSITION_SPEED}s;
+  opacity: ${props => (props.$isNavigationVisible ? 1 : 0)};
+  z-index: 999;
+  fill: ${COLORS.BLACK};
+  cursor: pointer;
+
+  &:hover {
+    fill: ${COLORS.GREEN};
+  }
+`
+
+const SectionsWrapper = styled.div`
   z-index: 999;
   padding: ${CONTENT_SPACING.XLARGE};
   height: 100vh;
@@ -113,7 +168,7 @@ const NavigationWrapper = styled.div`
   overflow: auto;
 `
 
-const SubNavigationWrapper = styled.div`
+const Section = styled.div`
   margin-bottom: ${CONTENT_SPACING.XLARGE};
   :last-child {
     margin-top: 0;
