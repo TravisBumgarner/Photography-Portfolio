@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components'
 import { FaTimes } from 'react-icons/fa'
 import { context } from '../context'
 import { COLORS, CONTENT_SPACING, FONT_SIZES, TRANSITION_SPEED } from '../theme'
+import { focusFirstSiteElement } from '../utils'
 
 interface Props {
   toggleNavigation: () => void
@@ -108,10 +109,14 @@ const Navigation = ({ toggleNavigation, isNavigationVisible }: Props) => {
     }
   }, [isNavigationVisible, toggleNavigation])
 
+  // Set focus on the first gallery link when the navigation is visible
+  // Clear focus when the navigation is hidden
   useEffect(() => {
     if (isNavigationVisible && navigationRef.current) {
       const firstGalleryLink = navigationRef.current.querySelector('a')
       firstGalleryLink?.focus()
+    } else {
+      focusFirstSiteElement()
     }
   }, [isNavigationVisible])
 
@@ -152,6 +157,7 @@ const Navigation = ({ toggleNavigation, isNavigationVisible }: Props) => {
       role="dialog"
       aria-modal="true"
       aria-label="Site navigation"
+      aria-hidden={!isNavigationVisible}
     >
       <SectionsWrapper>
         <NavigationClose
@@ -190,7 +196,7 @@ const Navigation = ({ toggleNavigation, isNavigationVisible }: Props) => {
   )
 }
 
-const NavigationGutter = styled.div<{ $isNavigationVisible: boolean }>`
+const NavigationGutter = styled.nav<{ $isNavigationVisible: boolean }>`
   transition: opacity ${TRANSITION_SPEED}s;
   opacity: ${props => (props.$isNavigationVisible ? 1 : 0)};
   visibility: ${props => (props.$isNavigationVisible ? 'visible' : 'hidden')};
@@ -210,7 +216,9 @@ const NavigationWrapper = styled.div<{ $isNavigationVisible: boolean }>`
   z-index: 999;
   top: 0;
   overflow: scroll;
-  transition: right ${TRANSITION_SPEED}s;
+  transition: right ${TRANSITION_SPEED}s; 
+  visibility: ${({ $isNavigationVisible }) =>
+    $isNavigationVisible ? 'visible' : 'hidden'};
   right: ${({ $isNavigationVisible }) =>
     $isNavigationVisible ? '0' : '-100vw'};
 
