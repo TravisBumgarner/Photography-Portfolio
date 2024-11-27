@@ -12,6 +12,7 @@ interface Props {
   width?: number
   height?: number
   useSquareImage: boolean
+  alt: string
 }
 
 export const BlurImage = ({
@@ -19,7 +20,8 @@ export const BlurImage = ({
   src,
   useSquareImage,
   width,
-  height
+  height,
+  alt
 }: Props) => {
   const [isVisible, setIsVisible] = useState(false)
 
@@ -65,6 +67,7 @@ export const BlurImage = ({
       {...(isVisible ? { src } : {})}
       loading="lazy"
       onLoad={handleOnLoad}
+      alt={alt}
     />
   )
 }

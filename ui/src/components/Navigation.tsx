@@ -216,7 +216,7 @@ const NavigationWrapper = styled.div<{ $isNavigationVisible: boolean }>`
   z-index: 999;
   top: 0;
   overflow: scroll;
-  transition: right ${TRANSITION_SPEED}s; 
+  transition: right ${TRANSITION_SPEED}s;
   visibility: ${({ $isNavigationVisible }) =>
     $isNavigationVisible ? 'visible' : 'hidden'};
   right: ${({ $isNavigationVisible }) =>
@@ -302,7 +302,7 @@ const sharedStyles = css`
   }
 `
 
-const Header = styled.h3`
+const Header = styled.h2`
   font-weight: 700;
   font-size: ${FONT_SIZES.SMALL};
   margin-bottom: ${CONTENT_SPACING.SMALL};
