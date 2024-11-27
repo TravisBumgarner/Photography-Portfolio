@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { COLORS, CONTENT_SPACING, FONT_SIZES } from 'src/theme'
 import styled from 'styled-components'
-import { COLORS, CONTENT_SPACING, FONT_SIZES } from 'theme'
 import { context } from '../context'
 import { BlurImage } from '../sharedComponents'
 import { getPhotoUrl } from '../utils'
@@ -32,22 +32,12 @@ const GalleryPreview = ({
   return (
     <div>
       <StyledLink id={slug} to={`/${slug}`}>
-        <BlurImage useSquareImage src={url} blurHash={blurHash} />
+        <BlurImage alt={title} useSquareImage src={url} blurHash={blurHash} />
         <Header>{title}</Header>
       </StyledLink>
     </div>
   )
 }
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  text-align: center;
-  color: black;
-
-  &:hover {
-    color: ${COLORS.GREEN};
-  }
-`
 
 const Header = styled.h2`
   font-weight: 700;
@@ -55,6 +45,17 @@ const Header = styled.h2`
   margin-top: ${CONTENT_SPACING.LARGE};
   font-size: ${FONT_SIZES.SMALL};
   text-align: left;
+  transition: color 0.2s ease;
+`
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  text-align: center;
+  color: ${COLORS.BACKGROUND};
+
+  &:hover ${Header} {
+    color: ${COLORS.PRIMARY};
+  }
 `
 
 export default GalleryPreview

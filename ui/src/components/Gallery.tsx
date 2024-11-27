@@ -1,10 +1,16 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react'
 import styled from 'styled-components'
 
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
-import { BlurImage, PageHeader } from 'sharedComponents'
-import { CONTENT_SPACING } from 'theme'
-import { type PhotoType, type PrivateGallery } from 'types'
+import { BlurImage, PageHeader } from 'src/sharedComponents'
+import { CONTENT_SPACING } from 'src/theme'
+import { type PhotoType, type PrivateGallery } from 'src/types'
 import { context } from '../context'
 import { getPhotoUrl } from '../utils'
 import PhotoModal from './PhotoModal'
@@ -45,13 +51,15 @@ interface PhotoPreviewProps {
   privateGallery: boolean
   gallerySlug: string
   updateSelectedPhotoId: (photoId: string) => void
+  alt: string
 }
 
 const PhotoPreview = ({
   photoId,
   privateGallery,
   gallerySlug,
-  updateSelectedPhotoId
+  updateSelectedPhotoId,
+  alt
 }: PhotoPreviewProps) => {
   const {
     state: { photos, privateGalleries }
@@ -73,7 +81,7 @@ const PhotoPreview = ({
 
   return (
     <Button id={photo.id} onClick={handleClick} key={photo.id}>
-      <BlurImage blurHash={photo.blurHash} src={src} useSquareImage />
+      <BlurImage alt={alt} blurHash={photo.blurHash} src={src} useSquareImage />
     </Button>
   )
 }
@@ -100,6 +108,15 @@ const Gallery = ({ privateGallery }: Props) => {
     gallerySlug: string
     photoSlug?: string
   }>()
+
+  const galleryTitle = useMemo(() => {
+    if (!gallerySlug) return ''
+
+    if (privateGallery) {
+      return privateGalleries[gallerySlug].gallery.title
+    }
+    return galleries[gallerySlug].title
+  }, [privateGallery, gallerySlug, galleries, privateGalleries])
 
   // Grab the photo id from the url and set it as the selectedPhotoId on first load.
   useEffect(() => {
@@ -228,6 +245,7 @@ const Gallery = ({ privateGallery }: Props) => {
       <GalleryWrapper>
         {selectedPhotoIds.map(photoId => (
           <PhotoPreview
+            alt={`photo of ${galleryTitle}`}
             key={photoId}
             photoId={photoId}
             privateGallery={privateGallery}

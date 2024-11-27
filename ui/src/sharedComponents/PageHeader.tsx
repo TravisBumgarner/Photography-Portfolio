@@ -1,5 +1,5 @@
+import { CONTENT_SPACING, FONT_SIZES } from 'src/theme'
 import styled from 'styled-components'
-import { CONTENT_SPACING, FONT_SIZES } from 'theme'
 
 export const PageHeader = styled.h2`
   font-weight: 900;

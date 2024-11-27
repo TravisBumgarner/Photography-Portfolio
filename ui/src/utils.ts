@@ -55,3 +55,13 @@ export const useEffectDebugger = (
 
   useEffect(effectHook, dependencies)
 }
+
+export const focusFirstSiteElement = () => {
+  const focusableElements = document.querySelectorAll(
+    'a[href], button, [tabindex]:not([tabindex="-1"])'
+  )
+  const firstElement = focusableElements[0] as HTMLElement
+  firstElement?.focus()
+  // blur the first element to remove the focus outline
+  firstElement?.blur()
+}

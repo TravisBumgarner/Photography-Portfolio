@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 
-import { CONTENT_SPACING } from 'theme'
-import { context } from '../context'
+import { context } from 'src/context'
+import { CONTENT_SPACING } from 'src/theme'
 import GalleryPreview from './GalleryPreview'
 
 const HomeImageWrapper = styled.div`

@@ -1,14 +1,14 @@
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
 
-import { CONTENT_SPACING, FONT_SIZES } from 'theme'
+import { CONTENT_SPACING, FONT_SIZES } from 'src/theme'
 import { PageHeader } from './PageHeader'
 
 const ErrorWrapper = styled.div`
   display: flex;
   margin: ${CONTENT_SPACING.LARGE};
   flex-direction: column;
-  `
+`
 
 const Error = ({ value }: { value: '404' | '500' }) => {
   const { message, header } = useMemo(() => {

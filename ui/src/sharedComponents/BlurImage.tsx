@@ -12,6 +12,7 @@ interface Props {
   width?: number
   height?: number
   useSquareImage: boolean
+  alt: string
 }
 
 export const BlurImage = ({
@@ -19,7 +20,8 @@ export const BlurImage = ({
   src,
   useSquareImage,
   width,
-  height
+  height,
+  alt
 }: Props) => {
   const [isVisible, setIsVisible] = useState(false)
 
@@ -65,6 +67,7 @@ export const BlurImage = ({
       {...(isVisible ? { src } : {})}
       loading="lazy"
       onLoad={handleOnLoad}
+      alt={alt}
     />
   )
 }
@@ -73,6 +76,9 @@ const StyledImage = styled.img<{
   $blurUrl: string | null
   $useSquareImage: boolean
 }>`
+  display: block;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   ${props =>
     props.$blurUrl &&
     `
@@ -86,8 +92,11 @@ const StyledImage = styled.img<{
       ? `
       object-fit: cover;
       width: 100%;
-      aspect-ratio: 1 / 1; /* This maintains a 1:1 aspect ratio */
+      aspect-ratio: 1 / 1;
     `
-      : `
-    `}
+      : ''}
+
+  &:hover {
+    transform: scale(1.03);
+  }
 `

@@ -1,4 +1,8 @@
-import { type GalleryType, type PhotoType, type PrivateGallery } from 'types'
+import {
+  type GalleryType,
+  type PhotoType,
+  type PrivateGallery
+} from 'src/types'
 import output from './output.json'
 // import rickyAndTif from './ricky-and-tif.json'
 
