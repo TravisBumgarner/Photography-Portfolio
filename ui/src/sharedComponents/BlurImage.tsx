@@ -77,6 +77,8 @@ const StyledImage = styled.img<{
   $useSquareImage: boolean
 }>`
   display: block;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   ${props =>
     props.$blurUrl &&
     `
@@ -90,8 +92,11 @@ const StyledImage = styled.img<{
       ? `
       object-fit: cover;
       width: 100%;
-      aspect-ratio: 1 / 1; /* This maintains a 1:1 aspect ratio */
+      aspect-ratio: 1 / 1;
     `
-      : `
-    `}
+      : ''}
+
+  &:hover {
+    transform: scale(1.03);
+  }
 `

@@ -34,7 +34,7 @@ li {
 
 :root {
   --doc-height: 100%;
-  --color-primary: rgb(74, 207, 160);
-  --color-foreground: rgb(0, 0, 0);
+  --color-primary: rgb(5 112 191);
+  --color-foreground: rgb(66, 66, 66);
   --color-background: rgb(255, 255, 255);
 }

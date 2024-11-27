@@ -39,22 +39,23 @@ const GalleryPreview = ({
   )
 }
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  text-align: center;
-  color: ${COLORS.BACKGROUND};
-
-  &:hover {
-    color: ${COLORS.PRIMARY};
-  }
-`
-
 const Header = styled.h2`
   font-weight: 700;
   margin-bottom: ${CONTENT_SPACING.MEDIUM};
   margin-top: ${CONTENT_SPACING.LARGE};
   font-size: ${FONT_SIZES.SMALL};
   text-align: left;
+  transition: color 0.2s ease;
+`
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  text-align: center;
+  color: ${COLORS.BACKGROUND};
+
+  &:hover ${Header} {
+    color: ${COLORS.PRIMARY};
+  }
 `
 
 export default GalleryPreview

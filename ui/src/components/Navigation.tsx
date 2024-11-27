@@ -283,7 +283,10 @@ const LinkListItem = styled.li`
   a {
     font-weight: 300;
     font-size: ${FONT_SIZES.SMALL};
-    color: color-mix(in srgb, ${COLORS.FOREGROUND} 70%, transparent);
+
+    &:hover {
+      color: ${COLORS.PRIMARY};
+    }
   }
 `
 
