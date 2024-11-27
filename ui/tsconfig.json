@@ -12,21 +12,8 @@
     "esModuleInterop": true,
     "strictNullChecks": true,
     "paths": {
-      "*": [
-        "src/types/*"
-      ],
-      "sharedComponents": [
-        "src/sharedComponents"
-      ],
-      "types": [
-        "src/types.ts"
-      ],
-      "theme": [
-        "src/theme.tsx"
-      ],
-      "utilities": [
-        "src/utilities"
-      ]
+      "*": ["src/types/*"],
+      "src/*": ["src/*"]
     }
   }
 }

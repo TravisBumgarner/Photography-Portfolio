@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { COLORS, CONTENT_SPACING, FONT_SIZES } from 'src/theme'
 import styled from 'styled-components'
-import { COLORS, CONTENT_SPACING, FONT_SIZES } from 'theme'
 import { context } from '../context'
 import { BlurImage } from '../sharedComponents'
 import { getPhotoUrl } from '../utils'

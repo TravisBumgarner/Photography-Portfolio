@@ -3,7 +3,12 @@ import { FaBars } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { COLORS, CONTENT_SPACING, FONT_SIZES, TRANSITION_SPEED } from 'theme'
+import {
+  COLORS,
+  CONTENT_SPACING,
+  FONT_SIZES,
+  TRANSITION_SPEED
+} from 'src/theme'
 
 interface Props {
   toggleNavigation: () => void

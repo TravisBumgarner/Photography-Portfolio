@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { List, PageHeader } from 'sharedComponents'
-import { CONTENT_SPACING } from 'theme'
+import { List, PageHeader } from 'src/sharedComponents'
+import { CONTENT_SPACING } from 'src/theme'
 
 const ContentWrapper = styled.div`
   display: flex;

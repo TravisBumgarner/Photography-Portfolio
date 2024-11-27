@@ -3,9 +3,10 @@ import { FaArrowLeft, FaArrowRight, FaDownload, FaTimes } from 'react-icons/fa'
 import Modal from 'react-modal'
 import styled, { createGlobalStyle, css } from 'styled-components'
 
-import { context } from '../context'
-import { COLORS, CONTENT_SPACING, FONT_SIZES } from '../theme'
-import { getPhotoUrl } from '../utils'
+import { context } from 'src/context'
+import usePreventAppScroll from 'src/hooks/usePreventAppScroll'
+import { COLORS, CONTENT_SPACING, FONT_SIZES } from 'src/theme'
+import { getPhotoUrl } from 'src/utils'
 
 interface PhotoProps {
   navigateToNextPhoto: (direction: 'left' | 'right') => void
@@ -23,6 +24,7 @@ const PhotoModal = ({
   const {
     state: { photos }
   } = useContext(context)
+  usePreventAppScroll(selectedPhotoId !== null)
 
   const details = selectedPhotoId ? photos[selectedPhotoId] : null
 

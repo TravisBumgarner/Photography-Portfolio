@@ -5,9 +5,13 @@ import React, {
   useState,
   type Dispatch
 } from 'react'
-import { type GalleryType, type PhotoType, type PrivateGallery } from 'types'
+import {
+  type GalleryType,
+  type PhotoType,
+  type PrivateGallery
+} from 'src/types'
 
-import getContent from './content'
+import getContent from 'src/content'
 
 export interface State {
   photos: Record<string, PhotoType>

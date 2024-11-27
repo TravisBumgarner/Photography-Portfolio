@@ -8,9 +8,9 @@ import React, {
 import styled from 'styled-components'
 
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
-import { BlurImage, PageHeader } from 'sharedComponents'
-import { CONTENT_SPACING } from 'theme'
-import { type PhotoType, type PrivateGallery } from 'types'
+import { BlurImage, PageHeader } from 'src/sharedComponents'
+import { CONTENT_SPACING } from 'src/theme'
+import { type PhotoType, type PrivateGallery } from 'src/types'
 import { context } from '../context'
 import { getPhotoUrl } from '../utils'
 import PhotoModal from './PhotoModal'

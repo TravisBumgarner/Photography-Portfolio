@@ -3,9 +3,15 @@ import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
 import { FaTimes } from 'react-icons/fa'
-import { context } from '../context'
-import { COLORS, CONTENT_SPACING, FONT_SIZES, TRANSITION_SPEED } from '../theme'
-import { focusFirstSiteElement } from '../utils'
+import { context } from 'src/context'
+import usePreventAppScroll from 'src/hooks/usePreventAppScroll'
+import {
+  COLORS,
+  CONTENT_SPACING,
+  FONT_SIZES,
+  TRANSITION_SPEED
+} from 'src/theme'
+import { focusFirstSiteElement } from 'src/utils'
 
 interface Props {
   toggleNavigation: () => void
@@ -50,6 +56,7 @@ const MISC_CONTENT = [
 
 const Navigation = ({ toggleNavigation, isNavigationVisible }: Props) => {
   const navigationRef = useRef<HTMLDivElement>(null)
+  usePreventAppScroll(isNavigationVisible)
 
   const {
     state: { galleries }

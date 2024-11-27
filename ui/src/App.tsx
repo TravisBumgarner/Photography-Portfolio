@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import { Error } from 'sharedComponents'
+import { Error } from 'src/sharedComponents'
 import { About, Home, Navigation, TitleBar } from './components'
 import Gallery from './components/Gallery'
 import Context from './context'
