@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode=development --config=webpack.js",
+    "start": "NODE_OPTIONS=\"--inspect\" webpack-dev-server --mode=development --config=webpack.js",
     "bundle": " rm -rf ./build; mkdir ./build; webpack --mode=production --config=webpack.js",
     "precommit": "tsc --noEmit --skipLibCheck",
     "deploy": "gcloud config set project root-270023 && gcloud builds submit --tag gcr.io/root-270023/photo20 && gcloud run deploy photo20 --image gcr.io/root-270023/photo20 --platform managed --region us-east1",
