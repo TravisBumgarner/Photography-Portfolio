@@ -1,39 +1,27 @@
 import React from 'react'
-import { FaBars } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-import {
-  COLORS,
-  CONTENT_SPACING,
-  FONT_SIZES,
-  TRANSITION_SPEED
-} from 'src/theme'
+import { IconButton } from 'src/sharedComponents'
+import { COLORS, CONTENT_SPACING, FONT_SIZES } from 'src/theme'
 
 interface Props {
   toggleNavigation: () => void
   isNavigationVisible: boolean
 }
 
-const TitleBar = ({ toggleNavigation, isNavigationVisible }: Props) => {
+const TitleBar = ({ toggleNavigation }: Props) => {
   return (
     <TitleBarWrapper>
       <InternalLink to="/">
         <Header>Travis Bumgarner Photography</Header>
       </InternalLink>
-      <NavigationOpen
-        tabIndex={0}
-        role="button"
-        aria-label="Open navigation"
-        onKeyDown={e => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault()
-            toggleNavigation()
-          }
-        }}
-        $isNavigationVisible={isNavigationVisible}
+
+      <IconButton
+        icon="menu"
+        ariaLabel="Open navigation"
         onClick={toggleNavigation}
-        size={FONT_SIZES.LARGE}
+        size="LARGE"
       />
     </TitleBarWrapper>
   )
@@ -46,14 +34,17 @@ const Header = styled.h1`
   margin-top: ${CONTENT_SPACING.LARGE};
   font-size: ${FONT_SIZES.MEDIUM};
 
-  &:hover {
-    color: ${COLORS.PRIMARY};
+  @media (hover: hover) {
+    &:hover {
+      color: ${COLORS.PRIMARY};
+    }
   }
 `
 
 const TitleBarWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin: ${CONTENT_SPACING.LARGE};
 `
 
@@ -63,20 +54,6 @@ const InternalLink = styled(Link)`
 
   &:visited {
     color: ${COLORS.BACKGROUND};
-  }
-`
-
-const NavigationOpen = styled(params => <FaBars {...params} />)`
-  fill: ${COLORS.FOREGROUND};
-  padding-bottom: ${CONTENT_SPACING.LARGE};
-  padding-top: ${CONTENT_SPACING.LARGE};
-  transition: opacity ${TRANSITION_SPEED}s;
-  opacity: ${props => (props.$isNavigationVisible ? 0 : 1)};
-  cursor: pointer;
-  margin-left: 1rem;
-
-  &:hover {
-    fill: ${COLORS.PRIMARY};
   }
 `
 

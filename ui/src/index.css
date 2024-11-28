@@ -1,5 +1,9 @@
 :root {
   --doc-height: 100%;
+  --doc-height: 100%;
+  --color-primary: rgb(5 112 191);
+  --color-foreground: rgb(66, 66, 66);
+  --color-background: rgb(255, 255, 255);
 }
 
 @font-face {
@@ -11,7 +15,6 @@
 
 body {
   background-color: var(--color-black);
-  font-display: block;
   font-size: 18px;
   margin: 4rem;
   box-sizing: border-box;
@@ -20,7 +23,7 @@ body {
   color: var(--color-light-grey);
 
   @media (max-width: 768px) {
-    margin: 1rem;
+    margin: 0rem;
   }
 }
 
@@ -30,11 +33,4 @@ h3,
 p,
 li {
   color: var(--color-foreground);
-}
-
-:root {
-  --doc-height: 100%;
-  --color-primary: rgb(5 112 191);
-  --color-foreground: rgb(66, 66, 66);
-  --color-background: rgb(255, 255, 255);
 }

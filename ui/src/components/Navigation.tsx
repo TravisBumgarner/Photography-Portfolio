@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
-import { FaTimes } from 'react-icons/fa'
 import { context } from 'src/context'
 import usePreventAppScroll from 'src/hooks/usePreventAppScroll'
+import { IconButton } from 'src/sharedComponents'
 import {
   COLORS,
   CONTENT_SPACING,
@@ -168,19 +168,14 @@ const Navigation = ({ toggleNavigation, isNavigationVisible }: Props) => {
         aria-hidden={!isNavigationVisible}
       >
         <SectionsWrapper>
-          <NavigationClose
-            $isNavigationVisible={isNavigationVisible}
-            onClick={toggleNavigation}
-            aria-label="Close navigation"
-            role="button"
-            tabIndex={0}
-            onKeyDown={e => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault()
-                toggleNavigation()
-              }
-            }}
-          />
+          <CloseButtonWrapper>
+            <IconButton
+              icon="close"
+              ariaLabel="Close navigation"
+              onClick={toggleNavigation}
+              size="LARGE"
+            />
+          </CloseButtonWrapper>
           <Section>
             <Header>GALLERIES</Header>
             <ul>{links}</ul>
@@ -206,7 +201,7 @@ const Navigation = ({ toggleNavigation, isNavigationVisible }: Props) => {
 }
 
 const NavigationGutter = styled.nav<{ $isNavigationVisible: boolean }>`
-  transition: opacity ${TRANSITION_SPEED}s;
+  transition: opacity ${TRANSITION_SPEED}s, visibility ${TRANSITION_SPEED}s;
   opacity: ${props => (props.$isNavigationVisible ? 1 : 0)};
   visibility: ${props => (props.$isNavigationVisible ? 'visible' : 'hidden')};
   position: fixed;
@@ -232,28 +227,14 @@ const NavigationWrapper = styled.div<{ $isNavigationVisible: boolean }>`
   right: ${({ $isNavigationVisible }) =>
     $isNavigationVisible ? '0' : '-100vw'};
 
-  box-shadow: -1px 0px 1.5px hsl(0deg 0% 72% / 0),
-    -17.4px 0px 26.1px hsl(0deg 0% 72% / 0.53);
+  /* box-shadow: -1px 0px 1.5px hsl(0deg 0% 72% / 0),
+    -17.4px 0px 26.1px hsl(0deg 0% 72% / 0.53); */
 `
 
-const NavigationClose = styled(params => <FaTimes {...params} />)`
+const CloseButtonWrapper = styled.div`
   position: absolute;
   top: ${CONTENT_SPACING.XLARGE};
   right: ${CONTENT_SPACING.XLARGE};
-  transition: opacity ${TRANSITION_SPEED}s;
-  opacity: ${props => (props.$isNavigationVisible ? 1 : 0)};
-  z-index: 999;
-  fill: ${COLORS.FOREGROUND};
-  cursor: pointer;
-
-  &:hover {
-    fill: ${COLORS.PRIMARY};
-  }
-
-  &:focus-visible {
-    outline: 2px solid ${COLORS.PRIMARY};
-    outline-offset: 2px;
-  }
 `
 
 const SectionsWrapper = styled.div`
@@ -274,38 +255,29 @@ const Section = styled.section`
 `
 
 const LinkListItem = styled.li`
-  display: flex;
-  align-items: center;
   padding: ${CONTENT_SPACING.SMALL} 0;
-
-  border-left: 5px solid transparent;
-  &:hover {
-    border-left-color: ${COLORS.PRIMARY};
-  }
-  padding-left: ${CONTENT_SPACING.MEDIUM};
 
   position: relative;
   left: calc(-1 * (${CONTENT_SPACING.MEDIUM} + 5px));
-
-  a {
-    font-weight: 300;
-    font-size: ${FONT_SIZES.SMALL};
-
-    &:hover {
-      color: ${COLORS.PRIMARY};
-    }
-  }
 `
 
 const sharedStyles = css`
+  border-left: 5px solid transparent;
+  padding-left: ${CONTENT_SPACING.MEDIUM};
+  font-weight: 300;
   text-decoration: none;
-  font-size: ${FONT_SIZES.MEDIUM};
+  font-size: ${FONT_SIZES.SMALL};
   color: ${COLORS.FOREGROUND};
-  width: 100%;
-  display: inline-block;
 
   &:visited {
     color: ${COLORS.FOREGROUND};
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      color: ${COLORS.PRIMARY};
+      border-left-color: ${COLORS.PRIMARY};
+    }
   }
 
   &:focus-visible {

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { COLORS, CONTENT_SPACING, FONT_SIZES } from 'src/theme'
+import { COLORS, CONTENT_SPACING, FONT_SIZES, MOBILE_WIDTH } from 'src/theme'
 import styled from 'styled-components'
 import { context } from '../context'
 import { BlurImage } from '../sharedComponents'
@@ -30,12 +30,12 @@ const GalleryPreview = ({
   const { blurHash } = photos[previewId]
 
   return (
-    <div>
+    <Container>
       <StyledLink id={slug} to={`/${slug}`}>
         <BlurImage alt={title} useSquareImage src={url} blurHash={blurHash} />
         <Header>{title}</Header>
       </StyledLink>
-    </div>
+    </Container>
   )
 }
 
@@ -46,6 +46,11 @@ const Header = styled.h2`
   font-size: ${FONT_SIZES.SMALL};
   text-align: left;
   transition: color 0.2s ease;
+
+  @media (max-width: ${MOBILE_WIDTH}) {
+    margin-top: ${CONTENT_SPACING.MEDIUM};
+    margin-bottom: ${CONTENT_SPACING.SMALL};
+  }
 `
 
 const StyledLink = styled(Link)`
@@ -53,8 +58,22 @@ const StyledLink = styled(Link)`
   text-align: center;
   color: ${COLORS.BACKGROUND};
 
-  &:hover ${Header} {
-    color: ${COLORS.PRIMARY};
+  @media (hover: hover) {
+    &:hover ${Header} {
+      color: ${COLORS.PRIMARY};
+    }
+  }
+`
+
+const Container = styled.div`
+  @media (hover: hover) {
+    &:hover ${Header} {
+      color: ${COLORS.PRIMARY};
+    }
+
+    &:hover img {
+      transform: scale(1.05);
+    }
   }
 `
 
