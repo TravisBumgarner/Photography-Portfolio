@@ -206,7 +206,7 @@ const Navigation = ({ toggleNavigation, isNavigationVisible }: Props) => {
 }
 
 const NavigationGutter = styled.nav<{ $isNavigationVisible: boolean }>`
-  transition: opacity ${TRANSITION_SPEED}s;
+  transition: opacity ${TRANSITION_SPEED}s, visibility ${TRANSITION_SPEED}s;
   opacity: ${props => (props.$isNavigationVisible ? 1 : 0)};
   visibility: ${props => (props.$isNavigationVisible ? 'visible' : 'hidden')};
   position: fixed;
@@ -232,8 +232,8 @@ const NavigationWrapper = styled.div<{ $isNavigationVisible: boolean }>`
   right: ${({ $isNavigationVisible }) =>
     $isNavigationVisible ? '0' : '-100vw'};
 
-  box-shadow: -1px 0px 1.5px hsl(0deg 0% 72% / 0),
-    -17.4px 0px 26.1px hsl(0deg 0% 72% / 0.53);
+  /* box-shadow: -1px 0px 1.5px hsl(0deg 0% 72% / 0),
+    -17.4px 0px 26.1px hsl(0deg 0% 72% / 0.53); */
 `
 
 const NavigationClose = styled(params => <FaTimes {...params} />)`
