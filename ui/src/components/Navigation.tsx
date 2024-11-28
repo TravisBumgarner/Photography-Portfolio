@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
-
 import { FaTimes } from 'react-icons/fa'
+
 import { context } from 'src/context'
 import usePreventAppScroll from 'src/hooks/usePreventAppScroll'
 import {

@@ -56,6 +56,7 @@ const Header = styled.h1`
 const TitleBarWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin: ${CONTENT_SPACING.LARGE};
 `
 
@@ -70,8 +71,6 @@ const InternalLink = styled(Link)`
 
 const NavigationOpen = styled(params => <FaBars {...params} />)`
   fill: ${COLORS.FOREGROUND};
-  padding-bottom: ${CONTENT_SPACING.LARGE};
-  padding-top: ${CONTENT_SPACING.LARGE};
   transition: opacity ${TRANSITION_SPEED}s;
   opacity: ${props => (props.$isNavigationVisible ? 0 : 1)};
   cursor: pointer;
