@@ -75,7 +75,9 @@ const NavigationOpen = styled(params => <FaBars {...params} />)`
   transition: opacity ${TRANSITION_SPEED}s;
   opacity: ${props => (props.$isNavigationVisible ? 0 : 1)};
   cursor: pointer;
-  margin-left: 1rem;
+
+  // Push site title over a bit to avoid misclicks.
+  margin-left: 4rem;
 
   @media (hover: hover) {
     &:hover {
