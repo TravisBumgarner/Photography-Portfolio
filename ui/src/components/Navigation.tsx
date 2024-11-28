@@ -274,38 +274,27 @@ const Section = styled.section`
 `
 
 const LinkListItem = styled.li`
-  display: flex;
-  align-items: center;
   padding: ${CONTENT_SPACING.SMALL} 0;
-
-  border-left: 5px solid transparent;
-  &:hover {
-    border-left-color: ${COLORS.PRIMARY};
-  }
-  padding-left: ${CONTENT_SPACING.MEDIUM};
 
   position: relative;
   left: calc(-1 * (${CONTENT_SPACING.MEDIUM} + 5px));
-
-  a {
-    font-weight: 300;
-    font-size: ${FONT_SIZES.SMALL};
-
-    &:hover {
-      color: ${COLORS.PRIMARY};
-    }
-  }
 `
 
 const sharedStyles = css`
+  border-left: 5px solid transparent;
+  padding-left: ${CONTENT_SPACING.MEDIUM};
+  font-weight: 300;
   text-decoration: none;
-  font-size: ${FONT_SIZES.MEDIUM};
+  font-size: ${FONT_SIZES.SMALL};
   color: ${COLORS.FOREGROUND};
-  width: 100%;
-  display: inline-block;
 
   &:visited {
     color: ${COLORS.FOREGROUND};
+  }
+
+  &:hover {
+    color: ${COLORS.PRIMARY};
+    border-left-color: ${COLORS.PRIMARY};
   }
 
   &:focus-visible {
