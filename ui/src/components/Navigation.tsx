@@ -128,31 +128,39 @@ const Navigation = ({ toggleNavigation, isNavigationVisible }: Props) => {
   }, [isNavigationVisible])
 
   const aboutLinks = ABOUT_CONTENT.map(m => {
+    const Component: React.ElementType = m.external
+      ? ExternalLink
+      : InternalLink
+
     return (
       <LinkListItem key={m.title} onClick={toggleNavigation}>
-        <ExternalLink
+        <Component
           target={m.external ? '_blank' : ''}
-          href={m.route}
+          {...(m.external ? { href: m.route } : { to: m.route })}
           rel={m.external ? 'noopener noreferrer' : undefined}
         >
           {m.title}
           {m.external && <VisuallyHidden>(opens in new tab)</VisuallyHidden>}
-        </ExternalLink>
+        </Component>
       </LinkListItem>
     )
   })
 
   const miscLinks = MISC_CONTENT.map(m => {
+    const Component: React.ElementType = m.external
+      ? ExternalLink
+      : InternalLink
+
     return (
       <LinkListItem key={m.title} onClick={toggleNavigation}>
-        <ExternalLink
+        <Component
           target={m.external ? '_blank' : ''}
-          href={m.route}
+          {...(m.external ? { href: m.route } : { to: m.route })}
           rel={m.external ? 'noopener noreferrer' : undefined}
         >
           {m.title}
           {m.external && <VisuallyHidden>(opens in new tab)</VisuallyHidden>}
-        </ExternalLink>
+        </Component>
       </LinkListItem>
     )
   })
