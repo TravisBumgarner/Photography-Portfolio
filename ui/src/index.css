@@ -21,12 +21,10 @@ body {
   font-family: 'Satoshi', sans-serif;
   color: var(--color-light-grey);
 
-  /* Start CSS that's same as TitleBar.tsx */
-  margin: 4rem;
+  margin: 0 4rem;
   @media (max-width: 768px) {
     margin: 0rem;
   }
-  /* End CSS that's same as TitleBar.tsx */
 }
 
 h1,
