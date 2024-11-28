@@ -15,40 +15,32 @@ const Gallery = lazy(async () => await import('./components/Gallery'))
 
 const App = () => {
   return (
-    <>
-      <Suspense fallback={<div>Loading...</div>}>
-        <TitleBar />
-        <Navigation />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/private/:gallerySlug">
-            <Route index element={<Gallery privateGallery={true} />} />
-            <Route
-              path=":photoSlug"
-              element={<Gallery privateGallery={true} />}
-            />
-          </Route>
-          <Route path="/:gallerySlug">
-            <Route index element={<Gallery privateGallery={false} />} />
-            <Route
-              path=":photoSlug"
-              element={<Gallery privateGallery={false} />}
-            />
-          </Route>
-          <Route path="/error500" element={<Error value="500" />} />
-          <Route path="*" element={<Error value="404" />} />
-        </Routes>
-      </Suspense>
-    </>
-  )
-}
-
-const WrappedApp = () => {
-  return (
     <AppContainer>
+      <TitleBar />
       <Context>
-        <App />
+        <Navigation />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/private/:gallerySlug">
+              <Route index element={<Gallery privateGallery={true} />} />
+              <Route
+                path=":photoSlug"
+                element={<Gallery privateGallery={true} />}
+              />
+            </Route>
+            <Route path="/:gallerySlug">
+              <Route index element={<Gallery privateGallery={false} />} />
+              <Route
+                path=":photoSlug"
+                element={<Gallery privateGallery={false} />}
+              />
+            </Route>
+            <Route path="/error500" element={<Error value="500" />} />
+            <Route path="*" element={<Error value="404" />} />
+          </Routes>
+        </Suspense>
       </Context>
     </AppContainer>
   )
@@ -59,4 +51,4 @@ const AppContainer = styled.div`
   margin: 0 auto;
 `
 
-export default WrappedApp
+export default App

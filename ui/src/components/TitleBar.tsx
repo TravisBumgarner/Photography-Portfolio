@@ -11,9 +11,7 @@ const TitleBar = () => {
   useSignals()
 
   const openNavigation = () => {
-    console.log(isNavigationVisible.value)
     isNavigationVisible.value = true
-    console.log(isNavigationVisible.value)
   }
 
   return (
