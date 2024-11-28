@@ -5,7 +5,7 @@ import styled, { createGlobalStyle } from 'styled-components'
 import { context } from 'src/context'
 import usePreventAppScroll from 'src/hooks/usePreventAppScroll'
 import { IconButton } from 'src/sharedComponents'
-import { COLORS, CONTENT_SPACING } from 'src/theme'
+import { COLORS, CONTENT_SPACING, MAX_WIDTH } from 'src/theme'
 import { getPhotoUrl } from 'src/utils'
 
 interface PhotoProps {
@@ -130,22 +130,36 @@ const OverflowHidden = createGlobalStyle`
 
 const modalCSS = {
   content: {
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
     border: 0,
     padding: 0,
     borderRadius: 0,
     backgroundColor: COLORS.BACKGROUND,
-    width: '100%',
-    height: '100%'
+    width: MAX_WIDTH,
+    maxWidth: '100vw',
+    height: MAX_WIDTH,
+    maxHeight: '100vh', // Ensure the modal doesn't exceed the viewport height
+    overflow: 'auto' // Allow scrolling if content overflows
+  },
+  overlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.75)', // Semi-transparent background
+    zIndex: 1000 // Ensure the overlay is above other elements
   }
 }
 
 const MetadataAndControlsBottomWrapper = styled.div`
   display: flex;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;

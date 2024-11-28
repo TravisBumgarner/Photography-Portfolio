@@ -27,3 +27,4 @@ export const COLORS = {
 
 // CSS Variables don't work with media queries.
 export const MOBILE_WIDTH = '768px'
+export const MAX_WIDTH = '2000px'

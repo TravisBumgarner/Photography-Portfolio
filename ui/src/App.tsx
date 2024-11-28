@@ -2,8 +2,10 @@ import React, { Suspense, lazy, useCallback, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import { Error } from 'src/sharedComponents'
+import styled from 'styled-components'
 import Context from './context'
 import './index.css'
+import { MAX_WIDTH } from './theme'
 
 const About = lazy(async () => await import('./components/About'))
 const Home = lazy(async () => await import('./components/Home'))
@@ -55,10 +57,17 @@ const App = () => {
 
 const WrappedApp = () => {
   return (
-    <Context>
-      <App />
-    </Context>
+    <AppContainer>
+      <Context>
+        <App />
+      </Context>
+    </AppContainer>
   )
 }
+
+const AppContainer = styled.div`
+  max-width: ${MAX_WIDTH};
+  margin: 0 auto;
+`
 
 export default WrappedApp
