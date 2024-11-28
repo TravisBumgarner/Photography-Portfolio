@@ -2,15 +2,20 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
+import { useSignals } from '@preact/signals-react/runtime'
 import { IconButton } from 'src/sharedComponents'
 import { COLORS, CONTENT_SPACING, FONT_SIZES } from 'src/theme'
+import { isNavigationVisible } from './Navigation'
 
-interface Props {
-  toggleNavigation: () => void
-  isNavigationVisible: boolean
-}
+const TitleBar = () => {
+  useSignals()
 
-const TitleBar = ({ toggleNavigation }: Props) => {
+  const openNavigation = () => {
+    console.log(isNavigationVisible.value)
+    isNavigationVisible.value = true
+    console.log(isNavigationVisible.value)
+  }
+
   return (
     <TitleBarWrapper>
       <InternalLink to="/">
@@ -20,7 +25,7 @@ const TitleBar = ({ toggleNavigation }: Props) => {
       <IconButton
         icon="menu"
         ariaLabel="Open navigation"
-        onClick={toggleNavigation}
+        onClick={openNavigation}
         size="LARGE"
       />
     </TitleBarWrapper>

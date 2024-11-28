@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useCallback, useState } from 'react'
+import React, { Suspense, lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import { Error } from 'src/sharedComponents'
@@ -14,22 +14,11 @@ const TitleBar = lazy(async () => await import('./components/TitleBar'))
 const Gallery = lazy(async () => await import('./components/Gallery'))
 
 const App = () => {
-  const [isNavigationVisible, setIsNavigationVisible] = useState(false)
-  const toggleNavigation = useCallback(() => {
-    setIsNavigationVisible(prev => !prev)
-  }, [])
-
   return (
     <>
       <Suspense fallback={<div>Loading...</div>}>
-        <TitleBar
-          isNavigationVisible={isNavigationVisible}
-          toggleNavigation={toggleNavigation}
-        />
-        <Navigation
-          isNavigationVisible={isNavigationVisible}
-          toggleNavigation={toggleNavigation}
-        />
+        <TitleBar />
+        <Navigation />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
