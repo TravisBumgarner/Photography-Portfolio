@@ -146,8 +146,10 @@ const IconCSS = css`
   fill: ${COLORS.FOREGROUND};
   cursor: pointer;
 
-  &:hover {
-    fill: ${COLORS.PRIMARY};
+  @media (hover: hover) {
+    &:hover {
+      fill: ${COLORS.PRIMARY};
+    }
   }
 `
 const CloseIcon = styled(FaTimes)`

@@ -246,8 +246,10 @@ const NavigationClose = styled(params => <FaTimes {...params} />)`
   fill: ${COLORS.FOREGROUND};
   cursor: pointer;
 
-  &:hover {
-    fill: ${COLORS.PRIMARY};
+  @media (hover: hover) {
+    &:hover {
+      fill: ${COLORS.PRIMARY};
+    }
   }
 
   &:focus-visible {
@@ -292,9 +294,11 @@ const sharedStyles = css`
     color: ${COLORS.FOREGROUND};
   }
 
-  &:hover {
-    color: ${COLORS.PRIMARY};
-    border-left-color: ${COLORS.PRIMARY};
+  @media (hover: hover) {
+    &:hover {
+      color: ${COLORS.PRIMARY};
+      border-left-color: ${COLORS.PRIMARY};
+    }
   }
 
   &:focus-visible {

@@ -46,8 +46,10 @@ const Header = styled.h1`
   margin-top: ${CONTENT_SPACING.LARGE};
   font-size: ${FONT_SIZES.MEDIUM};
 
-  &:hover {
-    color: ${COLORS.PRIMARY};
+  @media (hover: hover) {
+    &:hover {
+      color: ${COLORS.PRIMARY};
+    }
   }
 `
 
@@ -75,8 +77,10 @@ const NavigationOpen = styled(params => <FaBars {...params} />)`
   cursor: pointer;
   margin-left: 1rem;
 
-  &:hover {
-    fill: ${COLORS.PRIMARY};
+  @media (hover: hover) {
+    &:hover {
+      fill: ${COLORS.PRIMARY};
+    }
   }
 `
 

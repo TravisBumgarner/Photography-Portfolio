@@ -58,18 +58,22 @@ const StyledLink = styled(Link)`
   text-align: center;
   color: ${COLORS.BACKGROUND};
 
-  &:hover ${Header} {
-    color: ${COLORS.PRIMARY};
+  @media (hover: hover) {
+    &:hover ${Header} {
+      color: ${COLORS.PRIMARY};
+    }
   }
 `
 
 const Container = styled.div`
-  &:hover ${Header} {
-    color: ${COLORS.PRIMARY};
-  }
+  @media (hover: hover) {
+    &:hover ${Header} {
+      color: ${COLORS.PRIMARY};
+    }
 
-  &:hover img {
-    transform: scale(1.05);
+    &:hover img {
+      transform: scale(1.05);
+    }
   }
 `
 

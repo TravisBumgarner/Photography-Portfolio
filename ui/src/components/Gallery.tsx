@@ -93,8 +93,10 @@ const Button = styled.button`
   cursor: pointer;
   display: inline-block;
 
-  > img:hover {
-    transform: scale(1.03);
+  @media (hover: hover) {
+    > img:hover {
+      transform: scale(1.03);
+    }
   }
 `
 
