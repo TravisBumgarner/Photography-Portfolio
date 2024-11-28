@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 
 import { context } from 'src/context'
-import { CONTENT_SPACING } from 'src/theme'
+import { CONTENT_SPACING, MOBILE_WIDTH } from 'src/theme'
 import GalleryPreview from './GalleryPreview'
 
 const HomeImageWrapper = styled.div`
@@ -11,8 +11,9 @@ const HomeImageWrapper = styled.div`
   gap: ${CONTENT_SPACING.XLARGE};
   margin: ${CONTENT_SPACING.LARGE};
 
-  @media (max-width: 768px) {
+  @media (max-width: ${MOBILE_WIDTH}) {
     grid-template-columns: repeat(2, 1fr);
+    gap: ${CONTENT_SPACING.LARGE};
   }
 `
 

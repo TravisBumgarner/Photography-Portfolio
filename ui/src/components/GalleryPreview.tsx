@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { COLORS, CONTENT_SPACING, FONT_SIZES } from 'src/theme'
+import { COLORS, CONTENT_SPACING, FONT_SIZES, MOBILE_WIDTH } from 'src/theme'
 import styled from 'styled-components'
 import { context } from '../context'
 import { BlurImage } from '../sharedComponents'
@@ -46,6 +46,11 @@ const Header = styled.h2`
   font-size: ${FONT_SIZES.SMALL};
   text-align: left;
   transition: color 0.2s ease;
+
+  @media (max-width: ${MOBILE_WIDTH}) {
+    margin-top: ${CONTENT_SPACING.MEDIUM};
+    margin-bottom: ${CONTENT_SPACING.SMALL};
+  }
 `
 
 const StyledLink = styled(Link)`

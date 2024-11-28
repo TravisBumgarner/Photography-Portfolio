@@ -9,7 +9,7 @@ import styled from 'styled-components'
 
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { BlurImage, PageHeader } from 'src/sharedComponents'
-import { CONTENT_SPACING } from 'src/theme'
+import { CONTENT_SPACING, MOBILE_WIDTH } from 'src/theme'
 import { type PhotoType, type PrivateGallery } from 'src/types'
 import { context } from '../context'
 import { getPhotoUrl } from '../utils'
@@ -272,8 +272,9 @@ const GalleryWrapper = styled.div`
   gap: ${CONTENT_SPACING.XLARGE};
   margin: ${CONTENT_SPACING.LARGE};
 
-  @media (max-width: 768px) {
+  @media (max-width: ${MOBILE_WIDTH}) {
     grid-template-columns: repeat(2, 1fr);
+    gap: ${CONTENT_SPACING.LARGE};
   }
 `
 

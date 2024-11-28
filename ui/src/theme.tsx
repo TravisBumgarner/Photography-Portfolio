@@ -24,3 +24,6 @@ export const COLORS = {
   FOREGROUND: 'var(--color-foreground)',
   BACKGROUND: 'var(--color-background)'
 }
+
+// CSS Variables don't work with media queries.
+export const MOBILE_WIDTH = '768px'
