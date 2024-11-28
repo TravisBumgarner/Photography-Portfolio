@@ -30,12 +30,12 @@ const GalleryPreview = ({
   const { blurHash } = photos[previewId]
 
   return (
-    <div>
+    <Container>
       <StyledLink id={slug} to={`/${slug}`}>
         <BlurImage alt={title} useSquareImage src={url} blurHash={blurHash} />
         <Header>{title}</Header>
       </StyledLink>
-    </div>
+    </Container>
   )
 }
 
@@ -55,6 +55,16 @@ const StyledLink = styled(Link)`
 
   &:hover ${Header} {
     color: ${COLORS.PRIMARY};
+  }
+`
+
+const Container = styled.div`
+  &:hover ${Header} {
+    color: ${COLORS.PRIMARY};
+  }
+
+  &:hover img {
+    transform: scale(1.05);
   }
 `
 

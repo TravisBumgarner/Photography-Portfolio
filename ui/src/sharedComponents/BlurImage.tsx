@@ -95,8 +95,4 @@ const StyledImage = styled.img<{
       aspect-ratio: 1 / 1;
     `
       : ''}
-
-  &:hover {
-    transform: scale(1.03);
-  }
 `

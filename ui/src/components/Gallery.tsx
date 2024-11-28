@@ -92,6 +92,10 @@ const Button = styled.button`
   padding: 0;
   cursor: pointer;
   display: inline-block;
+
+  > img:hover {
+    transform: scale(1.03);
+  }
 `
 
 const Gallery = ({ privateGallery }: Props) => {
