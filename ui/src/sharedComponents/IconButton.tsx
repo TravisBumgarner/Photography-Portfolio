@@ -17,7 +17,7 @@ import styled, { css } from 'styled-components'
 const IconCSS = css`
   fill: ${COLORS.FOREGROUND};
   cursor: pointer;
-  margin: 0 ${CONTENT_SPACING.MEDIUM};
+  /* margin: 0 ${CONTENT_SPACING.MEDIUM}; */
 
   @media (hover: hover) {
     &:hover {

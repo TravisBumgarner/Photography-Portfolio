@@ -17,7 +17,8 @@ import {
   COLORS,
   CONTENT_SPACING,
   FONT_SIZES,
-  TRANSITION_SPEED
+  TRANSITION_SPEED,
+  Z_INDEX
 } from 'src/theme'
 import { focusFirstSiteElement } from 'src/utils'
 
@@ -228,14 +229,14 @@ const NavigationGutter = styled.nav<{ $isNavigationVisible: boolean }>`
   background-color: color-mix(in srgb, ${COLORS.FOREGROUND} 20%, transparent);
   width: 100vw;
   height: 100vh;
-  z-index: 998;
+  z-index: ${Z_INDEX.NAVIGATION_GUTTER};
 `
 
 const NavigationWrapper = styled.div<{ $isNavigationVisible: boolean }>`
   box-sizing: border-box;
   display: flex;
   position: fixed;
-  z-index: 999;
+  z-index: ${Z_INDEX.NAVIGATION};
   top: 0;
   overflow: scroll;
   background-color: ${COLORS.BACKGROUND};

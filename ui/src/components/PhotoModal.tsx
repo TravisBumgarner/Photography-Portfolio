@@ -181,11 +181,11 @@ const ControlsSectionWrapper = styled.div<{ hideBackground?: boolean }>`
   border-radius: ${CONTENT_SPACING.MEDIUM};
   height: 30px;
 
-  :first-child {
-    margin-right: ${CONTENT_SPACING.MEDIUM};
+  > button:first-child {
+    margin-right: ${CONTENT_SPACING.SMALL};
   }
-  :last-child {
-    margin-left: ${CONTENT_SPACING.MEDIUM};
+  > button:last-child {
+    margin-left: ${CONTENT_SPACING.SMALL};
   }
 `
 
