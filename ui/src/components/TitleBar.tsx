@@ -1,39 +1,27 @@
 import React from 'react'
-import { FaBars } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-import {
-  COLORS,
-  CONTENT_SPACING,
-  FONT_SIZES,
-  TRANSITION_SPEED
-} from 'src/theme'
+import { IconButton } from 'src/sharedComponents'
+import { COLORS, CONTENT_SPACING, FONT_SIZES } from 'src/theme'
 
 interface Props {
   toggleNavigation: () => void
   isNavigationVisible: boolean
 }
 
-const TitleBar = ({ toggleNavigation, isNavigationVisible }: Props) => {
+const TitleBar = ({ toggleNavigation }: Props) => {
   return (
     <TitleBarWrapper>
       <InternalLink to="/">
         <Header>Travis Bumgarner Photography</Header>
       </InternalLink>
-      <NavigationOpen
-        tabIndex={0}
-        role="button"
-        aria-label="Open navigation"
-        onKeyDown={e => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault()
-            toggleNavigation()
-          }
-        }}
-        $isNavigationVisible={isNavigationVisible}
+
+      <IconButton
+        icon="menu"
+        ariaLabel="Open navigation"
         onClick={toggleNavigation}
-        size={FONT_SIZES.LARGE}
+        size="LARGE"
       />
     </TitleBarWrapper>
   )
@@ -66,22 +54,6 @@ const InternalLink = styled(Link)`
 
   &:visited {
     color: ${COLORS.BACKGROUND};
-  }
-`
-
-const NavigationOpen = styled(params => <FaBars {...params} />)`
-  fill: ${COLORS.FOREGROUND};
-  transition: opacity ${TRANSITION_SPEED}s;
-  opacity: ${props => (props.$isNavigationVisible ? 0 : 1)};
-  cursor: pointer;
-
-  // Push site title over a bit to avoid misclicks.
-  margin-left: 4rem;
-
-  @media (hover: hover) {
-    &:hover {
-      fill: ${COLORS.PRIMARY};
-    }
   }
 `
 

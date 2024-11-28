@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
-import { FaTimes } from 'react-icons/fa'
 
 import { context } from 'src/context'
 import usePreventAppScroll from 'src/hooks/usePreventAppScroll'
+import { IconButton } from 'src/sharedComponents'
 import {
   COLORS,
   CONTENT_SPACING,
@@ -168,19 +168,14 @@ const Navigation = ({ toggleNavigation, isNavigationVisible }: Props) => {
         aria-hidden={!isNavigationVisible}
       >
         <SectionsWrapper>
-          <NavigationClose
-            $isNavigationVisible={isNavigationVisible}
-            onClick={toggleNavigation}
-            aria-label="Close navigation"
-            role="button"
-            tabIndex={0}
-            onKeyDown={e => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault()
-                toggleNavigation()
-              }
-            }}
-          />
+          <CloseButtonWrapper>
+            <IconButton
+              icon="close"
+              ariaLabel="Close navigation"
+              onClick={toggleNavigation}
+              size="LARGE"
+            />
+          </CloseButtonWrapper>
           <Section>
             <Header>GALLERIES</Header>
             <ul>{links}</ul>
@@ -236,26 +231,10 @@ const NavigationWrapper = styled.div<{ $isNavigationVisible: boolean }>`
     -17.4px 0px 26.1px hsl(0deg 0% 72% / 0.53); */
 `
 
-const NavigationClose = styled(params => <FaTimes {...params} />)`
+const CloseButtonWrapper = styled.div`
   position: absolute;
   top: ${CONTENT_SPACING.XLARGE};
   right: ${CONTENT_SPACING.XLARGE};
-  transition: opacity ${TRANSITION_SPEED}s;
-  opacity: ${props => (props.$isNavigationVisible ? 1 : 0)};
-  z-index: 999;
-  fill: ${COLORS.FOREGROUND};
-  cursor: pointer;
-
-  @media (hover: hover) {
-    &:hover {
-      fill: ${COLORS.PRIMARY};
-    }
-  }
-
-  &:focus-visible {
-    outline: 2px solid ${COLORS.PRIMARY};
-    outline-offset: 2px;
-  }
 `
 
 const SectionsWrapper = styled.div`

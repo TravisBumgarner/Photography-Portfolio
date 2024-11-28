@@ -1,11 +1,11 @@
 import React, { useCallback, useContext, useEffect } from 'react'
-import { FaArrowLeft, FaArrowRight, FaDownload, FaTimes } from 'react-icons/fa'
 import Modal from 'react-modal'
-import styled, { createGlobalStyle, css } from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 
 import { context } from 'src/context'
 import usePreventAppScroll from 'src/hooks/usePreventAppScroll'
-import { COLORS, CONTENT_SPACING, FONT_SIZES } from 'src/theme'
+import { IconButton } from 'src/sharedComponents'
+import { COLORS, CONTENT_SPACING } from 'src/theme'
 import { getPhotoUrl } from 'src/utils'
 
 interface PhotoProps {
@@ -82,35 +82,36 @@ const PhotoModal = ({
           <ControlsWrapper>
             <ControlsSectionWrapper hideBackground={!privateGallery}>
               {privateGallery && (
-                <DownloadButton
-                  size={FONT_SIZES.LARGE}
+                <IconButton
+                  icon="download"
+                  size="LARGE"
+                  ariaLabel="Previous photo"
                   onClick={downloadPhoto}
                 />
               )}
             </ControlsSectionWrapper>
             <ControlsSectionWrapper>
-              <PreviousButton
-                size={FONT_SIZES.LARGE}
-                aria-label="Previous photo"
+              <IconButton
+                icon="arrowLeft"
+                size="LARGE"
+                ariaLabel="Previous photo"
                 onClick={() => {
                   navigateToNextPhoto('left')
                 }}
               />
-              <CloseIcon
-                aria-label="Close single photo view"
-                size={FONT_SIZES.LARGE}
+              <IconButton
+                icon="close"
+                ariaLabel="Close single photo view"
                 onClick={closeModal}
-                style={{
-                  marginLeft: CONTENT_SPACING.LARGE,
-                  marginRight: CONTENT_SPACING.LARGE
-                }}
+                size="LARGE"
               />
-              <NextButton
-                size={FONT_SIZES.LARGE}
-                aria-label="Next photo"
+              <IconButton
+                icon="arrowRight"
+                ariaLabel="Next photo"
                 onClick={() => {
                   navigateToNextPhoto('right')
                 }}
+                size="LARGE"
               />
             </ControlsSectionWrapper>
           </ControlsWrapper>
@@ -142,36 +143,12 @@ const modalCSS = {
   }
 }
 
-const IconCSS = css`
-  fill: ${COLORS.FOREGROUND};
-  cursor: pointer;
-
-  @media (hover: hover) {
-    &:hover {
-      fill: ${COLORS.PRIMARY};
-    }
-  }
-`
-const CloseIcon = styled(FaTimes)`
-  ${IconCSS}
-`
-const PreviousButton = styled(FaArrowLeft)`
-  ${IconCSS}
-`
-const NextButton = styled(FaArrowRight)`
-  ${IconCSS}
-`
-
-const DownloadButton = styled(FaDownload)`
-  ${IconCSS}
-`
-
 const MetadataAndControlsBottomWrapper = styled.div`
   display: flex;
   position: fixed;
-  bottom: ${CONTENT_SPACING.LARGE};
-  left: ${CONTENT_SPACING.LARGE};
-  right: ${CONTENT_SPACING.LARGE};
+  bottom: 0;
+  left: 0;
+  right: 0;
   justify-content: center;
   box-sizing: border-box;
   align-items: end;
