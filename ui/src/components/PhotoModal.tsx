@@ -19,10 +19,13 @@ const PhotoModal = ({
   closeModal,
   selectedPhotoId
 }: PhotoProps) => {
-  const photos = usePhotoStore(state => state.photos)
+  // const photos = usePhotoStore(state => state.photos)
+  const selectedPhotoIds = usePhotoStore(state => state.selectedPhotoIds)
+  const getPhotoById = usePhotoStore(state => state.getPhotoById)
+
   usePreventAppScroll(selectedPhotoId !== null)
 
-  const details = selectedPhotoId ? photos[selectedPhotoId] : null
+  const details = getPhotoById(selectedPhotoId)
 
   const handleKeyPress = useCallback(
     (event: KeyboardEvent) => {
@@ -38,6 +41,37 @@ const PhotoModal = ({
       window.removeEventListener('keydown', handleKeyPress)
     }
   }, [handleKeyPress])
+
+  const preLoadNeighboringPhotos = useCallback(() => {
+    if (!selectedPhotoIds || !selectedPhotoId) return
+
+    const index = selectedPhotoIds.indexOf(selectedPhotoId)
+    const previousIndex = index === 0 ? selectedPhotoIds.length - 1 : index - 1
+    const nextIndex = index === selectedPhotoIds.length - 1 ? 0 : index + 1
+
+    const previousPhoto = getPhotoById(selectedPhotoIds[previousIndex])
+    const nextPhoto = getPhotoById(selectedPhotoIds[nextIndex])
+
+    if (previousPhoto) {
+      const img = new Image()
+      img.src = getPhotoUrl({
+        isThumbnail: false,
+        photoSrc: previousPhoto.src
+      })
+    }
+
+    if (nextPhoto) {
+      const img = new Image()
+      img.src = getPhotoUrl({
+        isThumbnail: false,
+        photoSrc: nextPhoto.src
+      })
+    }
+  }, [selectedPhotoIds, selectedPhotoId, getPhotoById])
+
+  useEffect(() => {
+    preLoadNeighboringPhotos()
+  }, [preLoadNeighboringPhotos])
 
   if (!details) return null
 

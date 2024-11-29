@@ -12,6 +12,7 @@ export interface State {
   setPhotos: (photos: Record<string, PhotoType>) => void
   setGalleries: (galleries: Record<string, GalleryType>) => void
   setSelectedPhotoIds: (galleryId: string | undefined) => void
+  getPhotoById: (photoId: string | null) => PhotoType | undefined
 }
 
 const initialData = getData()
@@ -24,6 +25,9 @@ const usePhotoStore = create<State>()(
         galleries: initialData.galleries,
         selectedPhotoId: null,
         selectedPhotoIds: [],
+        getPhotoById: (photoId: string) => {
+          return get().photos[photoId]
+        },
         setPhotos: photos => {
           set({ photos })
         },

@@ -5,20 +5,17 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { PageHeader } from 'src/sharedComponents'
 import usePhotoStore from 'src/store'
 import { CONTENT_SPACING, MOBILE_WIDTH } from 'src/theme'
-import { getPhotoUrl } from 'src/utils'
 import GalleryItemPreview from './GalleryItemPreview'
 import PhotoModal from './PhotoModal'
 
 const Gallery = () => {
   const setSelectedPhotoIds = usePhotoStore(state => state.setSelectedPhotoIds)
   const selectedPhotoIds = usePhotoStore(state => state.selectedPhotoIds)
-  const photos = usePhotoStore(state => state.photos)
   const selectedPhotoId = usePhotoStore(state => state.selectedPhotoId)
   const setSelectedPhotoId = usePhotoStore(state => state.setSelectedPhotoId)
   const navigate = useNavigate()
 
   const galleries = usePhotoStore(state => state.galleries)
-  // const photos = usePhotoStore(state => state.photos)
 
   const { gallerySlug, photoSlug } = useParams<{
     gallerySlug: string
@@ -70,37 +67,6 @@ const Gallery = () => {
     },
     [selectedPhotoId, selectedPhotoIds, setSelectedPhotoId]
   )
-
-  const preLoadNeighboringPhotos = useCallback(() => {
-    if (!selectedPhotoIds || !selectedPhotoId) return
-
-    const index = selectedPhotoIds.indexOf(selectedPhotoId)
-    const previousIndex = index === 0 ? selectedPhotoIds.length - 1 : index - 1
-    const nextIndex = index === selectedPhotoIds.length - 1 ? 0 : index + 1
-
-    const previousPhoto = photos[selectedPhotoIds[previousIndex]]
-    const nextPhoto = photos[selectedPhotoIds[nextIndex]]
-
-    if (previousPhoto) {
-      const img = new Image()
-      img.src = getPhotoUrl({
-        isThumbnail: false,
-        photoSrc: previousPhoto.src
-      })
-    }
-
-    if (nextPhoto) {
-      const img = new Image()
-      img.src = getPhotoUrl({
-        isThumbnail: false,
-        photoSrc: nextPhoto.src
-      })
-    }
-  }, [selectedPhotoIds, selectedPhotoId, photos])
-
-  useEffect(() => {
-    preLoadNeighboringPhotos()
-  }, [preLoadNeighboringPhotos])
 
   const handleCloseModal = useCallback(() => {
     if (selectedPhotoId) {
