@@ -20,8 +20,3 @@ export interface PhotoType {
   width: number
   height: number
 }
-
-export interface PrivateGallery {
-  gallery: GalleryType
-  photos: Record<string, PhotoType>
-}

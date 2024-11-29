@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import usePhotoStore from 'src/store'
 import { COLORS, CONTENT_SPACING, FONT_SIZES, MOBILE_WIDTH } from 'src/theme'
 import styled from 'styled-components'
 import { BlurImage } from '../sharedComponents'
 import { getPhotoUrl } from '../utils'
-import usePhotoStore from 'src/store'
 
 const GalleryPreview = ({
   slug,
@@ -21,8 +21,7 @@ const GalleryPreview = ({
 
   const url = getPhotoUrl({
     isThumbnail: true,
-    photoSrc: previewSrc,
-    privateGalleryId: undefined
+    photoSrc: previewSrc
   })
 
   const { blurHash } = photos[previewId]

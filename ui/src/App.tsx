@@ -22,18 +22,11 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/private/:gallerySlug">
-            <Route index element={<Gallery privateGallery={true} />} />
-            <Route
-              path=":photoSlug"
-              element={<Gallery privateGallery={true} />}
-            />
-          </Route>
           <Route path="/:gallerySlug">
-            <Route index element={<Gallery privateGallery={false} />} />
+            <Route index element={<Gallery />} />
             <Route
               path=":photoSlug"
-              element={<Gallery privateGallery={false} />}
+              element={<Gallery />}
             />
           </Route>
           <Route path="/error500" element={<Error value="500" />} />

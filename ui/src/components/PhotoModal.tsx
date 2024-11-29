@@ -10,14 +10,12 @@ import { getPhotoUrl } from 'src/utils'
 
 interface PhotoProps {
   navigateToNextPhoto: (direction: 'left' | 'right') => void
-  privateGallery: boolean
   closeModal: () => void
   selectedPhotoId: string | null
 }
 
 const PhotoModal = ({
   navigateToNextPhoto,
-  privateGallery,
   closeModal,
   selectedPhotoId
 }: PhotoProps) => {
@@ -25,21 +23,6 @@ const PhotoModal = ({
   usePreventAppScroll(selectedPhotoId !== null)
 
   const details = selectedPhotoId ? photos[selectedPhotoId] : null
-
-  const downloadPhoto = () => {
-    if (!details || !selectedPhotoId) return
-
-    const downloadLink = document.createElement('a')
-    downloadLink.href = getPhotoUrl({
-      isThumbnail: false,
-      privateGalleryId: privateGallery ? selectedPhotoId : undefined,
-      photoSrc: details.src
-    })
-    downloadLink.download = details.src
-    document.body.append(downloadLink)
-    downloadLink.click()
-    document.body.removeChild(downloadLink)
-  }
 
   const handleKeyPress = useCallback(
     (event: KeyboardEvent) => {
@@ -60,7 +43,6 @@ const PhotoModal = ({
 
   const photoSrc = getPhotoUrl({
     isThumbnail: false,
-    privateGalleryId: privateGallery ? selectedPhotoId : undefined,
     photoSrc: details.src
   })
 
@@ -78,16 +60,6 @@ const PhotoModal = ({
         </PhotoWrapper>
         <MetadataAndControlsBottomWrapper>
           <ControlsWrapper>
-            <ControlsSectionWrapper hideBackground={!privateGallery}>
-              {privateGallery && (
-                <IconButton
-                  icon="download"
-                  size="LARGE"
-                  ariaLabel="Previous photo"
-                  onClick={downloadPhoto}
-                />
-              )}
-            </ControlsSectionWrapper>
             <ControlsSectionWrapper>
               <IconButton
                 icon="arrowLeft"
