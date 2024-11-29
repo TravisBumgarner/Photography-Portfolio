@@ -17,36 +17,34 @@ const Gallery = lazy(async () => await import('./components/Gallery'))
 
 const App = () => {
   return (
-    <>
-      <AppContainer animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-        <TitleBar />
-        <Context>
-          <Navigation />
-          <Suspense fallback={<Loading />}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/private/:gallerySlug">
-                <Route index element={<Gallery privateGallery={true} />} />
-                <Route
-                  path=":photoSlug"
-                  element={<Gallery privateGallery={true} />}
-                />
-              </Route>
-              <Route path="/:gallerySlug">
-                <Route index element={<Gallery privateGallery={false} />} />
-                <Route
-                  path=":photoSlug"
-                  element={<Gallery privateGallery={false} />}
-                />
-              </Route>
-              <Route path="/error500" element={<Error value="500" />} />
-              <Route path="*" element={<Error value="404" />} />
-            </Routes>
-          </Suspense>
-        </Context>
-      </AppContainer>
-    </>
+    <AppContainer animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+      <TitleBar />
+      <Context>
+        <Navigation />
+        <Suspense fallback={<Loading />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/private/:gallerySlug">
+              <Route index element={<Gallery privateGallery={true} />} />
+              <Route
+                path=":photoSlug"
+                element={<Gallery privateGallery={true} />}
+              />
+            </Route>
+            <Route path="/:gallerySlug">
+              <Route index element={<Gallery privateGallery={false} />} />
+              <Route
+                path=":photoSlug"
+                element={<Gallery privateGallery={false} />}
+              />
+            </Route>
+            <Route path="/error500" element={<Error value="500" />} />
+            <Route path="*" element={<Error value="404" />} />
+          </Routes>
+        </Suspense>
+      </Context>
+    </AppContainer>
   )
 }
 
