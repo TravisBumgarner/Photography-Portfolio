@@ -17,7 +17,7 @@ const Gallery = lazy(async () => await import('./components/Gallery'))
 
 const App = () => {
   return (
-    <AppContainer animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+    <AppContainer>
       <TitleBar />
       <Context>
         <Navigation />
@@ -51,7 +51,6 @@ const App = () => {
 const AppContainer = styled(motion.div)`
   max-width: ${MAX_WIDTH};
   margin: 0 auto;
-  opacity: 0;
 `
 
 export default App
