@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 
-import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import { PageHeader } from 'src/sharedComponents'
 import usePhotoStore from 'src/store'
 import { CONTENT_SPACING, MOBILE_WIDTH } from 'src/theme'
@@ -11,10 +11,8 @@ import PhotoModal from './PhotoModal'
 const Gallery = () => {
   const setSelectedPhotoIds = usePhotoStore(state => state.setSelectedPhotoIds)
   const selectedPhotoIds = usePhotoStore(state => state.selectedPhotoIds)
-  const selectedPhotoId = usePhotoStore(state => state.selectedPhotoId)
   const setSelectedPhotoId = usePhotoStore(state => state.setSelectedPhotoId)
-  const navigate = useNavigate()
-
+  const [onlyFetchOnLoad, setOnlyFetchOnLoad] = useState(false)
   const galleries = usePhotoStore(state => state.galleries)
 
   const { gallerySlug, photoSlug } = useParams<{
@@ -29,48 +27,24 @@ const Gallery = () => {
   const galleryTitle = useMemo(() => {
     if (!gallerySlug) return ''
 
-    return galleries[gallerySlug].title
+    const gallery = galleries[gallerySlug]
+    return gallery?.title || ''
   }, [gallerySlug, galleries])
 
-  // Grab the photo id from the url and set it as the selectedPhotoId on first load.
+  // Grab the photo id from the url on load and set it as the selectedPhotoId on first load.
   useEffect(() => {
-    if (photoSlug) {
+    if (photoSlug && !onlyFetchOnLoad) {
       setSelectedPhotoId(photoSlug)
+      setOnlyFetchOnLoad(true)
     }
-  }, [photoSlug, setSelectedPhotoId])
+  }, [photoSlug, setSelectedPhotoId, onlyFetchOnLoad])
 
-  useEffect(() => {
-    if (selectedPhotoId) {
-      navigate(`/${gallerySlug}/${selectedPhotoId}`)
-    } else {
-      navigate(`/${gallerySlug}`)
-    }
-  }, [selectedPhotoId, navigate, gallerySlug])
-
-  const navigateToNextPhoto = useCallback(
-    (direction: 'left' | 'right') => {
-      if (!selectedPhotoId) return
-
-      const index = selectedPhotoIds.indexOf(selectedPhotoId)
-
-      let nextIndex: number
-      if (direction === 'left') {
-        if (index === 0) nextIndex = selectedPhotoIds.length - 1
-        else nextIndex = index - 1
-      } else {
-        if (index === selectedPhotoIds.length - 1) nextIndex = 0
-        else nextIndex = index + 1
-      }
-
-      const nextPhotoId = selectedPhotoIds[nextIndex]
-      setSelectedPhotoId(nextPhotoId)
-    },
-    [selectedPhotoId, selectedPhotoIds, setSelectedPhotoId]
-  )
-
-  const handleCloseModal = useCallback(() => {
-    if (selectedPhotoId) {
-      const previousFocusedPhoto = document.getElementById(selectedPhotoId)
+  const closeModalCallback = useCallback(
+    (previouslySelectedPhotoId: string | null) => {
+      if (!previouslySelectedPhotoId) return
+      const previousFocusedPhoto = document.getElementById(
+        previouslySelectedPhotoId
+      )
       if (!previousFocusedPhoto) return
 
       previousFocusedPhoto.scrollIntoView({
@@ -84,22 +58,17 @@ const Gallery = () => {
       setTimeout(() => {
         previousFocusedPhoto.blur()
       }, 0)
-    }
+    },
+    []
+  )
 
-    setSelectedPhotoId(null)
-  }, [setSelectedPhotoId, selectedPhotoId])
-
-  if (!gallerySlug) {
+  if (!gallerySlug || !galleries[gallerySlug]) {
     return <Navigate to="/" />
   }
 
   return (
     <>
-      <PhotoModal
-        closeModal={handleCloseModal}
-        navigateToNextPhoto={navigateToNextPhoto}
-        selectedPhotoId={selectedPhotoId}
-      />
+      <PhotoModal closeModalCallback={closeModalCallback} />
       <ProjectDescriptionWrapper>
         <PageHeader>{galleryTitle}</PageHeader>
       </ProjectDescriptionWrapper>

@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from 'react'
 import Modal from 'react-modal'
 import styled, { createGlobalStyle } from 'styled-components'
 
+import { useNavigate, useParams } from 'react-router-dom'
 import usePreventAppScroll from 'src/hooks/usePreventAppScroll'
 import { IconButton } from 'src/sharedComponents'
 import usePhotoStore from 'src/store'
@@ -9,23 +10,44 @@ import { COLORS, CONTENT_SPACING, MAX_WIDTH } from 'src/theme'
 import { getPhotoUrl } from 'src/utils'
 
 interface PhotoProps {
-  navigateToNextPhoto: (direction: 'left' | 'right') => void
-  closeModal: () => void
-  selectedPhotoId: string | null
+  closeModalCallback: (previouslySelectedPhotoId: string | null) => void
 }
 
-const PhotoModal = ({
-  navigateToNextPhoto,
-  closeModal,
-  selectedPhotoId
-}: PhotoProps) => {
-  // const photos = usePhotoStore(state => state.photos)
+const PhotoModal = ({ closeModalCallback }: PhotoProps) => {
   const selectedPhotoIds = usePhotoStore(state => state.selectedPhotoIds)
   const getPhotoById = usePhotoStore(state => state.getPhotoById)
+  const setSelectedPhotoId = usePhotoStore(state => state.setSelectedPhotoId)
+  const selectedPhotoId = usePhotoStore(state => state.selectedPhotoId)
+  const navigate = useNavigate()
+
+  const { gallerySlug } = useParams<{
+    gallerySlug: string
+  }>()
 
   usePreventAppScroll(selectedPhotoId !== null)
 
   const details = getPhotoById(selectedPhotoId)
+
+  const navigateToNextPhoto = useCallback(
+    (direction: 'left' | 'right') => {
+      if (!selectedPhotoId) return
+
+      const index = selectedPhotoIds.indexOf(selectedPhotoId)
+
+      let nextIndex: number
+      if (direction === 'left') {
+        if (index === 0) nextIndex = selectedPhotoIds.length - 1
+        else nextIndex = index - 1
+      } else {
+        if (index === selectedPhotoIds.length - 1) nextIndex = 0
+        else nextIndex = index + 1
+      }
+
+      const nextPhotoId = selectedPhotoIds[nextIndex]
+      setSelectedPhotoId(nextPhotoId)
+    },
+    [selectedPhotoId, selectedPhotoIds, setSelectedPhotoId]
+  )
 
   const handleKeyPress = useCallback(
     (event: KeyboardEvent) => {
@@ -69,6 +91,28 @@ const PhotoModal = ({
     }
   }, [selectedPhotoIds, selectedPhotoId, getPhotoById])
 
+  const handleCloseModal = useCallback(() => {
+    closeModalCallback(selectedPhotoId)
+
+    navigate(`/${gallerySlug}`, { replace: true })
+
+    setSelectedPhotoId(null)
+  }, [
+    closeModalCallback,
+    selectedPhotoId,
+    navigate,
+    gallerySlug,
+    setSelectedPhotoId
+  ])
+
+  useEffect(() => {
+    if (selectedPhotoId) {
+      // Prevent unneccesary re-renders which was caused with useNavigate
+      const newUrl = `/${gallerySlug}/${selectedPhotoId}`
+      window.history.replaceState(null, '', newUrl)
+    }
+  }, [selectedPhotoId, gallerySlug])
+
   useEffect(() => {
     preLoadNeighboringPhotos()
   }, [preLoadNeighboringPhotos])
@@ -86,7 +130,7 @@ const PhotoModal = ({
       <Modal
         isOpen={selectedPhotoId !== null}
         style={modalCSS}
-        onRequestClose={closeModal}
+        onRequestClose={handleCloseModal}
         preventScroll
       >
         <PhotoWrapper>
@@ -106,7 +150,7 @@ const PhotoModal = ({
               <IconButton
                 icon="close"
                 ariaLabel="Close single photo view"
-                onClick={closeModal}
+                onClick={handleCloseModal}
                 size="LARGE"
               />
               <IconButton
