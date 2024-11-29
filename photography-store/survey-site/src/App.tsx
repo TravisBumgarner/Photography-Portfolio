@@ -4,7 +4,7 @@ import ImageToggleForm from './ImageToggleForm'
 const App: React.FC = () => {
   const generateImageUrls = (baseUrl: string, count: number, uniqueKey: string): string[] => {
     // Something is caching results in GCP. I'm just going to force unique keys because this app is throwaway.
-    return Array.from({ length: count }, (_, index) => `${baseUrl}/${uniqueKey}${index + 1}.jpg`);
+    return Array.from({ length: count }, (_, index) => `${baseUrl}/${uniqueKey}${index + 1}.avif`);
   };
 
   const images = generateImageUrls('https://storage.googleapis.com/photo-survey', 21, 'arizona'); // Adjust the count as needed

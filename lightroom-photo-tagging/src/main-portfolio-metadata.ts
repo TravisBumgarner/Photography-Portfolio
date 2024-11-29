@@ -5,7 +5,7 @@ import { Metadata } from './types'
 import { encodeImageToBlurHash } from './blur-hash'
 import { PUBLIC_GALLERIES_BY_TAG, TAG_TO_GALLERY_LOOKUP } from './galleries'
 
-const VALID_EXTENSIONS = ['.jpg']
+const VALID_EXTENSIONS = ['.avif']
 
 const main = async (directoryPath: string) => {
     const errorsByFile: Record<string, string[]> = {}

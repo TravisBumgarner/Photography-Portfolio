@@ -4,7 +4,7 @@ import processPhoto from './metadata'
 import lightroomTagsToInstragramTemplateString from './tags'
 import createTemplate from './template'
 
-const VALID_EXTENSIONS = ['.jpg']
+const VALID_EXTENSIONS = ['.avif']
 
 
 const main = async (directoryPath: string) => {
