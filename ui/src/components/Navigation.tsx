@@ -1,7 +1,15 @@
-import React, { useContext, useEffect, useMemo, useRef } from 'react'
+import { signal } from '@preact/signals-react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef
+} from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
+import { useSignals } from '@preact/signals-react/runtime'
 import { context } from 'src/context'
 import usePreventAppScroll from 'src/hooks/usePreventAppScroll'
 import { IconButton } from 'src/sharedComponents'
@@ -9,14 +17,12 @@ import {
   COLORS,
   CONTENT_SPACING,
   FONT_SIZES,
-  TRANSITION_SPEED
+  TRANSITION_SPEED,
+  Z_INDEX
 } from 'src/theme'
 import { focusFirstSiteElement } from 'src/utils'
 
-interface Props {
-  toggleNavigation: () => void
-  isNavigationVisible: boolean
-}
+export const isNavigationVisible = signal(false)
 
 const ABOUT_CONTENT = [
   {
@@ -54,36 +60,41 @@ const MISC_CONTENT = [
   }
 ]
 
-const Navigation = ({ toggleNavigation, isNavigationVisible }: Props) => {
+const Navigation = () => {
+  useSignals()
   const navigationRef = useRef<HTMLDivElement>(null)
-  usePreventAppScroll(isNavigationVisible)
+  usePreventAppScroll(isNavigationVisible.value)
 
   const {
     state: { galleries }
   } = useContext(context)
+
+  const closeNavigation = useCallback(() => {
+    isNavigationVisible.value = false
+  }, [])
 
   const links = useMemo(() => {
     return Object.values(galleries)
       .sort((a, b) => (a.title > b.title ? 1 : -1))
       .map(({ title, slug }) => {
         return (
-          <LinkListItem key={slug} onClick={toggleNavigation}>
+          <LinkListItem key={slug} onClick={closeNavigation}>
             <InternalLink to={`/${slug}`}>{title}</InternalLink>
           </LinkListItem>
         )
       })
-  }, [galleries, toggleNavigation])
+  }, [galleries, closeNavigation])
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // Handle Escape key
-      if (event.key === 'Escape' && isNavigationVisible) {
-        toggleNavigation()
+      if (event.key === 'Escape' && isNavigationVisible.value) {
+        isNavigationVisible.value = false
         return
       }
 
       // Only handle Tab key if navigation is visible
-      if (!isNavigationVisible || !navigationRef.current) return
+      if (!isNavigationVisible.value || !navigationRef.current) return
 
       if (event.key === 'Tab') {
         const focusableElements = navigationRef.current.querySelectorAll(
@@ -114,45 +125,53 @@ const Navigation = ({ toggleNavigation, isNavigationVisible }: Props) => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [isNavigationVisible, toggleNavigation])
+  }, [])
 
   // Set focus on the first gallery link when the navigation is visible
   // Clear focus when the navigation is hidden
   useEffect(() => {
-    if (isNavigationVisible && navigationRef.current) {
+    if (isNavigationVisible.value && navigationRef.current) {
       const firstGalleryLink = navigationRef.current.querySelector('a')
       firstGalleryLink?.focus()
     } else {
       focusFirstSiteElement()
     }
-  }, [isNavigationVisible])
+  }, [])
 
   const aboutLinks = ABOUT_CONTENT.map(m => {
+    const Component: React.ElementType = m.external
+      ? ExternalLink
+      : InternalLink
+
     return (
-      <LinkListItem key={m.title} onClick={toggleNavigation}>
-        <ExternalLink
+      <LinkListItem key={m.title} onClick={closeNavigation}>
+        <Component
           target={m.external ? '_blank' : ''}
-          href={m.route}
+          {...(m.external ? { href: m.route } : { to: m.route })}
           rel={m.external ? 'noopener noreferrer' : undefined}
         >
           {m.title}
           {m.external && <VisuallyHidden>(opens in new tab)</VisuallyHidden>}
-        </ExternalLink>
+        </Component>
       </LinkListItem>
     )
   })
 
   const miscLinks = MISC_CONTENT.map(m => {
+    const Component: React.ElementType = m.external
+      ? ExternalLink
+      : InternalLink
+
     return (
-      <LinkListItem key={m.title} onClick={toggleNavigation}>
-        <ExternalLink
+      <LinkListItem key={m.title} onClick={closeNavigation}>
+        <Component
           target={m.external ? '_blank' : ''}
-          href={m.route}
+          {...(m.external ? { href: m.route } : { to: m.route })}
           rel={m.external ? 'noopener noreferrer' : undefined}
         >
           {m.title}
           {m.external && <VisuallyHidden>(opens in new tab)</VisuallyHidden>}
-        </ExternalLink>
+        </Component>
       </LinkListItem>
     )
   })
@@ -160,8 +179,8 @@ const Navigation = ({ toggleNavigation, isNavigationVisible }: Props) => {
   return (
     <>
       <NavigationWrapper
+        $isNavigationVisible={isNavigationVisible.value}
         ref={navigationRef}
-        $isNavigationVisible={isNavigationVisible}
         role="dialog"
         aria-modal="true"
         aria-label="Site navigation"
@@ -172,7 +191,7 @@ const Navigation = ({ toggleNavigation, isNavigationVisible }: Props) => {
             <IconButton
               icon="close"
               ariaLabel="Close navigation"
-              onClick={toggleNavigation}
+              onClick={closeNavigation}
               size="LARGE"
             />
           </CloseButtonWrapper>
@@ -193,8 +212,8 @@ const Navigation = ({ toggleNavigation, isNavigationVisible }: Props) => {
         </SectionsWrapper>
       </NavigationWrapper>
       <NavigationGutter
-        $isNavigationVisible={isNavigationVisible}
-        onClick={toggleNavigation}
+        $isNavigationVisible={isNavigationVisible.value}
+        onClick={closeNavigation}
       />
     </>
   )
@@ -210,14 +229,14 @@ const NavigationGutter = styled.nav<{ $isNavigationVisible: boolean }>`
   background-color: color-mix(in srgb, ${COLORS.FOREGROUND} 20%, transparent);
   width: 100vw;
   height: 100vh;
-  z-index: 998;
+  z-index: ${Z_INDEX.NAVIGATION_GUTTER};
 `
 
 const NavigationWrapper = styled.div<{ $isNavigationVisible: boolean }>`
   box-sizing: border-box;
   display: flex;
   position: fixed;
-  z-index: 999;
+  z-index: ${Z_INDEX.NAVIGATION};
   top: 0;
   overflow: scroll;
   background-color: ${COLORS.BACKGROUND};

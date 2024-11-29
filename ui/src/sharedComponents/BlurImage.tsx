@@ -65,7 +65,7 @@ export const BlurImage = ({
       ref={imgRef}
       // Fixes brief flickering of a broken image if using '' here.
       {...(isVisible ? { src } : {})}
-      loading="lazy"
+      loading={isVisible ? 'eager' : 'lazy'}
       onLoad={handleOnLoad}
       alt={alt}
     />

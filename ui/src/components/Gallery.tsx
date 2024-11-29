@@ -220,12 +220,22 @@ const Gallery = ({ privateGallery }: Props) => {
 
   const handleCloseModal = useCallback(() => {
     if (selectedPhotoId) {
-      document.getElementById(selectedPhotoId)?.scrollIntoView({
+      const previousFocusedPhoto = document.getElementById(selectedPhotoId)
+      if (!previousFocusedPhoto) return
+
+      previousFocusedPhoto.scrollIntoView({
         behavior: 'auto',
         block: 'center',
         inline: 'center'
       })
+      previousFocusedPhoto.focus()
+      // Without the timeout the photo doesn't have a chance to focus before blurring causing
+      // tab index to remain on the photo that was selected when the PhotoModal was first openned.
+      setTimeout(() => {
+        previousFocusedPhoto.blur()
+      }, 0)
     }
+
     setSelectedPhotoId(null)
   }, [setSelectedPhotoId, selectedPhotoId])
 

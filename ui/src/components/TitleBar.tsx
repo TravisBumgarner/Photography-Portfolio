@@ -2,27 +2,38 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
+import { useSignals } from '@preact/signals-react/runtime'
 import { IconButton } from 'src/sharedComponents'
-import { COLORS, CONTENT_SPACING, FONT_SIZES } from 'src/theme'
+import {
+  COLORS,
+  CONTENT_SPACING,
+  FONT_SIZES,
+  MAX_WIDTH,
+  Z_INDEX
+} from 'src/theme'
+import { isNavigationVisible } from './Navigation'
 
-interface Props {
-  toggleNavigation: () => void
-  isNavigationVisible: boolean
-}
+const TitleBar = () => {
+  useSignals()
 
-const TitleBar = ({ toggleNavigation }: Props) => {
+  const openNavigation = () => {
+    isNavigationVisible.value = true
+  }
+
   return (
     <TitleBarWrapper>
-      <InternalLink to="/">
-        <Header>Travis Bumgarner Photography</Header>
-      </InternalLink>
+      <div>
+        <InternalLink to="/">
+          <Header>Travis Bumgarner Photography</Header>
+        </InternalLink>
 
-      <IconButton
-        icon="menu"
-        ariaLabel="Open navigation"
-        onClick={toggleNavigation}
-        size="LARGE"
-      />
+        <IconButton
+          icon="menu"
+          ariaLabel="Open navigation"
+          onClick={openNavigation}
+          size="LARGE"
+        />
+      </div>
     </TitleBarWrapper>
   )
 }
@@ -30,9 +41,11 @@ const TitleBar = ({ toggleNavigation }: Props) => {
 const Header = styled.h1`
   font-weight: 700;
   text-transform: uppercase;
-  margin-bottom: ${CONTENT_SPACING.LARGE};
-  margin-top: ${CONTENT_SPACING.LARGE};
   font-size: ${FONT_SIZES.MEDIUM};
+
+  // This in combination with the position sticky and margin on TitleBarWrapper
+  // gives a nice vertical spacing before scroll.
+  padding: ${CONTENT_SPACING.LARGE} 0;
 
   @media (hover: hover) {
     &:hover {
@@ -42,10 +55,21 @@ const Header = styled.h1`
 `
 
 const TitleBarWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: ${CONTENT_SPACING.LARGE};
+  z-index: ${Z_INDEX.TITLE_BAR}; // Exists to deal with stacking order of hovered images covering title.
+  position: sticky;
+  top: 0;
+  max-width: ${MAX_WIDTH};
+  margin: ${CONTENT_SPACING.XLARGE} auto;
+
+  padding: 0 ${CONTENT_SPACING.LARGE};
+  background-color: ${COLORS.BACKGROUND};
+
+  > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+  }
 `
 
 const InternalLink = styled(Link)`

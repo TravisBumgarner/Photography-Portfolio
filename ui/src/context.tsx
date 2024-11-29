@@ -52,7 +52,7 @@ const context = createContext({
   dispatch: Dispatch<Action>
 })
 
-const ResultsContext = ({ children }: { children: JSX.Element }) => {
+const ResultsContext = ({ children }: { children: JSX.Element[] }) => {
   const [state, dispatch] = useReducer(reducer, EMPTY_STATE)
   const [isLoading, setIsLoading] = useState<boolean>(true)
 

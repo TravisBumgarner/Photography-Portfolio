@@ -16,12 +16,12 @@
 body {
   background-color: var(--color-black);
   font-size: 18px;
-  margin: 4rem;
   box-sizing: border-box;
   font-weight: 400;
   font-family: 'Satoshi', sans-serif;
   color: var(--color-light-grey);
 
+  margin: 0 4rem;
   @media (max-width: 768px) {
     margin: 0rem;
   }
