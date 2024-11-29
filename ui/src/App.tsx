@@ -1,7 +1,6 @@
 import React, { Suspense, lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import { motion } from 'framer-motion'
 import { Error } from 'src/sharedComponents'
 import styled from 'styled-components'
 import Context from './context'
@@ -48,7 +47,7 @@ const App = () => {
   )
 }
 
-const AppContainer = styled(motion.div)`
+const AppContainer = styled.div`
   max-width: ${MAX_WIDTH};
   margin: 0 auto;
 `
