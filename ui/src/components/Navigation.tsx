@@ -1,18 +1,12 @@
 import { signal } from '@preact/signals-react'
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef
-} from 'react'
+import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
 import { useSignals } from '@preact/signals-react/runtime'
-import { context } from 'src/context'
 import usePreventAppScroll from 'src/hooks/usePreventAppScroll'
 import { IconButton } from 'src/sharedComponents'
+import usePhotoStore from 'src/store'
 import {
   COLORS,
   CONTENT_SPACING,
@@ -64,10 +58,7 @@ const Navigation = () => {
   useSignals()
   const navigationRef = useRef<HTMLDivElement>(null)
   usePreventAppScroll(isNavigationVisible.value)
-
-  const {
-    state: { galleries }
-  } = useContext(context)
+  const galleries = usePhotoStore(state => state.galleries)
 
   const closeNavigation = useCallback(() => {
     isNavigationVisible.value = false

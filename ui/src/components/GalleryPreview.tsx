@@ -1,8 +1,8 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
+import usePhotoStore from 'src/store'
 import { COLORS, CONTENT_SPACING, FONT_SIZES, MOBILE_WIDTH } from 'src/theme'
 import styled from 'styled-components'
-import { context } from '../context'
 import { BlurImage } from '../sharedComponents'
 import { getPhotoUrl } from '../utils'
 
@@ -17,14 +17,11 @@ const GalleryPreview = ({
   previewSrc: string
   previewId: string
 }) => {
-  const {
-    state: { photos }
-  } = useContext(context)
+  const photos = usePhotoStore(state => state.photos)
 
   const url = getPhotoUrl({
     isThumbnail: true,
-    photoSrc: previewSrc,
-    privateGalleryId: undefined
+    photoSrc: previewSrc
   })
 
   const { blurHash } = photos[previewId]

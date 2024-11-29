@@ -69,18 +69,27 @@ const main = async (directoryPath: string) => {
                 ]
                 continue
             }
-            const { tags, ...metadataWithoutTags } = metadata // eslint-disable-line @typescript-eslint/no-unused-vars
+            const {
+                tags,
+                camera,
+                lens,
+                aperture,
+                shutterSpeed,
+                iso,
+                focalLength,
+                ...usedMetadata
+            } = metadata // eslint-disable-line @typescript-eslint/no-unused-vars
             console.log('\t\t', metadataWithoutTags)
             const { width, height, blurHash } =
                 await encodeImageToBlurHash(filePath)
+
             photos[metadata.id] = {
-                ...metadataWithoutTags,
+                ...usedMetadata,
                 galleryIds,
                 blurHash,
                 width,
                 height,
             }
-            // photos[metadata.id] = { ...metadata, galleryIds }
         }
 
         if (Object.keys(errorsByFile).length > 0) {

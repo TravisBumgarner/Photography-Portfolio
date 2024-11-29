@@ -1,47 +1,53 @@
-import React, { useCallback, useContext, useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import Modal from 'react-modal'
 import styled, { createGlobalStyle } from 'styled-components'
 
-import { context } from 'src/context'
+import { useNavigate, useParams } from 'react-router-dom'
 import usePreventAppScroll from 'src/hooks/usePreventAppScroll'
 import { IconButton } from 'src/sharedComponents'
+import usePhotoStore from 'src/store'
 import { COLORS, CONTENT_SPACING, MAX_WIDTH } from 'src/theme'
 import { getPhotoUrl } from 'src/utils'
 
 interface PhotoProps {
-  navigateToNextPhoto: (direction: 'left' | 'right') => void
-  privateGallery: boolean
-  closeModal: () => void
-  selectedPhotoId: string | null
+  closeModalCallback: (previouslySelectedPhotoId: string | null) => void
 }
 
-const PhotoModal = ({
-  navigateToNextPhoto,
-  privateGallery,
-  closeModal,
-  selectedPhotoId
-}: PhotoProps) => {
-  const {
-    state: { photos }
-  } = useContext(context)
+const PhotoModal = ({ closeModalCallback }: PhotoProps) => {
+  const selectedPhotoIds = usePhotoStore(state => state.selectedPhotoIds)
+  const getPhotoById = usePhotoStore(state => state.getPhotoById)
+  const setSelectedPhotoId = usePhotoStore(state => state.setSelectedPhotoId)
+  const selectedPhotoId = usePhotoStore(state => state.selectedPhotoId)
+  const navigate = useNavigate()
+
+  const { gallerySlug } = useParams<{
+    gallerySlug: string
+  }>()
+
   usePreventAppScroll(selectedPhotoId !== null)
 
-  const details = selectedPhotoId ? photos[selectedPhotoId] : null
+  const details = getPhotoById(selectedPhotoId)
 
-  const downloadPhoto = () => {
-    if (!details || !selectedPhotoId) return
+  const navigateToNextPhoto = useCallback(
+    (direction: 'left' | 'right') => {
+      if (!selectedPhotoId) return
 
-    const downloadLink = document.createElement('a')
-    downloadLink.href = getPhotoUrl({
-      isThumbnail: false,
-      privateGalleryId: privateGallery ? selectedPhotoId : undefined,
-      photoSrc: details.src
-    })
-    downloadLink.download = details.src
-    document.body.append(downloadLink)
-    downloadLink.click()
-    document.body.removeChild(downloadLink)
-  }
+      const index = selectedPhotoIds.indexOf(selectedPhotoId)
+
+      let nextIndex: number
+      if (direction === 'left') {
+        if (index === 0) nextIndex = selectedPhotoIds.length - 1
+        else nextIndex = index - 1
+      } else {
+        if (index === selectedPhotoIds.length - 1) nextIndex = 0
+        else nextIndex = index + 1
+      }
+
+      const nextPhotoId = selectedPhotoIds[nextIndex]
+      setSelectedPhotoId(nextPhotoId)
+    },
+    [selectedPhotoId, selectedPhotoIds, setSelectedPhotoId]
+  )
 
   const handleKeyPress = useCallback(
     (event: KeyboardEvent) => {
@@ -58,11 +64,63 @@ const PhotoModal = ({
     }
   }, [handleKeyPress])
 
+  const preLoadNeighboringPhotos = useCallback(() => {
+    if (!selectedPhotoIds || !selectedPhotoId) return
+
+    const index = selectedPhotoIds.indexOf(selectedPhotoId)
+    const previousIndex = index === 0 ? selectedPhotoIds.length - 1 : index - 1
+    const nextIndex = index === selectedPhotoIds.length - 1 ? 0 : index + 1
+
+    const previousPhoto = getPhotoById(selectedPhotoIds[previousIndex])
+    const nextPhoto = getPhotoById(selectedPhotoIds[nextIndex])
+
+    if (previousPhoto) {
+      const img = new Image()
+      img.src = getPhotoUrl({
+        isThumbnail: false,
+        photoSrc: previousPhoto.src
+      })
+    }
+
+    if (nextPhoto) {
+      const img = new Image()
+      img.src = getPhotoUrl({
+        isThumbnail: false,
+        photoSrc: nextPhoto.src
+      })
+    }
+  }, [selectedPhotoIds, selectedPhotoId, getPhotoById])
+
+  const handleCloseModal = useCallback(() => {
+    closeModalCallback(selectedPhotoId)
+
+    navigate(`/${gallerySlug}`, { replace: true })
+
+    setSelectedPhotoId(null)
+  }, [
+    closeModalCallback,
+    selectedPhotoId,
+    navigate,
+    gallerySlug,
+    setSelectedPhotoId
+  ])
+
+  useEffect(() => {
+    if (selectedPhotoId) {
+      // Prevent unneccesary re-renders which was caused with useNavigate
+      const newUrl = `/${gallerySlug}/${selectedPhotoId}`
+      window.history.replaceState(null, '', newUrl)
+    }
+  }, [selectedPhotoId, gallerySlug])
+
+  useEffect(() => {
+    preLoadNeighboringPhotos()
+  }, [preLoadNeighboringPhotos])
+
   if (!details) return null
 
   const photoSrc = getPhotoUrl({
     isThumbnail: false,
-    privateGalleryId: privateGallery ? selectedPhotoId : undefined,
     photoSrc: details.src
   })
 
@@ -72,7 +130,7 @@ const PhotoModal = ({
       <Modal
         isOpen={selectedPhotoId !== null}
         style={modalCSS}
-        onRequestClose={closeModal}
+        onRequestClose={handleCloseModal}
         preventScroll
       >
         <PhotoWrapper>
@@ -80,16 +138,6 @@ const PhotoModal = ({
         </PhotoWrapper>
         <MetadataAndControlsBottomWrapper>
           <ControlsWrapper>
-            <ControlsSectionWrapper hideBackground={!privateGallery}>
-              {privateGallery && (
-                <IconButton
-                  icon="download"
-                  size="LARGE"
-                  ariaLabel="Previous photo"
-                  onClick={downloadPhoto}
-                />
-              )}
-            </ControlsSectionWrapper>
             <ControlsSectionWrapper>
               <IconButton
                 icon="arrowLeft"
@@ -102,7 +150,7 @@ const PhotoModal = ({
               <IconButton
                 icon="close"
                 ariaLabel="Close single photo view"
-                onClick={closeModal}
+                onClick={handleCloseModal}
                 size="LARGE"
               />
               <IconButton

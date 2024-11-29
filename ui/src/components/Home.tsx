@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
-import { context } from 'src/context'
+import usePhotoStore from 'src/store'
 import { CONTENT_SPACING, MOBILE_WIDTH } from 'src/theme'
 import GalleryPreview from './GalleryPreview'
 
@@ -18,9 +18,7 @@ const HomeImageWrapper = styled.div`
 `
 
 const Home = () => {
-  const {
-    state: { galleries }
-  } = useContext(context)
+  const galleries = usePhotoStore(state => state.galleries)
 
   return (
     <HomeImageWrapper>
