@@ -6,13 +6,12 @@ import { type GalleryType, type PhotoType } from './types'
 export interface State {
   photos: Record<string, PhotoType>
   galleries: Record<string, GalleryType>
-  selectedGallery: { id: string } | null
   selectedPhotoId: string | null
+  selectedPhotoIds: string[]
   setSelectedPhotoId: (selectedPhotoId: string | null) => void
   setPhotos: (photos: Record<string, PhotoType>) => void
   setGalleries: (galleries: Record<string, GalleryType>) => void
-  setSelectedGallery: (selectedGallery: { id: string }) => void
-  getSelectedGalleryPhotoIdsByGalleryId: () => string[]
+  setSelectedPhotoIds: (galleryId: string | undefined) => void
 }
 
 const initialData = getData()
@@ -23,33 +22,28 @@ const usePhotoStore = create<State>()(
       (set, get) => ({
         photos: initialData.photos,
         galleries: initialData.galleries,
-        selectedGallery: null,
         selectedPhotoId: null,
+        selectedPhotoIds: [],
         setPhotos: photos => {
           set({ photos })
         },
         setGalleries: galleries => {
           set({ galleries })
         },
-        setSelectedGallery: selectedGallery => {
-          set({ selectedGallery })
-        },
         setSelectedPhotoId: selectedPhotoId => {
           set({ selectedPhotoId })
         },
-        getSelectedGalleryPhotoIdsByGalleryId: () => {
-          const photos = get().photos
-          const selectedGallery = get().selectedGallery
-
-          if (!selectedGallery) return []
-          return Object.values(photos)
-            .filter(photo => photo.galleryIds.includes(selectedGallery.id))
+        setSelectedPhotoIds: (galleryId?: string) => {
+          const selectedPhotoIds = Object.values(get().photos)
+            .filter(photo => photo.galleryIds.includes(galleryId ?? ''))
             .sort((a, b) => {
               const aDate = new Date(a.dateTaken)
               const bDate = new Date(b.dateTaken)
               return aDate.getTime() - bDate.getTime()
             })
             .map(({ id }) => id)
+
+          set({ selectedPhotoIds })
         }
       }),
       {
