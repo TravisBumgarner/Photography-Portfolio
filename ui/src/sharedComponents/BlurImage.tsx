@@ -63,8 +63,7 @@ export const BlurImage = ({
       height={height}
       $blurUrl={blurUrl}
       ref={imgRef}
-      // Fixes brief flickering of a broken image if using '' here.
-      {...(isVisible ? { src } : {})}
+      src={src}
       loading={isVisible ? 'eager' : 'lazy'}
       onLoad={handleOnLoad}
       alt={alt}

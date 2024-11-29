@@ -233,21 +233,20 @@ const NavigationGutter = styled.nav<{ $isNavigationVisible: boolean }>`
 `
 
 const NavigationWrapper = styled.div<{ $isNavigationVisible: boolean }>`
+  width: 300px;
   box-sizing: border-box;
   display: flex;
   position: fixed;
   z-index: ${Z_INDEX.NAVIGATION};
   top: 0;
+  right: 0;
   overflow: scroll;
   background-color: ${COLORS.BACKGROUND};
-  transition: right ${TRANSITION_SPEED}s, visibility ${TRANSITION_SPEED}s;
+  transition: transform ${TRANSITION_SPEED}s, visibility ${TRANSITION_SPEED}s;
   visibility: ${({ $isNavigationVisible }) =>
     $isNavigationVisible ? 'visible' : 'hidden'};
-  right: ${({ $isNavigationVisible }) =>
-    $isNavigationVisible ? '0' : '-100vw'};
-
-  /* box-shadow: -1px 0px 1.5px hsl(0deg 0% 72% / 0),
-    -17.4px 0px 26.1px hsl(0deg 0% 72% / 0.53); */
+  transform: ${({ $isNavigationVisible }) =>
+    $isNavigationVisible ? 'translateX(0)' : 'translateX(300px)'};
 `
 
 const CloseButtonWrapper = styled.div`
@@ -262,7 +261,6 @@ const SectionsWrapper = styled.div`
   height: 100vh;
   box-sizing: border-box;
   flex-direction: column;
-  width: 300px;
   overflow: auto;
 `
 

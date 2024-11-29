@@ -5,6 +5,7 @@ import { Error } from 'src/sharedComponents'
 import styled from 'styled-components'
 import Context from './context'
 import './index.css'
+import Loading from './sharedComponents/Loading'
 import { MAX_WIDTH } from './theme'
 
 const About = lazy(async () => await import('./components/About'))
@@ -19,7 +20,7 @@ const App = () => {
       <TitleBar />
       <Context>
         <Navigation />
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loading />}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />

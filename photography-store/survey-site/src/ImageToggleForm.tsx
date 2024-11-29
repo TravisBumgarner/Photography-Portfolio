@@ -28,7 +28,7 @@ const ImageToggleForm: React.FC<ImageToggleFormProps> = ({ images }) => {
 
     const imageIndexes = selectedImages
       .map(i => i.replace('https://storage.googleapis.com/photo-survey/', ''))
-      .map(i => i.replace('.jpg', ''))
+      .map(i => i.replace('.avif', ''))
 
     const response = (await submitContactForm({
       name: NAME,
