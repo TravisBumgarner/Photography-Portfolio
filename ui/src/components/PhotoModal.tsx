@@ -1,10 +1,10 @@
-import React, { useCallback, useContext, useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import Modal from 'react-modal'
 import styled, { createGlobalStyle } from 'styled-components'
 
-import { context } from 'src/context'
 import usePreventAppScroll from 'src/hooks/usePreventAppScroll'
 import { IconButton } from 'src/sharedComponents'
+import usePhotoStore from 'src/store'
 import { COLORS, CONTENT_SPACING, MAX_WIDTH } from 'src/theme'
 import { getPhotoUrl } from 'src/utils'
 
@@ -21,9 +21,7 @@ const PhotoModal = ({
   closeModal,
   selectedPhotoId
 }: PhotoProps) => {
-  const {
-    state: { photos }
-  } = useContext(context)
+  const photos = usePhotoStore(state => state.photos)
   usePreventAppScroll(selectedPhotoId !== null)
 
   const details = selectedPhotoId ? photos[selectedPhotoId] : null

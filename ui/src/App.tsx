@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom'
 
 import { Error } from 'src/sharedComponents'
 import styled from 'styled-components'
-import Context from './context'
 import './index.css'
 import Loading from './sharedComponents/Loading'
 import { MAX_WIDTH } from './theme'
@@ -18,31 +17,29 @@ const App = () => {
   return (
     <AppContainer>
       <TitleBar />
-      <Context>
-        <Navigation />
-        <Suspense fallback={<Loading />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/private/:gallerySlug">
-              <Route index element={<Gallery privateGallery={true} />} />
-              <Route
-                path=":photoSlug"
-                element={<Gallery privateGallery={true} />}
-              />
-            </Route>
-            <Route path="/:gallerySlug">
-              <Route index element={<Gallery privateGallery={false} />} />
-              <Route
-                path=":photoSlug"
-                element={<Gallery privateGallery={false} />}
-              />
-            </Route>
-            <Route path="/error500" element={<Error value="500" />} />
-            <Route path="*" element={<Error value="404" />} />
-          </Routes>
-        </Suspense>
-      </Context>
+      <Navigation />
+      <Suspense fallback={<Loading />}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/private/:gallerySlug">
+            <Route index element={<Gallery privateGallery={true} />} />
+            <Route
+              path=":photoSlug"
+              element={<Gallery privateGallery={true} />}
+            />
+          </Route>
+          <Route path="/:gallerySlug">
+            <Route index element={<Gallery privateGallery={false} />} />
+            <Route
+              path=":photoSlug"
+              element={<Gallery privateGallery={false} />}
+            />
+          </Route>
+          <Route path="/error500" element={<Error value="500" />} />
+          <Route path="*" element={<Error value="404" />} />
+        </Routes>
+      </Suspense>
     </AppContainer>
   )
 }

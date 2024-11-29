@@ -1,17 +1,11 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState
-} from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { BlurImage, PageHeader } from 'src/sharedComponents'
+import usePhotoStore from 'src/store'
 import { CONTENT_SPACING, MOBILE_WIDTH } from 'src/theme'
 import { type PhotoType, type PrivateGallery } from 'src/types'
-import { context } from '../context'
 import { getPhotoUrl } from '../utils'
 import PhotoModal from './PhotoModal'
 
@@ -61,9 +55,8 @@ const PhotoPreview = ({
   updateSelectedPhotoId,
   alt
 }: PhotoPreviewProps) => {
-  const {
-    state: { photos, privateGalleries }
-  } = useContext(context)
+  const photos = usePhotoStore(state => state.photos)
+  const privateGalleries = usePhotoStore(state => state.privateGalleries)
 
   const photo = privateGallery
     ? privateGalleries[gallerySlug].photos[photoId]
@@ -106,9 +99,9 @@ const Gallery = ({ privateGallery }: Props) => {
 
   const navigate = useNavigate()
 
-  const {
-    state: { galleries, photos, privateGalleries }
-  } = useContext(context)
+  const galleries = usePhotoStore(state => state.galleries)
+  const privateGalleries = usePhotoStore(state => state.privateGalleries)
+  const photos = usePhotoStore(state => state.photos)
 
   const { gallerySlug, photoSlug } = useParams<{
     gallerySlug: string

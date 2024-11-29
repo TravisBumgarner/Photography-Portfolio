@@ -14,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@preact/signals-react": "^2.2.0",
+    "@redux-devtools/extension": "^3.3.0",
     "@sentry/react": "^7.17.4",
     "@sentry/tracing": "^7.17.4",
     "blurhash": "^2.0.5",
@@ -24,7 +25,8 @@
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.4.3",
     "styled-components": "^5.3.6",
-    "webpack-dev-server": "^4.11.1"
+    "webpack-dev-server": "^4.11.1",
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.25",
