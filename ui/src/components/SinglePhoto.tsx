@@ -107,34 +107,30 @@ const SinglePhoto = () => {
       <PhotoWrapper>
         <StyledPhoto src={photoSrc} />
       </PhotoWrapper>
-      <MetadataAndControlsBottomWrapper>
-        <ControlsWrapper>
-          <ControlsSectionWrapper>
-            <IconButton
-              icon="arrowLeft"
-              size="LARGE"
-              ariaLabel="Previous photo"
-              onClick={() => {
-                navigateToNextPhoto('left')
-              }}
-            />
-            <IconButton
-              icon="close"
-              ariaLabel="Close single photo view"
-              onClick={returnToGallery}
-              size="LARGE"
-            />
-            <IconButton
-              icon="arrowRight"
-              ariaLabel="Next photo"
-              onClick={() => {
-                navigateToNextPhoto('right')
-              }}
-              size="LARGE"
-            />
-          </ControlsSectionWrapper>
-        </ControlsWrapper>
-      </MetadataAndControlsBottomWrapper>
+      <ControlsWrapper>
+        <IconButton
+          icon="arrowLeft"
+          size="LARGE"
+          ariaLabel="Previous photo"
+          onClick={() => {
+            navigateToNextPhoto('left')
+          }}
+        />
+        <IconButton
+          icon="close"
+          ariaLabel="Close single photo view"
+          onClick={returnToGallery}
+          size="LARGE"
+        />
+        <IconButton
+          icon="arrowRight"
+          ariaLabel="Next photo"
+          onClick={() => {
+            navigateToNextPhoto('right')
+          }}
+          size="LARGE"
+        />
+      </ControlsWrapper>
     </Wrapper>
   )
 }
@@ -150,41 +146,15 @@ const Wrapper = styled.div`
   z-index: ${Z_INDEX.SINGLE_PHOTO};
 `
 
-const MetadataAndControlsBottomWrapper = styled.div`
-  display: flex;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  justify-content: center;
-  box-sizing: border-box;
-  align-items: end;
-  flex-direction: column;
-`
-
-const ControlsSectionWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: color-mix(in srgb, ${COLORS.BACKGROUND} 50%, transparent);
-  padding: ${CONTENT_SPACING.MEDIUM};
-  border-radius: ${CONTENT_SPACING.MEDIUM};
-  height: 30px;
-
-  > button:first-child {
-    margin-right: ${CONTENT_SPACING.SMALL};
-  }
-  > button:last-child {
-    margin-left: ${CONTENT_SPACING.SMALL};
-  }
-`
-
 const ControlsWrapper = styled.div`
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  background-color: color-mix(in srgb, ${COLORS.BACKGROUND} 50%, transparent);
+  > button {
+    padding: ${CONTENT_SPACING.MEDIUM};
+  }
   border-radius: ${CONTENT_SPACING.MEDIUM};
-  margin: ${CONTENT_SPACING.MEDIUM};
-  justify-content: end;
-  display: flex;
-  flex-direction: row;
 `
 
 const PhotoWrapper = styled.div`
