@@ -23,7 +23,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/:gallerySlug">
+          <Route path="/gallery/:gallerySlug">
             <Route index element={<Gallery />} />
             <Route path=":photoSlug" element={<SinglePhoto />} />
           </Route>

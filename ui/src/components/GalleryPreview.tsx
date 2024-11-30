@@ -28,7 +28,7 @@ const GalleryPreview = ({
 
   return (
     <Container>
-      <StyledLink id={slug} to={`/${slug}`}>
+      <StyledLink id={slug} to={`/gallery/${slug}`}>
         <BlurImage alt={title} useSquareImage src={url} blurHash={blurHash} />
         <Header>{title}</Header>
       </StyledLink>

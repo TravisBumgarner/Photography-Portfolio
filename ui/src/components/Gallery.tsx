@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import styled from 'styled-components'
 
 import { Navigate, useParams } from 'react-router-dom'
@@ -10,13 +10,10 @@ import GalleryItemPreview from './GalleryItemPreview'
 const Gallery = () => {
   const setSelectedPhotoIds = usePhotoStore(state => state.setSelectedPhotoIds)
   const selectedPhotoIds = usePhotoStore(state => state.selectedPhotoIds)
-  const setSelectedPhotoId = usePhotoStore(state => state.setSelectedPhotoId)
-  const [onlyFetchOnLoad, setOnlyFetchOnLoad] = useState(false)
   const galleries = usePhotoStore(state => state.galleries)
 
-  const { gallerySlug, photoSlug } = useParams<{
+  const { gallerySlug } = useParams<{
     gallerySlug: string
-    photoSlug?: string
   }>()
 
   useEffect(() => {
@@ -29,37 +26,6 @@ const Gallery = () => {
     const gallery = galleries[gallerySlug]
     return gallery?.title || ''
   }, [gallerySlug, galleries])
-
-  // Grab the photo id from the url on load and set it as the selectedPhotoId on first load.
-  useEffect(() => {
-    if (photoSlug && !onlyFetchOnLoad) {
-      setSelectedPhotoId(photoSlug)
-      setOnlyFetchOnLoad(true)
-    }
-  }, [photoSlug, setSelectedPhotoId, onlyFetchOnLoad])
-
-  // const closeModalCallback = useCallback(
-  //   (previouslySelectedPhotoId: string | null) => {
-  //     if (!previouslySelectedPhotoId) return
-  //     const previousFocusedPhoto = document.getElementById(
-  //       previouslySelectedPhotoId
-  //     )
-  //     if (!previousFocusedPhoto) return
-
-  //     previousFocusedPhoto.scrollIntoView({
-  //       behavior: 'auto',
-  //       block: 'center',
-  //       inline: 'center'
-  //     })
-  //     previousFocusedPhoto.focus()
-  //     // Without the timeout the photo doesn't have a chance to focus before blurring causing
-  //     // tab index to remain on the photo that was selected when the PhotoModal was first openned.
-  //     setTimeout(() => {
-  //       previousFocusedPhoto.blur()
-  //     }, 0)
-  //   },
-  //   []
-  // )
 
   if (!gallerySlug || !galleries[gallerySlug]) {
     return <Navigate to="/" />
@@ -76,7 +42,7 @@ const Gallery = () => {
             alt={`photo of ${galleryTitle}`}
             key={photoId}
             photoId={photoId}
-            // gallerySlug={gallerySlug}
+            galleryId={gallerySlug}
           />
         ))}
       </GalleryWrapper>

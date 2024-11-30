@@ -2,32 +2,32 @@ import React, { useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { useNavigate, useParams } from 'react-router-dom'
-import usePreventAppScroll from 'src/hooks/usePreventAppScroll'
+import Error from 'src/sharedComponents/Error'
 import IconButton from 'src/sharedComponents/IconButton'
 import usePhotoStore from 'src/store'
-import { COLORS, CONTENT_SPACING } from 'src/theme'
+import { COLORS, CONTENT_SPACING, Z_INDEX } from 'src/theme'
 import { getPhotoUrl } from 'src/utils'
 
 const SinglePhoto = () => {
   const selectedPhotoIds = usePhotoStore(state => state.selectedPhotoIds)
   const getPhotoById = usePhotoStore(state => state.getPhotoById)
-  const setSelectedPhotoId = usePhotoStore(state => state.setSelectedPhotoId)
-  const selectedPhotoId = usePhotoStore(state => state.selectedPhotoId)
   const navigate = useNavigate()
 
-  const { gallerySlug } = useParams<{
+  const { gallerySlug, photoSlug } = useParams<{
     gallerySlug: string
+    photoSlug: string
   }>()
 
-  usePreventAppScroll(selectedPhotoId !== null)
-
-  const details = getPhotoById(selectedPhotoId)
+  const details = getPhotoById(photoSlug!) // todo fix
 
   const navigateToNextPhoto = useCallback(
     (direction: 'left' | 'right') => {
-      if (!selectedPhotoId) return
+      if (!photoSlug) {
+        navigate('/error404')
+        return
+      }
 
-      const index = selectedPhotoIds.indexOf(selectedPhotoId)
+      const index = selectedPhotoIds.indexOf(photoSlug)
 
       let nextIndex: number
       if (direction === 'left') {
@@ -39,30 +39,15 @@ const SinglePhoto = () => {
       }
 
       const nextPhotoId = selectedPhotoIds[nextIndex]
-      setSelectedPhotoId(nextPhotoId)
+      navigate(`/gallery/${gallerySlug}/${nextPhotoId}`)
     },
-    [selectedPhotoId, selectedPhotoIds, setSelectedPhotoId]
+    [selectedPhotoIds, gallerySlug, navigate, photoSlug]
   )
-
-  const handleKeyPress = useCallback(
-    (event: KeyboardEvent) => {
-      if (event.key === 'ArrowLeft') navigateToNextPhoto('left')
-      if (event.key === 'ArrowRight') navigateToNextPhoto('right')
-    },
-    [navigateToNextPhoto]
-  )
-
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyPress)
-    return () => {
-      window.removeEventListener('keydown', handleKeyPress)
-    }
-  }, [handleKeyPress])
 
   const preLoadNeighboringPhotos = useCallback(() => {
-    if (!selectedPhotoIds || !selectedPhotoId) return
+    if (!selectedPhotoIds || !photoSlug) return
 
-    const index = selectedPhotoIds.indexOf(selectedPhotoId)
+    const index = selectedPhotoIds.indexOf(photoSlug)
     const previousIndex = index === 0 ? selectedPhotoIds.length - 1 : index - 1
     const nextIndex = index === selectedPhotoIds.length - 1 ? 0 : index + 1
 
@@ -84,35 +69,33 @@ const SinglePhoto = () => {
         photoSrc: nextPhoto.src
       })
     }
-  }, [selectedPhotoIds, selectedPhotoId, getPhotoById])
+  }, [selectedPhotoIds, getPhotoById, photoSlug])
 
-  const handleCloseModal = useCallback(() => {
-    // closeModalCallback(selectedPhotoId)
-
-    navigate(`/${gallerySlug}`, { replace: true })
-
-    setSelectedPhotoId(null)
-  }, [
-    // closeModalCallback,
-    // selectedPhotoId,
-    navigate,
-    gallerySlug,
-    setSelectedPhotoId
-  ])
-
-  useEffect(() => {
-    if (selectedPhotoId) {
-      // Prevent unneccesary re-renders which was caused with useNavigate
-      const newUrl = `/${gallerySlug}/${selectedPhotoId}`
-      window.history.replaceState(null, '', newUrl)
-    }
-  }, [selectedPhotoId, gallerySlug])
+  const returnToGallery = useCallback(() => {
+    navigate(`/gallery/${gallerySlug}`)
+  }, [gallerySlug, navigate])
 
   useEffect(() => {
     preLoadNeighboringPhotos()
   }, [preLoadNeighboringPhotos])
 
-  if (!details) return null
+  const handleKeyPress = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === 'ArrowLeft') navigateToNextPhoto('left')
+      if (event.key === 'ArrowRight') navigateToNextPhoto('right')
+      if (event.key === 'Escape') returnToGallery()
+    },
+    [navigateToNextPhoto, returnToGallery]
+  )
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyPress)
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress)
+    }
+  }, [handleKeyPress])
+
+  if (!details) return <Error value="404" />
 
   const photoSrc = getPhotoUrl({
     isThumbnail: false,
@@ -120,7 +103,7 @@ const SinglePhoto = () => {
   })
 
   return (
-    <>
+    <Wrapper>
       <PhotoWrapper>
         <StyledPhoto src={photoSrc} />
       </PhotoWrapper>
@@ -138,7 +121,7 @@ const SinglePhoto = () => {
             <IconButton
               icon="close"
               ariaLabel="Close single photo view"
-              onClick={handleCloseModal}
+              onClick={returnToGallery}
               size="LARGE"
             />
             <IconButton
@@ -152,38 +135,20 @@ const SinglePhoto = () => {
           </ControlsSectionWrapper>
         </ControlsWrapper>
       </MetadataAndControlsBottomWrapper>
-    </>
+    </Wrapper>
   )
 }
 
-// const modalCSS = {
-//   content: {
-//     top: '50%',
-//     left: '50%',
-//     right: 'auto',
-//     bottom: 'auto',
-//     marginRight: '-50%',
-//     transform: 'translate(-50%, -50%)',
-//     border: 0,
-//     padding: 0,
-//     borderRadius: 0,
-//     backgroundColor: COLORS.BACKGROUND,
-//     width: MAX_WIDTH,
-//     maxWidth: '100dvw',
-//     height: MAX_WIDTH,
-//     maxHeight: '100dvh', // Ensure the modal doesn't exceed the viewport height
-//     overflow: 'auto' // Allow scrolling if content overflows
-//   },
-//   overlay: {
-//     position: 'fixed',
-//     top: 0,
-//     left: 0,
-//     right: 0,
-//     bottom: 0,
-//     backgroundColor: 'rgba(0, 0, 0, 0.75)', // Semi-transparent background
-//     zIndex: 1000 // Ensure the overlay is above other elements
-//   }
-// }
+const Wrapper = styled.div`
+  background-color: ${COLORS.BACKGROUND};
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: ${Z_INDEX.SINGLE_PHOTO};
+`
 
 const MetadataAndControlsBottomWrapper = styled.div`
   display: flex;

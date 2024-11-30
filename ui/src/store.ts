@@ -6,9 +6,7 @@ import { type GalleryType, type PhotoType } from './types'
 export interface State {
   photos: Record<string, PhotoType>
   galleries: Record<string, GalleryType>
-  selectedPhotoId: string | null
   selectedPhotoIds: string[]
-  setSelectedPhotoId: (selectedPhotoId: string | null) => void
   setPhotos: (photos: Record<string, PhotoType>) => void
   setGalleries: (galleries: Record<string, GalleryType>) => void
   setSelectedPhotoIds: (galleryId: string | undefined) => void
@@ -23,7 +21,6 @@ const usePhotoStore = create<State>()(
       (set, get) => ({
         photos: initialData.photos,
         galleries: initialData.galleries,
-        selectedPhotoId: null,
         selectedPhotoIds: [],
         getPhotoById: (photoId: string) => {
           return get().photos[photoId]
@@ -33,9 +30,6 @@ const usePhotoStore = create<State>()(
         },
         setGalleries: galleries => {
           set({ galleries })
-        },
-        setSelectedPhotoId: selectedPhotoId => {
-          set({ selectedPhotoId })
         },
         setSelectedPhotoIds: (galleryId?: string) => {
           const selectedPhotoIds = Object.values(get().photos)
