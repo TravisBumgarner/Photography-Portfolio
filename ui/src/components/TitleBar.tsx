@@ -1,34 +1,58 @@
-import React from 'react'
+import { motion, useAnimationControls } from 'framer-motion'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { useSignals } from '@preact/signals-react/runtime'
 
 import IconButton from 'src/sharedComponents/IconButton'
+import { SHARED_ANIMATION_DURATION } from 'src/sharedComponents/NavigationAnimation'
 import {
   COLORS,
   CONTENT_SPACING,
   FONT_SIZES,
   MAX_WIDTH,
+  MOBILE_WIDTH,
   Z_INDEX
 } from 'src/theme'
 import { isNavigationVisible } from './Navigation'
 
-const TitleBar = () => {
+interface TitleBarProps {
+  isPhotoSlugRoute: boolean
+}
+
+const TitleBar = ({ isPhotoSlugRoute }: TitleBarProps) => {
   useSignals()
+  const controls = useAnimationControls()
 
   const openNavigation = () => {
     isNavigationVisible.value = true
   }
 
+  useEffect(() => {
+    if (isPhotoSlugRoute) {
+      void controls.start('show')
+    } else {
+      void controls.start('hide')
+    }
+  }, [isPhotoSlugRoute, controls])
+
   return (
-    <TitleBarWrapper>
+    <TitleBarWrapper
+      animate={controls}
+      transition={{ duration: SHARED_ANIMATION_DURATION, ease: 'easeInOut' }}
+      variants={{
+        show: { opacity: 0 },
+        hide: { opacity: 1 }
+      }}
+    >
       <div>
         <InternalLink to="/">
           <Header>Travis Bumgarner Photography</Header>
         </InternalLink>
 
         <IconButton
+          color={COLORS.FOREGROUND}
           icon="menu"
           ariaLabel="Open navigation"
           onClick={openNavigation}
@@ -44,10 +68,6 @@ const Header = styled.h1`
   text-transform: uppercase;
   font-size: ${FONT_SIZES.MEDIUM};
 
-  // This in combination with the position sticky and margin on TitleBarWrapper
-  // gives a nice vertical spacing before scroll.
-  padding: ${CONTENT_SPACING.LARGE} 0;
-
   @media (hover: hover) {
     &:hover {
       color: ${COLORS.PRIMARY};
@@ -55,15 +75,15 @@ const Header = styled.h1`
   }
 `
 
-const TitleBarWrapper = styled.div`
+const TitleBarWrapper = styled(motion.div)`
   z-index: ${Z_INDEX.TITLE_BAR}; // Exists to deal with stacking order of hovered images covering title.
-  position: sticky;
   top: 0;
   max-width: ${MAX_WIDTH};
-  margin: ${CONTENT_SPACING.XLARGE} auto;
+  padding-bottom: ${CONTENT_SPACING.XXLARGE};
 
-  padding: 0 ${CONTENT_SPACING.LARGE};
-  background-color: ${COLORS.BACKGROUND};
+  @media (max-width: ${MOBILE_WIDTH}) {
+    padding-bottom: ${CONTENT_SPACING.LARGE};
+  }
 
   > div {
     display: flex;

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { useNavigate, useParams } from 'react-router-dom'
 import Error from 'src/sharedComponents/Error'
 import IconButton from 'src/sharedComponents/IconButton'
+import NavigationAnimation from 'src/sharedComponents/NavigationAnimation'
 import usePhotoStore from 'src/store'
 import { COLORS, CONTENT_SPACING, Z_INDEX } from 'src/theme'
 import { getPhotoUrl } from 'src/utils'
@@ -72,8 +73,8 @@ const SinglePhoto = () => {
   }, [selectedPhotoIds, getPhotoById, photoSlug])
 
   const returnToGallery = useCallback(() => {
-    navigate(`/gallery/${gallerySlug}?previouslyOpenPhotoId=${photoSlug}`)
-  }, [gallerySlug, navigate, photoSlug])
+    navigate(`/gallery/${gallerySlug}`)
+  }, [gallerySlug, navigate])
 
   useEffect(() => {
     preLoadNeighboringPhotos()
@@ -103,12 +104,17 @@ const SinglePhoto = () => {
   })
 
   return (
-    <Wrapper>
-      <PhotoWrapper>
-        <StyledPhoto src={photoSrc} />
-      </PhotoWrapper>
+    <>
+      <NavigationAnimation>
+        <Wrapper>
+          <PhotoWrapper>
+            <StyledPhoto src={photoSrc} />
+          </PhotoWrapper>
+        </Wrapper>
+      </NavigationAnimation>
       <ControlsWrapper>
         <IconButton
+          color={COLORS.BACKGROUND}
           icon="arrowLeft"
           size="LARGE"
           ariaLabel="Previous photo"
@@ -117,12 +123,14 @@ const SinglePhoto = () => {
           }}
         />
         <IconButton
+          color={COLORS.BACKGROUND}
           icon="close"
           ariaLabel="Close single photo view"
           onClick={returnToGallery}
           size="LARGE"
         />
         <IconButton
+          color={COLORS.BACKGROUND}
           icon="arrowRight"
           ariaLabel="Next photo"
           onClick={() => {
@@ -131,12 +139,11 @@ const SinglePhoto = () => {
           size="LARGE"
         />
       </ControlsWrapper>
-    </Wrapper>
+    </>
   )
 }
 
 const Wrapper = styled.div`
-  background-color: ${COLORS.BACKGROUND};
   position: fixed;
   left: 0;
   top: 0;
@@ -150,11 +157,12 @@ const ControlsWrapper = styled.div`
   position: fixed;
   right: 0;
   bottom: 0;
-  background-color: color-mix(in srgb, ${COLORS.BACKGROUND} 50%, transparent);
+  background-color: color-mix(in srgb, ${COLORS.FOREGROUND} 50%, transparent);
   > button {
     padding: ${CONTENT_SPACING.MEDIUM};
   }
   border-radius: ${CONTENT_SPACING.MEDIUM};
+  z-index: ${Z_INDEX.SINGLE_PHOTO_CONTROLS};
 `
 
 const PhotoWrapper = styled.div`

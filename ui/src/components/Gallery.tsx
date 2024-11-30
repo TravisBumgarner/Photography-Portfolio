@@ -1,28 +1,29 @@
 import React, { useEffect, useMemo } from 'react'
-import styled from 'styled-components'
 
-import { Navigate, useParams, useSearchParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
+import NavigationAnimation from 'src/sharedComponents/NavigationAnimation'
 import PageHeader from 'src/sharedComponents/PageHeader'
 import usePhotoStore from 'src/store'
 import { CONTENT_SPACING, MOBILE_WIDTH } from 'src/theme'
+import styled from 'styled-components'
 import GalleryItemPreview from './GalleryItemPreview'
 
 const Gallery = () => {
   const setSelectedPhotoIds = usePhotoStore(state => state.setSelectedPhotoIds)
   const selectedPhotoIds = usePhotoStore(state => state.selectedPhotoIds)
   const galleries = usePhotoStore(state => state.galleries)
-  const [searchParams, setSearchParams] = useSearchParams()
-  const previouslyOpenPhotoId = searchParams.get('previouslyOpenPhotoId')
+  // const [searchParams, setSearchParams] = useSearchParams()
+  // const previouslyOpenPhotoId = searchParams.get('previouslyOpenPhotoId')
 
-  useEffect(() => {
-    if (previouslyOpenPhotoId) {
-      document.getElementById(previouslyOpenPhotoId)?.scrollIntoView({
-        block: 'center',
-        inline: 'center'
-      })
-      setSearchParams({})
-    }
-  }, [previouslyOpenPhotoId, setSearchParams])
+  // useEffect(() => {
+  //   if (previouslyOpenPhotoId) {
+  //     document.getElementById(previouslyOpenPhotoId)?.scrollIntoView({
+  //       block: 'center',
+  //       inline: 'center'
+  //     })
+  //     setSearchParams({})
+  //   }
+  // }, [previouslyOpenPhotoId, setSearchParams])
 
   const { gallerySlug } = useParams<{
     gallerySlug: string
@@ -44,10 +45,8 @@ const Gallery = () => {
   }
 
   return (
-    <>
-      <ProjectDescriptionWrapper>
-        <PageHeader>{galleryTitle}</PageHeader>
-      </ProjectDescriptionWrapper>
+    <NavigationAnimation>
+      <PageHeader>{galleryTitle}</PageHeader>
       <GalleryWrapper>
         {selectedPhotoIds.map(photoId => (
           <GalleryItemPreview
@@ -58,19 +57,14 @@ const Gallery = () => {
           />
         ))}
       </GalleryWrapper>
-    </>
+    </NavigationAnimation>
   )
 }
-
-const ProjectDescriptionWrapper = styled.div`
-  margin: 1rem;
-`
 
 const GalleryWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: ${CONTENT_SPACING.XLARGE};
-  margin: ${CONTENT_SPACING.LARGE};
 
   @media (max-width: ${MOBILE_WIDTH}) {
     grid-template-columns: repeat(2, 1fr);

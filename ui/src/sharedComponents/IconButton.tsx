@@ -6,52 +6,46 @@ import {
   FaDownload,
   FaTimes
 } from 'react-icons/fa'
-import {
-  COLORS,
-  CONTENT_SPACING,
-  FONT_SIZES,
-  TRANSITION_SPEED
-} from 'src/theme'
+import { COLORS, FONT_SIZES, TRANSITION_SPEED } from 'src/theme'
 import styled, { css } from 'styled-components'
 
-const IconCSS = css`
-  fill: ${COLORS.FOREGROUND};
+const IconCSS = (color: string) => css`
+  fill: ${color};
   cursor: pointer;
-  /* margin: 0 ${CONTENT_SPACING.MEDIUM}; */
 
   @media (hover: hover) {
     &:hover {
-      fill: ${COLORS.PRIMARY};
+      fill: ${color};
     }
   }
 `
 
-const StyledFaTimes = styled(FaTimes)`
-  ${IconCSS}
+const StyledFaTimes = styled(FaTimes)<{ color: string }>`
+  ${props => IconCSS(props.color)}
 `
 
-const StyledFaArrowLeft = styled(FaArrowLeft)`
-  ${IconCSS}
+const StyledFaArrowLeft = styled(FaArrowLeft)<{ color: string }>`
+  ${props => IconCSS(props.color)}
 `
 
-const StyledFaArrowRight = styled(FaArrowRight)`
-  ${IconCSS}
+const StyledFaArrowRight = styled(FaArrowRight)<{ color: string }>`
+  ${props => IconCSS(props.color)}
 `
 
-const StyledFaBars = styled(FaBars)`
-  ${IconCSS}
+const StyledFaBars = styled(FaBars)<{ color: string }>`
+  ${props => IconCSS(props.color)}
 `
 
-const StyledFaDownload = styled(FaDownload)`
-  ${IconCSS}
+const StyledFaDownload = styled(FaDownload)<{ color: string }>`
+  ${props => IconCSS(props.color)}
 `
 
 const iconLookup = {
-  close: <StyledFaTimes />,
-  arrowLeft: <StyledFaArrowLeft />,
-  arrowRight: <StyledFaArrowRight />,
-  menu: <StyledFaBars />,
-  download: <StyledFaDownload />
+  close: StyledFaTimes,
+  arrowLeft: StyledFaArrowLeft,
+  arrowRight: StyledFaArrowRight,
+  menu: StyledFaBars,
+  download: StyledFaDownload
 }
 
 interface IconButtonProps {
@@ -61,6 +55,7 @@ interface IconButtonProps {
   ariaLabel: string
   tabIndex?: number
   role?: string
+  color: string // New color prop
 }
 
 const IconButton = ({
@@ -69,8 +64,11 @@ const IconButton = ({
   ariaLabel,
   tabIndex = 0,
   role = 'button',
-  size
+  size,
+  color // Destructure the color prop
 }: IconButtonProps) => {
+  const IconComponent = iconLookup[icon]
+
   return (
     <Button
       onClick={onClick}
@@ -78,7 +76,9 @@ const IconButton = ({
       tabIndex={tabIndex}
       role={role}
     >
-      {cloneElement(iconLookup[icon], { size: FONT_SIZES[size], css: IconCSS })}
+      {cloneElement(<IconComponent color={color} />, {
+        size: FONT_SIZES[size]
+      })}
     </Button>
   )
 }
@@ -88,14 +88,7 @@ const Button = styled.button`
   border: none;
   padding: 0;
   cursor: pointer;
-  fill: ${COLORS.FOREGROUND};
   transition: fill ${TRANSITION_SPEED}s;
-
-  @media (hover: hover) {
-    &:hover {
-      fill: ${COLORS.PRIMARY};
-    }
-  }
 
   &:focus-visible {
     outline: 2px solid ${COLORS.PRIMARY};
