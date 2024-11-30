@@ -10,12 +10,12 @@ import { COLORS, FONT_SIZES, TRANSITION_SPEED } from 'src/theme'
 import styled, { css } from 'styled-components'
 
 const IconCSS = (color: string) => css`
-  fill: ${color}; // Use the passed color prop
+  fill: ${color};
   cursor: pointer;
 
   @media (hover: hover) {
     &:hover {
-      fill: ${color}; // Change this if you want a different hover color
+      fill: ${color};
     }
   }
 `
