@@ -105,13 +105,13 @@ const SinglePhoto = () => {
 
   return (
     <>
-      <Wrapper>
-        <NavigationAnimation>
+      <NavigationAnimation>
+        <Wrapper>
           <PhotoWrapper>
             <StyledPhoto src={photoSrc} />
           </PhotoWrapper>
-        </NavigationAnimation>
-      </Wrapper>
+        </Wrapper>
+      </NavigationAnimation>
       <ControlsWrapper>
         <IconButton
           icon="arrowLeft"
