@@ -5,7 +5,13 @@ module.exports = {
   entry: './src/index.tsx',
   output: {
     filename: 'app.[contenthash].js',
-    path: path.resolve(__dirname, 'build')
+    path: path.resolve(__dirname, 'build'),
+    assetModuleFilename: 'fonts/[name].[contenthash][ext]'
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
   },
   module: {
     rules: [
@@ -17,6 +23,10 @@ module.exports = {
       {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource' // Use asset/resource for font files
       }
     ]
   },
