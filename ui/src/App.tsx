@@ -17,7 +17,7 @@ const Gallery = lazy(async () => await import('./components/Gallery'))
 
 const App = () => {
   const location = useLocation()
-  
+
   return (
     <AppContainer>
       <TitleBar />

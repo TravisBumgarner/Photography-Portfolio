@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { useNavigate, useParams } from 'react-router-dom'
 import Error from 'src/sharedComponents/Error'
 import IconButton from 'src/sharedComponents/IconButton'
+import NavigationAnimation from 'src/sharedComponents/NavigationAnimation'
 import usePhotoStore from 'src/store'
 import { COLORS, CONTENT_SPACING, Z_INDEX } from 'src/theme'
 import { getPhotoUrl } from 'src/utils'
@@ -103,35 +104,37 @@ const SinglePhoto = () => {
   })
 
   return (
-    <Wrapper>
-      <PhotoWrapper>
-        <StyledPhoto src={photoSrc} />
-      </PhotoWrapper>
-      <ControlsWrapper>
-        <IconButton
-          icon="arrowLeft"
-          size="LARGE"
-          ariaLabel="Previous photo"
-          onClick={() => {
-            navigateToNextPhoto('left')
-          }}
-        />
-        <IconButton
-          icon="close"
-          ariaLabel="Close single photo view"
-          onClick={returnToGallery}
-          size="LARGE"
-        />
-        <IconButton
-          icon="arrowRight"
-          ariaLabel="Next photo"
-          onClick={() => {
-            navigateToNextPhoto('right')
-          }}
-          size="LARGE"
-        />
-      </ControlsWrapper>
-    </Wrapper>
+    <NavigationAnimation>
+      <Wrapper>
+        <PhotoWrapper>
+          <StyledPhoto src={photoSrc} />
+        </PhotoWrapper>
+        <ControlsWrapper>
+          <IconButton
+            icon="arrowLeft"
+            size="LARGE"
+            ariaLabel="Previous photo"
+            onClick={() => {
+              navigateToNextPhoto('left')
+            }}
+          />
+          <IconButton
+            icon="close"
+            ariaLabel="Close single photo view"
+            onClick={returnToGallery}
+            size="LARGE"
+          />
+          <IconButton
+            icon="arrowRight"
+            ariaLabel="Next photo"
+            onClick={() => {
+              navigateToNextPhoto('right')
+            }}
+            size="LARGE"
+          />
+        </ControlsWrapper>
+      </Wrapper>
+    </NavigationAnimation>
   )
 }
 
