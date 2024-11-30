@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from 'framer-motion'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -14,7 +15,11 @@ import {
 } from 'src/theme'
 import { isNavigationVisible } from './Navigation'
 
-const TitleBar = () => {
+interface TitleBarProps {
+  isPhotoSlugRoute: boolean
+}
+
+const TitleBar = ({ isPhotoSlugRoute }: TitleBarProps) => {
   useSignals()
 
   const openNavigation = () => {
@@ -22,20 +27,29 @@ const TitleBar = () => {
   }
 
   return (
-    <TitleBarWrapper>
-      <div>
-        <InternalLink to="/">
-          <Header>Travis Bumgarner Photography</Header>
-        </InternalLink>
+    <AnimatePresence>
+      {!isPhotoSlugRoute && (
+        <TitleBarWrapper
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25, delay: 0.25 }}
+        >
+          <div>
+            <InternalLink to="/">
+              <Header>Travis Bumgarner Photography</Header>
+            </InternalLink>
 
-        <IconButton
-          icon="menu"
-          ariaLabel="Open navigation"
-          onClick={openNavigation}
-          size="LARGE"
-        />
-      </div>
-    </TitleBarWrapper>
+            <IconButton
+              icon="menu"
+              ariaLabel="Open navigation"
+              onClick={openNavigation}
+              size="LARGE"
+            />
+          </div>
+        </TitleBarWrapper>
+      )}
+    </AnimatePresence>
   )
 }
 
@@ -55,9 +69,9 @@ const Header = styled.h1`
   }
 `
 
-const TitleBarWrapper = styled.div`
+const TitleBarWrapper = styled(motion.div)`
   z-index: ${Z_INDEX.TITLE_BAR}; // Exists to deal with stacking order of hovered images covering title.
-  position: sticky;
+  /* position: sticky; */
   top: 0;
   max-width: ${MAX_WIDTH};
   margin: ${CONTENT_SPACING.XLARGE} auto;

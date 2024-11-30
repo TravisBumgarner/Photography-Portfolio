@@ -17,11 +17,14 @@ const Gallery = lazy(async () => await import('./components/Gallery'))
 
 const App = () => {
   const location = useLocation()
+  const isPhotoSlugRoute =
+    location.pathname.includes('/gallery/') &&
+    location.pathname.split('/').length > 3
 
   return (
     <AppContainer>
-      <TitleBar />
       <Navigation />
+      <TitleBar isPhotoSlugRoute={isPhotoSlugRoute} />
       <Suspense fallback={<Loading />}>
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
