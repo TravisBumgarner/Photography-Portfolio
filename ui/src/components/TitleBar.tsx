@@ -1,5 +1,5 @@
-import { AnimatePresence, motion } from 'framer-motion'
-import React from 'react'
+import { motion, useAnimationControls } from 'framer-motion'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -21,35 +21,43 @@ interface TitleBarProps {
 
 const TitleBar = ({ isPhotoSlugRoute }: TitleBarProps) => {
   useSignals()
+  const controls = useAnimationControls()
 
   const openNavigation = () => {
     isNavigationVisible.value = true
   }
+  console.log('isPhotoSlugRoute', isPhotoSlugRoute)
+
+  useEffect(() => {
+    if (isPhotoSlugRoute) {
+      void controls.start('show')
+    } else {
+      void controls.start('hide')
+    }
+  }, [isPhotoSlugRoute, controls])
 
   return (
-    <AnimatePresence>
-      {!isPhotoSlugRoute && (
-        <TitleBarWrapper
-          initial={{ opacity: 1 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.25, delay: 0.25 }}
-        >
-          <div>
-            <InternalLink to="/">
-              <Header>Travis Bumgarner Photography</Header>
-            </InternalLink>
+    <TitleBarWrapper
+      animate={controls}
+      transition={{ duration: 0.25 }}
+      variants={{
+        show: { opacity: 0 },
+        hide: { opacity: 1 }
+      }}
+    >
+      <div>
+        <InternalLink to="/">
+          <Header>Travis Bumgarner Photography</Header>
+        </InternalLink>
 
-            <IconButton
-              icon="menu"
-              ariaLabel="Open navigation"
-              onClick={openNavigation}
-              size="LARGE"
-            />
-          </div>
-        </TitleBarWrapper>
-      )}
-    </AnimatePresence>
+        <IconButton
+          icon="menu"
+          ariaLabel="Open navigation"
+          onClick={openNavigation}
+          size="LARGE"
+        />
+      </div>
+    </TitleBarWrapper>
   )
 }
 

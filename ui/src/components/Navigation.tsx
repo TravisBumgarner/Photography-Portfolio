@@ -70,7 +70,7 @@ const Navigation = () => {
       .map(({ title, slug }) => {
         return (
           <LinkListItem key={slug} onClick={closeNavigation}>
-            <InternalLink to={`/${slug}`}>{title}</InternalLink>
+            <InternalLink to={`/gallery/${slug}`}>{title}</InternalLink>
           </LinkListItem>
         )
       })
