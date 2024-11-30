@@ -7,6 +7,10 @@ import { useSignals } from '@preact/signals-react/runtime'
 
 import IconButton from 'src/sharedComponents/IconButton'
 import {
+  EXIT_OPACITY,
+  SHARED_ANIMATION_DURATION
+} from 'src/sharedComponents/NavigationAnimation'
+import {
   COLORS,
   CONTENT_SPACING,
   FONT_SIZES,
@@ -26,7 +30,6 @@ const TitleBar = ({ isPhotoSlugRoute }: TitleBarProps) => {
   const openNavigation = () => {
     isNavigationVisible.value = true
   }
-  console.log('isPhotoSlugRoute', isPhotoSlugRoute)
 
   useEffect(() => {
     if (isPhotoSlugRoute) {
@@ -39,9 +42,9 @@ const TitleBar = ({ isPhotoSlugRoute }: TitleBarProps) => {
   return (
     <TitleBarWrapper
       animate={controls}
-      transition={{ duration: 0.25 }}
+      transition={{ duration: SHARED_ANIMATION_DURATION }}
       variants={{
-        show: { opacity: 0 },
+        show: { opacity: isPhotoSlugRoute ? 0 : EXIT_OPACITY },
         hide: { opacity: 1 }
       }}
     >

@@ -73,8 +73,8 @@ const SinglePhoto = () => {
   }, [selectedPhotoIds, getPhotoById, photoSlug])
 
   const returnToGallery = useCallback(() => {
-    navigate(`/gallery/${gallerySlug}?previouslyOpenPhotoId=${photoSlug}`)
-  }, [gallerySlug, navigate, photoSlug])
+    navigate(`/gallery/${gallerySlug}`)
+  }, [gallerySlug, navigate])
 
   useEffect(() => {
     preLoadNeighboringPhotos()
@@ -104,37 +104,39 @@ const SinglePhoto = () => {
   })
 
   return (
-    <NavigationAnimation>
-      <Wrapper>
-        <PhotoWrapper>
-          <StyledPhoto src={photoSrc} />
-        </PhotoWrapper>
-        <ControlsWrapper>
-          <IconButton
-            icon="arrowLeft"
-            size="LARGE"
-            ariaLabel="Previous photo"
-            onClick={() => {
-              navigateToNextPhoto('left')
-            }}
-          />
-          <IconButton
-            icon="close"
-            ariaLabel="Close single photo view"
-            onClick={returnToGallery}
-            size="LARGE"
-          />
-          <IconButton
-            icon="arrowRight"
-            ariaLabel="Next photo"
-            onClick={() => {
-              navigateToNextPhoto('right')
-            }}
-            size="LARGE"
-          />
-        </ControlsWrapper>
-      </Wrapper>
-    </NavigationAnimation>
+    <>
+      <NavigationAnimation>
+        <Wrapper>
+          <PhotoWrapper>
+            <StyledPhoto src={photoSrc} />
+          </PhotoWrapper>
+        </Wrapper>
+      </NavigationAnimation>
+      <ControlsWrapper>
+        <IconButton
+          icon="arrowLeft"
+          size="LARGE"
+          ariaLabel="Previous photo"
+          onClick={() => {
+            navigateToNextPhoto('left')
+          }}
+        />
+        <IconButton
+          icon="close"
+          ariaLabel="Close single photo view"
+          onClick={returnToGallery}
+          size="LARGE"
+        />
+        <IconButton
+          icon="arrowRight"
+          ariaLabel="Next photo"
+          onClick={() => {
+            navigateToNextPhoto('right')
+          }}
+          size="LARGE"
+        />
+      </ControlsWrapper>
+    </>
   )
 }
 
@@ -158,6 +160,7 @@ const ControlsWrapper = styled.div`
     padding: ${CONTENT_SPACING.MEDIUM};
   }
   border-radius: ${CONTENT_SPACING.MEDIUM};
+  z-index: ${Z_INDEX.SINGLE_PHOTO_CONTROLS};
 `
 
 const PhotoWrapper = styled.div`
