@@ -35,8 +35,7 @@ const App = () => {
     <Background
       animate={controls}
       transition={{
-        duration: SHARED_ANIMATION_DURATION,
-        delay: SHARED_ANIMATION_DURATION
+        duration: SHARED_ANIMATION_DURATION
       }}
       variants={{
         darkenBackground: {
