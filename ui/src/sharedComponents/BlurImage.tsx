@@ -15,7 +15,7 @@ interface Props {
   alt: string
 }
 
-export const BlurImage = ({
+const BlurImage = ({
   blurHash,
   src,
   useSquareImage,
@@ -96,3 +96,5 @@ const StyledImage = styled.img<{
     `
       : ''}
 `
+
+export default BlurImage

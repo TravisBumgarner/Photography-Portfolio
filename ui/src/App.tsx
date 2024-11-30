@@ -1,8 +1,9 @@
 import React, { Suspense, lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import { Error } from 'src/sharedComponents'
+import Error from 'src/sharedComponents/Error'
 import styled from 'styled-components'
+import SinglePhoto from './components/SinglePhoto'
 import './index.css'
 import Loading from './sharedComponents/Loading'
 import { MAX_WIDTH } from './theme'
@@ -22,12 +23,9 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/:gallerySlug">
+          <Route path="/gallery/:gallerySlug">
             <Route index element={<Gallery />} />
-            <Route
-              path=":photoSlug"
-              element={<Gallery />}
-            />
+            <Route path=":photoSlug" element={<SinglePhoto />} />
           </Route>
           <Route path="/error500" element={<Error value="500" />} />
           <Route path="*" element={<Error value="404" />} />

@@ -1,7 +1,7 @@
 import { CONTENT_SPACING, FONT_SIZES, MOBILE_WIDTH } from 'src/theme'
 import styled from 'styled-components'
 
-export const PageHeader = styled.h2`
+const PageHeader = styled.h2`
   font-weight: 900;
   margin-bottom: ${CONTENT_SPACING.XXLARGE};
 
@@ -13,3 +13,5 @@ export const PageHeader = styled.h2`
     margin-top: ${CONTENT_SPACING.MEDIUM};
   }
 `
+
+export default PageHeader

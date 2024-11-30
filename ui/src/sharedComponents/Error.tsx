@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
 
+import PageHeader from 'src/sharedComponents/PageHeader'
 import { CONTENT_SPACING, FONT_SIZES } from 'src/theme'
-import { PageHeader } from './PageHeader'
 
 const ErrorWrapper = styled.div`
   display: flex;
