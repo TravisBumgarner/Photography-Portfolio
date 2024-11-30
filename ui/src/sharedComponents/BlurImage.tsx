@@ -65,6 +65,7 @@ export const BlurImage = ({
       ref={imgRef}
       src={src}
       loading={isVisible ? 'eager' : 'lazy'}
+      rel={isVisible ? 'preload' : ''}
       onLoad={handleOnLoad}
       alt={alt}
     />
