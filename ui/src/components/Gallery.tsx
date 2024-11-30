@@ -1,12 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 
 import { Navigate, useParams } from 'react-router-dom'
-import { PageHeader } from 'src/sharedComponents'
+import PageHeader from 'src/sharedComponents/PageHeader'
 import usePhotoStore from 'src/store'
 import { CONTENT_SPACING, MOBILE_WIDTH } from 'src/theme'
 import GalleryItemPreview from './GalleryItemPreview'
-import PhotoModal from './PhotoModal'
 
 const Gallery = () => {
   const setSelectedPhotoIds = usePhotoStore(state => state.setSelectedPhotoIds)
@@ -39,28 +38,28 @@ const Gallery = () => {
     }
   }, [photoSlug, setSelectedPhotoId, onlyFetchOnLoad])
 
-  const closeModalCallback = useCallback(
-    (previouslySelectedPhotoId: string | null) => {
-      if (!previouslySelectedPhotoId) return
-      const previousFocusedPhoto = document.getElementById(
-        previouslySelectedPhotoId
-      )
-      if (!previousFocusedPhoto) return
+  // const closeModalCallback = useCallback(
+  //   (previouslySelectedPhotoId: string | null) => {
+  //     if (!previouslySelectedPhotoId) return
+  //     const previousFocusedPhoto = document.getElementById(
+  //       previouslySelectedPhotoId
+  //     )
+  //     if (!previousFocusedPhoto) return
 
-      previousFocusedPhoto.scrollIntoView({
-        behavior: 'auto',
-        block: 'center',
-        inline: 'center'
-      })
-      previousFocusedPhoto.focus()
-      // Without the timeout the photo doesn't have a chance to focus before blurring causing
-      // tab index to remain on the photo that was selected when the PhotoModal was first openned.
-      setTimeout(() => {
-        previousFocusedPhoto.blur()
-      }, 0)
-    },
-    []
-  )
+  //     previousFocusedPhoto.scrollIntoView({
+  //       behavior: 'auto',
+  //       block: 'center',
+  //       inline: 'center'
+  //     })
+  //     previousFocusedPhoto.focus()
+  //     // Without the timeout the photo doesn't have a chance to focus before blurring causing
+  //     // tab index to remain on the photo that was selected when the PhotoModal was first openned.
+  //     setTimeout(() => {
+  //       previousFocusedPhoto.blur()
+  //     }, 0)
+  //   },
+  //   []
+  // )
 
   if (!gallerySlug || !galleries[gallerySlug]) {
     return <Navigate to="/" />
@@ -68,7 +67,6 @@ const Gallery = () => {
 
   return (
     <>
-      <PhotoModal closeModalCallback={closeModalCallback} />
       <ProjectDescriptionWrapper>
         <PageHeader>{galleryTitle}</PageHeader>
       </ProjectDescriptionWrapper>

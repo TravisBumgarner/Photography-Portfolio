@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import styled from 'styled-components'
 
-import { BlurImage } from 'src/sharedComponents'
+import BlurImage from 'src/sharedComponents/BlurImage'
 import usePhotoStore from 'src/store'
 import { getPhotoUrl } from '../utils'
 

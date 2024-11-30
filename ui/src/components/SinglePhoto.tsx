@@ -1,19 +1,14 @@
 import React, { useCallback, useEffect } from 'react'
-import Modal from 'react-modal'
-import styled, { createGlobalStyle } from 'styled-components'
+import styled from 'styled-components'
 
 import { useNavigate, useParams } from 'react-router-dom'
 import usePreventAppScroll from 'src/hooks/usePreventAppScroll'
-import { IconButton } from 'src/sharedComponents'
+import IconButton from 'src/sharedComponents/IconButton'
 import usePhotoStore from 'src/store'
-import { COLORS, CONTENT_SPACING, MAX_WIDTH } from 'src/theme'
+import { COLORS, CONTENT_SPACING } from 'src/theme'
 import { getPhotoUrl } from 'src/utils'
 
-interface PhotoProps {
-  closeModalCallback: (previouslySelectedPhotoId: string | null) => void
-}
-
-const PhotoModal = ({ closeModalCallback }: PhotoProps) => {
+const SinglePhoto = () => {
   const selectedPhotoIds = usePhotoStore(state => state.selectedPhotoIds)
   const getPhotoById = usePhotoStore(state => state.getPhotoById)
   const setSelectedPhotoId = usePhotoStore(state => state.setSelectedPhotoId)
@@ -92,14 +87,14 @@ const PhotoModal = ({ closeModalCallback }: PhotoProps) => {
   }, [selectedPhotoIds, selectedPhotoId, getPhotoById])
 
   const handleCloseModal = useCallback(() => {
-    closeModalCallback(selectedPhotoId)
+    // closeModalCallback(selectedPhotoId)
 
     navigate(`/${gallerySlug}`, { replace: true })
 
     setSelectedPhotoId(null)
   }, [
-    closeModalCallback,
-    selectedPhotoId,
+    // closeModalCallback,
+    // selectedPhotoId,
     navigate,
     gallerySlug,
     setSelectedPhotoId
@@ -126,84 +121,69 @@ const PhotoModal = ({ closeModalCallback }: PhotoProps) => {
 
   return (
     <>
-      <OverflowHidden />
-      <Modal
-        isOpen={selectedPhotoId !== null}
-        style={modalCSS}
-        onRequestClose={handleCloseModal}
-        preventScroll
-      >
-        <PhotoWrapper>
-          <StyledPhoto src={photoSrc} />
-        </PhotoWrapper>
-        <MetadataAndControlsBottomWrapper>
-          <ControlsWrapper>
-            <ControlsSectionWrapper>
-              <IconButton
-                icon="arrowLeft"
-                size="LARGE"
-                ariaLabel="Previous photo"
-                onClick={() => {
-                  navigateToNextPhoto('left')
-                }}
-              />
-              <IconButton
-                icon="close"
-                ariaLabel="Close single photo view"
-                onClick={handleCloseModal}
-                size="LARGE"
-              />
-              <IconButton
-                icon="arrowRight"
-                ariaLabel="Next photo"
-                onClick={() => {
-                  navigateToNextPhoto('right')
-                }}
-                size="LARGE"
-              />
-            </ControlsSectionWrapper>
-          </ControlsWrapper>
-        </MetadataAndControlsBottomWrapper>
-      </Modal>
+      <PhotoWrapper>
+        <StyledPhoto src={photoSrc} />
+      </PhotoWrapper>
+      <MetadataAndControlsBottomWrapper>
+        <ControlsWrapper>
+          <ControlsSectionWrapper>
+            <IconButton
+              icon="arrowLeft"
+              size="LARGE"
+              ariaLabel="Previous photo"
+              onClick={() => {
+                navigateToNextPhoto('left')
+              }}
+            />
+            <IconButton
+              icon="close"
+              ariaLabel="Close single photo view"
+              onClick={handleCloseModal}
+              size="LARGE"
+            />
+            <IconButton
+              icon="arrowRight"
+              ariaLabel="Next photo"
+              onClick={() => {
+                navigateToNextPhoto('right')
+              }}
+              size="LARGE"
+            />
+          </ControlsSectionWrapper>
+        </ControlsWrapper>
+      </MetadataAndControlsBottomWrapper>
     </>
   )
 }
 
-// Prevent scroll while Modal is open.
-const OverflowHidden = createGlobalStyle`
-  body {
-    overflow: hidden;
-  }
-`
-
-const modalCSS = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    border: 0,
-    padding: 0,
-    borderRadius: 0,
-    backgroundColor: COLORS.BACKGROUND,
-    width: MAX_WIDTH,
-    maxWidth: '100dvw',
-    height: MAX_WIDTH,
-    maxHeight: '100dvh', // Ensure the modal doesn't exceed the viewport height
-    overflow: 'auto' // Allow scrolling if content overflows
-  },
-  overlay: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.75)', // Semi-transparent background
-    zIndex: 1000 // Ensure the overlay is above other elements
-  }
-}
+// const modalCSS = {
+//   content: {
+//     top: '50%',
+//     left: '50%',
+//     right: 'auto',
+//     bottom: 'auto',
+//     marginRight: '-50%',
+//     transform: 'translate(-50%, -50%)',
+//     border: 0,
+//     padding: 0,
+//     borderRadius: 0,
+//     backgroundColor: COLORS.BACKGROUND,
+//     width: MAX_WIDTH,
+//     maxWidth: '100dvw',
+//     height: MAX_WIDTH,
+//     maxHeight: '100dvh', // Ensure the modal doesn't exceed the viewport height
+//     overflow: 'auto' // Allow scrolling if content overflows
+//   },
+//   overlay: {
+//     position: 'fixed',
+//     top: 0,
+//     left: 0,
+//     right: 0,
+//     bottom: 0,
+//     backgroundColor: 'rgba(0, 0, 0, 0.75)', // Semi-transparent background
+//     zIndex: 1000 // Ensure the overlay is above other elements
+//   }
+// }
 
 const MetadataAndControlsBottomWrapper = styled.div`
   display: flex;
@@ -262,4 +242,4 @@ const StyledPhoto = styled.img`
   user-select: none;
 `
 
-export default PhotoModal
+export default SinglePhoto
