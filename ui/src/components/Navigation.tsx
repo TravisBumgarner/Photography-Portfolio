@@ -180,6 +180,7 @@ const Navigation = () => {
         <SectionsWrapper>
           <CloseButtonWrapper>
             <IconButton
+              color={COLORS.FOREGROUND}
               icon="close"
               ariaLabel="Close navigation"
               onClick={closeNavigation}

@@ -33,7 +33,6 @@ const HomeImageWrapper = styled(motion.div)`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: ${CONTENT_SPACING.XLARGE};
-  margin: ${CONTENT_SPACING.LARGE};
 
   @media (max-width: ${MOBILE_WIDTH}) {
     grid-template-columns: repeat(2, 1fr);

@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import React, { useEffect } from 'react'
 
-export const SHARED_ANIMATION_DURATION = 0.25
+export const SHARED_ANIMATION_DURATION = 0.5
 
 const NavigationAnimation = ({ children }: { children: React.ReactNode }) => {
   // For some reason, adding AnimatePresence to the App component

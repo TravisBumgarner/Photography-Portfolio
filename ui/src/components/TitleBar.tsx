@@ -12,6 +12,7 @@ import {
   CONTENT_SPACING,
   FONT_SIZES,
   MAX_WIDTH,
+  MOBILE_WIDTH,
   Z_INDEX
 } from 'src/theme'
 import { isNavigationVisible } from './Navigation'
@@ -39,7 +40,7 @@ const TitleBar = ({ isPhotoSlugRoute }: TitleBarProps) => {
   return (
     <TitleBarWrapper
       animate={controls}
-      transition={{ duration: SHARED_ANIMATION_DURATION }}
+      transition={{ duration: SHARED_ANIMATION_DURATION, delay: 0.5 }}
       variants={{
         show: { opacity: 0 },
         hide: { opacity: 1 }
@@ -51,6 +52,7 @@ const TitleBar = ({ isPhotoSlugRoute }: TitleBarProps) => {
         </InternalLink>
 
         <IconButton
+          color={COLORS.FOREGROUND}
           icon="menu"
           ariaLabel="Open navigation"
           onClick={openNavigation}
@@ -66,10 +68,6 @@ const Header = styled.h1`
   text-transform: uppercase;
   font-size: ${FONT_SIZES.MEDIUM};
 
-  // This in combination with the position sticky and margin on TitleBarWrapper
-  // gives a nice vertical spacing before scroll.
-  padding: ${CONTENT_SPACING.LARGE} 0;
-
   @media (hover: hover) {
     &:hover {
       color: ${COLORS.PRIMARY};
@@ -79,13 +77,13 @@ const Header = styled.h1`
 
 const TitleBarWrapper = styled(motion.div)`
   z-index: ${Z_INDEX.TITLE_BAR}; // Exists to deal with stacking order of hovered images covering title.
-  /* position: sticky; */
   top: 0;
   max-width: ${MAX_WIDTH};
-  margin: ${CONTENT_SPACING.XLARGE} auto;
+  padding-bottom: ${CONTENT_SPACING.XXLARGE};
 
-  padding: 0 ${CONTENT_SPACING.LARGE};
-  background-color: ${COLORS.BACKGROUND};
+  @media (max-width: ${MOBILE_WIDTH}) {
+    padding-bottom: ${CONTENT_SPACING.LARGE};
+  }
 
   > div {
     display: flex;

@@ -46,9 +46,7 @@ const Gallery = () => {
 
   return (
     <NavigationAnimation>
-      <ProjectDescriptionWrapper>
-        <PageHeader>{galleryTitle}</PageHeader>
-      </ProjectDescriptionWrapper>
+      <PageHeader>{galleryTitle}</PageHeader>
       <GalleryWrapper>
         {selectedPhotoIds.map(photoId => (
           <GalleryItemPreview
@@ -63,15 +61,11 @@ const Gallery = () => {
   )
 }
 
-const ProjectDescriptionWrapper = styled.div`
-  margin: 1rem;
-`
-
 const GalleryWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: ${CONTENT_SPACING.XLARGE};
-  margin: ${CONTENT_SPACING.LARGE};
+  /* margin: ${CONTENT_SPACING.LARGE}; */
 
   @media (max-width: ${MOBILE_WIDTH}) {
     grid-template-columns: repeat(2, 1fr);

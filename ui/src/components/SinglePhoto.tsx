@@ -114,6 +114,7 @@ const SinglePhoto = () => {
       </NavigationAnimation>
       <ControlsWrapper>
         <IconButton
+          color={COLORS.BACKGROUND}
           icon="arrowLeft"
           size="LARGE"
           ariaLabel="Previous photo"
@@ -122,12 +123,14 @@ const SinglePhoto = () => {
           }}
         />
         <IconButton
+          color={COLORS.BACKGROUND}
           icon="close"
           ariaLabel="Close single photo view"
           onClick={returnToGallery}
           size="LARGE"
         />
         <IconButton
+          color={COLORS.BACKGROUND}
           icon="arrowRight"
           ariaLabel="Next photo"
           onClick={() => {
@@ -141,7 +144,6 @@ const SinglePhoto = () => {
 }
 
 const Wrapper = styled.div`
-  background-color: ${COLORS.BACKGROUND};
   position: fixed;
   left: 0;
   top: 0;
@@ -155,7 +157,7 @@ const ControlsWrapper = styled.div`
   position: fixed;
   right: 0;
   bottom: 0;
-  background-color: color-mix(in srgb, ${COLORS.BACKGROUND} 50%, transparent);
+  background-color: color-mix(in srgb, ${COLORS.FOREGROUND} 50%, transparent);
   > button {
     padding: ${CONTENT_SPACING.MEDIUM};
   }
