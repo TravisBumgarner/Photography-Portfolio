@@ -1,7 +1,6 @@
 import { ErrorBoundary, init as sentryInit } from '@sentry/react'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import Modal from 'react-modal'
 
 import App from './App'
 
@@ -13,7 +12,6 @@ sentryInit({
 })
 
 const container = document.getElementById('root')
-Modal.setAppElement('#root')
 
 const root = createRoot(container!)
 
