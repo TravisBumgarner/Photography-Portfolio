@@ -40,7 +40,7 @@ const TitleBar = ({ isPhotoSlugRoute }: TitleBarProps) => {
   return (
     <TitleBarWrapper
       animate={controls}
-      transition={{ duration: SHARED_ANIMATION_DURATION }}
+      transition={{ duration: SHARED_ANIMATION_DURATION, ease: 'easeInOut' }}
       variants={{
         show: { opacity: 0 },
         hide: { opacity: 1 }

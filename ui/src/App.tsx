@@ -35,6 +35,7 @@ const App = () => {
     <Background
       animate={controls}
       transition={{
+        ease: 'easeInOut',
         duration: SHARED_ANIMATION_DURATION
       }}
       variants={{
