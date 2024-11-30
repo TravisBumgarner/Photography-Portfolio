@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import BlurImage from 'src/sharedComponents/BlurImage'
 import usePhotoStore from 'src/store'
 import { COLORS, CONTENT_SPACING, FONT_SIZES, MOBILE_WIDTH } from 'src/theme'
 import styled from 'styled-components'
-import { BlurImage } from '../sharedComponents'
 import { getPhotoUrl } from '../utils'
 
 const GalleryPreview = ({
@@ -28,7 +28,7 @@ const GalleryPreview = ({
 
   return (
     <Container>
-      <StyledLink id={slug} to={`/${slug}`}>
+      <StyledLink id={slug} to={`/gallery/${slug}`}>
         <BlurImage alt={title} useSquareImage src={url} blurHash={blurHash} />
         <Header>{title}</Header>
       </StyledLink>

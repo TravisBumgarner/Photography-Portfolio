@@ -6,9 +6,11 @@ import Modal from 'react-modal'
 import App from './App'
 
 import { BrowserRouter } from 'react-router-dom'
-import { Error } from './sharedComponents'
+import Error from 'src/sharedComponents/Error'
 
-sentryInit({ dsn: 'https://9f4ad55370e84dea97293045aab74b8b@sentry.io/1304092' })
+sentryInit({
+  dsn: 'https://9f4ad55370e84dea97293045aab74b8b@sentry.io/1304092'
+})
 
 const container = document.getElementById('root')
 Modal.setAppElement('#root')

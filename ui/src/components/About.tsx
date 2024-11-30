@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { List, NavigationAnimation, PageHeader } from 'src/sharedComponents'
+import List from 'src/sharedComponents/List'
+import NavigationAnimation from 'src/sharedComponents/NavigationAnimation'
+import PageHeader from 'src/sharedComponents/PageHeader'
 import { CONTENT_SPACING } from 'src/theme'
 
 const ContentWrapper = styled.div`

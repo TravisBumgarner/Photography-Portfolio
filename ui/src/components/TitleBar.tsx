@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { useSignals } from '@preact/signals-react/runtime'
-import { IconButton } from 'src/sharedComponents'
+
+import IconButton from 'src/sharedComponents/IconButton'
 import {
   COLORS,
   CONTENT_SPACING,

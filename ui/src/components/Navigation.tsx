@@ -1,11 +1,11 @@
 import { signal } from '@preact/signals-react'
+import { useSignals } from '@preact/signals-react/runtime'
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
-import { useSignals } from '@preact/signals-react/runtime'
 import usePreventAppScroll from 'src/hooks/usePreventAppScroll'
-import { IconButton } from 'src/sharedComponents'
+import IconButton from 'src/sharedComponents/IconButton'
 import usePhotoStore from 'src/store'
 import {
   COLORS,

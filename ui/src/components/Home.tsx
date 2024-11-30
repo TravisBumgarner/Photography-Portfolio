@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { motion } from 'framer-motion'
-import { NavigationAnimation } from 'src/sharedComponents'
+import NavigationAnimation from 'src/sharedComponents/NavigationAnimation'
 import usePhotoStore from 'src/store'
 import { CONTENT_SPACING, MOBILE_WIDTH } from 'src/theme'
 import GalleryPreview from './GalleryPreview'
