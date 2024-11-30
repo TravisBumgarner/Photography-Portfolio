@@ -189,9 +189,9 @@ const modalCSS = {
     borderRadius: 0,
     backgroundColor: COLORS.BACKGROUND,
     width: MAX_WIDTH,
-    maxWidth: '100vw',
+    maxWidth: '100dvw',
     height: MAX_WIDTH,
-    maxHeight: '100vh', // Ensure the modal doesn't exceed the viewport height
+    maxHeight: '100dvh', // Ensure the modal doesn't exceed the viewport height
     overflow: 'auto' // Allow scrolling if content overflows
   },
   overlay: {
@@ -217,14 +217,11 @@ const MetadataAndControlsBottomWrapper = styled.div`
   flex-direction: column;
 `
 
-const ControlsSectionWrapper = styled.div<{ hideBackground?: boolean }>`
+const ControlsSectionWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${({ hideBackground }) =>
-    hideBackground
-      ? 'transparent'
-      : `color-mix(in srgb, ${COLORS.BACKGROUND} 50%, transparent)`};
+  background-color: color-mix(in srgb, ${COLORS.BACKGROUND} 50%, transparent);
   padding: ${CONTENT_SPACING.MEDIUM};
   border-radius: ${CONTENT_SPACING.MEDIUM};
   height: 30px;
