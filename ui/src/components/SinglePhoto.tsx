@@ -72,8 +72,8 @@ const SinglePhoto = () => {
   }, [selectedPhotoIds, getPhotoById, photoSlug])
 
   const returnToGallery = useCallback(() => {
-    navigate(`/gallery/${gallerySlug}`)
-  }, [gallerySlug, navigate])
+    navigate(`/gallery/${gallerySlug}?previouslyOpenPhotoId=${photoSlug}`)
+  }, [gallerySlug, navigate, photoSlug])
 
   useEffect(() => {
     preLoadNeighboringPhotos()

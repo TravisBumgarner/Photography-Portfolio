@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react'
 import styled from 'styled-components'
 
-import { Navigate, useParams } from 'react-router-dom'
+import { Navigate, useParams, useSearchParams } from 'react-router-dom'
 import PageHeader from 'src/sharedComponents/PageHeader'
 import usePhotoStore from 'src/store'
 import { CONTENT_SPACING, MOBILE_WIDTH } from 'src/theme'
@@ -11,6 +11,17 @@ const Gallery = () => {
   const setSelectedPhotoIds = usePhotoStore(state => state.setSelectedPhotoIds)
   const selectedPhotoIds = usePhotoStore(state => state.selectedPhotoIds)
   const galleries = usePhotoStore(state => state.galleries)
+  const [searchParams] = useSearchParams()
+  const previouslyOpenPhotoId = searchParams.get('previouslyOpenPhotoId')
+
+  useEffect(() => {
+    if (previouslyOpenPhotoId) {
+      document.getElementById(previouslyOpenPhotoId)?.scrollIntoView({
+        block: 'center',
+        inline: 'center'
+      })
+    }
+  }, [previouslyOpenPhotoId])
 
   const { gallerySlug } = useParams<{
     gallerySlug: string
