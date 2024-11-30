@@ -11,7 +11,7 @@ const Gallery = () => {
   const setSelectedPhotoIds = usePhotoStore(state => state.setSelectedPhotoIds)
   const selectedPhotoIds = usePhotoStore(state => state.selectedPhotoIds)
   const galleries = usePhotoStore(state => state.galleries)
-  const [searchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const previouslyOpenPhotoId = searchParams.get('previouslyOpenPhotoId')
 
   useEffect(() => {
@@ -20,8 +20,9 @@ const Gallery = () => {
         block: 'center',
         inline: 'center'
       })
+      setSearchParams({})
     }
-  }, [previouslyOpenPhotoId])
+  }, [previouslyOpenPhotoId, setSearchParams])
 
   const { gallerySlug } = useParams<{
     gallerySlug: string
