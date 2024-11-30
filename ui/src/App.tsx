@@ -1,5 +1,6 @@
+import { AnimatePresence } from 'framer-motion'
 import React, { Suspense, lazy } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 
 import { Error } from 'src/sharedComponents'
 import styled from 'styled-components'
@@ -14,24 +15,25 @@ const TitleBar = lazy(async () => await import('./components/TitleBar'))
 const Gallery = lazy(async () => await import('./components/Gallery'))
 
 const App = () => {
+  const location = useLocation()
+
   return (
     <AppContainer>
       <TitleBar />
       <Navigation />
       <Suspense fallback={<Loading />}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/:gallerySlug">
-            <Route index element={<Gallery />} />
-            <Route
-              path=":photoSlug"
-              element={<Gallery />}
-            />
-          </Route>
-          <Route path="/error500" element={<Error value="500" />} />
-          <Route path="*" element={<Error value="404" />} />
-        </Routes>
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/:gallerySlug">
+              <Route index element={<Gallery />} />
+              <Route path=":photoSlug" element={<Gallery />} />
+            </Route>
+            <Route path="/error500" element={<Error value="500" />} />
+            <Route path="*" element={<Error value="404" />} />
+          </Routes>
+        </AnimatePresence>
       </Suspense>
     </AppContainer>
   )

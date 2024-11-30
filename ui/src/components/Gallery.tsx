@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 
 import { Navigate, useParams } from 'react-router-dom'
-import { PageHeader } from 'src/sharedComponents'
+import { NavigationAnimation, PageHeader } from 'src/sharedComponents'
 import usePhotoStore from 'src/store'
 import { CONTENT_SPACING, MOBILE_WIDTH } from 'src/theme'
 import GalleryItemPreview from './GalleryItemPreview'
@@ -67,7 +67,7 @@ const Gallery = () => {
   }
 
   return (
-    <>
+    <NavigationAnimation>
       <PhotoModal closeModalCallback={closeModalCallback} />
       <ProjectDescriptionWrapper>
         <PageHeader>{galleryTitle}</PageHeader>
@@ -82,7 +82,7 @@ const Gallery = () => {
           />
         ))}
       </GalleryWrapper>
-    </>
+    </NavigationAnimation>
   )
 }
 
