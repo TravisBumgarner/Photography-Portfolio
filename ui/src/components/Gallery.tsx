@@ -22,25 +22,26 @@ const Gallery = () => {
 
   const thumbnailsLoading = thumbnailsLoadingCount !== thumbnailsLoadedCount
 
-  const loadLargeImage = useCallback((thumbnailAbsoluteUrl: string) => {
+  // We queue up large images of all thumbnails the user has viewed
+  // assuming those will be the ones they'll want to click.
+  const preloadLargeImage = useCallback(() => {
+    if (thumbnailsLoading) {
+      return
+    }
+
+    const thumbnailAbsoluteUrl = largeImageLoadQueue.current.shift()
+    if (!thumbnailAbsoluteUrl) return
+
     const largeAbsoluteUrl = thumbnailAbsoluteUrl.replace('thumbnail', 'large')
-    console.log('\tloading large image')
     const img = new Image()
     img.src = largeAbsoluteUrl
-  }, [])
 
-  const loadLargeImages = useCallback(() => {
-    while (largeImageLoadQueue.current.length > 0) {
-      const thumbnailAbsoluteUrl = largeImageLoadQueue.current.shift()
-      if (!thumbnailAbsoluteUrl) return
-      loadLargeImage(thumbnailAbsoluteUrl)
-    }
-  }, [loadLargeImage])
+    preloadLargeImage()
+  }, [thumbnailsLoading])
 
   useEffect(() => {
-    if (thumbnailsLoading) return
-    loadLargeImages()
-  }, [thumbnailsLoading, loadLargeImages])
+    preloadLargeImage()
+  }, [thumbnailsLoading, preloadLargeImage])
 
   const updateLoadedThumbnails = useCallback((thumbnailId: string) => {
     setThumbnailsLoadedCount(prev => prev + 1)
