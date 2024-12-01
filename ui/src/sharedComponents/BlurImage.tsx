@@ -1,3 +1,4 @@
+import { useInView } from 'framer-motion'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { useBlurhash } from '../hooks/useBlurhash'
@@ -13,6 +14,8 @@ interface Props {
   height?: number
   useSquareImage: boolean
   alt: string
+  loadingStartCallback?: () => void
+  loadingEndCallback?: (src: string) => void
 }
 
 const BlurImage = ({
@@ -21,40 +24,36 @@ const BlurImage = ({
   useSquareImage,
   width,
   height,
-  alt
+  alt,
+  loadingStartCallback,
+  loadingEndCallback
 }: Props) => {
-  const [isVisible, setIsVisible] = useState(false)
-
   const imgRef = useRef<HTMLImageElement>(null)
+  const startLoadingBlurHash = useInView(imgRef, {
+    margin: '0px 0px 3000px 0px',
+    once: true
+  })
+
+  const startLoadingImage = useInView(imgRef, {
+    margin: '0px 0px 500px 0px',
+    once: true
+  })
+
   const [imgLoaded, setImgLoaded] = useState(false)
-  const blurUrl = useBlurhash(!imgLoaded && isVisible ? blurHash : null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      entries => {
-        const [entry] = entries
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-          observer.disconnect()
-        }
-      },
-      {
-        rootMargin: '100px'
-      }
-    )
-
-    if (imgRef.current) {
-      observer.observe(imgRef.current)
-    }
-
-    return () => {
-      observer.disconnect()
-    }
-  }, [])
+  const blurUrl = useBlurhash(
+    !imgLoaded && startLoadingBlurHash ? blurHash : null
+  )
 
   const handleOnLoad = useCallback(() => {
     setImgLoaded(true)
-  }, [])
+    loadingEndCallback?.(src)
+  }, [loadingEndCallback, src])
+
+  useEffect(() => {
+    if (startLoadingImage) {
+      loadingStartCallback?.()
+    }
+  }, [startLoadingImage, loadingStartCallback])
 
   return (
     <StyledImage
@@ -63,9 +62,9 @@ const BlurImage = ({
       height={height}
       $blurUrl={blurUrl}
       ref={imgRef}
-      src={src}
-      loading={isVisible ? 'eager' : 'lazy'}
-      rel={isVisible ? 'preload' : ''}
+      {...(startLoadingImage || imgLoaded ? { src } : {})}
+      loading={startLoadingImage ? 'eager' : 'lazy'}
+      rel={startLoadingImage ? 'preload' : ''}
       onLoad={handleOnLoad}
       alt={alt}
     />

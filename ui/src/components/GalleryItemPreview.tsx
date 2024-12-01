@@ -10,9 +10,17 @@ interface PhotoPreviewProps {
   photoId: string
   alt: string
   galleryId: string
+  updateLoadedThumbnails: (thumbnailId: string) => void
+  updateLoadingCount: () => void
 }
 
-const GalleryItemPreview = ({ photoId, alt, galleryId }: PhotoPreviewProps) => {
+const GalleryItemPreview = ({
+  photoId,
+  alt,
+  galleryId,
+  updateLoadedThumbnails,
+  updateLoadingCount
+}: PhotoPreviewProps) => {
   const photos = usePhotoStore(state => state.photos)
 
   const photo = photos[photoId]
@@ -28,7 +36,14 @@ const GalleryItemPreview = ({ photoId, alt, galleryId }: PhotoPreviewProps) => {
       to={`/gallery/${galleryId}/${photoId}`}
       key={photo.id}
     >
-      <BlurImage alt={alt} blurHash={photo.blurHash} src={src} useSquareImage />
+      <BlurImage
+        alt={alt}
+        blurHash={photo.blurHash}
+        src={src}
+        useSquareImage
+        loadingStartCallback={updateLoadingCount}
+        loadingEndCallback={updateLoadedThumbnails}
+      />
     </StyledLink>
   )
 }
