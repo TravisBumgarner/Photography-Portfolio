@@ -30,12 +30,12 @@ const BlurImage = ({
 }: Props) => {
   const imgRef = useRef<HTMLImageElement>(null)
   const startLoadingBlurHash = useInView(imgRef, {
-    margin: '0px 0px 3000px 0px',
+    margin: '0px 0px 500px 0px',
     once: true
   })
 
   const startLoadingImage = useInView(imgRef, {
-    margin: '0px 0px 500px 0px',
+    margin: '0px 0px 100px 0px',
     once: true
   })
 
