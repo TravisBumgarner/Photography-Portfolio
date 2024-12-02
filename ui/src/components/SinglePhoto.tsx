@@ -1,10 +1,13 @@
+import { motion } from 'framer-motion'
 import React, { useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { useNavigate, useParams } from 'react-router-dom'
 import Error from 'src/sharedComponents/Error'
 import IconButton from 'src/sharedComponents/IconButton'
-import NavigationAnimation from 'src/sharedComponents/NavigationAnimation'
+import NavigationAnimation, {
+  SHARED_ANIMATION_DURATION
+} from 'src/sharedComponents/NavigationAnimation'
 import usePhotoStore from 'src/store'
 import { COLORS, CONTENT_SPACING, Z_INDEX } from 'src/theme'
 import { getPhotoUrl } from 'src/utils'
@@ -111,7 +114,15 @@ const SinglePhoto = () => {
             <StyledPhoto src={photoSrc} />
           </PhotoWrapper>
         </Wrapper>
-        <ControlsWrapper>
+        <ControlsWrapper
+          // The app background and this background animate at different times so we add a delay so that it isn't noticed.
+          initial={{ backgroundColor: 'transparent' }}
+          animate={{
+            backgroundColor: ` color-mix(in srgb, ${COLORS.FOREGROUND} 50%, transparent)`
+          }}
+          exit={{ backgroundColor: 'transparent' }}
+          transition={{ duration: SHARED_ANIMATION_DURATION, delay: 0.5 }}
+        >
           <IconButton
             color={COLORS.BACKGROUND}
             icon="arrowLeft"
@@ -153,11 +164,10 @@ const Wrapper = styled.div`
   z-index: ${Z_INDEX.SINGLE_PHOTO};
 `
 
-const ControlsWrapper = styled.div`
+const ControlsWrapper = styled(motion.div)`
   position: fixed;
   right: 0;
   bottom: 0;
-  background-color: color-mix(in srgb, ${COLORS.FOREGROUND} 50%, transparent);
   > button {
     padding: ${CONTENT_SPACING.MEDIUM};
   }
