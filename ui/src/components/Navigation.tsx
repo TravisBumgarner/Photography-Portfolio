@@ -178,15 +178,6 @@ const Navigation = () => {
         aria-hidden={!isNavigationVisible}
       >
         <SectionsWrapper>
-          <CloseButtonWrapper>
-            <IconButton
-              color={COLORS.FOREGROUND}
-              icon="close"
-              ariaLabel="Close navigation"
-              onClick={closeNavigation}
-              size="LARGE"
-            />
-          </CloseButtonWrapper>
           <Section>
             <Header>GALLERIES</Header>
             <ul>{links}</ul>
@@ -202,6 +193,15 @@ const Navigation = () => {
             <ul>{miscLinks}</ul>
           </Section>
         </SectionsWrapper>
+        <CloseButtonWrapper>
+          <IconButton
+            color={COLORS.FOREGROUND}
+            icon="close"
+            ariaLabel="Close navigation"
+            onClick={closeNavigation}
+            size="LARGE"
+          />
+        </CloseButtonWrapper>
       </NavigationWrapper>
       <NavigationGutter
         $isNavigationVisible={isNavigationVisible.value}
@@ -225,7 +225,6 @@ const NavigationGutter = styled.nav<{ $isNavigationVisible: boolean }>`
 `
 
 const NavigationWrapper = styled.div<{ $isNavigationVisible: boolean }>`
-  width: 300px;
   box-sizing: border-box;
   display: flex;
   position: fixed;
@@ -243,12 +242,11 @@ const NavigationWrapper = styled.div<{ $isNavigationVisible: boolean }>`
 
 const CloseButtonWrapper = styled.div`
   position: absolute;
-  top: ${CONTENT_SPACING.XLARGE};
-  right: ${CONTENT_SPACING.XLARGE};
+  top: ${CONTENT_SPACING.LARGE};
+  right: ${CONTENT_SPACING.LARGE};
 `
 
 const SectionsWrapper = styled.div`
-  z-index: 999;
   padding: ${CONTENT_SPACING.XLARGE};
   height: 100vh;
   box-sizing: border-box;
