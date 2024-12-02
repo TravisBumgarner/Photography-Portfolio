@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion'
-import React, { useCallback, useEffect } from 'react'
+import { AnimatePresence, motion, useAnimationControls } from 'framer-motion'
+import React, { useCallback, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
 import { useSwipeable } from 'react-swipeable'
@@ -18,6 +18,9 @@ const SinglePhoto = () => {
   const selectedPhotoIds = usePhotoStore(state => state.selectedPhotoIds)
   const getPhotoById = usePhotoStore(state => state.getPhotoById)
   const navigate = useNavigate()
+  const controls = useAnimationControls()
+  const nextPhotoId = useRef<string | null>(null)
+  const previousSwipeOutDirection = useRef<'left' | 'right' | null>(null)
 
   const { gallerySlug, photoSlug } = useParams<{
     gallerySlug: string
@@ -27,17 +30,37 @@ const SinglePhoto = () => {
   const handlers = useSwipeable({
     preventScrollOnSwipe: true,
     onSwipedLeft: () => {
-      navigateToNextPhoto('right')
+      swipeToNextPhoto('right')
     },
     onSwipedRight: () => {
-      navigateToNextPhoto('left')
+      swipeToNextPhoto('left')
     },
     trackMouse: true
   })
 
-  const details = getPhotoById(photoSlug!) // todo fix
+  useEffect(() => {
+    console.log('woo')
+    void controls.start('swipeLeftIn')
+  }, [controls, photoSlug])
+
+  const details = getPhotoById(photoSlug!)
 
   const navigateToNextPhoto = useCallback(
+    (nextPhotoId: string) => {
+      navigate(`/gallery/${gallerySlug}/${nextPhotoId}`)
+    },
+    [gallerySlug, navigate]
+  )
+
+  const handleAnimationComplete = useCallback(
+    (name: string) => {
+      console.log('name', name)
+      if (nextPhotoId.current) navigateToNextPhoto(nextPhotoId.current)
+    },
+    [navigateToNextPhoto]
+  )
+
+  const swipeToNextPhoto = useCallback(
     (direction: 'left' | 'right') => {
       if (!photoSlug) {
         navigate('/error404')
@@ -54,11 +77,14 @@ const SinglePhoto = () => {
         if (index === selectedPhotoIds.length - 1) nextIndex = 0
         else nextIndex = index + 1
       }
+      nextPhotoId.current = selectedPhotoIds[nextIndex]
 
-      const nextPhotoId = selectedPhotoIds[nextIndex]
-      navigate(`/gallery/${gallerySlug}/${nextPhotoId}`)
+      previousSwipeOutDirection.current = direction
+      void controls.start(
+        direction === 'left' ? 'swipeLeftOut' : 'swipeRightOut'
+      )
     },
-    [selectedPhotoIds, gallerySlug, navigate, photoSlug]
+    [selectedPhotoIds, navigate, photoSlug, controls]
   )
 
   const preLoadNeighboringPhotos = useCallback(() => {
@@ -98,11 +124,11 @@ const SinglePhoto = () => {
 
   const handleKeyPress = useCallback(
     (event: KeyboardEvent) => {
-      if (event.key === 'ArrowLeft') navigateToNextPhoto('left')
-      if (event.key === 'ArrowRight') navigateToNextPhoto('right')
+      if (event.key === 'ArrowLeft') swipeToNextPhoto('left')
+      if (event.key === 'ArrowRight') swipeToNextPhoto('right')
       if (event.key === 'Escape') returnToGallery()
     },
-    [navigateToNextPhoto, returnToGallery]
+    [swipeToNextPhoto, returnToGallery]
   )
 
   useEffect(() => {
@@ -124,14 +150,35 @@ const SinglePhoto = () => {
       <NavigationAnimation>
         <Wrapper {...handlers}>
           <PhotoWrapper>
-            <StyledPhoto
-              key={photoSrc}
-              src={photoSrc}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1, ease: 'easeInOut' }}
-            />
+            <AnimatePresence mode="wait">
+              <StyledPhoto
+                onAnimationComplete={handleAnimationComplete}
+                key={photoSrc}
+                src={photoSrc}
+                animate={controls}
+                initial={
+                  'swipeLeftIn'
+                  // previousSwipeOutDirection.current === 'left'
+                  //   ? 'swipeLeftIn'
+                  //   : 'swipeRightIn'
+                }
+                variants={{
+                  swipeRightIn: {
+                    transform: ['translateX(-100vw)', 'translateX(0px)']
+                  },
+                  swipeRightOut: {
+                    transform: ['translateX(0px)', 'translateX(100vw)']
+                  },
+                  swipeLeftIn: {
+                    transform: ['translateX(100vw)', 'translateX(0px)']
+                  },
+                  swipeLeftOut: {
+                    transform: ['translateX(0px)', 'translateX(-100vw)']
+                  }
+                }}
+                transition={{ duration: 3, ease: 'easeInOut' }}
+              />
+            </AnimatePresence>
           </PhotoWrapper>
         </Wrapper>
         <ControlsWrapper
@@ -149,7 +196,7 @@ const SinglePhoto = () => {
             size="LARGE"
             ariaLabel="Previous photo"
             onClick={() => {
-              navigateToNextPhoto('left')
+              swipeToNextPhoto('left')
             }}
           />
           <IconButton
@@ -164,7 +211,7 @@ const SinglePhoto = () => {
             icon="arrowRight"
             ariaLabel="Next photo"
             onClick={() => {
-              navigateToNextPhoto('right')
+              swipeToNextPhoto('right')
             }}
             size="LARGE"
           />
