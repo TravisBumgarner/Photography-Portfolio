@@ -2,6 +2,8 @@ import { motion } from 'framer-motion'
 import React, { useCallback, useEffect } from 'react'
 import styled from 'styled-components'
 
+import { useSwipeable } from 'react-swipeable'
+
 import { useNavigate, useParams } from 'react-router-dom'
 import Error from 'src/sharedComponents/Error'
 import IconButton from 'src/sharedComponents/IconButton'
@@ -21,6 +23,17 @@ const SinglePhoto = () => {
     gallerySlug: string
     photoSlug: string
   }>()
+
+  const handlers = useSwipeable({
+    preventScrollOnSwipe: true,
+    onSwipedLeft: () => {
+      navigateToNextPhoto('right')
+    },
+    onSwipedRight: () => {
+      navigateToNextPhoto('left')
+    },
+    trackMouse: true
+  })
 
   const details = getPhotoById(photoSlug!) // todo fix
 
@@ -109,7 +122,7 @@ const SinglePhoto = () => {
   return (
     <>
       <NavigationAnimation>
-        <Wrapper>
+        <Wrapper {...handlers}>
           <PhotoWrapper>
             <StyledPhoto
               key={photoSrc}
