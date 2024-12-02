@@ -111,7 +111,14 @@ const SinglePhoto = () => {
       <NavigationAnimation>
         <Wrapper>
           <PhotoWrapper>
-            <StyledPhoto src={photoSrc} />
+            <StyledPhoto
+              key={photoSrc}
+              src={photoSrc}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1, ease: 'easeInOut' }}
+            />
           </PhotoWrapper>
         </Wrapper>
         <ControlsWrapper
@@ -186,7 +193,7 @@ const PhotoWrapper = styled.div`
   padding: ${CONTENT_SPACING.LARGE};
 `
 
-const StyledPhoto = styled.img`
+const StyledPhoto = styled(motion.img)`
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
