@@ -1,10 +1,15 @@
+import { motion } from 'framer-motion'
 import React, { useCallback, useEffect } from 'react'
 import styled from 'styled-components'
+
+import { useSwipeable } from 'react-swipeable'
 
 import { useNavigate, useParams } from 'react-router-dom'
 import Error from 'src/sharedComponents/Error'
 import IconButton from 'src/sharedComponents/IconButton'
-import NavigationAnimation from 'src/sharedComponents/NavigationAnimation'
+import NavigationAnimation, {
+  SHARED_ANIMATION_DURATION
+} from 'src/sharedComponents/NavigationAnimation'
 import usePhotoStore from 'src/store'
 import { COLORS, CONTENT_SPACING, Z_INDEX } from 'src/theme'
 import { getPhotoUrl } from 'src/utils'
@@ -18,6 +23,17 @@ const SinglePhoto = () => {
     gallerySlug: string
     photoSlug: string
   }>()
+
+  const handlers = useSwipeable({
+    preventScrollOnSwipe: true,
+    onSwipedLeft: () => {
+      navigateToNextPhoto('right')
+    },
+    onSwipedRight: () => {
+      navigateToNextPhoto('left')
+    },
+    trackMouse: true
+  })
 
   const details = getPhotoById(photoSlug!) // todo fix
 
@@ -106,39 +122,54 @@ const SinglePhoto = () => {
   return (
     <>
       <NavigationAnimation>
-        <Wrapper>
+        <Wrapper {...handlers}>
           <PhotoWrapper>
-            <StyledPhoto src={photoSrc} />
+            <StyledPhoto
+              key={photoSrc}
+              src={photoSrc}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1, ease: 'easeInOut' }}
+            />
           </PhotoWrapper>
         </Wrapper>
+        <ControlsWrapper
+          // The app background and this background animate at different times so we add a delay so that it isn't noticed.
+          initial={{ backgroundColor: 'transparent' }}
+          animate={{
+            backgroundColor: ` color-mix(in srgb, ${COLORS.FOREGROUND} 50%, transparent)`
+          }}
+          exit={{ backgroundColor: 'transparent' }}
+          transition={{ duration: SHARED_ANIMATION_DURATION, delay: 0.5 }}
+        >
+          <IconButton
+            color={COLORS.BACKGROUND}
+            icon="arrowLeft"
+            size="LARGE"
+            ariaLabel="Previous photo"
+            onClick={() => {
+              navigateToNextPhoto('left')
+            }}
+          />
+          <IconButton
+            color={COLORS.BACKGROUND}
+            icon="close"
+            ariaLabel="Close single photo view"
+            onClick={returnToGallery}
+            size="LARGE"
+          />
+          <IconButton
+            color={COLORS.BACKGROUND}
+            icon="arrowRight"
+            ariaLabel="Next photo"
+            onClick={() => {
+              navigateToNextPhoto('right')
+            }}
+            size="LARGE"
+          />
+        </ControlsWrapper>
       </NavigationAnimation>
-      <ControlsWrapper>
-        <IconButton
-          color={COLORS.BACKGROUND}
-          icon="arrowLeft"
-          size="LARGE"
-          ariaLabel="Previous photo"
-          onClick={() => {
-            navigateToNextPhoto('left')
-          }}
-        />
-        <IconButton
-          color={COLORS.BACKGROUND}
-          icon="close"
-          ariaLabel="Close single photo view"
-          onClick={returnToGallery}
-          size="LARGE"
-        />
-        <IconButton
-          color={COLORS.BACKGROUND}
-          icon="arrowRight"
-          ariaLabel="Next photo"
-          onClick={() => {
-            navigateToNextPhoto('right')
-          }}
-          size="LARGE"
-        />
-      </ControlsWrapper>
     </>
   )
 }
@@ -147,17 +178,16 @@ const Wrapper = styled.div`
   position: fixed;
   left: 0;
   top: 0;
-  width: 100vw;
-  height: 100vh;
+  bottom: 0;
+  right: 0;
   overflow: hidden;
   z-index: ${Z_INDEX.SINGLE_PHOTO};
 `
 
-const ControlsWrapper = styled.div`
+const ControlsWrapper = styled(motion.div)`
   position: fixed;
   right: 0;
   bottom: 0;
-  background-color: color-mix(in srgb, ${COLORS.FOREGROUND} 50%, transparent);
   > button {
     padding: ${CONTENT_SPACING.MEDIUM};
   }
@@ -176,7 +206,7 @@ const PhotoWrapper = styled.div`
   padding: ${CONTENT_SPACING.LARGE};
 `
 
-const StyledPhoto = styled.img`
+const StyledPhoto = styled(motion.img)`
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;

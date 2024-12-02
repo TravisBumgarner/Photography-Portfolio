@@ -52,7 +52,11 @@ const App = () => {
         <TitleBar isPhotoSlugRoute={isPhotoSlugRoute} />
         <Suspense fallback={<Loading />}>
           <AnimatePresence mode="wait">
-            <Routes location={location} key={location.pathname}>
+            <Routes
+              location={location}
+              // key={location.pathname} lets us reuse the SinglePhoto compoennt and avoids rerenders on changing photos.
+              // This then prevents the mount / unmount animation of NavigationAnimation
+            >
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/gallery/:gallerySlug">

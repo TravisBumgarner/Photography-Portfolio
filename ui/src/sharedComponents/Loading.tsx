@@ -14,7 +14,7 @@ const LoadingContainer = styled(motion.div)`
   top: 0;
   left: 0;
   width: 100vw;
-  background-color: ${COLORS.PRIMARY};
+  background-color: ${COLORS.BACKGROUND};
   z-index: ${Z_INDEX.LOADING};
 `
 
@@ -24,11 +24,6 @@ const Favicon = () => {
       animate={{ transform: 'rotate(360deg)' }}
       transition={{ repeat: Infinity, duration: 3, ease: 'linear' }}
       style={{ fill: COLORS.PRIMARY, width: 100, height: 100 }}
-      //   exit={{
-      // opacity: 0,
-      // transform: 'scale(20)',
-      // transition: { duration: EXIT_DURATION }
-      //   }}
     >
       <FaviconLeft />
       <FaviconRight />
@@ -61,10 +56,7 @@ const FaviconWrapper = styled(motion.div)`
 
 const Loading = () => {
   return (
-    <LoadingContainer
-    // Currently can't animate exit with Suspsense.
-    //   exit={{ opacity: 0, transition: { duration: EXIT_DURATION } }}
-    >
+    <LoadingContainer>
       <Favicon />
     </LoadingContainer>
   )
