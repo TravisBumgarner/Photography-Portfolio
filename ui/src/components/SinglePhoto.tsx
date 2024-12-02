@@ -111,34 +111,34 @@ const SinglePhoto = () => {
             <StyledPhoto src={photoSrc} />
           </PhotoWrapper>
         </Wrapper>
+        <ControlsWrapper>
+          <IconButton
+            color={COLORS.BACKGROUND}
+            icon="arrowLeft"
+            size="LARGE"
+            ariaLabel="Previous photo"
+            onClick={() => {
+              navigateToNextPhoto('left')
+            }}
+          />
+          <IconButton
+            color={COLORS.BACKGROUND}
+            icon="close"
+            ariaLabel="Close single photo view"
+            onClick={returnToGallery}
+            size="LARGE"
+          />
+          <IconButton
+            color={COLORS.BACKGROUND}
+            icon="arrowRight"
+            ariaLabel="Next photo"
+            onClick={() => {
+              navigateToNextPhoto('right')
+            }}
+            size="LARGE"
+          />
+        </ControlsWrapper>
       </NavigationAnimation>
-      <ControlsWrapper>
-        <IconButton
-          color={COLORS.BACKGROUND}
-          icon="arrowLeft"
-          size="LARGE"
-          ariaLabel="Previous photo"
-          onClick={() => {
-            navigateToNextPhoto('left')
-          }}
-        />
-        <IconButton
-          color={COLORS.BACKGROUND}
-          icon="close"
-          ariaLabel="Close single photo view"
-          onClick={returnToGallery}
-          size="LARGE"
-        />
-        <IconButton
-          color={COLORS.BACKGROUND}
-          icon="arrowRight"
-          ariaLabel="Next photo"
-          onClick={() => {
-            navigateToNextPhoto('right')
-          }}
-          size="LARGE"
-        />
-      </ControlsWrapper>
     </>
   )
 }
@@ -147,8 +147,8 @@ const Wrapper = styled.div`
   position: fixed;
   left: 0;
   top: 0;
-  width: 100vw;
-  height: 100vh;
+  bottom: 0;
+  right: 0;
   overflow: hidden;
   z-index: ${Z_INDEX.SINGLE_PHOTO};
 `
