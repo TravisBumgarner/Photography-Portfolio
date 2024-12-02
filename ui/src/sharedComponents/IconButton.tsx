@@ -15,7 +15,7 @@ const IconCSS = (color: string) => css`
 
   @media (hover: hover) {
     &:hover {
-      fill: ${color};
+      fill: ${COLORS.PRIMARY};
     }
   }
 `
