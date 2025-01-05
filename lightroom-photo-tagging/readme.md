@@ -21,6 +21,7 @@ App For Tagging Photos for Instagram by reading EXIF data from Adobe Lightroom
         - Descriptions are optional. Try and add a `Photography Tip: ...` where possible (and include the tags). 
         - Write descriptions and use ChatGPT to proofread.
 4. Export photos
+    - Select destination - `bluesky` or `instagram` by changing the arg to `main()`
     - Run this script (`yarn start`)
     - Open Buffer
     - Queue each photo

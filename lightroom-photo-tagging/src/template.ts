@@ -1,17 +1,19 @@
-import { Metadata, TagOrAccount } from './types'
+import { Metadata, MODE, TagOrAccount } from './types'
 
 const createTemplate = ({
     metadata,
     accountsAndTagsTemplateString,
     tagsAndAccountsPreview,
+    mode,
 }: {
     metadata: Metadata
     accountsAndTagsTemplateString: string
     tagsAndAccountsPreview: Record<string, TagOrAccount[]>
+    mode: MODE
 }) => {
     let output = ''
 
-    output += '\n\n\n------PREVIEW-----\n'
+    output += `------${mode === MODE.BLUESKY ? 'BLUESKY' : 'INSTAGRAM'} PREVIEW-----\n`
     for (const [tag, tags] of Object.entries(tagsAndAccountsPreview)) {
         output += `${tag} - ${tags.join(', ')}\n`
     }

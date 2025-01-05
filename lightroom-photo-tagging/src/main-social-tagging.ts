@@ -1,13 +1,13 @@
 import fs from 'fs'
 import path from 'path'
 import processPhoto from './metadata'
-import lightroomTagsToInstragramTemplateString from './tags'
+import generateTags from './tags'
 import createTemplate from './template'
+import { MODE } from './types'
 
-const VALID_EXTENSIONS = ['.avif']
+const VALID_EXTENSIONS = ['.avif', '.jpg', '.jpeg', '.png']
 
-
-const main = async (directoryPath: string) => {
+const main = async (directoryPath: string, mode: MODE) => {
     const errorsByFile: Record<string, string[]> = {}
 
     try {
@@ -52,9 +52,7 @@ const main = async (directoryPath: string) => {
                 continue
             }
 
-            const accountsAndTags = lightroomTagsToInstragramTemplateString(
-                metadata.tags
-            )
+            const accountsAndTags = generateTags(metadata.tags, mode)
             if ('errors' in accountsAndTags) {
                 errorsByFile[file] = accountsAndTags.errors
                 continue
@@ -64,6 +62,7 @@ const main = async (directoryPath: string) => {
                 metadata,
                 accountsAndTagsTemplateString: accountsAndTags.templateString,
                 tagsAndAccountsPreview: accountsAndTags.tagsAndAccountsPreview,
+                mode,
             })
 
             const fileNameWithoutExt = path.parse(file).name
@@ -87,4 +86,7 @@ const main = async (directoryPath: string) => {
     }
 }
 
-main('/Users/travisbumgarner/Desktop/cameracoffeewander_template_ingest')
+main(
+    '/Users/travisbumgarner/Desktop/cameracoffeewander_template_ingest',
+    MODE.BLUESKY
+)
