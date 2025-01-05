@@ -3,11 +3,13 @@ import { Tags } from '../types'
 const NatGeoYourShot: Tags = {
     general: [],
     priority: ['#yourshotphotographer'],
+    bluesky: [],
 }
 
 const FotoHercules: Tags = {
     general: [],
     priority: ['#fotohercules', '@fotohercules'],
+    bluesky: [],
 }
 
 const PhotographyTips: Tags = {
@@ -20,6 +22,7 @@ const PhotographyTips: Tags = {
         '#photographyskills',
         '#photography101',
     ],
+    bluesky: [],
 }
 
 const Special = { NatGeoYourShot, FotoHercules, PhotographyTips }

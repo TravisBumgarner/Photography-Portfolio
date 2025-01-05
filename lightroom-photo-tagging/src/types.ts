@@ -67,4 +67,13 @@ export type ParsedData = {
     FocalLength?: number
 }
 
-export type Tags = { general: TagOrAccount[]; priority: TagOrAccount[] }
+export type Tags = {
+    general: TagOrAccount[]
+    priority: TagOrAccount[]
+    bluesky: TagOrAccount[]
+}
+
+export enum MODE {
+    INSTAGRAM = 'instagram',
+    BLUESKY = 'bluesky',
+}

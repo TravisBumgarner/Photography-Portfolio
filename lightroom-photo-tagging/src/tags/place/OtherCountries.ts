@@ -9,6 +9,7 @@ const Iceland: Record<string, Tags> = {
             '#icelandnature',
         ],
         priority: [],
+        bluesky: ['#iceland'],
     },
 }
 
