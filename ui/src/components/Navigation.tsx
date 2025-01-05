@@ -30,6 +30,11 @@ const ABOUT_CONTENT = [
     external: true
   },
   {
+    title: 'Bluesky',
+    route: 'https://bsky.app/profile/cameracoffeewander.bsky.social',
+    external: true
+  },
+  {
     title: 'Recognition',
     route: '/about',
     external: false
@@ -37,19 +42,6 @@ const ABOUT_CONTENT = [
   {
     title: 'Contact',
     route: 'https://www.linkedin.com/in/travisbumgarner/',
-    external: true
-  }
-]
-
-const MISC_CONTENT = [
-  {
-    title: 'Silly Side Projects',
-    route: 'https://sillysideprojects.com/',
-    external: true
-  },
-  {
-    title: 'Engineering & Blog',
-    route: 'https://travisbumgarner.com/',
     external: true
   }
 ]
@@ -148,25 +140,6 @@ const Navigation = () => {
     )
   })
 
-  const miscLinks = MISC_CONTENT.map(m => {
-    const Component: React.ElementType = m.external
-      ? ExternalLink
-      : InternalLink
-
-    return (
-      <LinkListItem key={m.title} onClick={closeNavigation}>
-        <Component
-          target={m.external ? '_blank' : ''}
-          {...(m.external ? { href: m.route } : { to: m.route })}
-          rel={m.external ? 'noopener noreferrer' : undefined}
-        >
-          {m.title}
-          {m.external && <VisuallyHidden>(opens in new tab)</VisuallyHidden>}
-        </Component>
-      </LinkListItem>
-    )
-  })
-
   return (
     <>
       <NavigationWrapper
@@ -186,11 +159,6 @@ const Navigation = () => {
           <Section>
             <Header>ABOUT</Header>
             <ul>{aboutLinks}</ul>
-          </Section>
-
-          <Section>
-            <Header>MISC</Header>
-            <ul>{miscLinks}</ul>
           </Section>
         </SectionsWrapper>
         <CloseButtonWrapper>
