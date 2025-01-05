@@ -3,19 +3,19 @@ import { Tags } from '../../types'
 const _USPark: Tags = {
     general: [],
     priority: ['#nationalparkgeek'],
-    bluesky: [],
+    bluesky: ['#nationalparks'],
 }
 
 const _CanadaPark: Tags = {
     general: [],
     priority: [],
-    bluesky: [],
+    bluesky: ['#nationalparks'],
 }
 
 const Arches: Tags = {
     general: [..._USPark.general, '#archesnationalpark'],
     priority: ['#archesnps', '@archesnps', ..._USPark.priority],
-    bluesky: [..._USPark.bluesky],
+    bluesky: [..._USPark.bluesky, '#arches'],
 }
 
 const Banff: Tags = {
@@ -27,13 +27,13 @@ const Banff: Tags = {
         '#banffalberta',
     ],
     priority: ['@banff.national.park', ..._CanadaPark.priority],
-    bluesky: [..._CanadaPark.bluesky],
+    bluesky: [..._CanadaPark.bluesky, '#banff'],
 }
 
 const Glacier: Tags = {
     general: [..._USPark.general, '#glaciernationalpark'],
     priority: ['#glaciernps', '@glaciernps', ..._USPark.priority],
-    bluesky: [..._USPark.bluesky],
+    bluesky: [..._USPark.bluesky, '#glaciernationalpark'],
 }
 
 const NationalPark = {

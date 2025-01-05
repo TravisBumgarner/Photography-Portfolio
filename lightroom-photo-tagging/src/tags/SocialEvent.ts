@@ -9,7 +9,7 @@ const DayOfTheDead: Tags = {
         '#marigolds',
     ],
     priority: [],
-    bluesky: [],
+    bluesky: ['#diadelosmuertos', '#dayofthedead'],
 }
 
 const MexicoCityFireworksFestival: Tags = {
@@ -21,13 +21,13 @@ const MexicoCityFireworksFestival: Tags = {
         '#fireworks',
     ],
     priority: [],
-    bluesky: [],
+    bluesky: ['#fireworks'],
 }
 
 const PrideCelebration: Tags = {
     general: ['#pride', '#pridemonth', '#equality'],
     priority: [],
-    bluesky: [],
+    bluesky: ['#pride'],
 }
 
 const SocialEvent = {

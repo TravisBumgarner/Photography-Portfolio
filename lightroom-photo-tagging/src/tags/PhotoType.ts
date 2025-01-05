@@ -8,7 +8,7 @@ const Animals: Tags = {
         '#everything_animals',
     ],
     priority: [],
-    bluesky: [],
+    bluesky: ['#animals'],
 }
 
 const Architecture: Tags = {
@@ -18,13 +18,13 @@ const Architecture: Tags = {
         '#architecturephotography',
     ],
     priority: [],
-    bluesky: [],
+    bluesky: ['#architecture'],
 }
 
 const Beach: Tags = {
     general: ['#beautifulbeaches', '#beach', '#beaches'],
     priority: [],
-    bluesky: [],
+    bluesky: ['#beach'],
 }
 
 const Leaves: Tags = {
@@ -42,7 +42,7 @@ const BlackAndWhite: Tags = {
         '#bnwphoto',
     ],
     priority: [],
-    bluesky: [],
+    bluesky: ['#blackandwhite', '#monochrome', '#bnw', '#bnw_captures'],
 }
 
 const Cars: Tags = {
@@ -66,7 +66,7 @@ const Clouds: Tags = {
         '#cloudlovers',
     ],
     priority: [],
-    bluesky: [],
+    bluesky: ['#clouds', '#cloudscape'],
 }
 
 const Flowers: Tags = {
@@ -77,7 +77,7 @@ const Flowers: Tags = {
         '#flowersmakemehappy',
     ],
     priority: [],
-    bluesky: [],
+    bluesky: ['#flowers', '#flores'],
 }
 
 const Landscape: Tags = {
@@ -87,13 +87,13 @@ const Landscape: Tags = {
         '#landscapelover',
     ],
     priority: [],
-    bluesky: [],
+    bluesky: ['#landscapephotography', '#landscape'],
 }
 
 const Portrait: Tags = {
     general: ['#portraitphotography', '#portrait'],
     priority: ['#mundusmag'],
-    bluesky: [],
+    bluesky: ['#portraitphotography', '#portrait'],
 }
 
 const Selfie: Tags = {
@@ -105,7 +105,7 @@ const Selfie: Tags = {
 const Shadows: Tags = {
     general: ['#shadows', '#shadowart'],
     priority: ['#shadows_magazine'],
-    bluesky: [],
+    bluesky: ['#shadows'],
 }
 
 const Stars: Tags = {
@@ -117,7 +117,7 @@ const Stars: Tags = {
         '#nightimages',
     ],
     priority: ['@milkyway_nightscape', '#milkyway_nightscape_'],
-    bluesky: [],
+    bluesky: ['#astrophotography', '#astrophoto'],
 }
 
 const Storms: Tags = {
@@ -130,7 +130,7 @@ const Storms: Tags = {
         '#dpsp_rainshots',
     ],
     priority: [],
-    bluesky: [],
+    bluesky: ['#storm', '#rain'],
 }
 
 const Street: Tags = {
@@ -143,13 +143,13 @@ const Street: Tags = {
         '#streetphotographer',
     ],
     priority: ['#streetdreamsmag'],
-    bluesky: [],
+    bluesky: ['#streetart', '#streetphotography'],
 }
 
 const Sunsets: Tags = {
     general: ['#sunset', '#sunsetlovers', '#sunsets'],
     priority: [],
-    bluesky: [],
+    bluesky: ['#sunset', '#colors'],
 }
 
 const PhotoType = {

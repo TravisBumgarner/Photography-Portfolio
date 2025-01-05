@@ -9,13 +9,13 @@ const Baja: Tags = {
 const Country: Tags = {
     general: ['#mexico', '#mexicomagico', '#mexicotravel', '#mexicolindo'],
     priority: ['#fotoexploramx'],
-    bluesky: [],
+    bluesky: ['#mexico'],
 }
 
 const MexicoCity: Tags = {
     general: ['#cdmx', '#mexicocity', '#mexicodf'],
     priority: [],
-    bluesky: [],
+    bluesky: ['#mexicocity', '#cdmx'],
 }
 
 const Mexico = {

@@ -4,7 +4,7 @@ const Arizona: Record<string, Tags> = {
     State: {
         general: ['#arizona', '#az'],
         priority: [],
-        bluesky: [],
+        bluesky: ['#arizona'],
     },
     ApacheJunction: {
         general: [
@@ -29,7 +29,7 @@ const Colorado: Record<string, Tags> = {
             '#coloradolove',
         ],
         priority: [],
-        bluesky: [],
+        bluesky: ['#colorado'],
     },
 }
 
@@ -43,7 +43,7 @@ const Montana: Record<string, Tags> = {
             '#montanaphotographer',
         ],
         priority: [],
-        bluesky: [],
+        bluesky: ['#montana'],
     },
 }
 
@@ -76,7 +76,7 @@ const Utah: Record<string, Tags> = {
             '@visitmoab',
             '#visitmoab',
         ],
-        bluesky: [],
+        bluesky: ['#utah'],
     },
 }
 

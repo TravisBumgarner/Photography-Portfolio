@@ -73,7 +73,14 @@ const generateSocialTags = (
                 ...tags.priority,
             ]
         } else if (mode === MODE.BLUESKY) {
-            tagsAndAccountsPreview[lightroomTag] = [...tags.bluesky]
+            tagsAndAccountsPreview[lightroomTag] = [
+                ...tags.bluesky,
+                ...([
+                    '#art',
+                    '#photography',
+                    '#photooftheday',
+                ] as TagOrAccount[]),
+            ]
         } else {
             throw new Error(`Invalid mode: ${mode}`)
         }
