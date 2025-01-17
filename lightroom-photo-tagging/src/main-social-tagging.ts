@@ -81,5 +81,5 @@ const main = async (directoryPath: string, mode: MODE) => {
 
 main(
     '/Users/travisbumgarner/Desktop/cameracoffeewander_template_ingest',
-    MODE.BLUESKY
+    MODE.INSTAGRAM
 )
