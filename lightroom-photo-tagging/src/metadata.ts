@@ -1,10 +1,10 @@
 import * as exifr from 'exifr'
 
 import { format } from 'date-fns'
+import path from 'path'
 import { v5 as uuidv5 } from 'uuid'
 import metadataOverride from './metadataOverride'
 import { Metadata, ParsedData, Sidecar, SupportedCameras } from './types'
-import path from 'path'
 
 const PHOTO_DIR = '/Users/travisbumgarner/Desktop/large'
 
@@ -51,8 +51,6 @@ const processPhoto = async (
 
     const camera = `${data.Make} - ${data.Model}` as string as SupportedCameras
 
-    const metadataOverrides = metadataOverride(camera, data)
-
     const errors = []
 
     if (!sidecar.dc) {
@@ -73,6 +71,8 @@ const processPhoto = async (
     const tags = Array.isArray(sidecar.lr.hierarchicalSubject)
         ? sidecar.lr.hierarchicalSubject
         : [sidecar.lr.hierarchicalSubject]
+
+    const metadataOverrides = metadataOverride(camera, data, tags)
 
     if (!sidecar.dc.title && !skipTitleAndDescriptionCheck) errors.push('Title')
     if (!sidecar.dc.description && !skipTitleAndDescriptionCheck)

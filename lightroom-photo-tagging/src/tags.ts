@@ -49,7 +49,7 @@ const generateSocialTags = (
             errors.push(`Unknown hierarchy tag: ${lightroomTag}`)
             continue
         }
-
+        console.log('ruda', tags)
         if (tags.general.length === 0 && tags.priority.length === 0) {
             errors.push(
                 `No tags or accounts found for hierarchy tag: ${lightroomTag}`

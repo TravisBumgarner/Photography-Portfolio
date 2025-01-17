@@ -1,4 +1,4 @@
-import { Metadata, MODE, TagOrAccount } from './types'
+import { FilmCameras, Metadata, MODE, TagOrAccount } from './types'
 
 const createTemplate = ({
     metadata,
@@ -25,8 +25,12 @@ const createTemplate = ({
     output += `\n`
     if (metadata.description) output += `${metadata.description.trim()}\n`
     if (metadata.description) output += `\n`
-    output += `The Gear - ${metadata.camera}, ${metadata.lens}\n`
-    output += `The Setup - ${metadata.shutterSpeed}, ${metadata.aperture}, ${metadata.focalLength} focal length\n`
+    output += `The Gear - ${[metadata.camera, metadata.lens].filter(a => a).join(', ')}\n`
+
+    // Forcing a type
+    if (!Object.values(FilmCameras).includes(metadata.camera as FilmCameras)) {
+        output += `The Setup - ${metadata.shutterSpeed}, ${metadata.aperture}, ${metadata.focalLength} focal length\n`
+    }
     output += `\n`
     output += `${accountsAndTagsTemplateString}\n`
 

@@ -2,21 +2,56 @@ import { Metadata, ParsedData, SupportedCameras } from './types'
 
 const metadataOverride = (
     camera: SupportedCameras,
-    data: ParsedData
+    data: ParsedData,
+    tags: string[]
 ): Partial<Metadata> => {
     let metadataOverrides: Partial<Metadata> = {}
-    switch (camera) {
+
+    let cameraLookup = camera
+    if (tags.includes('cameracoffeewander|Camera|PentaxK1000')) {
+        cameraLookup = SupportedCameras.PentaxK1000
+    }
+
+    if (tags.includes('cameracoffeewander|Camera|YashicaC')) {
+        cameraLookup = SupportedCameras.YashicaC
+    }
+
+    if (tags.includes('cameracoffeewander|Camera|OlympusPS')) {
+        cameraLookup = SupportedCameras.OlympusPS
+    }
+
+    if (tags.includes('cameracoffeewander|Camera|NikonSLR')) {
+        cameraLookup = SupportedCameras.NikonSLR
+    }
+
+    switch (cameraLookup) {
         // Film Scanner
         case SupportedCameras.Scanner1:
         case SupportedCameras.Scanner2: {
+            throw new Error('This should be a film camera.')
+            break
+        }
+        case SupportedCameras.PentaxK1000: {
             metadataOverrides = {
-                camera: 'REPLACE',
-                lens: 'REPLACE',
-                iso: 'REPLACE',
-                shutterSpeed: 'REPLACE',
-                aperture: 'REPLACE',
-                focalLength: 'REPLACE',
-                dateTaken: 'REPLACE',
+                camera: 'Pentax K1000',
+            }
+            break
+        }
+        case SupportedCameras.YashicaC: {
+            metadataOverrides = {
+                camera: 'Yashica C',
+            }
+            break
+        }
+        case SupportedCameras.OlympusPS: {
+            metadataOverrides = {
+                camera: 'Olympus Stylus P&S',
+            }
+            break
+        }
+        case SupportedCameras.NikonSLR: {
+            metadataOverrides = {
+                camera: 'Nikon SLR',
             }
             break
         }
@@ -50,8 +85,9 @@ const metadataOverride = (
                 'NIKON CORPORATION - NIKON D7500': 'Nikon D7500',
             }
 
+            const cameraKey = camera as keyof typeof NIKON_LOOKUP
             metadataOverrides = {
-                camera: NIKON_LOOKUP[camera],
+                camera: NIKON_LOOKUP[cameraKey],
             }
 
             break
@@ -64,15 +100,7 @@ const metadataOverride = (
             break
         }
         case SupportedCameras.Unknown: {
-            // Unclear how these ended up in lightroom
-            metadataOverrides = {
-                camera: 'REPLACE',
-                iso: 'REPLACE',
-                shutterSpeed: 'REPLACE',
-                aperture: 'REPLACE',
-                focalLength: 'REPLACE',
-                dateTaken: 'REPLACE',
-            }
+            throw new Error('Unknown camera')
             break
         }
         case SupportedCameras.MotoX4: {
