@@ -12,10 +12,22 @@ const IlfordDelta3200: Tags = {
     bluesky: ['#ilford', '#delta3200'],
 }
 
+const Kentmere400: Tags = {
+    general: ['#kentmere400'],
+    priority: [],
+    bluesky: ['#kentmere400'],
+}
+
 const IlfordHP5: Tags = {
     general: ['#ilford', '#hp5'],
     priority: [],
     bluesky: ['#ilford', '#hp5'],
+}
+
+const Kodak400TX: Tags = {
+    general: ['#kodak', '#400tx'],
+    priority: [],
+    bluesky: ['#kodak', '#400tx'],
 }
 
 const KodakUltramax400: Tags = {
@@ -113,6 +125,8 @@ const FilmType = {
     IlfordHP5,
     KodakUltramax400,
     FujiPro160,
+    Kentmere400,
+    Kodak400TX,
 }
 
 export default FilmType

@@ -21,7 +21,7 @@ const createTemplate = ({
 
     output += '-----PHOTO DETAILS-----\n\n\n'
 
-    output += `${metadata.title.trim()} (${metadata.dateTaken})\n`
+    output += `${metadata.title.trim()} ${metadata.dateTaken ? `(${metadata.dateTaken})` : ''}\n`
     output += `\n`
     if (metadata.description) output += `${metadata.description.trim()}\n`
     if (metadata.description) output += `\n`

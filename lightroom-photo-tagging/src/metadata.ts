@@ -72,7 +72,7 @@ const processPhoto = async (
         ? sidecar.lr.hierarchicalSubject
         : [sidecar.lr.hierarchicalSubject]
 
-    const metadataOverrides = metadataOverride(camera, data, tags)
+    const metadataOverrides = metadataOverride(camera, data, tags, file)
 
     if (!sidecar.dc.title && !skipTitleAndDescriptionCheck) errors.push('Title')
     if (!sidecar.dc.description && !skipTitleAndDescriptionCheck)
@@ -100,7 +100,7 @@ const processPhoto = async (
         focalLength: data.FocalLength ? `${data.FocalLength}mm` : '',
         dateTaken: data.DateTimeOriginal
             ? format(data.DateTimeOriginal, 'MMMM yyyy')
-            : 'REPLACE',
+            : '',
         title: sidecar.dc.title?.value || '',
         description: sidecar.dc.description?.value || '',
         tags,

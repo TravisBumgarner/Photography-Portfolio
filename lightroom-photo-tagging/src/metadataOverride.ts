@@ -3,7 +3,8 @@ import { Metadata, ParsedData, SupportedCameras } from './types'
 const metadataOverride = (
     camera: SupportedCameras,
     data: ParsedData,
-    tags: string[]
+    tags: string[],
+    file: string
 ): Partial<Metadata> => {
     let metadataOverrides: Partial<Metadata> = {}
 
@@ -100,7 +101,7 @@ const metadataOverride = (
             break
         }
         case SupportedCameras.Unknown: {
-            throw new Error('Unknown camera')
+            throw new Error(`Unknown camera: ${file}`)
             break
         }
         case SupportedCameras.MotoX4: {
