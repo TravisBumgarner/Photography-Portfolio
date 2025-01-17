@@ -76,8 +76,6 @@ const main = async (directoryPath: string) => {
 
             photos[metadata.id] = {
                 dateTaken,
-                title,
-                description,
                 id,
                 src,
                 galleryIds,
