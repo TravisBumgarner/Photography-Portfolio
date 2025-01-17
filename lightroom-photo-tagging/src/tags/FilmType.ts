@@ -1,5 +1,53 @@
 import { Tags } from '../types'
 
+const FujiPro160: Tags = {
+    general: ['#fujifilm', '#pro160'],
+    priority: [],
+    bluesky: ['#fujifilm', '#pro160'],
+}
+
+const IlfordDelta3200: Tags = {
+    general: ['#ilford', '#delta3200'],
+    priority: [],
+    bluesky: ['#ilford', '#delta3200'],
+}
+
+const Kentmere400: Tags = {
+    general: ['#kentmere400'],
+    priority: [],
+    bluesky: ['#kentmere400'],
+}
+
+const IlfordHP5: Tags = {
+    general: ['#ilford', '#hp5'],
+    priority: [],
+    bluesky: ['#ilford', '#hp5'],
+}
+
+const Kodak400TX: Tags = {
+    general: ['#kodak', '#400tx'],
+    priority: [],
+    bluesky: ['#kodak', '#400tx'],
+}
+
+const KodakUltramax400: Tags = {
+    general: ['#kodak', '#ultramax400'],
+    priority: [],
+    bluesky: ['#kodak', '#ultramax400'],
+}
+
+const Across100: Tags = {
+    general: ['#fujifilm', '#across100'],
+    priority: [],
+    bluesky: ['#fujifilm', '#across100'],
+}
+
+const Portra160: Tags = {
+    general: ['#portra160'],
+    priority: ['#MadeWithKodak'],
+    bluesky: ['#portra160', '#kodak', '#madewithkodak'],
+}
+
 const Portra400: Tags = {
     general: ['#portra400'],
     priority: ['#MadeWithKodak'],
@@ -22,6 +70,12 @@ const FujifilmXtra400: Tags = {
     general: ['#fujifilm', '#fujifilmxtra400', '#fujifilmxtra'],
     priority: [],
     bluesky: ['#fujifilm'],
+}
+
+const LomographyTurquoise: Tags = {
+    general: ['#lomographyturquoise'],
+    priority: ['@lomography', '#HeyLomography'],
+    bluesky: ['#lomography'],
 }
 
 const Lomography100: Tags = {
@@ -55,15 +109,24 @@ const Ektar100: Tags = {
 }
 
 const FilmType = {
+    Across100,
     FujifilmXtra400,
     KodakTMax400,
     Gold200,
     Lomography100,
     LomographyMetro,
     LomographyPurple,
+    Portra160,
     Portra400,
     Portra800,
     Ektar100,
+    LomographyTurquoise,
+    IlfordDelta3200,
+    IlfordHP5,
+    KodakUltramax400,
+    FujiPro160,
+    Kentmere400,
+    Kodak400TX,
 }
 
 export default FilmType

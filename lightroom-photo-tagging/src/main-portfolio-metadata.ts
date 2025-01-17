@@ -1,9 +1,9 @@
 import fs from 'fs'
 import path from 'path'
-import processPhoto from './metadata'
-import { Metadata } from './types'
 import { encodeImageToBlurHash } from './blur-hash'
 import { PUBLIC_GALLERIES_BY_TAG, TAG_TO_GALLERY_LOOKUP } from './galleries'
+import processPhoto from './metadata'
+import { Metadata } from './types'
 
 const VALID_EXTENSIONS = ['.avif']
 
@@ -25,6 +25,7 @@ const main = async (directoryPath: string) => {
 
         console.log('Gathering tags...')
         for (const file of files) {
+            console.log(file)
             if (!VALID_EXTENSIONS.includes(path.extname(file))) {
                 console.log(
                     '\tSkipping for invalid file type',
@@ -34,7 +35,6 @@ const main = async (directoryPath: string) => {
             }
 
             const filePath = path.join(directoryPath, file)
-            console.log('\t', filePath)
 
             const skipTitleAndDescriptionCheck = true
             const metadata = await processPhoto(
@@ -64,27 +64,22 @@ const main = async (directoryPath: string) => {
                     metadata.tags.join(',')
                 )
                 errorsByFile[file] = [
-                    'No valid galleries found for tags:' +
+                    '\tNo valid galleries found for tags:' +
                         metadata.tags.join(','),
                 ]
                 continue
             }
-            const {
-                tags,
-                camera,
-                lens,
-                aperture,
-                shutterSpeed,
-                iso,
-                focalLength,
-                ...usedMetadata
-            } = metadata // eslint-disable-line @typescript-eslint/no-unused-vars
-            console.log('\t\t', metadataWithoutTags)
+            const { dateTaken, title, description, id, src } = metadata // eslint-disable-line @typescript-eslint/no-unused-vars
+
             const { width, height, blurHash } =
                 await encodeImageToBlurHash(filePath)
 
             photos[metadata.id] = {
-                ...usedMetadata,
+                dateTaken,
+                title,
+                description,
+                id,
+                src,
                 galleryIds,
                 blurHash,
                 width,
@@ -116,5 +111,4 @@ const main = async (directoryPath: string) => {
 }
 
 const PHOTO_DIR = '/Users/travisbumgarner/Desktop/large'
-
 main(PHOTO_DIR)

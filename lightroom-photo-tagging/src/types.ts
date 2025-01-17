@@ -21,6 +21,17 @@ export enum SupportedCameras {
     SonyA290 = 'SONY - DSLR-A290',
     DJIMini3Pro = 'cameraDJI - FC3582',
     Unknown = 'undefined - undefined',
+    PentaxK1000 = 'Pentax K1000',
+    YashicaC = 'Yashica C',
+    OlympusPS = 'Olympus Stylus P&S',
+    NikonSLR = 'Nikon SLR',
+}
+
+export enum FilmCameras {
+    YashicaC = SupportedCameras.YashicaC,
+    OlympusPS = SupportedCameras.OlympusPS,
+    NikonSLR = SupportedCameras.NikonSLR,
+    PentaxK1000 = SupportedCameras.PentaxK1000,
 }
 
 export type Sidecar = {
