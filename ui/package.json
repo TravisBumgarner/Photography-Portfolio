@@ -7,9 +7,7 @@
     "start": "NODE_OPTIONS=\"--inspect\" webpack-dev-server --mode=development --config=webpack.js",
     "bundle": " rm -rf ./build; mkdir ./build; webpack --mode=production --config=webpack.js",
     "precommit": "tsc --noEmit --skipLibCheck",
-    "deploy": "gcloud config set project root-270023 && gcloud builds submit --tag gcr.io/root-270023/photo20 && gcloud run deploy photo20 --image gcr.io/root-270023/photo20 --platform managed --region us-east1",
-    "deploy-perf-updates": "gcloud config set project root-270023 && gcloud builds submit --tag gcr.io/root-270023/photo20perfupdates && gcloud run deploy photo20perfupdates --image gcr.io/root-270023/photo20perfupdates --platform managed --region us-east1",
-    "serve": "serve -p 8080 -s ./build"
+    "deploy:nfs": "yarn run bundle && bash deploy.sh"
   },
   "author": "",
   "license": "ISC",
@@ -34,6 +32,7 @@
     "@types/styled-components": "^5.1.15",
     "@typescript-eslint/eslint-plugin": "^7.11.0",
     "@typescript-eslint/parser": "^7.11.0",
+    "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^7.1.2",
     "eslint": "^8.49.0",
     "eslint-config-standard-with-typescript": "^39.0.0",

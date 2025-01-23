@@ -7,7 +7,7 @@ export const getPhotoUrl = ({
   isThumbnail: boolean
   photoSrc: string
 }) => {
-  let url = 'https://storage.googleapis.com/photo21-asdqwd/photos/'
+  let url = '/'
 
   url += isThumbnail ? 'thumbnail/' : 'large/'
   url += encodeURIComponent(photoSrc)
