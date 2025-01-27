@@ -41,8 +41,8 @@ const ABOUT_CONTENT = [
   },
   {
     title: 'Contact',
-    route: 'https://www.linkedin.com/in/travisbumgarner/',
-    external: true
+    route: '/contact',
+    external: false
   }
 ]
 

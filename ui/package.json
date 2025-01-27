@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_OPTIONS=\"--inspect\" webpack-dev-server --mode=development --config=webpack.js",
+    "dev": "NODE_OPTIONS=\"--inspect\" webpack-dev-server --mode=development --config=webpack.js",
     "bundle": " rm -rf ./build; mkdir ./build; webpack --mode=production --config=webpack.js",
     "precommit": "tsc --noEmit --skipLibCheck",
     "deploy:nfs": "yarn run bundle && bash deploy.sh"
