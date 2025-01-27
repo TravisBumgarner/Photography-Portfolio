@@ -83,7 +83,6 @@ const Contact = () => {
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    console.log('formData:', formData)
     const response = await fetch('https://contact-form.nfshost.com/contact', {
       method: 'POST',
       headers: {
