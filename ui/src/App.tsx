@@ -4,6 +4,7 @@ import { Route, Routes, useLocation } from 'react-router-dom'
 
 import Error from 'src/sharedComponents/Error'
 import styled from 'styled-components'
+import Contact from './components/Contact'
 import './index.css'
 import Loading from './sharedComponents/Loading'
 import { SHARED_ANIMATION_DURATION } from './sharedComponents/NavigationAnimation'
@@ -59,6 +60,7 @@ const App = () => {
             >
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} /> 
               <Route path="/gallery/:gallerySlug">
                 <Route index element={<Gallery />} />
                 <Route path=":photoSlug" element={<SinglePhoto />} />
