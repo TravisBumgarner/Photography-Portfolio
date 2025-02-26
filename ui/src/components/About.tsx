@@ -17,6 +17,10 @@ const About = () => {
       <ContentWrapper>
         <PageHeader>AWARDS & RECOGNITIONS</PageHeader>
         <UL>
+          <li>
+            2025 Banco Nacional: El México de los mexicanos III (Banco Nacional:
+            Mexico of the Mexicans III)
+          </li>
           <li>2024 Master Class Selected</li>
           <li>2024 March SA Monthly Contest Winner - Envelop</li>
           <li>2023 April SA Monthly Contest Winner - Hard Light</li>
@@ -39,6 +43,7 @@ const UL = styled.ul`
   padding: 0;
 
   li {
+    line-height: 1.5;
     margin-bottom: ${CONTENT_SPACING.MEDIUM};
   }
 `
