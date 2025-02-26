@@ -20,6 +20,11 @@ export const isNavigationVisible = signal(false)
 
 const ABOUT_CONTENT = [
   {
+    title: 'Recognition',
+    route: '/about',
+    external: false
+  },
+  {
     title: 'Store',
     route: 'https://travisbumgarner.darkroom.com/',
     external: true
@@ -33,11 +38,6 @@ const ABOUT_CONTENT = [
     title: 'Bluesky',
     route: 'https://bsky.app/profile/cameracoffeewander.bsky.social',
     external: true
-  },
-  {
-    title: 'Recognition',
-    route: '/about',
-    external: false
   },
   {
     title: 'Contact',
