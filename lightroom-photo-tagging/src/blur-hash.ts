@@ -1,9 +1,5 @@
 import { encode } from 'blurhash'
-import { createCanvas, loadImage, Image } from 'canvas'
-
-const loadImageNode = async (src: string): Promise<Image> => {
-    return loadImage(src)
-}
+import { createCanvas, Image, loadImage } from 'canvas'
 
 const getImageData = (image: Image) => {
     const canvas = createCanvas(image.width, image.height)
@@ -15,22 +11,16 @@ const getImageData = (image: Image) => {
 export const encodeImageToBlurHash = async (
     filePath: string
 ): Promise<{ blurHash: string; width: number; height: number }> => {
-    const image = await loadImageNode(filePath)
+    console.log('filePath', filePath)
+    const image = await loadImage(filePath)
 
     // faster processing by using a smaller image
-    const smallImage = await loadImageNode(
-        filePath.replace('large', 'thumbnail')
-    )
+    const imagePath = filePath.replace('large', 'thumbnail')
+    const smallImage = await loadImage(imagePath)
 
     const imageData = getImageData(smallImage)
     return {
-        blurHash: encode(
-            imageData.data,
-            imageData.width,
-            imageData.height,
-            4,
-            4
-        ),
+        blurHash: encode(imageData.data, imageData.width, imageData.height, 4, 4),
         width: image.width,
         height: image.height,
     }

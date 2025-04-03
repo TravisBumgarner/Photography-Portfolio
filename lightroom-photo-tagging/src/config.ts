@@ -26,7 +26,8 @@ function isOneOf(key: string, validValues: string[]) {
 const config = {
     debugMode: notNull('DEBUG_MODE') === 'true',
     socialPlatform: isOneOf('SOCIAL_PLATFORM', ['instagram', 'bluesky']),
-    ingestPath: notNull('INGEST_PATH'),
+    socialIngestPath: notNull('SOCIAL_INGEST_PATH'),
+    portfolioIngestPath: notNull('PORTFOLIO_INGEST_PATH'),
 }
 
 export default config
