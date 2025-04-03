@@ -1,5 +1,6 @@
+import config from './config'
 import TAGS from './tags/index'
-import { MODE, TagOrAccount, Tags } from './types'
+import { TagOrAccount, Tags } from './types'
 
 function lightroomToSocialMedia(
     hierarchyTagParts: string[],
@@ -18,8 +19,7 @@ function lightroomToSocialMedia(
 }
 
 const generateSocialTags = (
-    lightroomTags: string[],
-    mode: MODE
+    lightroomTags: string[]
 ):
     | { errors: string[] }
     | {
@@ -67,12 +67,12 @@ const generateSocialTags = (
         socialTags.general.push(...tags.general)
         socialTags.priority.push(...tags.priority)
         socialTags.bluesky.push(...tags.bluesky)
-        if (mode === MODE.INSTAGRAM) {
+        if (config.socialPlatform === 'instagram') {
             tagsAndAccountsPreview[lightroomTag] = [
                 ...tags.general,
                 ...tags.priority,
             ]
-        } else if (mode === MODE.BLUESKY) {
+        } else if (config.socialPlatform === 'bluesky') {
             tagsAndAccountsPreview[lightroomTag] = [
                 ...tags.bluesky,
                 ...([
@@ -82,7 +82,7 @@ const generateSocialTags = (
                 ] as TagOrAccount[]),
             ]
         } else {
-            throw new Error(`Invalid mode: ${mode}`)
+            throw new Error(`Invalid mode: ${config.socialPlatform}`)
         }
     }
 
@@ -90,12 +90,12 @@ const generateSocialTags = (
         return { errors }
     }
     let socialTagsSet: Set<TagOrAccount>
-    if (mode === MODE.INSTAGRAM) {
+    if (config.socialPlatform === 'instagram') {
         socialTagsSet = new Set([...socialTags.priority, ...socialTags.general])
-    } else if (mode === MODE.BLUESKY) {
+    } else if (config.socialPlatform === 'bluesky') {
         socialTagsSet = new Set([...socialTags.bluesky])
     } else {
-        throw new Error(`Invalid mode: ${mode}`)
+        throw new Error(`Invalid mode: ${config.socialPlatform}`)
     }
 
     // Instagram only allows 30 tags. We will prioritize priority tags which are known to be tags actively monitored.

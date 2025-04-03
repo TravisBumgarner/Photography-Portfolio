@@ -1,22 +1,22 @@
 import fs from 'fs'
 import path from 'path'
+import config from './config'
 import processPhoto from './metadata'
 import generateTags from './tags'
 import createTemplate from './template'
-import { MODE } from './types'
 
 const VALID_EXTENSIONS = ['.avif', '.jpg', '.jpeg', '.png']
 
-const main = async (directoryPath: string, mode: MODE) => {
+const main = async () => {
     const errorsByFile: Record<string, string[]> = {}
 
     try {
-        const files = fs.readdirSync(directoryPath)
+        const files = fs.readdirSync(config.ingestPath)
 
         files.forEach(file => {
             if (path.extname(file) === '.txt') {
                 try {
-                    fs.unlinkSync(path.join(directoryPath, file))
+                    fs.unlinkSync(path.join(config.ingestPath, file))
                     console.log(`Deleted file: ${file}`)
                 } catch (err) {
                     console.log(`Error deleting file: ${file}`)
@@ -29,7 +29,7 @@ const main = async (directoryPath: string, mode: MODE) => {
 
     let templates = ''
 
-    const files = fs.readdirSync(directoryPath)
+    const files = fs.readdirSync(config.ingestPath)
 
     console.log('Gathering tags...')
     for (const file of files) {
@@ -38,7 +38,7 @@ const main = async (directoryPath: string, mode: MODE) => {
             continue
         }
 
-        const filePath = path.join(directoryPath, file)
+        const filePath = path.join(config.ingestPath, file)
         console.log('\t', filePath)
 
         const metadata = await processPhoto(filePath)
@@ -48,7 +48,7 @@ const main = async (directoryPath: string, mode: MODE) => {
             continue
         }
 
-        const accountsAndTags = generateTags(metadata.tags, mode)
+        const accountsAndTags = generateTags(metadata.tags)
         if ('errors' in accountsAndTags) {
             errorsByFile[file] = accountsAndTags.errors
             continue
@@ -58,12 +58,11 @@ const main = async (directoryPath: string, mode: MODE) => {
             metadata,
             accountsAndTagsTemplateString: accountsAndTags.templateString,
             tagsAndAccountsPreview: accountsAndTags.tagsAndAccountsPreview,
-            mode,
         })
 
         const fileNameWithoutExt = path.parse(file).name
         fs.writeFileSync(
-            path.join(directoryPath, fileNameWithoutExt + '.txt'),
+            path.join(config.ingestPath, fileNameWithoutExt + '.txt'),
             template
         )
 
@@ -79,7 +78,4 @@ const main = async (directoryPath: string, mode: MODE) => {
     }
 }
 
-main(
-    '/Users/travisbumgarner/Desktop/cameracoffeewander_template_ingest',
-    MODE.INSTAGRAM
-)
+main()

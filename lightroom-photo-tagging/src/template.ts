@@ -1,19 +1,18 @@
-import { FilmCameras, Metadata, MODE, TagOrAccount } from './types'
+import config from './config'
+import { FilmCameras, Metadata, TagOrAccount } from './types'
 
 const createTemplate = ({
     metadata,
     accountsAndTagsTemplateString,
     tagsAndAccountsPreview,
-    mode,
 }: {
     metadata: Metadata
     accountsAndTagsTemplateString: string
     tagsAndAccountsPreview: Record<string, TagOrAccount[]>
-    mode: MODE
 }) => {
     let output = ''
 
-    output += `------${mode === MODE.BLUESKY ? 'BLUESKY' : 'INSTAGRAM'} PREVIEW-----\n`
+    output += `------${config.socialPlatform} PREVIEW-----\n`
     for (const [tag, tags] of Object.entries(tagsAndAccountsPreview)) {
         output += `${tag} - ${tags.join(', ')}\n`
     }
