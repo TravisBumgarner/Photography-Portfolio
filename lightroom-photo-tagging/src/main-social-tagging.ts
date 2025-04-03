@@ -7,27 +7,17 @@ import createTemplate from './template'
 
 const VALID_EXTENSIONS = ['.avif', '.jpg', '.jpeg', '.png']
 
+const clearDirOfTxtFiles = () => {
+    const files = fs.readdirSync(config.ingestPath)
+    files.forEach(file => {
+        if (path.extname(file) === '.txt') fs.unlinkSync(path.join(config.ingestPath, file))
+    })
+}
+
 const main = async () => {
     const errorsByFile: Record<string, string[]> = {}
 
-    try {
-        const files = fs.readdirSync(config.ingestPath)
-
-        files.forEach(file => {
-            if (path.extname(file) === '.txt') {
-                try {
-                    fs.unlinkSync(path.join(config.ingestPath, file))
-                    console.log(`Deleted file: ${file}`)
-                } catch (err) {
-                    console.log(`Error deleting file: ${file}`)
-                }
-            }
-        })
-    } catch (err) {
-        console.log('Unable to scan directory: ' + err)
-    }
-
-    let templates = ''
+    clearDirOfTxtFiles()
 
     const files = fs.readdirSync(config.ingestPath)
 
@@ -48,33 +38,24 @@ const main = async () => {
             continue
         }
 
-        const accountsAndTags = generateTags(metadata.tags)
-        if ('errors' in accountsAndTags) {
-            errorsByFile[file] = accountsAndTags.errors
+        const result = generateTags(metadata.tags)
+        if ('errors' in result) {
+            errorsByFile[file] = result.errors
             continue
         }
 
         const template = createTemplate({
             metadata,
-            accountsAndTagsTemplateString: accountsAndTags.templateString,
-            tagsAndAccountsPreview: accountsAndTags.tagsAndAccountsPreview,
+            tagsAndAccounts: result,
         })
 
         const fileNameWithoutExt = path.parse(file).name
-        fs.writeFileSync(
-            path.join(config.ingestPath, fileNameWithoutExt + '.txt'),
-            template
-        )
-
-        templates += template
-        templates += '\n\n\n\n\n\n\n\n\n\n'
+        fs.writeFileSync(path.join(config.ingestPath, fileNameWithoutExt + '.txt'), template)
     }
 
     if (Object.keys(errorsByFile).length > 0) {
         console.log('Errors by file:')
         console.log(errorsByFile)
-    } else {
-        console.log(templates)
     }
 }
 
