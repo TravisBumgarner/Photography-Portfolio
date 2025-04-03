@@ -8,9 +8,9 @@ import createTemplate from './template'
 const VALID_EXTENSIONS = ['.avif', '.jpg', '.jpeg', '.png']
 
 const clearDirOfTxtFiles = () => {
-    const files = fs.readdirSync(config.ingestPath)
+    const files = fs.readdirSync(config.socialIngestPath)
     files.forEach(file => {
-        if (path.extname(file) === '.txt') fs.unlinkSync(path.join(config.ingestPath, file))
+        if (path.extname(file) === '.txt') fs.unlinkSync(path.join(config.socialIngestPath, file))
     })
 }
 
@@ -19,7 +19,7 @@ const main = async () => {
 
     clearDirOfTxtFiles()
 
-    const files = fs.readdirSync(config.ingestPath)
+    const files = fs.readdirSync(config.socialIngestPath)
 
     console.log('Gathering tags...')
     for (const file of files) {
@@ -28,7 +28,7 @@ const main = async () => {
             continue
         }
 
-        const filePath = path.join(config.ingestPath, file)
+        const filePath = path.join(config.socialIngestPath, file)
         console.log('\t', filePath)
 
         const metadata = await processPhoto(filePath)
@@ -50,7 +50,7 @@ const main = async () => {
         })
 
         const fileNameWithoutExt = path.parse(file).name
-        fs.writeFileSync(path.join(config.ingestPath, fileNameWithoutExt + '.txt'), template)
+        fs.writeFileSync(path.join(config.socialIngestPath, fileNameWithoutExt + '.txt'), template)
     }
 
     if (Object.keys(errorsByFile).length > 0) {

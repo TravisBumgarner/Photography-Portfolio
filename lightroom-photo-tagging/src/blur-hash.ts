@@ -11,7 +11,7 @@ const getImageData = (image: Image) => {
 export const encodeImageToBlurHash = async (
     filePath: string
 ): Promise<{ blurHash: string; width: number; height: number }> => {
-    console.log('filePath', filePath)
+    throw new Error('loadImage does not seem to work anymore')
     const image = await loadImage(filePath)
 
     // faster processing by using a smaller image
