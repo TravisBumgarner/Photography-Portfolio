@@ -1,42 +1,16 @@
-import { FilmCameras, Metadata, MODE, TagOrAccount } from './types'
+import { Metadata, TagOrAccount } from './types'
 
-const createTemplate = ({
-    metadata,
-    accountsAndTagsTemplateString,
-    tagsAndAccountsPreview,
-    mode,
-}: {
-    metadata: Metadata
-    accountsAndTagsTemplateString: string
-    tagsAndAccountsPreview: Record<string, TagOrAccount[]>
-    mode: MODE
-}) => {
-    let output = ''
+const createTemplate = ({ metadata, tagsAndAccounts }: { metadata: Metadata; tagsAndAccounts: TagOrAccount[] }) => {
+    const line1 = `${metadata.title.trim()} ${metadata.dateTaken ? `${metadata.dateTaken}` : ''}`.trim()
+    const line2 = `${metadata.description.trim()}`
+    const line3 = `The Gear - ${[metadata.camera, metadata.lens].filter(a => a).join(', ')}`
+    const line4 = `The Setup - ${metadata.shutterSpeed}, ${metadata.aperture}, ${metadata.focalLength} focal length`
+    const line5 = `${tagsAndAccounts.map(tag => tag.toString()).join(' ')}`
 
-    output += `------${mode === MODE.BLUESKY ? 'BLUESKY' : 'INSTAGRAM'} PREVIEW-----\n`
-    for (const [tag, tags] of Object.entries(tagsAndAccountsPreview)) {
-        output += `${tag} - ${tags.join(', ')}\n`
-    }
-    output += '------END PREVIEW-----\n'
-
-    output += '-----PHOTO DETAILS-----\n\n\n'
-
-    output += `${metadata.title.trim()} ${metadata.dateTaken ? `(${metadata.dateTaken})` : ''}\n`
-    output += `\n`
-    if (metadata.description) output += `${metadata.description.trim()}\n`
-    if (metadata.description) output += `\n`
-    output += `The Gear - ${[metadata.camera, metadata.lens].filter(a => a).join(', ')}\n`
-
-    // Forcing a type
-    if (!Object.values(FilmCameras).includes(metadata.camera as FilmCameras)) {
-        output += `The Setup - ${metadata.shutterSpeed}, ${metadata.aperture}, ${metadata.focalLength} focal length\n`
-    }
-    output += `\n`
-    output += `${accountsAndTagsTemplateString}\n`
-
-    output += '\n\n\n------END PHOTO DETAILS-----\n\n\n'
-
-    return output
+    return [line1, line2, line3, line4, line5]
+        .map(a => a.trim())
+        .filter(a => a)
+        .join('\n')
 }
 
 export default createTemplate

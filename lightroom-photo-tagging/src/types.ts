@@ -83,8 +83,3 @@ export type Tags = {
     priority: TagOrAccount[]
     bluesky: TagOrAccount[]
 }
-
-export enum MODE {
-    INSTAGRAM = 'instagram',
-    BLUESKY = 'bluesky',
-}

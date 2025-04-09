@@ -33,17 +33,7 @@ const formatLens = (possibleLenses: (undefined | string)[]) => {
     return lens || ''
 }
 
-const VALID_EXTENSIONS = ['jpg']
-
-const processPhoto = async (
-    file: string,
-    skipTitleAndDescriptionCheck = false
-): Promise<Metadata | { errors: string[] }> => {
-    const extension = file.split('.').slice(-1)[0]
-    if (!extension || !VALID_EXTENSIONS.includes(extension)) {
-        throw Error('invalid file type')
-    }
-
+const processPhoto = async (file: string): Promise<Metadata | { errors: string[] }> => {
     const data = (await exifr.parse(file)) as ParsedData
     const sidecar = (await exifr.sidecar(file)) as unknown as Sidecar
 
@@ -72,19 +62,12 @@ const processPhoto = async (
         ? sidecar.lr.hierarchicalSubject
         : [sidecar.lr.hierarchicalSubject]
 
-    const metadataOverrides = metadataOverride(camera, data, tags, file)
-
-    if (!sidecar.dc.title && !skipTitleAndDescriptionCheck) errors.push('Title')
-    if (!sidecar.dc.description && !skipTitleAndDescriptionCheck)
-        console.log('\t\tNo Description')
-    if (tags.length === 0) errors.push('Tags')
-
-    if (
-        (!sidecar.dc.title && !skipTitleAndDescriptionCheck) ||
-        tags.length === 0
-    ) {
+    if (tags.length === 0) {
+        errors.push('Tags')
         return { errors }
     }
+
+    const metadataOverrides = metadataOverride(camera, data, tags, file)
 
     const src = file.replace(path.normalize(PHOTO_DIR) + path.sep, '')
 
@@ -93,14 +76,10 @@ const processPhoto = async (
         camera: `${data.Make} - ${data.Model}`,
         lens: formatLens([data.Lens, data.LensModel]),
         iso: data.ISO ? `ISO ${data.ISO}` : '',
-        shutterSpeed: data.ExposureTime
-            ? formatShutterSpeed(data.ExposureTime)
-            : '',
+        shutterSpeed: data.ExposureTime ? formatShutterSpeed(data.ExposureTime) : '',
         aperture: data.FNumber ? formatAperture(data.FNumber) : '',
         focalLength: data.FocalLength ? `${data.FocalLength}mm` : '',
-        dateTaken: data.DateTimeOriginal
-            ? format(data.DateTimeOriginal, 'MMMM yyyy')
-            : '',
+        dateTaken: data.DateTimeOriginal ? format(data.DateTimeOriginal, 'MMMM yyyy') : '',
         title: sidecar.dc.title?.value || '',
         description: sidecar.dc.description?.value || '',
         tags,
