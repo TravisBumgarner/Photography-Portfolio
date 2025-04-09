@@ -2,20 +2,8 @@ import { Tags } from '../types'
 
 const _FilmPhotography: Tags = {
     general: ['#filmphotography', '#filmisnotdead', '#analogphotography'],
-    priority: [
-        '#analogsunrise',
-        '@analogsunrise',
-        '#shootfilmmag',
-        '@shootfilmworld',
-    ],
-    bluesky: [
-        '#filmphotography',
-        '#film',
-        '#believeinfilm',
-        '#filmisnotdead',
-        '#infilmwetrust',
-        '#filmphotography 🎞️',
-    ],
+    priority: ['#analogsunrise', '@analogsunrise', '#shootfilmmag', '@shootfilmworld'],
+    bluesky: ['#filmphotography', '#film', '#believeinfilm', '#filmisnotdead', '#infilmwetrust', '#filmphotography 🎞️'],
 }
 
 const _35mmFilmPhotography: Tags = {
@@ -49,11 +37,7 @@ const NikonZ5: Tags = {
 }
 
 const NikonSLR: Tags = {
-    general: [
-        ..._FilmPhotography.general,
-        ..._35mmFilmPhotography.general,
-        ..._nikon.general,
-    ],
+    general: [..._FilmPhotography.general, ..._35mmFilmPhotography.general, ..._nikon.general],
     priority: [..._FilmPhotography.priority, ..._35mmFilmPhotography.priority],
     bluesky: [..._nikon.bluesky],
 }
@@ -71,13 +55,7 @@ const NikonD7500: Tags = {
 }
 
 const Pixel3: Tags = {
-    general: [
-        '#shotonpixel',
-        '#pixel3',
-        '#googlepixel3',
-        '#googlepixel',
-        '#pixelartist',
-    ],
+    general: ['#shotonpixel', '#pixel3', '#googlepixel3', '#googlepixel', '#pixelartist'],
     priority: [],
     bluesky: ['#googlepixel', '#mobilephotography'],
 }
@@ -95,45 +73,19 @@ const iPhone15: Tags = {
 }
 
 const YashicaC: Tags = {
-    general: [
-        ..._FilmPhotography.general,
-        ..._120mmFilmPhotography.general,
-        '#yashicac',
-        '#yashica',
-    ],
+    general: [..._FilmPhotography.general, ..._120mmFilmPhotography.general, '#yashicac', '#yashica'],
     priority: [..._FilmPhotography.priority, ..._120mmFilmPhotography.priority],
-    bluesky: [
-        '#yashica',
-        ..._FilmPhotography.bluesky,
-        ..._120mmFilmPhotography.bluesky,
-    ],
+    bluesky: ['#yashica', ..._FilmPhotography.bluesky, ..._120mmFilmPhotography.bluesky],
 }
 
 const PentaxK1000: Tags = {
-    general: [
-        ..._FilmPhotography.general,
-        ..._35mmFilmPhotography.general,
-        '#pentax',
-        '#k1000',
-        '#pentaxk1000',
-    ],
+    general: [..._FilmPhotography.general, ..._35mmFilmPhotography.general, '#pentax', '#k1000', '#pentaxk1000'],
     priority: [..._FilmPhotography.priority, ..._35mmFilmPhotography.priority],
-    bluesky: [
-        '#pentaxK1000',
-        '#pentaxphotography',
-        ..._FilmPhotography.bluesky,
-        ..._35mmFilmPhotography.bluesky,
-    ],
+    bluesky: ['#pentaxK1000', '#pentaxphotography', ..._FilmPhotography.bluesky, ..._35mmFilmPhotography.bluesky],
 }
 
 const DJIMini3Pro: Tags = {
-    general: [
-        '#dji',
-        '#djiphotography',
-        '#djidrone',
-        '#djicreator',
-        '#djimini3pro',
-    ],
+    general: ['#dji', '#djiphotography', '#djidrone', '#djicreator', '#djimini3pro'],
     priority: [],
     bluesky: [
         '#dronephotography',
@@ -145,18 +97,9 @@ const DJIMini3Pro: Tags = {
 }
 
 const OlympusPS: Tags = {
-    general: [
-        ..._FilmPhotography.general,
-        ..._35mmFilmPhotography.general,
-        '#olympusphotography',
-        '#olympuscamera',
-    ],
+    general: [..._FilmPhotography.general, ..._35mmFilmPhotography.general, '#olympusphotography', '#olympuscamera'],
     priority: [..._FilmPhotography.priority, ..._35mmFilmPhotography.priority],
-    bluesky: [
-        '#PointandShoot',
-        ..._FilmPhotography.bluesky,
-        ..._35mmFilmPhotography.bluesky,
-    ],
+    bluesky: ['#PointandShoot', ..._FilmPhotography.bluesky, ..._35mmFilmPhotography.bluesky],
 }
 
 const UnknownFilmCamera: Tags = {

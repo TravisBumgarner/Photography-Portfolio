@@ -1,22 +1,13 @@
 import { Tags } from '../types'
 
 const Animals: Tags = {
-    general: [
-        '#animalkingdom',
-        '#naturewanderers',
-        '#animallovers',
-        '#everything_animals',
-    ],
+    general: ['#animalkingdom', '#naturewanderers', '#animallovers', '#everything_animals'],
     priority: [],
     bluesky: ['#animals'],
 }
 
 const Architecture: Tags = {
-    general: [
-        '#architecture',
-        '#architecturelovers',
-        '#architecturephotography',
-    ],
+    general: ['#architecture', '#architecturelovers', '#architecturephotography'],
     priority: [],
     bluesky: ['#architecture'],
 }
@@ -34,58 +25,31 @@ const Leaves: Tags = {
 }
 
 const BlackAndWhite: Tags = {
-    general: [
-        '#bnw',
-        '#bnwphotography',
-        '#bnwmood',
-        '#bnw_captures',
-        '#bnwphoto',
-    ],
+    general: ['#bnw', '#bnwphotography', '#bnwmood', '#bnw_captures', '#bnwphoto'],
     priority: [],
     bluesky: ['#blackandwhite', '#monochrome', '#bnw', '#bnw_captures'],
 }
 
 const Cars: Tags = {
-    general: [
-        '#cars',
-        '#carsdaily',
-        '#carlovers',
-        '#carswithoutlimits',
-        '#carstagram',
-    ],
+    general: ['#cars', '#carsdaily', '#carlovers', '#carswithoutlimits', '#carstagram'],
     priority: [],
     bluesky: [],
 }
 
 const Clouds: Tags = {
-    general: [
-        '#clouds',
-        '#cloudscape',
-        '#cloudchaser',
-        '#cloudphotography',
-        '#cloudlovers',
-    ],
+    general: ['#clouds', '#cloudscape', '#cloudchaser', '#cloudphotography', '#cloudlovers'],
     priority: [],
     bluesky: ['#clouds', '#cloudscape'],
 }
 
 const Flowers: Tags = {
-    general: [
-        '#flowers',
-        '#flowerslovers',
-        '#flowersphotography',
-        '#flowersmakemehappy',
-    ],
+    general: ['#flowers', '#flowerslovers', '#flowersphotography', '#flowersmakemehappy'],
     priority: [],
     bluesky: ['#flowers', '#flores'],
 }
 
 const Landscape: Tags = {
-    general: [
-        '#landscapephotography',
-        '#landscape_collection',
-        '#landscapelover',
-    ],
+    general: ['#landscapephotography', '#landscape_collection', '#landscapelover'],
     priority: [],
     bluesky: ['#landscapephotography', '#landscape'],
 }
@@ -109,26 +73,13 @@ const Shadows: Tags = {
 }
 
 const Stars: Tags = {
-    general: [
-        '#astrophotography',
-        '#moonlovers',
-        '#astronomy',
-        '#nightshooters',
-        '#nightimages',
-    ],
+    general: ['#astrophotography', '#moonlovers', '#astronomy', '#nightshooters', '#nightimages'],
     priority: ['@milkyway_nightscape', '#milkyway_nightscape_'],
     bluesky: ['#astrophotography', '#astrophoto'],
 }
 
 const Storms: Tags = {
-    general: [
-        '#lightening',
-        '#stormphotography',
-        '#stormchasers',
-        '#stormclouds',
-        '#thunderstorms',
-        '#dpsp_rainshots',
-    ],
+    general: ['#lightening', '#stormphotography', '#stormchasers', '#stormclouds', '#thunderstorms', '#dpsp_rainshots'],
     priority: [],
     bluesky: ['#storm', '#rain'],
 }
