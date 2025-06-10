@@ -7,13 +7,7 @@ import styled, { css } from 'styled-components'
 import usePreventAppScroll from 'src/hooks/usePreventAppScroll'
 import IconButton from 'src/sharedComponents/IconButton'
 import usePhotoStore from 'src/store'
-import {
-  COLORS,
-  CONTENT_SPACING,
-  FONT_SIZES,
-  TRANSITION_SPEED,
-  Z_INDEX
-} from 'src/theme'
+import { COLORS, CONTENT_SPACING, FONT_SIZES, TRANSITION_SPEED, Z_INDEX } from 'src/theme'
 import { focusFirstSiteElement } from 'src/utils'
 
 export const isNavigationVisible = signal(false)
@@ -36,7 +30,7 @@ const ABOUT_CONTENT = [
   },
   {
     title: 'Bluesky',
-    route: 'https://bsky.app/profile/cameracoffeewander.bsky.social',
+    route: 'https://bsky.app/profile/travisbumgarner.photography',
     external: true
   },
   {
@@ -85,9 +79,7 @@ const Navigation = () => {
         )
 
         const firstElement = focusableElements[0] as HTMLElement
-        const lastElement = focusableElements[
-          focusableElements.length - 1
-        ] as HTMLElement
+        const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement
 
         if (event.shiftKey) {
           if (document.activeElement === firstElement) {
@@ -122,9 +114,7 @@ const Navigation = () => {
   }, [])
 
   const aboutLinks = ABOUT_CONTENT.map(m => {
-    const Component: React.ElementType = m.external
-      ? ExternalLink
-      : InternalLink
+    const Component: React.ElementType = m.external ? ExternalLink : InternalLink
 
     return (
       <LinkListItem key={m.title} onClick={closeNavigation}>
@@ -155,11 +145,11 @@ const Navigation = () => {
             <Header>GALLERIES</Header>
             <ul>{links}</ul>
           </Section>
-
           <Section>
             <Header>ABOUT</Header>
             <ul>{aboutLinks}</ul>
           </Section>
+          <div style={{ height: '50px' }} /> {/*Scroll on mobile gutter */}
         </SectionsWrapper>
         <CloseButtonWrapper>
           <IconButton
@@ -171,10 +161,7 @@ const Navigation = () => {
           />
         </CloseButtonWrapper>
       </NavigationWrapper>
-      <NavigationGutter
-        $isNavigationVisible={isNavigationVisible.value}
-        onClick={closeNavigation}
-      />
+      <NavigationGutter $isNavigationVisible={isNavigationVisible.value} onClick={closeNavigation} />
     </>
   )
 }
@@ -202,10 +189,8 @@ const NavigationWrapper = styled.div<{ $isNavigationVisible: boolean }>`
   overflow: scroll;
   background-color: ${COLORS.BACKGROUND};
   transition: transform ${TRANSITION_SPEED}s, visibility ${TRANSITION_SPEED}s;
-  visibility: ${({ $isNavigationVisible }) =>
-    $isNavigationVisible ? 'visible' : 'hidden'};
-  transform: ${({ $isNavigationVisible }) =>
-    $isNavigationVisible ? 'translateX(0)' : 'translateX(300px)'};
+  visibility: ${({ $isNavigationVisible }) => ($isNavigationVisible ? 'visible' : 'hidden')};
+  transform: ${({ $isNavigationVisible }) => ($isNavigationVisible ? 'translateX(0)' : 'translateX(300px)')};
 `
 
 const CloseButtonWrapper = styled.div`
@@ -230,7 +215,7 @@ const Section = styled.section`
 `
 
 const LinkListItem = styled.li`
-  padding: ${CONTENT_SPACING.SMALL} 0;
+  /* padding: ${CONTENT_SPACING.SMALL} 0; */
 
   position: relative;
   left: calc(-1 * (${CONTENT_SPACING.MEDIUM} + 5px));
