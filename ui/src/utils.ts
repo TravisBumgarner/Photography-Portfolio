@@ -1,12 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-export const getPhotoUrl = ({
-  isThumbnail,
-  photoSrc
-}: {
-  isThumbnail: boolean
-  photoSrc: string
-}) => {
+export const getPhotoUrl = ({ isThumbnail, photoSrc }: { isThumbnail: boolean; photoSrc: string }) => {
   let url = '/'
 
   url += isThumbnail ? 'thumbnail/' : 'large/'
@@ -22,11 +16,7 @@ const usePrevious = (value, initialValue) => {
   return ref.current
 }
 
-export const useEffectDebugger = (
-  effectHook,
-  dependencies,
-  dependencyNames = []
-) => {
+export const useEffectDebugger = (effectHook, dependencies, dependencyNames = []) => {
   const previousDeps = usePrevious(dependencies, [])
 
   const changedDeps = dependencies.reduce((accum, dependency, index) => {
@@ -52,9 +42,7 @@ export const useEffectDebugger = (
 }
 
 export const focusFirstSiteElement = () => {
-  const focusableElements = document.querySelectorAll(
-    'a[href], button, [tabindex]:not([tabindex="-1"])'
-  )
+  const focusableElements = document.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])')
   const firstElement = focusableElements[0] as HTMLElement
   firstElement?.focus()
   // blur the first element to remove the focus outline

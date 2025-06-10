@@ -1,13 +1,14 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin') 
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: './src/index.tsx',
   output: {
     filename: 'app.[contenthash].js',
     path: path.resolve(__dirname, 'build'),
-    assetModuleFilename: 'fonts/[name].[contenthash][ext]'
+    assetModuleFilename: 'fonts/[name].[contenthash][ext]',
+    publicPath: '/'
   },
   optimization: {
     splitChunks: {
@@ -53,8 +54,12 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: './src/public/.htaccess',
-          to: './'
+          from: path.resolve(__dirname, 'src/public'),
+          to: path.resolve(__dirname, 'build'),
+          noErrorOnMissing: true,
+          globOptions: {
+            ignore: ['**/index.template.ejs'] // Don't copy the template
+          }
         }
       ]
     })

@@ -16,7 +16,6 @@ api_django/db.sqlite3
 input_photos/
 output_photos/
 output_json/
-public/
 build/
 large/
 .env
