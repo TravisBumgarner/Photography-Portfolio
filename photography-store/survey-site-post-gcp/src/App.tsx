@@ -29,6 +29,17 @@ interface SelectedPhoto {
   photoPath: string
 }
 
+const labelLookup: Record<string, string> = {
+  americana:
+    'A small town diner with a counter full of regulars. A main drag constellated by vintage neon. The tight-knit communities, culture, and characters that tell an American story.',
+  'road-life':
+    'The camp spots and overlook stops, everyday rituals and changes of light—capture the quotidian moments of life on the road.',
+  'natural-world':
+    'Super Blooms and craggy mountain profiles, hot springs hideaways and butterfly migrations. These are the landscapes and natural wonders that move us.',
+  'photo-essay':
+    'A sequence of 5-10 images that tell a story from the open road. From a day at the rodeo to a series of vintage motel signs — this is the place for defined photo projects and thematic image collections.'
+}
+
 function App() {
   const [selectedPhotos, setSelectedPhotos] = useState<SelectedPhoto[]>([])
   const [success, setSuccess] = useState(false)
@@ -110,7 +121,8 @@ function App() {
     <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
       <style>{styles}</style>
       <h1>Photo Selection Survey</h1>
-      <p>Select photos you like by checking the boxes below.</p>
+      <p>I've included the themes for each category if you'd like to read more.</p>
+      <p>Thank you!</p>
 
       <div style={{ marginBottom: '20px' }}>
         <strong>Selected: {selectedPhotos.length} photos</strong>
@@ -119,6 +131,7 @@ function App() {
       {photoStructure.map((folder: PhotoFolder) => (
         <div key={folder.slug} style={{ marginBottom: '40px' }}>
           <h2>{folder.title}</h2>
+          {labelLookup[folder.slug] && <p style={{ fontStyle: 'italic', color: '#555' }}>{labelLookup[folder.slug]}</p>}
           <div className="photo-grid">
             {folder.photos.map(photo => {
               const photoId = `${folder.slug}-${photo}`
