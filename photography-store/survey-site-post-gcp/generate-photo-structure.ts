@@ -30,7 +30,7 @@ function fromSlug(slug: string): string {
 
 // Function to check if a file is an image
 function isImageFile(filename: string): boolean {
-  const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.svg', '.tiff', '.tif']
+  const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.svg', '.tiff', '.tif', '.avif']
   const ext = path.extname(filename).toLowerCase()
   return imageExtensions.includes(ext)
 }
@@ -118,7 +118,10 @@ function generatePhotoStructure(inputDir: string = 'input'): PhotoFolder[] {
 }
 
 // Function to save the structure to a JSON file
-function savePhotoStructure(outputFile: string = 'photo-structure.json', inputDir: string = 'input'): PhotoFolder[] {
+function savePhotoStructure(
+  outputFile: string = './src/photo-structure.json',
+  inputDir: string = 'input'
+): PhotoFolder[] {
   const structure = generatePhotoStructure(inputDir)
 
   try {
@@ -131,14 +134,14 @@ function savePhotoStructure(outputFile: string = 'photo-structure.json', inputDi
 }
 
 // Export functions for use in other modules
-export { generatePhotoStructure, savePhotoStructure, toSlug, fromSlug, type PhotoFolder }
+export { fromSlug, generatePhotoStructure, savePhotoStructure, toSlug, type PhotoFolder }
 
 /* eslint-disable no-console */
 
 // CLI script to generate photo structure
 async function main() {
-  const inputDir = '../public'
-  const outputFile = 'photo-structure.json'
+  const inputDir = './public'
+  const outputFile = './src/photo-structure.json'
 
   console.log(`Reading photos from: ${path.resolve(inputDir)}`)
   console.log(`Output file: ${outputFile}`)

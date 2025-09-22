@@ -1,27 +1,18 @@
 #!/bin/bash
 set -e
 
-APP_NAME="sam-photo-survey"
-SUBDIR="photography-store/survey-site-post-gcp"
+LOCAL_DIR="dist/"
+SERVER_USER="tbumgarner_sam-photo-survey"
+SERVER_HOST="nfs_sam_survey"
+REMOTE_DIR="/home/public"
 
-cd "$(git rev-parse --show-toplevel)"
+echo ">>> Creating remote directory $REMOTE_DIR if it doesn't exist"
+ssh $SERVER_USER@$SERVER_HOST "mkdir -p $REMOTE_DIR"
 
-echo ">>> Checking if Heroku app '$APP_NAME' exists..."
-if heroku apps:info --app "$APP_NAME" > /dev/null 2>&1; then
-  echo ">>> App already exists."
-else
-  echo ">>> Creating app '$APP_NAME'..."
-  heroku create "$APP_NAME" --stack heroku-22
-  heroku buildpacks:set heroku/nodejs --app "$APP_NAME"
-  heroku buildpacks:add heroku-community/nginx --app "$APP_NAME"
-fi
+echo ">>> Cleaning up remote directory $REMOTE_DIR"
+ssh $SERVER_USER@$SERVER_HOST "rm -rf $REMOTE_DIR/*"
 
-echo ">>> Setting heroku remote to $APP_NAME..."
-git remote remove heroku 2>/dev/null || true
-heroku git:remote -a "$APP_NAME"
+echo ">>> Uploading files to $SERVER_HOST:$REMOTE_DIR"
+rsync -avz --delete "$LOCAL_DIR" "$SERVER_USER@$SERVER_HOST:$REMOTE_DIR/"
 
-echo ">>> Deploying subdir '$SUBDIR' to Heroku..."
-git push heroku "$(git subtree split --prefix=$SUBDIR HEAD)":refs/heads/main --force
-
-echo ">>> Opening app..."
-heroku open --app "$APP_NAME"
+echo ">>> Deployment completed successfully"
