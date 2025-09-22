@@ -120,8 +120,9 @@ function App() {
   return (
     <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
       <style>{styles}</style>
-      <h1>Photo Selection Survey</h1>
-      <p>I've included the themes for each category if you'd like to read more.</p>
+      <h1>Photo Survey</h1>
+      <p>Select all the photos you like.</p>
+      <p>Descriptions are included for more details.</p>
       <p>Thank you!</p>
 
       <div style={{ marginBottom: '20px' }}>
@@ -130,8 +131,12 @@ function App() {
 
       {photoStructure.map((folder: PhotoFolder) => (
         <div key={folder.slug} style={{ marginBottom: '40px' }}>
-          <h2>{folder.title}</h2>
-          {labelLookup[folder.slug] && <p style={{ fontStyle: 'italic', color: '#555' }}>{labelLookup[folder.slug]}</p>}
+          <div style={{ position: 'sticky', top: 0, backgroundColor: 'white', padding: '10px', zIndex: 1 }}>
+            <h2>{folder.title}</h2>
+            {labelLookup[folder.slug] && (
+              <p style={{ fontStyle: 'italic', color: '#555' }}>{labelLookup[folder.slug]}</p>
+            )}
+          </div>
           <div className="photo-grid">
             {folder.photos.map(photo => {
               const photoId = `${folder.slug}-${photo}`
