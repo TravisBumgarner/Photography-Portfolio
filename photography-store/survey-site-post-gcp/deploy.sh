@@ -1,10 +1,9 @@
 #!/bin/bash
 set -e
 
-APP_NAME="sam-photo-survey2"
+APP_NAME="sam-photo-survey"
 SUBDIR="photography-store/survey-site-post-gcp"
 
-# Go to repo root
 cd "$(git rev-parse --show-toplevel)"
 
 echo ">>> Checking if Heroku app '$APP_NAME' exists..."
@@ -14,7 +13,7 @@ else
   echo ">>> Creating app '$APP_NAME'..."
   heroku create "$APP_NAME" --stack heroku-22
   heroku buildpacks:set heroku/nodejs --app "$APP_NAME"
-  heroku buildpacks:add heroku-community/static --app "$APP_NAME"
+  heroku buildpacks:add heroku-community/nginx --app "$APP_NAME"
 fi
 
 echo ">>> Setting heroku remote to $APP_NAME..."
