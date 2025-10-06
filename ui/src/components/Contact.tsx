@@ -4,10 +4,7 @@ import PageHeader from 'src/sharedComponents/PageHeader'
 import { CONTENT_SPACING } from 'src/theme'
 import styled from 'styled-components'
 
-const Wrapper = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-`
+const MESSAGE_LENGTH = 800
 
 const Form = styled.form`
   max-width: 500px;
@@ -47,7 +44,6 @@ const ContentWrapper = styled.div`
   padding-left: ${CONTENT_SPACING.LARGE};
 `
 
-
 const SubmitButton = styled.button<{ $disabled?: boolean }>`
   padding: 0.5rem 1rem;
   background-color: transparent;
@@ -71,40 +67,45 @@ const Contact = () => {
     website: 'photography-portfolio-and-blog'
   })
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (e.target.name === 'message' && e.target.value.length > MESSAGE_LENGTH) {
+      return
+    }
+
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     })
   }
 
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    const response = await fetch('https://contact-form.nfshost.com/contact', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-    if (response.ok) {
-      setSuccess(true)
-      setFormData(prev => ({
-        ...prev,
-        ...{
-          name: '',
-          email: '',
-          message: ''
-        }
-      }))
-    } else {
-      setFailure(true)
-    }
-    setIsSubmitting(false)
-  }, [formData])
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault()
+      setIsSubmitting(true)
+      const response = await fetch('https://contact-form.nfshost.com/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      if (response.ok) {
+        setSuccess(true)
+        setFormData(prev => ({
+          ...prev,
+          ...{
+            name: '',
+            email: '',
+            message: ''
+          }
+        }))
+      } else {
+        setFailure(true)
+      }
+      setIsSubmitting(false)
+    },
+    [formData]
+  )
 
   const resetButtonText = useCallback(() => {
     setTimeout(() => {
@@ -131,35 +132,30 @@ const Contact = () => {
   return (
     <NavigationAnimation>
       <ContentWrapper>
-      <PageHeader>Contact</PageHeader>
-      <Form onSubmit={handleSubmit}>
-        <Input
-          placeholder="Name (Optional)"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-        />
-        <Input
-          placeholder="Email (Optional)"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          type="email"
-        />
-        <TextArea
-          placeholder="Message"
-          name="message"
-          value={formData.message}
-          onChange={handleChange}
-        />
-        <SubmitButton
-          $disabled={isSubmitting || formData.message.length === 0}
-          type="submit"
-          disabled={isSubmitting || formData.message.length === 0}
-        >
-          {buttonText}
-        </SubmitButton>
-      </Form>
+        <PageHeader>Contact</PageHeader>
+        <Form onSubmit={handleSubmit}>
+          <Input placeholder="Name (Optional)" name="name" value={formData.name} onChange={handleChange} />
+          <Input
+            placeholder="Email (Optional)"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            type="email"
+          />
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <span>
+              {formData.message.length}/{MESSAGE_LENGTH}
+            </span>
+          </div>
+          <TextArea placeholder="Message" name="message" value={formData.message} onChange={handleChange} />
+          <SubmitButton
+            $disabled={isSubmitting || formData.message.length === 0}
+            type="submit"
+            disabled={isSubmitting || formData.message.length === 0}
+          >
+            {buttonText}
+          </SubmitButton>
+        </Form>
       </ContentWrapper>
     </NavigationAnimation>
   )
