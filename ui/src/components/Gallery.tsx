@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Navigate, useParams } from 'react-router-dom'
+import { Navigate, useLocation, useParams } from 'react-router-dom'
 import NavigationAnimation from 'src/sharedComponents/NavigationAnimation'
 import PageHeader from 'src/sharedComponents/PageHeader'
 import usePhotoStore from 'src/store'
@@ -15,10 +15,22 @@ const Gallery = () => {
   const [thumbnailsLoadingCount, setThumbnailsLoadingCount] = useState(0)
   const [thumbnailsLoadedCount, setThumbnailsLoadedCount] = useState(0)
   const largeImageLoadQueue = useRef<string[]>([])
+  const location = useLocation()
 
   const { gallerySlug } = useParams<{
     gallerySlug: string
   }>()
+
+  // Scroll to the photo the user was viewing when returning from single photo view
+  useEffect(() => {
+    const scrollToPhotoId = (location.state as { scrollToPhoto?: string })?.scrollToPhoto
+    if (scrollToPhotoId) {
+      requestAnimationFrame(() => {
+        const element = document.getElementById(scrollToPhotoId)
+        element?.scrollIntoView({ block: 'center' })
+      })
+    }
+  }, [location.state])
 
   const thumbnailsLoading = thumbnailsLoadingCount !== thumbnailsLoadedCount
 
