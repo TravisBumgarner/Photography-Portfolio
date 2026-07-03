@@ -47,5 +47,7 @@ App For Tagging Photos for Instagram by reading EXIF data from Adobe Lightroom
 
 # Setup for New Gallery
 
-1. Nest tag correctly in Lightroom. For Example `PhotographyPortfolioV2 -> Alaska`
-2. Add new gallery in galleries.ts using tag. 
+1. Nest tag correctly in Lightroom. For Example `PhotographyPortfolioV3 -> Alaska`
+2. Add new gallery in galleries.ts using tag.
+3. Set the gallery's cover photo via `previewSrc` in `galleries.ts` (the exported filename of a
+   photo in that gallery). `previewId` is derived from it automatically. 

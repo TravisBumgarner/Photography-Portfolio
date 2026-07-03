@@ -1,27 +1,22 @@
 import { encode } from 'blurhash'
-import { createCanvas, Image, loadImage } from 'canvas'
-
-const getImageData = (image: Image) => {
-    const canvas = createCanvas(image.width, image.height)
-    const context = canvas.getContext('2d')
-    context.drawImage(image, 0, 0)
-    return context.getImageData(0, 0, image.width, image.height)
-}
+import sharp from 'sharp'
 
 export const encodeImageToBlurHash = async (
     filePath: string
 ): Promise<{ blurHash: string; width: number; height: number }> => {
-    throw new Error('loadImage does not seem to work anymore')
-    const image = await loadImage(filePath)
+    // Full-resolution dimensions come from the large export.
+    const { width = 0, height = 0 } = await sharp(filePath).rotate().metadata()
 
-    // faster processing by using a smaller image
-    const imagePath = filePath.replace('large', 'thumbnail')
-    const smallImage = await loadImage(imagePath)
+    // The blurhash is computed from the smaller thumbnail export for speed.
+    const thumbnailPath = filePath.replace('large', 'thumbnail')
+    const { data, info } = await sharp(thumbnailPath)
+        .rotate()
+        .raw()
+        .ensureAlpha()
+        .resize(64, 64, { fit: 'inside' })
+        .toBuffer({ resolveWithObject: true })
 
-    const imageData = getImageData(smallImage)
-    return {
-        blurHash: encode(imageData.data, imageData.width, imageData.height, 4, 4),
-        width: image.width,
-        height: image.height,
-    }
+    const blurHash = encode(new Uint8ClampedArray(data), info.width, info.height, 4, 4)
+
+    return { blurHash, width, height }
 }

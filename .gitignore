@@ -18,4 +18,5 @@ output_photos/
 output_json/
 build/
 large/
+thumbnail/
 .env
