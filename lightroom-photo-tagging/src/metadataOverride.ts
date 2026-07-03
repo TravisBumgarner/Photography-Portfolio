@@ -25,11 +25,20 @@ const metadataOverride = (
         cameraLookup = SupportedCameras.NikonSLR
     }
 
+    if (tags.includes('cameracoffeewander|Camera|UnknownFilmCamera')) {
+        cameraLookup = SupportedCameras.UnknownFilmCamera
+    }
+
     switch (cameraLookup) {
-        // Film Scanner
+        // Film scans whose specific film camera wasn't tagged (or was tagged
+        // `UnknownFilmCamera`). The scanner isn't the real camera and EXIF has
+        // no usable model, so include them without a camera label.
         case SupportedCameras.Scanner1:
         case SupportedCameras.Scanner2: {
-            throw new Error('This should be a film camera.')
+            metadataOverrides = {
+                camera: '',
+                lens: '',
+            }
             break
         }
         case SupportedCameras.PentaxK1000: {
@@ -53,6 +62,13 @@ const metadataOverride = (
         case SupportedCameras.NikonSLR: {
             metadataOverrides = {
                 camera: 'Nikon SLR',
+            }
+            break
+        }
+        case SupportedCameras.UnknownFilmCamera: {
+            metadataOverrides = {
+                camera: 'Unknown Film Camera',
+                lens: '',
             }
             break
         }
@@ -101,7 +117,12 @@ const metadataOverride = (
             break
         }
         case SupportedCameras.Unknown: {
-            throw new Error(`Unknown camera: ${file}`)
+            // Phone photos / exports with stripped camera EXIF. They still have
+            // valid Lightroom gallery tags, so include them without a camera label.
+            metadataOverrides = {
+                camera: '',
+                lens: '',
+            }
             break
         }
         case SupportedCameras.MotoX4: {

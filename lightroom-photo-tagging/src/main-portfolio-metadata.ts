@@ -35,41 +35,48 @@ const main = async () => {
 
         const filePath = path.join(config.portfolioIngestPath, file)
 
-        const metadata = await processPhoto(filePath)
+        try {
+            const metadata = await processPhoto(filePath)
 
-        if ('errors' in metadata) {
-            console.log('\tErrors:', metadata.errors)
-            errorsByFile[file] = metadata.errors
-            continue
-        }
-
-        const galleryIds = metadata.tags.reduce((accum, tag) => {
-            const gallerySlug = TAG_TO_GALLERY_LOOKUP[tag]
-
-            if (gallerySlug) {
-                accum.push(gallerySlug)
+            if ('errors' in metadata) {
+                console.log('\tErrors:', metadata.errors)
+                errorsByFile[file] = metadata.errors
+                continue
             }
 
-            return accum
-        }, [] as string[])
+            const galleryIds = metadata.tags.reduce((accum, tag) => {
+                const gallerySlug = TAG_TO_GALLERY_LOOKUP[tag]
 
-        if (galleryIds.length === 0) {
-            console.log('\tNo valid galleries found for tags:', metadata.tags.join(','))
-            errorsByFile[file] = ['\tNo valid galleries found for tags:' + metadata.tags.join(',')]
-            continue
-        }
-        const { dateTaken, id, src } = metadata
+                if (gallerySlug) {
+                    accum.push(gallerySlug)
+                }
 
-        const { width, height, blurHash } = await encodeImageToBlurHash(filePath)
+                return accum
+            }, [] as string[])
 
-        photos[metadata.id] = {
-            dateTaken,
-            id,
-            src,
-            galleryIds,
-            blurHash,
-            width,
-            height,
+            if (galleryIds.length === 0) {
+                console.log('\tNo valid galleries found for tags:', metadata.tags.join(','))
+                errorsByFile[file] = ['\tNo valid galleries found for tags:' + metadata.tags.join(',')]
+                continue
+            }
+            const { dateTaken, id, src } = metadata
+
+            const { width, height, blurHash } = await encodeImageToBlurHash(filePath)
+
+            photos[metadata.id] = {
+                dateTaken,
+                id,
+                src,
+                galleryIds,
+                blurHash,
+                width,
+                height,
+            }
+        } catch (error) {
+            // One bad photo shouldn't abort the whole run — log it and move on.
+            const message = error instanceof Error ? error.message : String(error)
+            console.log('\tSkipping (unexpected error):', message)
+            errorsByFile[file] = [message]
         }
     }
 

@@ -25,6 +25,7 @@ export enum SupportedCameras {
     YashicaC = 'Yashica C',
     OlympusPS = 'Olympus Stylus P&S',
     NikonSLR = 'Nikon SLR',
+    UnknownFilmCamera = 'Unknown Film Camera',
 }
 
 export enum FilmCameras {

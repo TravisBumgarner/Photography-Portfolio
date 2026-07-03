@@ -9,14 +9,15 @@ type Gallery = {
 
 enum ValidSlugs {
     Alaska = 'alaska',
-    Animals = 'animals',
+    Dogs = 'for-the-love-of-dogs',
     ArchitectureOfMexico = 'architecture-of-mexico',
     Arizona = 'arizona',
     BajaCalifornia = 'baja-california',
     Boston = 'boston',
     DayOfTheDead = 'day-of-the-dead',
     Iceland = 'iceland',
-    Life = 'life',
+    UnitedStatesSnapshots = 'united-states-snapshots',
+    RoadTripToArcticOcean = 'road-trip-to-the-arctic-ocean',
     MexicoSnapshots = 'mexico-snapshots',
     MontanaAndWyoming = 'montana-and-wyoming',
     NegativeSpace = 'negative-space',
@@ -31,26 +32,29 @@ enum ValidSlugs {
 // It's possible in the future that multiple slugs could map to the same gallery.
 
 export const TAG_TO_GALLERY_LOOKUP: Record<string, ValidSlugs> = {
-    'PhotographyPortfolioV2|Alaska': ValidSlugs.Alaska,
-    'PhotographyPortfolioV2|Animals': ValidSlugs.Animals,
-    'PhotographyPortfolioV2|Architecture of Mexico':
+    'PhotographyPortfolioV3|Alaska': ValidSlugs.Alaska,
+    'PhotographyPortfolioV3|For the Love of Dogs': ValidSlugs.Dogs,
+    'PhotographyPortfolioV3|Architecture of Mexico':
         ValidSlugs.ArchitectureOfMexico,
-    'PhotographyPortfolioV2|Arizona': ValidSlugs.Arizona,
-    'PhotographyPortfolioV2|Baja California': ValidSlugs.BajaCalifornia,
-    'PhotographyPortfolioV2|Boston': ValidSlugs.Boston,
-    'PhotographyPortfolioV2|Day of the Dead': ValidSlugs.DayOfTheDead,
-    'PhotographyPortfolioV2|Iceland': ValidSlugs.Iceland,
-    'PhotographyPortfolioV2|Life': ValidSlugs.Life,
-    'PhotographyPortfolioV2|Mexico Snapshots': ValidSlugs.MexicoSnapshots,
-    'PhotographyPortfolioV2|Montana and Wyoming': ValidSlugs.MontanaAndWyoming,
-    'PhotographyPortfolioV2|Negative Space': ValidSlugs.NegativeSpace,
-    'PhotographyPortfolioV2|Pacific Northwest': ValidSlugs.PacficNorthwest,
-    'PhotographyPortfolioV2|Peru to Guatemala': ValidSlugs.PeruToGuatemala,
-    'PhotographyPortfolioV2|Toritos de Tultepec': ValidSlugs.ToritosDeTultepec,
-    'PhotographyPortfolioV2|Utah Colorado Nevada':
+    'PhotographyPortfolioV3|Arizona': ValidSlugs.Arizona,
+    'PhotographyPortfolioV3|Baja California': ValidSlugs.BajaCalifornia,
+    'PhotographyPortfolioV3|Boston': ValidSlugs.Boston,
+    'PhotographyPortfolioV3|Day of the Dead': ValidSlugs.DayOfTheDead,
+    'PhotographyPortfolioV3|Iceland': ValidSlugs.Iceland,
+    'PhotographyPortfolioV3|United States Snapshots':
+        ValidSlugs.UnitedStatesSnapshots,
+    'PhotographyPortfolioV3|Road Trip to the Arctic Ocean':
+        ValidSlugs.RoadTripToArcticOcean,
+    'PhotographyPortfolioV3|Mexican Snapshots': ValidSlugs.MexicoSnapshots,
+    'PhotographyPortfolioV3|Montana &amp; Wyoming': ValidSlugs.MontanaAndWyoming,
+    'PhotographyPortfolioV3|Negative Space': ValidSlugs.NegativeSpace,
+    'PhotographyPortfolioV3|PNW': ValidSlugs.PacficNorthwest,
+    'PhotographyPortfolioV3|Peru to Guatemala': ValidSlugs.PeruToGuatemala,
+    'PhotographyPortfolioV3|Toritos de Tultepec': ValidSlugs.ToritosDeTultepec,
+    'PhotographyPortfolioV3|Utah Colorado Nevada':
         ValidSlugs.UtahColoradoNeveda,
-    'PhotographyPortfolioV2|Western Canada': ValidSlugs.WesternCanada,
-    'PhotographyPortfolioV2|Western Europe': ValidSlugs.WesternEurope,
+    'PhotographyPortfolioV3|Western Canada': ValidSlugs.WesternCanada,
+    'PhotographyPortfolioV3|Western Europe': ValidSlugs.WesternEurope,
 }
 
 // previewSrc is the ID of the photo to be used for the gallery preview on the home page.
@@ -58,6 +62,16 @@ const PUBLIC_GALLERIES_BY_TAG_WITHOUT_PREVIEW_ID: Record<
     ValidSlugs,
     Omit<Gallery, 'previewId'>
 > = {
+    [ValidSlugs.RoadTripToArcticOcean]: {
+        title: 'Road Trip to the Arctic Ocean',
+        slug: ValidSlugs.RoadTripToArcticOcean,
+        previewSrc: '20250622-DSC_1472.avif',
+    },
+    [ValidSlugs.MexicoSnapshots]: {
+        title: 'Mexico Snapshots',
+        slug: ValidSlugs.MexicoSnapshots,
+        previewSrc: '20191103-DSC_6882.avif',
+    },
     [ValidSlugs.UtahColoradoNeveda]: {
         title: 'Utah Colorado & Nevada',
         slug: ValidSlugs.UtahColoradoNeveda,
@@ -83,11 +97,6 @@ const PUBLIC_GALLERIES_BY_TAG_WITHOUT_PREVIEW_ID: Record<
         slug: ValidSlugs.ToritosDeTultepec,
         previewSrc: '20240308-DSC_1435.avif',
     },
-    [ValidSlugs.MexicoSnapshots]: {
-        title: 'Mexico Snapshots',
-        slug: ValidSlugs.MexicoSnapshots,
-        previewSrc: '20191103-DSC_6882.avif',
-    },
     [ValidSlugs.NegativeSpace]: {
         title: 'Negative Space',
         slug: ValidSlugs.NegativeSpace,
@@ -103,10 +112,10 @@ const PUBLIC_GALLERIES_BY_TAG_WITHOUT_PREVIEW_ID: Record<
         slug: ValidSlugs.DayOfTheDead,
         previewSrc: '20191027-DSC_5739.avif',
     },
-    [ValidSlugs.Life]: {
-        title: 'Life',
-        slug: ValidSlugs.Life,
-        previewSrc: '20231004-000016240006.avif',
+    [ValidSlugs.UnitedStatesSnapshots]: {
+        title: 'United States Snapshots',
+        slug: ValidSlugs.UnitedStatesSnapshots,
+        previewSrc: '20260628-000016240006.avif',
     },
     [ValidSlugs.PacficNorthwest]: {
         title: 'Pacific Northwest',
@@ -118,9 +127,9 @@ const PUBLIC_GALLERIES_BY_TAG_WITHOUT_PREVIEW_ID: Record<
         slug: ValidSlugs.Alaska,
         previewSrc: '20170826-DSC_0814.avif',
     },
-    [ValidSlugs.Animals]: {
-        title: 'Animals',
-        slug: ValidSlugs.Animals,
+    [ValidSlugs.Dogs]: {
+        title: 'For the Love of Dogs',
+        slug: ValidSlugs.Dogs,
         previewSrc: '20230610-DSC_5028.avif',
     },
     [ValidSlugs.BajaCalifornia]: {
