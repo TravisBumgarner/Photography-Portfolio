@@ -13,17 +13,9 @@ const Home = () => {
   return (
     <NavigationAnimation>
       <HomeImageWrapper>
-        {Object.values(galleries).map(
-          ({ slug, title, previewSrc, previewId }) => (
-            <GalleryPreview
-              key={slug}
-              slug={slug}
-              title={title}
-              previewSrc={previewSrc}
-              previewId={previewId}
-            />
-          )
-        )}
+        {Object.values(galleries).map(({ slug, title, previewSrc, previewId }) => (
+          <GalleryPreview key={slug} slug={slug} title={title} previewSrc={previewSrc} previewId={previewId} />
+        ))}
       </HomeImageWrapper>
     </NavigationAnimation>
   )

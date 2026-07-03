@@ -1,4 +1,5 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import type React from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import NavigationAnimation from 'src/sharedComponents/NavigationAnimation'
 import PageHeader from 'src/sharedComponents/PageHeader'
 import { CONTENT_SPACING } from 'src/theme'

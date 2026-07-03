@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import getData from './content'
-import { type GalleryType, type PhotoType } from './types'
+import type { GalleryType, PhotoType } from './types'
 
 export interface State {
   photos: Record<string, PhotoType>

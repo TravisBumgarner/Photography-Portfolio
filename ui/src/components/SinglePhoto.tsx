@@ -7,9 +7,7 @@ import { useSwipeable } from 'react-swipeable'
 import { useNavigate, useParams } from 'react-router-dom'
 import Error from 'src/sharedComponents/Error'
 import IconButton from 'src/sharedComponents/IconButton'
-import NavigationAnimation, {
-  SHARED_ANIMATION_DURATION
-} from 'src/sharedComponents/NavigationAnimation'
+import NavigationAnimation, { SHARED_ANIMATION_DURATION } from 'src/sharedComponents/NavigationAnimation'
 import usePhotoStore from 'src/store'
 import { COLORS, CONTENT_SPACING, Z_INDEX } from 'src/theme'
 import { getPhotoUrl } from 'src/utils'

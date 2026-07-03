@@ -7,14 +7,7 @@ import { useSignals } from '@preact/signals-react/runtime'
 
 import IconButton from 'src/sharedComponents/IconButton'
 import { SHARED_ANIMATION_DURATION } from 'src/sharedComponents/NavigationAnimation'
-import {
-  COLORS,
-  CONTENT_SPACING,
-  FONT_SIZES,
-  MAX_WIDTH,
-  MOBILE_WIDTH,
-  Z_INDEX
-} from 'src/theme'
+import { COLORS, CONTENT_SPACING, FONT_SIZES, MAX_WIDTH, MOBILE_WIDTH, Z_INDEX } from 'src/theme'
 import { isNavigationVisible } from './Navigation'
 
 interface TitleBarProps {

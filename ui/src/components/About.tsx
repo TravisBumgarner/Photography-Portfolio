@@ -17,18 +17,13 @@ const About = () => {
       <ContentWrapper>
         <PageHeader>AWARDS & RECOGNITIONS</PageHeader>
         <UL>
-          <li>
-            2025 Banco Nacional: El México de los mexicanos III (Banco Nacional:
-            Mexico of the Mexicans III)
-          </li>
+          <li>2025 Banco Nacional: El México de los mexicanos III (Banco Nacional: Mexico of the Mexicans III)</li>
           <li>2024 Master Class Selected</li>
           <li>2024 March SA Monthly Contest Winner - Envelop</li>
           <li>2023 April SA Monthly Contest Winner - Hard Light</li>
           <li>2023 Black Box Gallery - Color Burst</li>
           <li>2023 Praxis Gallery - The Portrait Exhibition</li>
-          <li>
-            2018 Noyes Museum of Art of Stockton University - RAW Exhibition
-          </li>
+          <li>2018 Noyes Museum of Art of Stockton University - RAW Exhibition</li>
           <li>2017 1st Place BARPCV Photography Competition</li>
           <li>2016 Front Page of National Geographic&apos;s YourShot</li>
           <li>2016 MIT Art Party</li>

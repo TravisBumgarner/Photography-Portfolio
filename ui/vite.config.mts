@@ -1,8 +1,8 @@
-import react from '@vitejs/plugin-react'
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import { defineConfig, type Plugin } from 'vite'
+import react from '@vitejs/plugin-react'
+import { type Plugin, defineConfig } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
 // The exported photos live on the Desktop, outside the repo. In production the
@@ -46,11 +46,7 @@ const serveLocalPhotos = (): Plugin => ({
 const usingProdPhotos = process.env.PHOTO_SOURCE === 'prod'
 
 export default defineConfig({
-  plugins: [
-    react(),
-    tsconfigPaths(),
-    ...(usingProdPhotos ? [] : [serveLocalPhotos()])
-  ],
+  plugins: [react(), tsconfigPaths(), ...(usingProdPhotos ? [] : [serveLocalPhotos()])],
   server: {
     port: 3000,
     ...(usingProdPhotos

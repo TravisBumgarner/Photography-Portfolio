@@ -22,8 +22,7 @@ const Error = ({ value }: { value: '404' | '500' }) => {
       case '500': {
         return {
           header: 'Whoops!',
-          message:
-            'Something went wrong. This error has been reported. Please try again later.'
+          message: 'Something went wrong. This error has been reported. Please try again later.'
         }
       }
     }

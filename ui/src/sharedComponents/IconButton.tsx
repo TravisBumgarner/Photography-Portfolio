@@ -1,11 +1,5 @@
 import React, { cloneElement } from 'react'
-import {
-  FaArrowLeft,
-  FaArrowRight,
-  FaBars,
-  FaDownload,
-  FaTimes
-} from 'react-icons/fa'
+import { FaArrowLeft, FaArrowRight, FaBars, FaDownload, FaTimes } from 'react-icons/fa'
 import { COLORS, FONT_SIZES, TRANSITION_SPEED } from 'src/theme'
 import styled, { css } from 'styled-components'
 
@@ -70,12 +64,7 @@ const IconButton = ({
   const IconComponent = iconLookup[icon]
 
   return (
-    <Button
-      onClick={onClick}
-      aria-label={ariaLabel}
-      tabIndex={tabIndex}
-      role={role}
-    >
+    <Button onClick={onClick} aria-label={ariaLabel} tabIndex={tabIndex} role={role}>
       {cloneElement(<IconComponent color={color} />, {
         size: FONT_SIZES[size]
       })}

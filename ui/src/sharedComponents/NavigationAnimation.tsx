@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
-import React, { useEffect } from 'react'
+import type React from 'react'
+import { useEffect } from 'react'
 
 export const SHARED_ANIMATION_DURATION = 0.5
 

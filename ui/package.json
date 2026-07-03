@@ -7,6 +7,9 @@
     "dev": "vite",
     "dev:prod-photos": "PHOTO_SOURCE=prod vite",
     "bundle": "vite build",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
     "precommit": "tsc --noEmit --skipLibCheck",
     "deploy:nfs": "yarn run bundle && bash deploy.sh"
   },
@@ -28,21 +31,11 @@
     "zustand": "^5.0.1"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
     "@types/node": "^20.14.0",
     "@types/react": "^18.0.25",
     "@types/styled-components": "^5.1.15",
-    "@typescript-eslint/eslint-plugin": "^7.11.0",
-    "@typescript-eslint/parser": "^7.11.0",
     "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "^8.49.0",
-    "eslint-config-standard-with-typescript": "^39.0.0",
-    "eslint-import-resolver-typescript": "^3.6.0",
-    "eslint-plugin-import": "^2.28.1",
-    "eslint-plugin-n": "^16.1.0",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-unused-imports": "^3.2.0",
     "typescript": "^4.5.2",
     "vite": "^5.4.11",
     "vite-tsconfig-paths": "^5.1.4"
