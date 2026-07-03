@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import styled from 'styled-components'
 
 import PageHeader from 'src/sharedComponents/PageHeader'
@@ -10,7 +10,7 @@ const ErrorWrapper = styled.div`
   flex-direction: column;
 `
 
-const Error = ({ value }: { value: '404' | '500' }) => {
+const ErrorView = ({ value }: { value: '404' | '500' }) => {
   const { message, header } = useMemo(() => {
     switch (value) {
       case '404': {
@@ -40,4 +40,4 @@ const Text = styled.p`
   font-size: ${FONT_SIZES.MEDIUM};
 `
 
-export default Error
+export default ErrorView

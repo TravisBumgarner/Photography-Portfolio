@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { useSwipeable } from 'react-swipeable'
 
 import { useNavigate, useParams } from 'react-router-dom'
-import Error from 'src/sharedComponents/Error'
+import ErrorView from 'src/sharedComponents/Error'
 import IconButton from 'src/sharedComponents/IconButton'
 import NavigationAnimation, { SHARED_ANIMATION_DURATION } from 'src/sharedComponents/NavigationAnimation'
 import usePhotoStore from 'src/store'
@@ -110,7 +110,7 @@ const SinglePhoto = () => {
     }
   }, [handleKeyPress])
 
-  if (!details) return <Error value="404" />
+  if (!details) return <ErrorView value="404" />
 
   const photoSrc = getPhotoUrl({
     isThumbnail: false,
