@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_OPTIONS=\"--inspect\" webpack-dev-server --mode=development --config=webpack.js",
-    "bundle": " rm -rf ./build; mkdir ./build; webpack --mode=production --config=webpack.js",
+    "dev": "vite",
+    "dev:prod-photos": "PHOTO_SOURCE=prod vite",
+    "bundle": "vite build",
     "precommit": "tsc --noEmit --skipLibCheck",
     "deploy:nfs": "yarn run bundle && bash deploy.sh"
   },
@@ -24,16 +25,15 @@
     "react-router-dom": "^6.4.3",
     "react-swipeable": "^7.0.2",
     "styled-components": "^5.3.6",
-    "webpack-dev-server": "^4.11.1",
     "zustand": "^5.0.1"
   },
   "devDependencies": {
+    "@types/node": "^20.14.0",
     "@types/react": "^18.0.25",
     "@types/styled-components": "^5.1.15",
     "@typescript-eslint/eslint-plugin": "^7.11.0",
     "@typescript-eslint/parser": "^7.11.0",
-    "copy-webpack-plugin": "^12.0.2",
-    "css-loader": "^7.1.2",
+    "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^8.49.0",
     "eslint-config-standard-with-typescript": "^39.0.0",
     "eslint-import-resolver-typescript": "^3.6.0",
@@ -43,12 +43,8 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-unused-imports": "^3.2.0",
-    "file-loader": "^6.2.0",
-    "html-webpack-plugin": "^5.5.0",
-    "style-loader": "^4.0.0",
-    "ts-loader": "^9.2.6",
     "typescript": "^4.5.2",
-    "webpack": "5.76",
-    "webpack-cli": "^4.9.1"
+    "vite": "^5.4.11",
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }

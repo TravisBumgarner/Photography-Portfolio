@@ -5,7 +5,14 @@ The public photography portfolio web app.
 # Setup
 
 1. `yarn` to install dependencies
-1. `yarn dev` to run locally
+1. `yarn dev` to run locally (Vite, on `localhost:3000`)
+
+The app is built with **Vite**. Photos live outside the repo (see below), so the
+dev server has two modes for resolving `/large/*` and `/thumbnail/*`:
+
+- `yarn dev` — serves photos straight from `~/Desktop/large` and `~/Desktop/thumbnail`.
+- `yarn dev:prod-photos` — proxies photo requests to the live site, so you can run
+  the dev server without a local export.
 
 # The Big Picture
 
