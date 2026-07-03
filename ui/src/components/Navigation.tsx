@@ -1,6 +1,7 @@
 import { signal } from '@preact/signals-react'
 import { useSignals } from '@preact/signals-react/runtime'
-import React, { useCallback, useEffect, useMemo, useRef } from 'react'
+import type React from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
@@ -135,6 +136,7 @@ const Navigation = () => {
       <NavigationWrapper
         $isNavigationVisible={isNavigationVisible.value}
         ref={navigationRef}
+        // biome-ignore lint/a11y/useSemanticElements: custom animated nav drawer, not a native <dialog>
         role="dialog"
         aria-modal="true"
         aria-label="Site navigation"

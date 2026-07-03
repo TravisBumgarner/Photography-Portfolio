@@ -19,20 +19,20 @@ const usePrevious = (value, initialValue) => {
 export const useEffectDebugger = (effectHook, dependencies, dependencyNames = []) => {
   const previousDeps = usePrevious(dependencies, [])
 
-  const changedDeps = dependencies.reduce((accum, dependency, index) => {
-    if (dependency !== previousDeps[index]) {
-      const keyName = dependencyNames[index] || index
-      return {
-        ...accum,
-        [keyName]: {
+  const changedDeps = dependencies.reduce(
+    (accum: Record<string, { before: unknown; after: unknown }>, dependency, index) => {
+      if (dependency !== previousDeps[index]) {
+        const keyName = dependencyNames[index] || index
+        accum[keyName] = {
           before: previousDeps[index],
           after: dependency
         }
       }
-    }
 
-    return accum
-  }, {})
+      return accum
+    },
+    {}
+  )
 
   if (Object.keys(changedDeps).length) {
     console.log('[use-effect-debugger] ', changedDeps)

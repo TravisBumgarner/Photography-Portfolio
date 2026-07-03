@@ -7,8 +7,8 @@
 }
 
 @font-face {
-  font-family: 'Satoshi';
-  src: url('./public/fonts/Satoshi-Variable.ttf') format('truetype');
+  font-family: "Satoshi";
+  src: url("./public/fonts/Satoshi-Variable.ttf") format("truetype");
   font-weight: 100 900;
   font-style: normal;
 }
@@ -20,7 +20,7 @@ select,
 button {
   font-size: 18px;
   font-weight: 400;
-  font-family: 'Satoshi', sans-serif;
+  font-family: "Satoshi", sans-serif;
   color: var(--color-light-grey);
 }
 

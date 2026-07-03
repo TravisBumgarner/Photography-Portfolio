@@ -26,7 +26,7 @@ const LazyImage = ({ url }: { url: string }) => {
     return () => {
       observer.disconnect()
     }
-  }, [url])
+  }, [])
 
   return <Image ref={imageRef} url={isVisible ? url : ''} />
 }

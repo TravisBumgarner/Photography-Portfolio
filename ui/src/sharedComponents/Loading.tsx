@@ -22,7 +22,7 @@ const Favicon = () => {
   return (
     <FaviconWrapper
       animate={{ transform: 'rotate(360deg)' }}
-      transition={{ repeat: Infinity, duration: 3, ease: 'linear' }}
+      transition={{ repeat: Number.POSITIVE_INFINITY, duration: 3, ease: 'linear' }}
       style={{ fill: COLORS.PRIMARY, width: 100, height: 100 }}
     >
       <FaviconLeft />

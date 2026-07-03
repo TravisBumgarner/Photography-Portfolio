@@ -1,24 +1,35 @@
-import { ErrorBoundary, init as sentryInit } from '@sentry/react'
+import posthog from 'posthog-js'
+import { PostHogErrorBoundary, PostHogProvider } from 'posthog-js/react'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 
 import App from './App'
 
 import { BrowserRouter } from 'react-router-dom'
-import Error from 'src/sharedComponents/Error'
+import ErrorView from 'src/sharedComponents/Error'
 
-sentryInit({
-  dsn: 'https://9f4ad55370e84dea97293045aab74b8b@sentry.io/1304092'
-})
+const POSTHOG_KEY = import.meta.env.VITE_POSTHOG_KEY
+const POSTHOG_HOST = import.meta.env.VITE_POSTHOG_HOST ?? 'https://us.i.posthog.com'
+
+// Analytics + error tracking only run in production builds.
+if (import.meta.env.PROD && POSTHOG_KEY) {
+  posthog.init(POSTHOG_KEY, {
+    api_host: POSTHOG_HOST,
+    capture_pageview: 'history_change',
+    capture_exceptions: true
+  })
+}
 
 const container = document.getElementById('root')
 
 const root = createRoot(container!)
 
 root.render(
-  <ErrorBoundary fallback={<Error value="500" />}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </ErrorBoundary>
+  <PostHogProvider client={posthog}>
+    <PostHogErrorBoundary fallback={<ErrorView value="500" />}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </PostHogErrorBoundary>
+  </PostHogProvider>
 )

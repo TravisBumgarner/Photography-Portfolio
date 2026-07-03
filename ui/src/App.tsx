@@ -2,7 +2,7 @@ import { AnimatePresence, motion, useAnimationControls } from 'framer-motion'
 import React, { Suspense, lazy, useEffect } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 
-import Error from 'src/sharedComponents/Error'
+import ErrorView from 'src/sharedComponents/Error'
 import styled from 'styled-components'
 import Contact from './components/Contact'
 import './index.css'
@@ -20,9 +20,7 @@ const Gallery = lazy(async () => await import('./components/Gallery'))
 const App = () => {
   const location = useLocation()
   const controls = useAnimationControls()
-  const isPhotoSlugRoute =
-    location.pathname.includes('/gallery/') &&
-    location.pathname.split('/').length > 3
+  const isPhotoSlugRoute = location.pathname.includes('/gallery/') && location.pathname.split('/').length > 3
 
   useEffect(() => {
     if (isPhotoSlugRoute) {
@@ -60,13 +58,13 @@ const App = () => {
             >
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} /> 
+              <Route path="/contact" element={<Contact />} />
               <Route path="/gallery/:gallerySlug">
                 <Route index element={<Gallery />} />
                 <Route path=":photoSlug" element={<SinglePhoto />} />
               </Route>
-              <Route path="/error500" element={<Error value="500" />} />
-              <Route path="*" element={<Error value="404" />} />
+              <Route path="/error500" element={<ErrorView value="500" />} />
+              <Route path="*" element={<ErrorView value="404" />} />
             </Routes>
           </AnimatePresence>
         </Suspense>

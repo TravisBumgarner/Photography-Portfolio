@@ -53,7 +53,7 @@ const Gallery = () => {
 
   useEffect(() => {
     preloadLargeImage()
-  }, [thumbnailsLoading, preloadLargeImage])
+  }, [preloadLargeImage])
 
   const updateLoadedThumbnails = useCallback((thumbnailId: string) => {
     setThumbnailsLoadedCount(prev => prev + 1)

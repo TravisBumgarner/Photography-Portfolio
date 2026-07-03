@@ -3,13 +3,8 @@ import { useEffect, useState } from 'react'
 
 // modified from https://gist.github.com/WorldMaker/a3cbe0059acd827edee568198376b95a
 // https://github.com/woltapp/react-blurhash/issues/3
-export function useBlurhash(
-  blurhash: string | undefined | null,
-  width: number = 32,
-  height: number = 32,
-  punch: number = 1
-) {
-  punch = punch || 1
+export function useBlurhash(blurhash: string | undefined | null, width = 32, height = 32, punch = 1) {
+  const resolvedPunch = punch || 1
 
   const [url, setUrl] = useState(null as string | null)
 
@@ -19,7 +14,7 @@ export function useBlurhash(
     if (!blurhash) return
 
     // decode hash
-    const pixels = decode(blurhash, width, height, punch)
+    const pixels = decode(blurhash, width, height, resolvedPunch)
 
     // temporary canvas to create a blob from decoded ImageData
     const canvas = document.createElement('canvas')
@@ -49,7 +44,7 @@ export function useBlurhash(
         return null
       })
     }
-  }, [blurhash, height, width, punch])
+  }, [blurhash, height, width, resolvedPunch])
 
   return url
 }

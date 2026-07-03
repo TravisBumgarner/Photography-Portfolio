@@ -1,4 +1,4 @@
-import { type GalleryType, type PhotoType } from 'src/types'
+import type { GalleryType, PhotoType } from 'src/types'
 import output from './output.json'
 
 interface Data {

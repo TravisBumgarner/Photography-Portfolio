@@ -40,9 +40,7 @@ const BlurImage = ({
   })
 
   const [imgLoaded, setImgLoaded] = useState(false)
-  const blurUrl = useBlurhash(
-    !imgLoaded && startLoadingBlurHash ? blurHash : null
-  )
+  const blurUrl = useBlurhash(!imgLoaded && startLoadingBlurHash ? blurHash : null)
 
   const handleOnLoad = useCallback(() => {
     setImgLoaded(true)
