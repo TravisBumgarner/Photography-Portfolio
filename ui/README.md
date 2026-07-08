@@ -24,7 +24,7 @@ three artifacts, all derived from Lightroom:
 | --- | --- | --- | --- |
 | `~/Desktop/large/` | Full-res `.avif`s | Lightroom export preset `For Portfolio - Large` | server `…/large/` |
 | `~/Desktop/thumbnail/` | Thumbnail `.avif`s | Lightroom export preset `For Portfolio - Thumbnail` | server `…/thumbnail/` |
-| `ui/src/content/output.json` | Gallery + photo metadata (titles, EXIF, blurhashes, gallery mapping) | the `lightroom-photo-tagging` project | bundled into `build/` |
+| `ui/src/content/output.json` | Gallery + photo metadata (blurhashes, dimensions, gallery mapping) | the `portfolio-preparation` project | bundled into `build/` |
 
 The app maps each photo `src` in `output.json` to `/large/<src>` and `/thumbnail/<src>` at
 runtime (see `getPhotoUrl` in `src/utils.ts`), so the filenames in `output.json` must match
@@ -35,7 +35,7 @@ the files exported to `~/Desktop/large` and `~/Desktop/thumbnail`.
 ### 1. Prep photos in Lightroom
 
 - Tag each photo into a gallery using the `PhotographyPortfolioV3 | <Gallery>` hierarchy.
-  - New gallery? Edit `lightroom-photo-tagging/src/galleries.ts`: add a `ValidSlugs` entry,
+  - New gallery? Edit `portfolio-preparation/src/galleries.ts`: add a `ValidSlugs` entry,
     a `TAG_TO_GALLERY_LOOKUP` mapping (`'PhotographyPortfolioV3|<Gallery>': ValidSlugs.X`),
     and an entry in `PUBLIC_GALLERIES_BY_TAG_WITHOUT_PREVIEW_ID` — see the cover photo below.
 - Give each photo a title (descriptions optional).
@@ -43,7 +43,7 @@ the files exported to `~/Desktop/large` and `~/Desktop/thumbnail`.
 ### Set each gallery's cover photo
 
 The gallery preview/cover shown on the home page is **not** driven by a Lightroom tag — it's a
-hardcoded filename in `lightroom-photo-tagging/src/galleries.ts`. Each gallery's entry has a
+hardcoded filename in `portfolio-preparation/src/galleries.ts`. Each gallery's entry has a
 `previewSrc: '<filename>.avif'` (the exported filename, matching a photo in that gallery); the
 `previewId` is derived from it automatically. To change a cover, set `previewSrc` to the desired
 photo's exported filename and re-run the metadata step below.
@@ -57,18 +57,18 @@ Run both export presets (in `../lightroom_presets/`) to your Desktop:
 
 ### 3. Generate the metadata manifest
 
-The manifest is built by the sibling `lightroom-photo-tagging` project, which reads the
+The manifest is built by the sibling `portfolio-preparation` project, which reads the
 exported `.avif`s and writes straight into `ui/src/content/output.json`.
 
 ```sh
-cd ../lightroom-photo-tagging
-yarn                       # first time only; needs canvas native deps — see that project's readme
+cd ../portfolio-preparation
+yarn                       # first time only
 # .env must set PORTFOLIO_INGEST_PATH=/Users/<you>/Desktop/large  (same dir as the Large export)
-yarn start-portfolio-metadata
+yarn start
 ```
 
-This reads every `.avif` in `PORTFOLIO_INGEST_PATH`, pulls EXIF + Lightroom tags, computes
-blurhashes, and overwrites `ui/src/content/output.json`.
+This reads every `.avif` in `PORTFOLIO_INGEST_PATH`, pulls the date + Lightroom gallery tags,
+computes blurhashes, and overwrites `ui/src/content/output.json`.
 
 > `output.json` is a **generated-but-committed** artifact (like a lockfile). It's `import`ed
 > at build time, and it can only be regenerated on the machine that has the Lightroom exports,
