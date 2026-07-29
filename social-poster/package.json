@@ -1,0 +1,21 @@
+{
+  "name": "social-poster",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Schedule image posts to Instagram and Bluesky from a calendar/queue web app",
+  "scripts": {
+    "postinstall": "npm --prefix web install",
+    "dev": "node dev.mjs",
+    "dev:no-tunnel": "concurrently -k -n api,web -c blue,green \"npm run dev:api\" \"npm run dev:web\"",
+    "dev:api": ".venv/bin/python scripts/server.py",
+    "dev:web": "npm --prefix web run dev",
+    "build": "docker build -t social-poster:local .",
+    "build:web": "npm --prefix web run build",
+    "start": "docker run --rm -p 5050:5050 -v social-poster-data:/data -e DRY_RUN=1 social-poster:local",
+    "test": ".venv/bin/python -m pytest tests",
+    "release": "git tag social-poster-v$npm_package_version && git push origin social-poster-v$npm_package_version"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}

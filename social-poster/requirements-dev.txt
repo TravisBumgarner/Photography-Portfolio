@@ -1,0 +1,5 @@
+# Local development only — never installed into the image.
+-r requirements.txt
+
+pytest==8.4.2   # tests/
+numpy>=2.0      # analysis/analyze_gallery_tags.py

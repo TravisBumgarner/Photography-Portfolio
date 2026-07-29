@@ -1,0 +1,21 @@
+node_modules
+# The Dockerfile's node stage builds this; it is not committed.
+dist
+dist-ssr
+*.local
+.DS_Store
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# TypeScript incremental build cache
+*.tsbuildinfo
