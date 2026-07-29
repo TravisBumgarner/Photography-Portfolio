@@ -45,10 +45,16 @@ export function useUpdateIngestItem() {
   return useMutation<
     IngestItem,
     Error,
-    { id: number; captions: Captions; tagPools?: TagPools }
+    {
+      id: number;
+      captions: Captions;
+      tagPools?: TagPools;
+      /** `{subreddit: title}` — the keys are the Reddit selection. */
+      titles?: Record<string, string>;
+    }
   >({
-    mutationFn: ({ id, captions, tagPools }) =>
-      updateIngestItem(id, captions, tagPools),
+    mutationFn: ({ id, captions, tagPools, titles }) =>
+      updateIngestItem(id, captions, tagPools, titles),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: INGEST_KEY });
     },

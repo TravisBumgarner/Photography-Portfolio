@@ -11,7 +11,13 @@ import {
   useSnapshotEngagement,
 } from '../hooks/usePosts';
 import { useSettings } from '../hooks/useSettings';
+import { useSubreddits, useSuggestSubreddits } from '../hooks/useSubreddits';
 import { useGenerateCaptions } from '../hooks/useTagging';
+import { RedditTargets } from './RedditTargets';
+import {
+  redditSelectionIsValid,
+  type RedditSelection,
+} from '../utils/reddit';
 import {
   apiISOToDatetimeLocal,
   dateToDatetimeLocal,
@@ -19,7 +25,7 @@ import {
   formatHHMM,
 } from '../utils/datetime';
 import { isOverdue } from '../utils/posts';
-import type { Captions, Platform, Post } from '../api/types';
+import type { Platform, Post, TargetInput } from '../api/types';
 
 interface PostModalProps {
   onClose: () => void;
@@ -32,9 +38,10 @@ interface PostModalProps {
 const PLATFORM_LABEL: Record<Platform, string> = {
   instagram: 'Instagram',
   bluesky: 'Bluesky',
+  reddit: 'Reddit',
 };
 
-const ALL_PLATFORMS: Platform[] = ['instagram', 'bluesky'];
+const ALL_PLATFORMS: Platform[] = ['instagram', 'bluesky', 'reddit'];
 
 interface FormValues {
   image?: FileList;
@@ -42,12 +49,24 @@ interface FormValues {
   account_ids: number[];
   captionInstagram?: string;
   captionBluesky?: string;
+  captionReddit?: string;
   featured_by?: string;
 }
 
-const CAPTION_FIELD: Record<Platform, 'captionInstagram' | 'captionBluesky'> = {
+const CAPTION_FIELD: Record<
+  Platform,
+  'captionInstagram' | 'captionBluesky' | 'captionReddit'
+> = {
   instagram: 'captionInstagram',
   bluesky: 'captionBluesky',
+  reddit: 'captionReddit',
+};
+
+/** Reddit's caption isn't a caption — it's the first comment under a link post. */
+const CAPTION_HELP: Partial<Record<Platform, string>> = {
+  reddit:
+    'Posted as the first comment — an image submission is a link post and ' +
+    'can’t carry body text. Each subreddit’s title is set below.',
 };
 
 export function PostModal({ onClose, post, initialScheduledAt }: PostModalProps) {
@@ -60,6 +79,24 @@ export function PostModal({ onClose, post, initialScheduledAt }: PostModalProps)
   const deletePost = useDeletePost();
   const captionGen = useGenerateCaptions();
   const snapshot = useSnapshotEngagement();
+  const suggestSubs = useSuggestSubreddits();
+  const { data: subredditRules } = useSubreddits();
+
+  // Reddit destinations live outside react-hook-form: the shape is a map of
+  // subreddit -> {title, offset}, which RHF's field model fits badly.
+  // Seeded from the post's existing Reddit targets when editing.
+  const [redditSelection, setRedditSelection] = useState<RedditSelection>(() => {
+    const initial: RedditSelection = {};
+    for (const target of post?.targets ?? []) {
+      if (target.subreddit) {
+        initial[target.subreddit] = {
+          title: target.title,
+          delay_minutes: target.delay_minutes,
+        };
+      }
+    }
+    return initial;
+  });
 
   // Published account records, preferring the fresh copy a snapshot returned
   // (the parent's `post` prop may be stale until the posts query refetches).
@@ -79,6 +116,7 @@ export function PostModal({ onClose, post, initialScheduledAt }: PostModalProps)
           account_ids: z.array(z.number()).min(1, 'Select at least one account.'),
           captionInstagram: z.string().max(2200, 'Caption is too long.').optional(),
           captionBluesky: z.string().max(2200, 'Caption is too long.').optional(),
+          captionReddit: z.string().max(10000, 'Comment is too long.').optional(),
           featured_by: z.string().max(2000, 'Too long.').optional(),
         })
         .superRefine((val, ctx) => {
@@ -122,9 +160,14 @@ export function PostModal({ onClose, post, initialScheduledAt }: PostModalProps)
           // Default a new post to an hour out so it's valid immediately, rather
           // than defaulting to "now" (which fails the must-be-future check).
           dateToDatetimeLocal(new Date(Date.now() + 60 * 60 * 1000)),
-      account_ids: post ? post.targets.map((t) => t.account_id) : [],
+      // Reddit contributes one target per subreddit, so the same account_id
+      // repeats — dedupe or the checkboxes double-count.
+      account_ids: post
+        ? Array.from(new Set(post.targets.map((t) => t.account_id)))
+        : [],
       captionInstagram: post?.captions.instagram ?? '',
       captionBluesky: post?.captions.bluesky ?? '',
+      captionReddit: post?.captions.reddit ?? '',
       featured_by: post?.featured_by ?? '',
     },
   });
@@ -211,23 +254,55 @@ export function PostModal({ onClose, post, initialScheduledAt }: PostModalProps)
         if (captions.bluesky && !getValues('captionBluesky')) {
           setValue('captionBluesky', captions.bluesky);
         }
+        // Reddit's first comment is the description; the Bluesky caption is the
+        // closest fit (short, no hashtag wall) when nothing is written yet.
+        if (!getValues('captionReddit')) {
+          const body = captions.reddit ?? captions.bluesky;
+          if (body) {
+            setValue('captionReddit', body);
+          }
+        }
       },
     });
+    // Which subs suit this photo, plus a title rendered per sub. Suggestions
+    // only — the user picks.
+    suggestSubs.mutate(file);
   };
 
-  const buildCaptions = (values: FormValues): Captions => {
-    const captions: Captions = {};
-    if (selectedPlatforms.has('instagram')) {
-      captions.instagram = values.captionInstagram ?? '';
+  /** One entry per destination: the non-Reddit accounts, then each chosen
+   * subreddit on every selected Reddit account. */
+  const buildTargets = (values: FormValues): TargetInput[] => {
+    const targets: TargetInput[] = [];
+    for (const accountId of values.account_ids) {
+      const account = accounts?.find((a) => a.id === accountId);
+      if (!account) {
+        continue;
+      }
+      if (account.platform !== 'reddit') {
+        targets.push({
+          account_id: accountId,
+          caption: values[CAPTION_FIELD[account.platform]] ?? '',
+        });
+        continue;
+      }
+      for (const [subreddit, choice] of Object.entries(redditSelection)) {
+        targets.push({
+          account_id: accountId,
+          caption: values.captionReddit ?? '',
+          subreddit,
+          title: choice.title,
+          // Omitting the offset lets the server stagger it from the subs' rules.
+          ...(choice.delay_minutes === undefined
+            ? {}
+            : { delay_minutes: choice.delay_minutes }),
+        });
+      }
     }
-    if (selectedPlatforms.has('bluesky')) {
-      captions.bluesky = values.captionBluesky ?? '';
-    }
-    return captions;
+    return targets;
   };
 
   const onSubmit = handleSubmit((values) => {
-    const captions = buildCaptions(values);
+    const targets = buildTargets(values);
     const scheduled_at = datetimeLocalToApiISO(values.scheduled_at);
     const image =
       values.image && values.image.length > 0 ? values.image[0] : undefined;
@@ -238,9 +313,8 @@ export function PostModal({ onClose, post, initialScheduledAt }: PostModalProps)
           id: post.id,
           input: {
             image,
-            captions,
             scheduled_at,
-            account_ids: values.account_ids,
+            targets,
             featured_by: values.featured_by ?? '',
           },
         },
@@ -252,7 +326,7 @@ export function PostModal({ onClose, post, initialScheduledAt }: PostModalProps)
       return;
     }
     createPost.mutate(
-      { image, captions, scheduled_at, account_ids: values.account_ids },
+      { image, scheduled_at, targets },
       { onSuccess: () => onClose() }
     );
   });
@@ -265,7 +339,16 @@ export function PostModal({ onClose, post, initialScheduledAt }: PostModalProps)
   const hasTime =
     Boolean(scheduledAt) &&
     (isEdit || new Date(scheduledAt).getTime() > Date.now());
-  const canSubmit = hasImage && hasTime && selectedIds.length >= 1;
+  // A selected Reddit account with no subreddit chosen would produce no Reddit
+  // destination at all, which is silently not what the user asked for.
+  const redditNeedsSubs =
+    selectedPlatforms.has('reddit') && Object.keys(redditSelection).length === 0;
+  const canSubmit =
+    hasImage &&
+    hasTime &&
+    selectedIds.length >= 1 &&
+    !redditNeedsSubs &&
+    redditSelectionIsValid(redditSelection, subredditRules);
 
   return (
     <div className="modal-backdrop" onClick={onClose} role="presentation">
@@ -394,13 +477,22 @@ export function PostModal({ onClose, post, initialScheduledAt }: PostModalProps)
                   (platform) => (
                     <label key={platform} className="field">
                       <span className="field-label">
-                        {PLATFORM_LABEL[platform]} caption
+                        {platform === 'reddit'
+                          ? 'Reddit description'
+                          : `${PLATFORM_LABEL[platform]} caption`}
                       </span>
                       <textarea
-                        rows={6}
-                        placeholder={`Write the ${PLATFORM_LABEL[platform]} caption (optional)…`}
+                        rows={platform === 'reddit' ? 4 : 6}
+                        placeholder={`Write the ${PLATFORM_LABEL[platform]} ${
+                          platform === 'reddit' ? 'description' : 'caption'
+                        } (optional)…`}
                         {...register(CAPTION_FIELD[platform])}
                       />
+                      {CAPTION_HELP[platform] && (
+                        <span className="muted field-help">
+                          {CAPTION_HELP[platform]}
+                        </span>
+                      )}
                       {errors[CAPTION_FIELD[platform]] && (
                         <span className="field-error">
                           {errors[CAPTION_FIELD[platform]]?.message}
@@ -409,6 +501,28 @@ export function PostModal({ onClose, post, initialScheduledAt }: PostModalProps)
                     </label>
                   )
                 )
+              )}
+
+              {selectedPlatforms.has('reddit') && (
+                <div className="field">
+                  <span className="field-label">Subreddits *</span>
+                  {suggestSubs.isPending && (
+                    <span className="muted">Finding matching subreddits…</span>
+                  )}
+                  <RedditTargets
+                    value={redditSelection}
+                    onChange={setRedditSelection}
+                    suggestions={suggestSubs.data}
+                    scheduledAt={
+                      scheduledAt ? datetimeLocalToApiISO(scheduledAt) : undefined
+                    }
+                  />
+                  {redditNeedsSubs && (
+                    <span className="field-error">
+                      Pick at least one subreddit, or unselect the Reddit account.
+                    </span>
+                  )}
+                </div>
               )}
 
               <div className="field">
@@ -470,7 +584,7 @@ export function PostModal({ onClose, post, initialScheduledAt }: PostModalProps)
                     {postedTargets.map((t) => (
                       <li key={t.id} className="engagement-row">
                         <span>
-                          {t.username}{' '}
+                          {t.subreddit ? `r/${t.subreddit}` : t.username}{' '}
                           <span className="muted">({t.platform})</span>
                         </span>
                         {t.engagement ? (
@@ -560,9 +674,23 @@ export function PostModal({ onClose, post, initialScheduledAt }: PostModalProps)
                 className="btn"
                 disabled={sendNow.isPending}
                 onClick={() => {
+                  // Staggered subreddits deliberately don't all fire at once,
+                  // so say what will actually happen before confirming.
+                  const staggered = post.targets.filter(
+                    (t) => t.status === 'scheduled' && t.delay_minutes > 0
+                  );
+                  const note = staggered.length
+                    ? `\n\n${staggered.length} subreddit(s) stay staggered and go out later:\n` +
+                      staggered
+                        .map(
+                          (t) => `  r/${t.subreddit} — +${t.delay_minutes} min`
+                        )
+                        .join('\n')
+                    : '';
                   if (
                     window.confirm(
-                      'Send this post now? It will publish on the next run (within a minute).'
+                      'Send this post now? It will publish on the next run (within a minute).' +
+                        note
                     )
                   ) {
                     sendNow.mutate(post.id, { onSuccess: () => onClose() });
