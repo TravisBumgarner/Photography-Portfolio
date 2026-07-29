@@ -66,6 +66,69 @@ def _table_columns(conn: sqlite3.Connection, table: str) -> set:
     return {row["name"] for row in conn.execute(f"PRAGMA table_info({table})")}
 
 
+def _migrate_reddit_targets(conn: sqlite3.Connection) -> None:
+    """Widen ``post_targets`` from one-row-per-account to one-row-per-destination.
+
+    Reddit is the first platform where a single account posts to several
+    destinations from one photo, each needing its own title and its own send
+    time. That breaks two older assumptions:
+
+    * a target was identified by ``(post_id, account_id)`` alone
+    * every target of a post went out in the same publisher tick
+
+    So targets gain ``subreddit`` (the destination, '' on every other
+    platform), ``title``/``flair_id`` (Reddit submits a title, not a caption),
+    and ``delay_minutes`` (an offset from the post's ``scheduled_at``, which
+    stays the anchor so rescheduling a post slides its whole stagger).
+    """
+    columns = _table_columns(conn, "post_targets")
+
+    # '' rather than NULL for subreddit: it participates in the uniqueness
+    # constraint below, and NULLs are never equal to each other in SQL, which
+    # would silently let duplicate non-Reddit targets back in.
+    if "subreddit" not in columns:
+        conn.execute(
+            "ALTER TABLE post_targets ADD COLUMN subreddit TEXT NOT NULL DEFAULT ''"
+        )
+    if "title" not in columns:
+        conn.execute(
+            "ALTER TABLE post_targets ADD COLUMN title TEXT NOT NULL DEFAULT ''"
+        )
+    if "flair_id" not in columns:
+        conn.execute("ALTER TABLE post_targets ADD COLUMN flair_id TEXT")
+    if "delay_minutes" not in columns:
+        conn.execute(
+            "ALTER TABLE post_targets ADD COLUMN delay_minutes INTEGER NOT NULL "
+            "DEFAULT 0"
+        )
+
+    # Collapse any pre-existing duplicate (post, account, subreddit) rows,
+    # keeping the earliest — a client that sent a repeated account_id could
+    # create them before the constraint existed, and the index below would
+    # otherwise fail to build. Posted rows are preserved in favour of
+    # unposted ones so publishing history is never the row that gets dropped.
+    conn.execute(
+        """
+        DELETE FROM post_targets WHERE id NOT IN (
+            SELECT (
+                SELECT x.id FROM post_targets x
+                WHERE x.post_id = g.post_id
+                  AND x.account_id = g.account_id
+                  AND x.subreddit = g.subreddit
+                ORDER BY x.status = 'posted' DESC, x.id
+                LIMIT 1
+            )
+            FROM post_targets g
+            GROUP BY g.post_id, g.account_id, g.subreddit
+        )
+        """
+    )
+    conn.execute(
+        "CREATE UNIQUE INDEX IF NOT EXISTS idx_post_targets_destination "
+        "ON post_targets (post_id, account_id, subreddit)"
+    )
+
+
 def init_db() -> None:
     """Create the database tables if they do not already exist.
 
@@ -105,6 +168,42 @@ def init_db() -> None:
                 posted_at TEXT,
                 FOREIGN KEY(post_id) REFERENCES posts(id) ON DELETE CASCADE,
                 FOREIGN KEY(account_id) REFERENCES accounts(id) ON DELETE CASCADE
+            );
+
+            -- Per-subreddit posting rules. Reddit is the one platform where a
+            -- single account posts to many destinations, each with its own
+            -- moderator-enforced requirements — title format, flair, cadence.
+            -- Keyed by bare subreddit name (no "r/" prefix), matched
+            -- case-insensitively via NOCASE.
+            CREATE TABLE IF NOT EXISTS subreddits (
+                id INTEGER PRIMARY KEY,
+                name TEXT NOT NULL UNIQUE COLLATE NOCASE,
+                -- Title template with {token} placeholders resolved from the
+                -- photo's metadata (see tagging.render_title). Empty means
+                -- "use the photo title as-is".
+                title_template TEXT NOT NULL DEFAULT '',
+                -- Flair to apply on submit. flair_id is what the API needs;
+                -- flair_text is kept for display only.
+                flair_id TEXT,
+                flair_text TEXT,
+                -- 1 when the sub rejects unflaired posts, so we refuse to
+                -- publish without a flair rather than fail at the API.
+                requires_flair INTEGER NOT NULL DEFAULT 0,
+                max_title_length INTEGER NOT NULL DEFAULT 300,
+                -- 1 when the sub tolerates hashtags in the body text. Most
+                -- don't; the default strips the tag line.
+                allow_tags INTEGER NOT NULL DEFAULT 0,
+                -- 1 to post the description as a first comment (image posts
+                -- are link posts on Reddit and can't carry body text).
+                comment_body INTEGER NOT NULL DEFAULT 1,
+                -- Minimum days between our posts to this sub; 0 disables the
+                -- check. Enforced against publish_log at publish time.
+                min_interval_days INTEGER NOT NULL DEFAULT 0,
+                -- Default spacing applied when this sub is one of several on
+                -- the same photo (see the stagger logic in server.py).
+                stagger_minutes INTEGER NOT NULL DEFAULT 30,
+                notes TEXT NOT NULL DEFAULT '',
+                created_at TEXT NOT NULL
             );
 
             -- Staging area for bulk ingestion: uploaded photos waiting for
@@ -211,6 +310,8 @@ def init_db() -> None:
         # cropper can restore the previous framing instead of resetting.
         if "ig_crop" not in _table_columns(conn, "ingest_items"):
             conn.execute("ALTER TABLE ingest_items ADD COLUMN ig_crop TEXT")
+
+        _migrate_reddit_targets(conn)
 
         conn.commit()
     finally:
