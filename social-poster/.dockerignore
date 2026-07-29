@@ -1,0 +1,24 @@
+# Real credentials. Gitignored too, but this repo is public and a build context
+# is one `docker history` away from being readable — belt and braces.
+config/.env
+
+# Runtime state: the SQLite database and uploaded images live in a volume.
+data/
+
+node_modules/
+web/node_modules/
+web/dist/
+
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.tsbuildinfo
+
+# Dev-only; nothing here is needed to build or run the image.
+tests/
+analysis/
+bootstrap.sh
+dev.mjs
+requirements-dev.txt
+*.md

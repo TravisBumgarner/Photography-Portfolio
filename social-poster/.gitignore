@@ -1,0 +1,16 @@
+# Dev environment config (real tokens) — never commit.
+config/.env
+
+# Dev data: local SQLite DB and uploaded images. In the container these live in
+# a volume mounted at /data (DATA_DIR).
+data/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# The repo-root .gitignore has an unanchored `config.py` left over from the
+# Django era, which would otherwise silently swallow this app's config module.
+!scripts/config.py
