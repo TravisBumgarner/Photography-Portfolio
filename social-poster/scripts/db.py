@@ -128,6 +128,18 @@ def _migrate_reddit_targets(conn: sqlite3.Connection) -> None:
         "ON post_targets (post_id, account_id, subreddit)"
     )
 
+    # The audit log and the engagement history both key off platform+username,
+    # which is ambiguous on Reddit: one account posts to many subreddits and
+    # they perform very differently. Record the destination in both so the
+    # year-over-year comparison the engagement history exists for can tell
+    # r/analog apart from r/EarthPorn. Also what the posting-cadence rule is
+    # checked against, since publish_log outlives deleted posts.
+    for table in ("publish_log", "engagement_snapshots"):
+        if "subreddit" not in _table_columns(conn, table):
+            conn.execute(
+                f"ALTER TABLE {table} ADD COLUMN subreddit TEXT NOT NULL DEFAULT ''"
+            )
+
 
 def init_db() -> None:
     """Create the database tables if they do not already exist.

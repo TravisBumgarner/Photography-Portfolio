@@ -58,6 +58,26 @@ def fetch_bluesky_engagement(creds: Dict, uri: str) -> Dict:
     }
 
 
+def fetch_reddit_engagement(creds: Dict, submission_id: str) -> Dict:
+    """Fetch score/comment counts for one Reddit submission by id.
+
+    Reddit's ``score`` is upvotes minus downvotes, not a like count — it is the
+    closest equivalent and what the sub's ranking actually uses. Crossposts are
+    the nearest thing to a repost count.
+    """
+    reddit = platforms._reddit_client(creds)
+    submission = reddit.submission(id=submission_id)
+    try:
+        score = submission.score
+    except Exception as exc:  # noqa: BLE001 - deleted/removed submission
+        raise RuntimeError(platforms._reddit_error_message(exc)) from exc
+    return {
+        "likes": score,
+        "comments": submission.num_comments,
+        "reposts": getattr(submission, "num_crossposts", None),
+    }
+
+
 def snapshot_targets(post_id: Optional[int] = None) -> List[Dict]:
     """Snapshot engagement for published targets; return per-target results.
 
@@ -73,7 +93,7 @@ def snapshot_targets(post_id: Optional[int] = None) -> List[Dict]:
     try:
         query = """
             SELECT pt.id AS target_id, pt.post_id AS post_id,
-                   pt.remote_id AS remote_id,
+                   pt.remote_id AS remote_id, pt.subreddit AS subreddit,
                    a.platform AS platform, a.username AS username,
                    a.credentials AS credentials
             FROM post_targets pt
@@ -94,6 +114,7 @@ def snapshot_targets(post_id: Optional[int] = None) -> List[Dict]:
             "target_id": row["target_id"],
             "platform": row["platform"],
             "username": row["username"],
+            "subreddit": row["subreddit"] or None,
             "ok": True,
             "error": None,
         }
@@ -101,6 +122,8 @@ def snapshot_targets(post_id: Optional[int] = None) -> List[Dict]:
             creds = json.loads(row["credentials"])
             if row["platform"] == "instagram":
                 metrics = fetch_instagram_engagement(creds, row["remote_id"])
+            elif row["platform"] == "reddit":
+                metrics = fetch_reddit_engagement(creds, row["remote_id"])
             else:
                 metrics = fetch_bluesky_engagement(creds, row["remote_id"])
             _record_snapshot(row, metrics)
@@ -117,14 +140,15 @@ def _record_snapshot(row, metrics: Dict) -> None:
     try:
         conn.execute(
             "INSERT INTO engagement_snapshots "
-            "(post_id, target_id, platform, username, remote_id, "
+            "(post_id, target_id, platform, username, subreddit, remote_id, "
             " likes, comments, reposts, recorded_at) "
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             (
                 row["post_id"],
                 row["target_id"],
                 row["platform"],
                 row["username"],
+                row["subreddit"],
                 row["remote_id"],
                 metrics.get("likes"),
                 metrics.get("comments"),

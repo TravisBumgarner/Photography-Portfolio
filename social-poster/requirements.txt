@@ -6,5 +6,6 @@
 atproto==0.0.69        # Bluesky client (scripts/platforms.py)
 Flask==3.1.3           # scripts/server.py
 Pillow==11.3.0         # image inspection, cropping, EXIF (scripts/tagging.py)
+praw==7.8.1            # Reddit client (scripts/platforms.py)
 python-dotenv==1.2.1   # optional dev .env loading (scripts/config.py)
 requests==2.32.5       # Instagram Graph API, notification relay
