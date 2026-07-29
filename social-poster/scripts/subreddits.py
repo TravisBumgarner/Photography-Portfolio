@@ -464,25 +464,37 @@ def cadence_conflict(
 # ---------------------------------------------------------------------------
 # Stagger
 # ---------------------------------------------------------------------------
-def assign_delays(conn, names: Sequence[str], seed: int = 0) -> Dict[str, int]:
+def assign_delays(
+    conn,
+    names: Sequence[str],
+    seed: int = 0,
+    start_after: Optional[int] = None,
+) -> Dict[str, int]:
     """Spread several subs on one photo across time, in minutes from the anchor.
 
     Submitting the same image to many subs in the same minute is the classic
     spam signature — several photo subs auto-remove for it and mods do check —
     so this is closer to a correctness requirement than a nicety.
 
-    The first sub goes out at the post's scheduled time (delay 0) and each
-    subsequent one waits its own ``stagger_minutes`` after the previous, plus a
+    Each sub waits its own ``stagger_minutes`` after the previous one, plus a
     small deterministic jitter so the gaps aren't suspiciously uniform. The
-    jitter is derived from ``seed`` (the post id) and the sub's name rather than
+    jitter comes from ``seed`` (the post id) and the sub's name rather than
     randomness, so re-rendering the same post produces the same offsets and
     saving twice doesn't reshuffle them.
+
+    Args:
+        start_after: The last offset already in use on this photo. ``None``
+            means nothing is placed yet, so the first sub goes out at the
+            post's own time (delay 0). Pass the current maximum when adding
+            subs to a photo that already has some, otherwise the new ones would
+            land on 0 alongside the existing first sub — simultaneous
+            submissions, which is the thing being avoided.
     """
     delays: Dict[str, int] = {}
-    running = 0
+    running = 0 if start_after is None else int(start_after)
     for index, raw in enumerate(names):
         name = normalize_name(raw)
-        if index == 0:
+        if index == 0 and start_after is None:
             delays[name] = 0
             continue
         rules = rules_or_default(conn, name)

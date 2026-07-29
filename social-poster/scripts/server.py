@@ -27,13 +27,14 @@ from flask import (
 from werkzeug.utils import secure_filename
 
 try:
-    from . import config, db, engagement, platforms, publisher, tagging
+    from . import config, db, engagement, platforms, publisher, subreddits, tagging
 except ImportError:  # Allows running directly as `python server.py`.
     import config
     import db
     import engagement
     import platforms
     import publisher
+    import subreddits
     import tagging
 
 app = Flask(__name__)
@@ -50,6 +51,9 @@ config.load_env()
 REQUIRED_CREDS = {
     "instagram": ("ig_user_id", "access_token"),
     "bluesky": ("handle", "app_password"),
+    # Reddit "script" app: the client id/secret from the app you register at
+    # reddit.com/prefs/apps, plus the owning account's own login.
+    "reddit": ("client_id", "client_secret", "username", "password"),
 }
 
 ALLOWED_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp", ".avif"}
@@ -98,16 +102,23 @@ def _latest_engagement(conn, target_id: int) -> Optional[Dict]:
     }
 
 
-def serialize_targets(conn, post_id: int) -> List[Dict]:
-    """Return the targets for a post, joined with account platform/username."""
+def serialize_targets(conn, post_id: int, scheduled_at: str = "") -> List[Dict]:
+    """Return the targets for a post, joined with account platform/username.
+
+    Reddit destinations carry their own ``subreddit``/``title``/``flair_id`` and
+    a ``delay_minutes`` offset from the post's scheduled time; ``due_at`` is
+    that offset already applied, so the UI can show when each one actually
+    goes out without repeating the arithmetic.
+    """
     rows = conn.execute(
         """
         SELECT pt.id, pt.account_id, pt.caption, pt.status, pt.error,
-               pt.posted_at, pt.remote_id, a.platform, a.username
+               pt.posted_at, pt.remote_id, pt.subreddit, pt.title,
+               pt.flair_id, pt.delay_minutes, a.platform, a.username
         FROM post_targets pt
         JOIN accounts a ON a.id = pt.account_id
         WHERE pt.post_id = ?
-        ORDER BY pt.id
+        ORDER BY pt.delay_minutes, pt.id
         """,
         (post_id,),
     ).fetchall()
@@ -118,6 +129,13 @@ def serialize_targets(conn, post_id: int) -> List[Dict]:
             "platform": row["platform"],
             "username": row["username"],
             "caption": row["caption"],
+            "subreddit": row["subreddit"] or None,
+            "title": row["title"],
+            "flair_id": row["flair_id"],
+            "delay_minutes": row["delay_minutes"],
+            "due_at": publisher.target_due_at(scheduled_at, row["delay_minutes"])
+            if scheduled_at
+            else None,
             "status": row["status"],
             "error": row["error"],
             "posted_at": row["posted_at"],
@@ -131,11 +149,13 @@ def serialize_targets(conn, post_id: int) -> List[Dict]:
 def serialize_post(conn, post_row) -> Dict:
     """Serialize a posts row (plus its targets) into the API shape.
 
-    Captions are per-platform (stored per target). ``captions`` maps each
-    platform present to its caption; ``caption`` is a representative value (the
-    first non-empty caption) kept for compact list/tooltip display.
+    ``captions`` maps each platform present to its caption, for the compact
+    views and older clients; it is lossy on Reddit, where several destinations
+    share a platform, so anything per-destination must read ``targets``.
+    ``caption`` is a representative value (the first non-empty one) kept for
+    compact list/tooltip display.
     """
-    targets = serialize_targets(conn, post_row["id"])
+    targets = serialize_targets(conn, post_row["id"], post_row["scheduled_at"])
     captions: Dict[str, str] = {}
     for target in targets:
         captions.setdefault(target["platform"], target["caption"])
@@ -198,8 +218,9 @@ def parse_account_body(body: Dict) -> Tuple[Optional[str], Dict, Optional[Tuple]
     """
     platform = body.get("platform")
     if platform not in REQUIRED_CREDS:
+        allowed = ", ".join(f"'{p}'" for p in sorted(REQUIRED_CREDS))
         return None, {}, (
-            jsonify({"error": "platform must be 'instagram' or 'bluesky'"}),
+            jsonify({"error": f"platform must be one of {allowed}"}),
             400,
         )
 
@@ -439,6 +460,102 @@ def update_settings():
         conn.close()
 
 
+# ---------------------------------------------------------------------------
+# Subreddits API — the per-sub rules and the category quick-selects
+# ---------------------------------------------------------------------------
+@app.route("/api/subreddits", methods=["GET"])
+def list_subreddits():
+    """Return every configured subreddit with its rules."""
+    conn = db.get_connection()
+    try:
+        return jsonify(subreddits.list_all(conn)), 200
+    finally:
+        conn.close()
+
+
+@app.route("/api/subreddits", methods=["POST"])
+@app.route("/api/subreddits/<path:name>", methods=["PUT"])
+def upsert_subreddit(name: Optional[str] = None):
+    """Create or update one subreddit's rules.
+
+    Only the fields present in the body are written, so the flair can be set
+    without resetting the title template.
+    """
+    body = request.get_json(silent=True) or {}
+    if name is not None:
+        body = dict(body, name=name)
+    conn = db.get_connection()
+    try:
+        return jsonify(subreddits.upsert(conn, body)), 200
+    except ValueError as exc:
+        return jsonify({"error": str(exc)}), 400
+    finally:
+        conn.close()
+
+
+@app.route("/api/subreddits/<path:name>", methods=["DELETE"])
+def delete_subreddit(name: str):
+    """Delete a subreddit's rules. Already-scheduled targets are untouched."""
+    conn = db.get_connection()
+    try:
+        subreddits.delete(conn, name)
+        return ("", 204)
+    finally:
+        conn.close()
+
+
+@app.route("/api/subreddits/import", methods=["POST"])
+def import_subreddits():
+    """Import config/subreddits.json, adding only subs/categories not yet stored.
+
+    Never overwrites an existing row, so it is safe to re-run: it can pick up
+    additions to the seed without reverting rules corrected in the app.
+    """
+    conn = db.get_connection()
+    try:
+        added = subreddits.import_seed(conn, only_missing=True)
+        return jsonify({"added": added, "subreddits": subreddits.list_all(conn)}), 200
+    finally:
+        conn.close()
+
+
+@app.route("/api/subreddit-categories", methods=["GET"])
+def list_subreddit_categories():
+    """Return the category quick-selects, each with the subs in it."""
+    conn = db.get_connection()
+    try:
+        return jsonify(subreddits.list_categories(conn)), 200
+    finally:
+        conn.close()
+
+
+@app.route("/api/subreddit-categories", methods=["POST"])
+@app.route("/api/subreddit-categories/<path:name>", methods=["PUT"])
+def upsert_subreddit_category(name: Optional[str] = None):
+    """Create or update a category (its name and Lightroom keyword prefixes)."""
+    body = request.get_json(silent=True) or {}
+    if name is not None:
+        body = dict(body, name=name)
+    conn = db.get_connection()
+    try:
+        return jsonify(subreddits.upsert_category(conn, body)), 200
+    except ValueError as exc:
+        return jsonify({"error": str(exc)}), 400
+    finally:
+        conn.close()
+
+
+@app.route("/api/subreddit-categories/<path:name>", methods=["DELETE"])
+def delete_subreddit_category(name: str):
+    """Delete a category quick-select."""
+    conn = db.get_connection()
+    try:
+        subreddits.delete_category(conn, name)
+        return ("", 204)
+    finally:
+        conn.close()
+
+
 @app.route("/api/logs", methods=["GET"])
 def list_logs():
     """Return recent publish attempts, newest first (append-only audit log)."""
@@ -529,6 +646,261 @@ def _account_platforms(conn, account_ids: List[int]) -> Tuple[Optional[Dict[int,
     if missing:
         return None, f"unknown account id(s): {missing}"
     return found, None
+
+
+def _parse_targets(raw: Optional[str]) -> Tuple[Optional[List[Dict]], Optional[str]]:
+    """Parse the ``targets`` JSON-array field: one entry per destination.
+
+    Each entry is ``{"account_id", "caption", "subreddit", "title", "flair_id",
+    "delay_minutes"}``, all optional but ``account_id``. A Reddit account
+    appears once per subreddit, which is the whole reason this replaced the old
+    ``account_ids`` + per-platform ``captions`` pair: two subreddits on one
+    account need two different titles, and a per-platform caption map has
+    nowhere to put them.
+
+    Returns (targets, error_message); error_message is None on success. A
+    missing field yields ``None`` rather than an error so callers can tell
+    "not sent" from "sent empty".
+    """
+    if not raw:
+        return None, None
+    try:
+        parsed = json.loads(raw)
+    except (json.JSONDecodeError, TypeError):
+        return None, "targets must be a JSON array string"
+    if not isinstance(parsed, list) or not parsed:
+        return None, "targets must be a non-empty array"
+
+    targets: List[Dict] = []
+    for entry in parsed:
+        if not isinstance(entry, dict):
+            return None, "each target must be an object"
+        try:
+            account_id = int(entry["account_id"])
+        except (KeyError, TypeError, ValueError):
+            return None, "each target needs an integer account_id"
+        try:
+            delay = max(0, int(entry.get("delay_minutes") or 0))
+        except (TypeError, ValueError):
+            return None, "delay_minutes must be an integer"
+        targets.append(
+            {
+                "account_id": account_id,
+                "caption": str(entry.get("caption") or ""),
+                "subreddit": subreddits.normalize_name(
+                    str(entry.get("subreddit") or "")
+                ),
+                "title": str(entry.get("title") or ""),
+                "flair_id": str(entry["flair_id"])
+                if entry.get("flair_id")
+                else None,
+                "delay_minutes": delay,
+                # Whether the client set the offset itself. When it didn't, we
+                # assign the stagger from the subs' own rules below.
+                "_delay_given": "delay_minutes" in entry,
+            }
+        )
+    return targets, None
+
+
+def _targets_from_legacy(
+    account_ids: List[int], captions: Dict[str, str], platforms_by_id: Dict[int, str]
+) -> List[Dict]:
+    """Build targets from the older ``account_ids`` + per-platform ``captions``.
+
+    Kept so existing clients (and any scripted use) keep working unchanged. It
+    cannot express a Reddit destination — there is nowhere to put a subreddit —
+    so a Reddit account arriving this way is rejected by validation below with a
+    message saying to send ``targets`` instead.
+    """
+    return [
+        {
+            "account_id": account_id,
+            "caption": captions.get(platforms_by_id[account_id], ""),
+            "subreddit": "",
+            "title": "",
+            "flair_id": None,
+            "delay_minutes": 0,
+            "_delay_given": True,
+        }
+        for account_id in account_ids
+    ]
+
+
+def _resolve_targets(
+    conn, request_form, post_id: Optional[int] = None
+) -> Tuple[Optional[List[Dict]], Optional[Dict[int, str]], Optional[str]]:
+    """Turn a create/edit request's fields into validated target rows.
+
+    Accepts either the current ``targets`` array or the older ``account_ids`` +
+    ``captions`` pair. Validates every destination against its platform's
+    requirements and its subreddit's rules, and fills in the stagger for any
+    Reddit target whose offset the client didn't set.
+
+    Returns ``(targets, platforms_by_id, error_message)``.
+    """
+    targets, err = _parse_targets(request_form.get("targets"))
+    if err is not None:
+        return None, None, err
+
+    if targets is None:
+        account_ids, ids_err = _parse_account_ids(request_form.get("account_ids"))
+        if ids_err is not None:
+            return None, None, ids_err
+        captions, cap_err = _parse_captions(request_form.get("captions"))
+        if cap_err is not None:
+            return None, None, cap_err
+        platforms_by_id, plat_err = _account_platforms(conn, account_ids)
+        if plat_err is not None:
+            return None, None, plat_err
+        targets = _targets_from_legacy(account_ids, captions, platforms_by_id)
+    else:
+        platforms_by_id, plat_err = _account_platforms(
+            conn, [t["account_id"] for t in targets]
+        )
+        if plat_err is not None:
+            return None, None, plat_err
+
+    err = _validate_targets(conn, targets, platforms_by_id)
+    if err is not None:
+        return None, None, err
+
+    _apply_stagger(conn, targets, platforms_by_id, post_id)
+    return targets, platforms_by_id, None
+
+
+def _validate_targets(
+    conn, targets: List[Dict], platforms_by_id: Dict[int, str]
+) -> Optional[str]:
+    """Validate a resolved target list; returns an error message or None.
+
+    Enforces the destination-level rules: one row per destination, a subreddit
+    and a rule-satisfying title on every Reddit target, and no stray subreddit
+    on a platform that has no such concept.
+    """
+    seen = set()
+    for target in targets:
+        platform = platforms_by_id[target["account_id"]]
+        if platform == "reddit":
+            if not target["subreddit"]:
+                return (
+                    "reddit targets need a subreddit — send a `targets` array "
+                    "with one entry per subreddit"
+                )
+            rules = subreddits.rules_or_default(conn, target["subreddit"])
+            # Fall back to the sub's template-free default so a client that
+            # sends no title gets a clear "title is required" rather than a
+            # surprise at publish time.
+            problem = subreddits.validate_target(
+                rules, target["title"], target["flair_id"]
+            )
+            if problem is not None:
+                return problem
+        elif target["subreddit"]:
+            return f"{platform} targets cannot have a subreddit"
+
+        key = (target["account_id"], target["subreddit"].lower())
+        if key in seen:
+            where = target["subreddit"] or platform
+            return f"duplicate target: account {target['account_id']} / {where}"
+        seen.add(key)
+    return None
+
+
+def _apply_stagger(
+    conn,
+    targets: List[Dict],
+    platforms_by_id: Dict[int, str],
+    post_id: Optional[int],
+) -> None:
+    """Fill in delay_minutes for Reddit targets the client left unset.
+
+    Only Reddit gets a stagger: it is the one platform where a single photo goes
+    to several destinations, and doing that in one minute is the spam signature
+    subs auto-remove for. Instagram and Bluesky are one destination each, so
+    they stay at the post's own time.
+
+    Offsets the client did send are left alone, and anything new is placed
+    *after* the largest of them. Otherwise adding one subreddit to a post that
+    already has several would give it delay 0 and fire it alongside the existing
+    first sub — the simultaneous submission the stagger exists to prevent.
+
+    Uses ``post_id`` as the jitter seed so a saved post keeps the same offsets
+    across edits; a not-yet-created post seeds from 0.
+    """
+    reddit_targets = [
+        t for t in targets if platforms_by_id[t["account_id"]] == "reddit"
+    ]
+    if len(reddit_targets) < 2:
+        return  # a single destination has nothing to stagger against
+    unassigned = [t for t in reddit_targets if not t["_delay_given"]]
+    if not unassigned:
+        return
+    placed = [t["delay_minutes"] for t in reddit_targets if t["_delay_given"]]
+    delays = subreddits.assign_delays(
+        conn,
+        [t["subreddit"] for t in unassigned],
+        seed=post_id or 0,
+        start_after=max(placed) if placed else None,
+    )
+    for target in unassigned:
+        target["delay_minutes"] = delays.get(target["subreddit"], 0)
+
+
+def _insert_target(conn, post_id: int, target: Dict) -> None:
+    """Insert one destination row for a post."""
+    conn.execute(
+        "INSERT INTO post_targets (post_id, account_id, caption, subreddit, "
+        " title, flair_id, delay_minutes, status) "
+        "VALUES (?, ?, ?, ?, ?, ?, ?, 'scheduled')",
+        (
+            post_id,
+            target["account_id"],
+            target["caption"],
+            target["subreddit"],
+            target["title"],
+            target["flair_id"],
+            target["delay_minutes"],
+        ),
+    )
+
+
+def _reconcile_targets(conn, post_id: int, targets: List[Dict]) -> None:
+    """Make a post's target rows match ``targets``, preserving kept rows' status.
+
+    Identity is ``(account_id, subreddit)``, not ``account_id`` alone — that is
+    what lets one Reddit account hold several destinations on the same photo.
+    Rows still wanted are updated in place (so a 'posted' target keeps its
+    status and remote id), rows no longer wanted are deleted, new ones inserted.
+    """
+    existing = {
+        (row["account_id"], (row["subreddit"] or "").lower()): row["id"]
+        for row in conn.execute(
+            "SELECT id, account_id, subreddit FROM post_targets WHERE post_id = ?",
+            (post_id,),
+        ).fetchall()
+    }
+    desired = set()
+    for target in targets:
+        key = (target["account_id"], target["subreddit"].lower())
+        desired.add(key)
+        if key in existing:
+            conn.execute(
+                "UPDATE post_targets SET caption = ?, title = ?, flair_id = ?, "
+                "delay_minutes = ? WHERE id = ?",
+                (
+                    target["caption"],
+                    target["title"],
+                    target["flair_id"],
+                    target["delay_minutes"],
+                    existing[key],
+                ),
+            )
+        else:
+            _insert_target(conn, post_id, target)
+    for key, target_id in existing.items():
+        if key not in desired:
+            conn.execute("DELETE FROM post_targets WHERE id = ?", (target_id,))
 
 
 def _convert_avif_to_jpeg(image, dest_path: str) -> None:
@@ -661,30 +1033,24 @@ def _check_instagram_image(filename: str, platforms_in_use) -> Optional[Tuple]:
 def create_post():
     """Create a scheduled post from multipart/form-data.
 
-    Fields: image (file, required), captions (JSON object of per-platform
-    captions, optional), scheduled_at (ISO-8601 str, required),
-    account_ids (JSON array string). Each target gets the caption for its
-    account's platform.
+    Fields: image (file, required), scheduled_at (ISO-8601 str, required), and
+    the destinations as either ``targets`` (a JSON array with one entry per
+    destination — the only shape that can express Reddit) or the older
+    ``account_ids`` + per-platform ``captions`` pair.
     """
     image = request.files.get("image")
     scheduled_at = request.form.get("scheduled_at")
-    account_ids, ids_err = _parse_account_ids(request.form.get("account_ids"))
-    captions, cap_err = _parse_captions(request.form.get("captions"))
 
     if image is None or not image.filename:
         return jsonify({"error": "image file is required"}), 400
     if not scheduled_at:
         return jsonify({"error": "scheduled_at is required"}), 400
-    if ids_err is not None:
-        return jsonify({"error": ids_err}), 400
-    if cap_err is not None:
-        return jsonify({"error": cap_err}), 400
 
     conn = db.get_connection()
     try:
-        platforms_by_id, plat_err = _account_platforms(conn, account_ids)
-        if plat_err is not None:
-            return jsonify({"error": plat_err}), 400
+        targets, platforms_by_id, err = _resolve_targets(conn, request.form)
+        if err is not None:
+            return jsonify({"error": err}), 400
 
         filename, img_err = _save_uploaded_image(image)
         if img_err is not None:
@@ -702,13 +1068,8 @@ def create_post():
             (filename, scheduled_at, now),
         )
         post_id = cur.lastrowid
-        for account_id in account_ids:
-            platform = platforms_by_id[account_id]
-            conn.execute(
-                "INSERT INTO post_targets (post_id, account_id, caption, status) "
-                "VALUES (?, ?, ?, 'scheduled')",
-                (post_id, account_id, captions.get(platform, "")),
-            )
+        for target in targets:
+            _insert_target(conn, post_id, target)
         conn.commit()
         return jsonify(fetch_post(conn, post_id)), 201
     finally:
@@ -758,23 +1119,16 @@ def edit_post(post_id: int):
     """Full edit of a post via multipart/form-data.
 
     Fields: image (file, optional — replaces the current image when present),
-    captions (JSON object, per-platform), scheduled_at (required),
-    account_ids (JSON array, required, >=1). Targets are reconciled to match
-    account_ids: kept targets get their caption refreshed (status preserved),
-    deselected accounts are dropped, newly selected accounts are added as
-    'scheduled'.
+    scheduled_at (required), and the destinations as either ``targets`` or the
+    older ``account_ids`` + ``captions`` pair. Targets are reconciled to match:
+    kept destinations keep their status and get their text refreshed, dropped
+    ones are deleted, new ones are added as 'scheduled'.
     """
     image = request.files.get("image")
     scheduled_at = request.form.get("scheduled_at")
-    account_ids, ids_err = _parse_account_ids(request.form.get("account_ids"))
-    captions, cap_err = _parse_captions(request.form.get("captions"))
 
     if not scheduled_at:
         return jsonify({"error": "scheduled_at is required"}), 400
-    if ids_err is not None:
-        return jsonify({"error": ids_err}), 400
-    if cap_err is not None:
-        return jsonify({"error": cap_err}), 400
 
     conn = db.get_connection()
     try:
@@ -784,9 +1138,11 @@ def edit_post(post_id: int):
         if post is None:
             return jsonify({"error": "post not found"}), 404
 
-        platforms_by_id, plat_err = _account_platforms(conn, account_ids)
-        if plat_err is not None:
-            return jsonify({"error": plat_err}), 400
+        targets, platforms_by_id, err = _resolve_targets(
+            conn, request.form, post_id=post_id
+        )
+        if err is not None:
+            return jsonify({"error": err}), 400
 
         # If a new image was uploaded, persist it first but don't swap it into
         # the post (or change anything else) until validation passes.
@@ -828,34 +1184,7 @@ def edit_post(post_id: int):
                 (featured_by, post_id),
             )
 
-        # Reconcile targets against the desired account set, preserving the
-        # status of targets that are being kept.
-        existing = {
-            row["account_id"]: row["id"]
-            for row in conn.execute(
-                "SELECT id, account_id FROM post_targets WHERE post_id = ?",
-                (post_id,),
-            ).fetchall()
-        }
-        desired = set(account_ids)
-        for account_id in account_ids:
-            caption = captions.get(platforms_by_id[account_id], "")
-            if account_id in existing:
-                conn.execute(
-                    "UPDATE post_targets SET caption = ? WHERE id = ?",
-                    (caption, existing[account_id]),
-                )
-            else:
-                conn.execute(
-                    "INSERT INTO post_targets (post_id, account_id, caption, status) "
-                    "VALUES (?, ?, ?, 'scheduled')",
-                    (post_id, account_id, caption),
-                )
-        for account_id, target_id in existing.items():
-            if account_id not in desired:
-                conn.execute(
-                    "DELETE FROM post_targets WHERE id = ?", (target_id,)
-                )
+        _reconcile_targets(conn, post_id, targets)
 
         conn.commit()
         return jsonify(fetch_post(conn, post_id)), 200
@@ -869,7 +1198,13 @@ def send_post_now(post_id: int):
 
     Re-queues any previously failed targets so they retry, then publishes the
     post's scheduled targets synchronously (rather than waiting for the next
-    scheduler tick). Returns the post with its updated per-target results.
+    scheduler tick).
+
+    Re-anchoring ``scheduled_at`` to now is what makes the stagger work here:
+    unstaggered targets go out in this request, and each staggered one becomes
+    due at now + its own offset for a later tick to send. The response reports
+    how many are still to come as ``staggered_pending`` so the UI can say so
+    rather than looking like it half-failed.
     """
     conn = db.get_connection()
     try:
@@ -893,11 +1228,13 @@ def send_post_now(post_id: int):
         conn.close()
 
     # Publish now (opens its own connections); then return the fresh state.
-    publisher.publish_post(post_id)
+    pending = publisher.publish_post(post_id)
 
     conn = db.get_connection()
     try:
-        return jsonify(fetch_post(conn, post_id)), 200
+        post = fetch_post(conn, post_id)
+        post["staggered_pending"] = pending
+        return jsonify(post), 200
     finally:
         conn.close()
 
@@ -1103,6 +1440,14 @@ def serialize_ingest_item(row) -> Dict:
         ig_crop = json.loads(row["ig_crop"]) if row["ig_crop"] else None
     except (json.JSONDecodeError, TypeError):
         ig_crop = None
+    try:
+        titles = json.loads(row["titles"])
+    except (json.JSONDecodeError, TypeError):
+        titles = {}
+    try:
+        reddit_suggestions = json.loads(row["reddit_suggestions"])
+    except (json.JSONDecodeError, TypeError):
+        reddit_suggestions = {}
     return {
         "id": row["id"],
         "image_url": "/api/images/" + row["image_filename"],
@@ -1118,6 +1463,11 @@ def serialize_ingest_item(row) -> Dict:
         and not _ig_aspect_ok(row["image_filename"]),
         "captions": captions,
         "tag_pools": tag_pools,
+        # {subreddit: title} — the keys are the Reddit selection for this photo,
+        # so an empty object means it isn't going to Reddit.
+        "titles": titles,
+        # {categories, subreddits, titles} proposed from the photo's keywords.
+        "reddit_suggestions": reddit_suggestions,
         "tag_status": row["tag_status"],
         "tag_error": row["tag_error"],
         "created_at": row["created_at"],
@@ -1150,10 +1500,22 @@ def _run_tagging(item_ids: List[int]) -> None:
                     tag_pools = tagging.extract_tag_pools(path)
                 except Exception:  # noqa: BLE001
                     tag_pools = {}
+                # Which subs suit this photo, and a title ready for each. A
+                # proposal only — nothing is selected until the user says so.
+                try:
+                    suggestions = _reddit_suggestions(conn, path)
+                except Exception:  # noqa: BLE001 - same fallback as tag_pools
+                    suggestions = {}
                 conn.execute(
                     "UPDATE ingest_items SET captions = ?, tag_pools = ?, "
-                    "tag_status = 'tagged' WHERE id = ? AND tag_status = 'pending'",
-                    (json.dumps(captions), json.dumps(tag_pools), item_id),
+                    "reddit_suggestions = ?, tag_status = 'tagged' "
+                    "WHERE id = ? AND tag_status = 'pending'",
+                    (
+                        json.dumps(captions),
+                        json.dumps(tag_pools),
+                        json.dumps(suggestions),
+                        item_id,
+                    ),
                 )
             except Exception as exc:  # noqa: BLE001 - one bad image must not kill the batch.
                 conn.execute(
@@ -1236,7 +1598,9 @@ def update_ingest_item(item_id: int):
 
     Body: ``{"captions": {"instagram": "...", "bluesky": "..."}}`` and
     optionally ``{"tag_pools": {...}}`` to persist the draggable pill
-    order/selection. Also promotes a still-'pending' item to 'tagged' so the
+    order/selection, and ``{"titles": {"analog": "..."}}`` to set the Reddit
+    destinations — the keys are the selection, so sending ``{}`` takes the photo
+    off Reddit entirely. Also promotes a still-'pending' item to 'tagged' so the
     tagging thread won't overwrite the user's edits if it finishes later.
     """
     body = request.get_json(silent=True) or {}
@@ -1246,6 +1610,9 @@ def update_ingest_item(item_id: int):
     tag_pools = body.get("tag_pools")
     if tag_pools is not None and not isinstance(tag_pools, dict):
         return jsonify({"error": "tag_pools must be a JSON object"}), 400
+    titles = body.get("titles")
+    if titles is not None and not isinstance(titles, dict):
+        return jsonify({"error": "titles must be a JSON object"}), 400
 
     conn = db.get_connection()
     try:
@@ -1254,22 +1621,27 @@ def update_ingest_item(item_id: int):
         ).fetchone()
         if row is None:
             return jsonify({"error": "ingest item not found"}), 404
-        if tag_pools is None:
-            conn.execute(
-                "UPDATE ingest_items SET captions = ?, tag_status = 'tagged', "
-                "tag_error = NULL WHERE id = ?",
-                (json.dumps({str(k): str(v) for k, v in captions.items()}), item_id),
+
+        fields = ["captions = ?", "tag_status = 'tagged'", "tag_error = NULL"]
+        values: List = [json.dumps({str(k): str(v) for k, v in captions.items()})]
+        if tag_pools is not None:
+            fields.append("tag_pools = ?")
+            values.append(json.dumps(tag_pools))
+        if titles is not None:
+            fields.append("titles = ?")
+            values.append(
+                json.dumps(
+                    {
+                        subreddits.normalize_name(str(k)): str(v)
+                        for k, v in titles.items()
+                    }
+                )
             )
-        else:
-            conn.execute(
-                "UPDATE ingest_items SET captions = ?, tag_pools = ?, "
-                "tag_status = 'tagged', tag_error = NULL WHERE id = ?",
-                (
-                    json.dumps({str(k): str(v) for k, v in captions.items()}),
-                    json.dumps(tag_pools),
-                    item_id,
-                ),
-            )
+        values.append(item_id)
+        conn.execute(
+            "UPDATE ingest_items SET " + ", ".join(fields) + " WHERE id = ?",
+            values,
+        )
         conn.commit()
         row = conn.execute(
             "SELECT * FROM ingest_items WHERE id = ?", (item_id,)
@@ -1342,17 +1714,90 @@ def delete_ingest_item(item_id: int):
         conn.close()
 
 
+def _ingest_item_targets(
+    conn,
+    row,
+    item: Dict,
+    account_ids: List[int],
+    platforms_by_id: Dict[int, str],
+) -> Tuple[Optional[List[Dict]], Optional[str]]:
+    """Expand one staged item into its destination rows.
+
+    Non-Reddit accounts contribute one destination each, captioned per platform.
+    A Reddit account contributes one destination per selected subreddit, taking
+    its title from the request's ``titles`` (or the item's stored ones) and its
+    description from the reddit caption. Selecting no subreddit for a Reddit
+    account simply means this photo doesn't go to Reddit — not an error, since a
+    batch legitimately mixes photos that suit Reddit and photos that don't.
+
+    Returns ``(targets, error_message)``.
+    """
+    captions = item.get("captions")
+    if not isinstance(captions, dict):
+        captions = {}
+    titles = item.get("titles")
+    if not isinstance(titles, dict):
+        try:
+            titles = json.loads(row["titles"])
+        except (json.JSONDecodeError, TypeError):
+            titles = {}
+
+    targets: List[Dict] = []
+    for account_id in account_ids:
+        platform = platforms_by_id[account_id]
+        if platform != "reddit":
+            targets.append(
+                {
+                    "account_id": account_id,
+                    "caption": str(captions.get(platform, "")),
+                    "subreddit": "",
+                    "title": "",
+                    "flair_id": None,
+                    "delay_minutes": 0,
+                    "_delay_given": True,
+                }
+            )
+            continue
+        for raw_name, title in titles.items():
+            name = subreddits.normalize_name(str(raw_name))
+            if not name:
+                continue
+            targets.append(
+                {
+                    "account_id": account_id,
+                    "caption": str(captions.get("reddit", "")),
+                    "subreddit": name,
+                    "title": str(title or ""),
+                    "flair_id": None,
+                    "delay_minutes": 0,
+                    "_delay_given": False,
+                }
+            )
+
+    if not targets:
+        return None, "no destinations selected"
+
+    err = _validate_targets(conn, targets, platforms_by_id)
+    if err is not None:
+        return None, err
+    _apply_stagger(conn, targets, platforms_by_id, None)
+    return targets, None
+
+
 @app.route("/api/ingest/approve", methods=["POST"])
 def approve_ingest_items():
     """Convert approved staged items into scheduled posts.
 
-    JSON body: ``account_ids`` (targets for every item) and ``items``, a list
-    of ``{"id": ..., "scheduled_at": ISO-8601, "captions": {platform: str}}``.
-    Each target gets the caption for its account's platform, same as regular
-    post creation. All items are validated first — unknown ids, missing
-    times, or Instagram-incompatible images reject the whole batch — then
-    every item becomes a post and its staging row is removed (image files are
-    kept; posts reuse them).
+    JSON body: ``account_ids`` (the accounts every item posts to) and ``items``,
+    a list of ``{"id", "scheduled_at", "captions": {platform: str}, "titles":
+    {subreddit: title}}``. ``titles`` is per item because the Reddit selection
+    is per photo — a film shot and a landscape don't belong in the same subs —
+    and it falls back to the item's stored titles when omitted.
+
+    All items are validated first — unknown ids, missing times, Reddit targets
+    that break their sub's rules, or Instagram-incompatible images reject the
+    whole batch — then every item becomes a post and its staging row is removed
+    (image files are kept; posts reuse them).
     """
     body = request.get_json(silent=True) or {}
     account_ids = body.get("account_ids")
@@ -1389,12 +1834,13 @@ def approve_ingest_items():
         if missing:
             return jsonify({"error": f"unknown ingest item id(s): {missing}"}), 400
 
-        # Validate every image before creating anything, so approval is
-        # all-or-nothing and a bad image names its file in the error.
+        # Validate every image and every Reddit destination before creating
+        # anything, so approval is all-or-nothing and the error names the item.
+        item_targets: Dict[int, List[Dict]] = {}
         for item_id in item_ids:
             row = rows_by_id[item_id]
             # Instagram publishes the cropped variant when one exists, so
-            # validate that; Bluesky is unaffected either way.
+            # validate that; the other platforms are unaffected either way.
             img_check = _check_instagram_image(
                 row["ig_image_filename"] or row["image_filename"],
                 platforms_by_id.values(),
@@ -1405,13 +1851,18 @@ def approve_ingest_items():
                 payload["item_id"] = item_id
                 return jsonify(payload), status
 
+            item = next(i for i in items if int(i["id"]) == item_id)
+            targets, err = _ingest_item_targets(
+                conn, row, item, account_ids, platforms_by_id
+            )
+            if err is not None:
+                return jsonify({"error": err, "item_id": item_id}), 400
+            item_targets[item_id] = targets
+
         now = db.utc_now_iso()
         created: List[Dict] = []
         for item in items:
             row = rows_by_id[int(item["id"])]
-            captions = item.get("captions") or {}
-            if not isinstance(captions, dict):
-                captions = {}
             cur = conn.execute(
                 "INSERT INTO posts (image_filename, ig_image_filename, caption, "
                 "scheduled_at, created_at) VALUES (?, ?, '', ?, ?)",
@@ -1423,13 +1874,8 @@ def approve_ingest_items():
                 ),
             )
             post_id = cur.lastrowid
-            for account_id in account_ids:
-                platform = platforms_by_id[account_id]
-                conn.execute(
-                    "INSERT INTO post_targets (post_id, account_id, caption, status) "
-                    "VALUES (?, ?, ?, 'scheduled')",
-                    (post_id, account_id, str(captions.get(platform, ""))),
-                )
+            for target in item_targets[int(item["id"])]:
+                _insert_target(conn, post_id, target)
             conn.execute(
                 "DELETE FROM ingest_items WHERE id = ?", (row["id"],)
             )
@@ -1464,6 +1910,61 @@ def tagging_preview():
         except Exception as exc:  # noqa: BLE001 - missing metadata is expected.
             return jsonify({"captions": {}, "error": str(exc)}), 200
     return jsonify({"captions": captions, "error": None}), 200
+
+
+def _reddit_suggestions(conn, image_path: str) -> Dict:
+    """Suggest subreddits for a photo and pre-render a title for each.
+
+    Returns ``{"categories", "subreddits", "titles"}``: the categories the
+    photo's Lightroom keywords matched, the subs in those categories, and a
+    rendered title for **every** configured sub — not just the suggested ones —
+    so picking any sub in the UI already has its title filled in.
+
+    Raises the same ValueErrors as ``extract_captions`` when the photo has no
+    usable metadata; a photo can still be posted with a hand-written title.
+    """
+    paths = tagging.keyword_paths(image_path)
+    suggestion = subreddits.suggest(conn, paths)
+    all_rules = subreddits.list_all(conn)
+    titles = tagging.reddit_titles(
+        image_path,
+        {r["name"]: r["title_template"] for r in all_rules},
+        {r["name"]: r["max_title_length"] for r in all_rules},
+    )
+    return {
+        "categories": suggestion["categories"],
+        "subreddits": suggestion["subreddits"],
+        "titles": titles,
+    }
+
+
+@app.route("/api/tagging/reddit", methods=["POST"])
+def tagging_reddit():
+    """Suggest subreddits and titles for an uploaded photo, without staging it.
+
+    Used by the single-post modal. Like the caption preview, a photo with no
+    usable metadata is a normal outcome rather than a request failure, so the
+    error comes back in a 200 with empty suggestions.
+    """
+    image = request.files.get("image")
+    if image is None or not image.filename:
+        return jsonify({"error": "image file is required"}), 400
+    ext = Path(image.filename).suffix.lower()
+    if ext not in ALLOWED_IMAGE_EXTENSIONS:
+        return jsonify({"error": "unsupported image type"}), 400
+
+    empty = {"categories": [], "subreddits": [], "titles": {}}
+    conn = db.get_connection()
+    try:
+        with tempfile.NamedTemporaryFile(suffix=ext) as tmp:
+            image.save(tmp.name)
+            try:
+                suggestions = _reddit_suggestions(conn, tmp.name)
+            except Exception as exc:  # noqa: BLE001 - missing metadata is expected.
+                return jsonify(dict(empty, error=str(exc))), 200
+    finally:
+        conn.close()
+    return jsonify(dict(suggestions, error=None)), 200
 
 
 @app.route("/api/tagging/check", methods=["POST"])
@@ -1608,6 +2109,13 @@ def main():
     if cfg["dry_run"]:
         print("social-poster: DRY_RUN=1 — posts will be simulated, not sent")
     db.init_db()
+    # First run only: load config/subreddits.json. Afterwards the database is
+    # the source of truth so in-app rule corrections are never reverted.
+    conn = db.get_connection()
+    try:
+        subreddits.seed_if_empty(conn)
+    finally:
+        conn.close()
     start_publisher(cfg)
     # Bind to all interfaces so it's reachable on the local network.
     app.run(host="0.0.0.0", port=cfg["port"])

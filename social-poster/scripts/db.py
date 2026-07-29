@@ -147,6 +147,23 @@ def _migrate_reddit_targets(conn: sqlite3.Connection) -> None:
             "DEFAULT '[]'"
         )
 
+    # Staged photos carry their Reddit choices through review:
+    #   titles       — JSON {subreddit: title}; the keys ARE the selection, so
+    #                  an empty object means "not going to Reddit".
+    #   suggestions  — JSON {categories, subreddits, titles} computed by the
+    #                  tagging pass from the photo's own keywords. A proposal
+    #                  the review UI pre-fills from, never a selection.
+    ingest_columns = _table_columns(conn, "ingest_items")
+    if "titles" not in ingest_columns:
+        conn.execute(
+            "ALTER TABLE ingest_items ADD COLUMN titles TEXT NOT NULL DEFAULT '{}'"
+        )
+    if "reddit_suggestions" not in ingest_columns:
+        conn.execute(
+            "ALTER TABLE ingest_items ADD COLUMN reddit_suggestions TEXT NOT NULL "
+            "DEFAULT '{}'"
+        )
+
 
 def init_db() -> None:
     """Create the database tables if they do not already exist.
