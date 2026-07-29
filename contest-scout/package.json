@@ -1,0 +1,13 @@
+{
+  "name": "contest-scout",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Monthly headless Claude Code sweep for photography contests, packaged as an arm64 container image",
+  "scripts": {
+    "dev": ".venv/bin/python scripts/sweep.py",
+    "test": ".venv/bin/python -m pytest tests",
+    "build": "docker build -f Dockerfile -t contest-scout:local ..",
+    "start": "docker run --rm -e CLAUDE_CODE_OAUTH_TOKEN -v contest-scout-data:/data contest-scout:local",
+    "release": "git tag contest-scout-v$npm_package_version && git push origin contest-scout-v$npm_package_version"
+  }
+}

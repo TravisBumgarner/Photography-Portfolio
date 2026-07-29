@@ -1,0 +1,6 @@
+# Local development only. There is no runtime requirements.txt on purpose: the
+# image gets `requests` from Debian's python3-requests package instead of pip,
+# because that is a prebuilt arm64 package rather than a wheel build on the Pi.
+# The versions here only have to be close enough to run the tests.
+requests==2.32.5   # scripts/sweep.py — the notification relay POST
+pytest==8.4.2      # tests/
