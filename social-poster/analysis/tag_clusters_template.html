@@ -1,0 +1,346 @@
+<title>Gallery tag landscape</title>
+<style>
+  .viz-root {
+    --surface-1: #fcfcfb;
+    --page: #f9f9f7;
+    --ink-1: #0b0b0b;
+    --ink-2: #52514e;
+    --ink-muted: #898781;
+    --grid: #e1e0d9;
+    --baseline: #c3c2b7;
+    --border: rgba(11,11,11,0.10);
+    --s1: #2a78d6; --s2: #1baf7a; --s3: #eda100; --s4: #008300;
+    --s5: #4a3aa7; --s6: #e34948; --s7: #e87ba4; --s8: #eb6834;
+    --other: #a5a49d;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: var(--ink-1);
+    background: var(--page);
+    margin: 0; padding: 24px;
+  }
+  @media (prefers-color-scheme: dark) {
+    .viz-root {
+      --surface-1: #1a1a19; --page: #0d0d0d;
+      --ink-1: #ffffff; --ink-2: #c3c2b7; --ink-muted: #898781;
+      --grid: #2c2c2a; --baseline: #383835; --border: rgba(255,255,255,0.10);
+      --s1: #3987e5; --s2: #199e70; --s3: #c98500; --s4: #008300;
+      --s5: #9085e9; --s6: #e66767; --s7: #d55181; --s8: #d95926;
+      --other: #6f6e68;
+    }
+  }
+  :root[data-theme="dark"] .viz-root {
+    --surface-1: #1a1a19; --page: #0d0d0d;
+    --ink-1: #ffffff; --ink-2: #c3c2b7; --ink-muted: #898781;
+    --grid: #2c2c2a; --baseline: #383835; --border: rgba(255,255,255,0.10);
+    --s1: #3987e5; --s2: #199e70; --s3: #c98500; --s4: #008300;
+    --s5: #9085e9; --s6: #e66767; --s7: #d55181; --s8: #d95926;
+    --other: #6f6e68;
+  }
+  :root[data-theme="light"] .viz-root {
+    --surface-1: #fcfcfb; --page: #f9f9f7;
+    --ink-1: #0b0b0b; --ink-2: #52514e; --ink-muted: #898781;
+    --grid: #e1e0d9; --baseline: #c3c2b7; --border: rgba(11,11,11,0.10);
+    --s1: #2a78d6; --s2: #1baf7a; --s3: #eda100; --s4: #008300;
+    --s5: #4a3aa7; --s6: #e34948; --s7: #e87ba4; --s8: #eb6834;
+    --other: #a5a49d;
+  }
+  .viz-root h1 { font-size: 20px; margin: 0 0 4px; }
+  .viz-root h2 { font-size: 15px; margin: 28px 0 4px; }
+  .viz-root .sub { color: var(--ink-2); font-size: 13px; margin: 0 0 16px; }
+  .tiles { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
+  .tile {
+    background: var(--surface-1); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 16px; min-width: 120px;
+  }
+  .tile .v { font-size: 22px; font-weight: 650; }
+  .tile .k { font-size: 12px; color: var(--ink-2); }
+  .card {
+    background: var(--surface-1); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px; overflow: hidden;
+  }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12.5px;
+            color: var(--ink-2); margin: 0 0 10px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+  #graphwrap { position: relative; }
+  #graph { width: 100%; height: auto; display: block; }
+  #tip {
+    position: absolute; pointer-events: none; display: none; z-index: 5;
+    background: var(--surface-1); border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 10px; font-size: 12.5px; max-width: 260px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  }
+  #tip b { font-size: 13.5px; }
+  #tip .m { color: var(--ink-2); }
+  .bars { display: grid; grid-template-columns: max-content 1fr max-content;
+          gap: 4px 10px; align-items: center; font-size: 12.5px; }
+  .bars .lbl { text-align: right; color: var(--ink-1); }
+  .bars .track { height: 14px; position: relative; }
+  .bars .fill { position: absolute; inset: 0 auto 0 0; border-radius: 0 4px 4px 0; }
+  .bars .val { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  table.reco { border-collapse: collapse; width: 100%; font-size: 13px; }
+  table.reco th, table.reco td { text-align: left; padding: 7px 10px;
+    border-bottom: 1px solid var(--grid); vertical-align: top; }
+  table.reco th { color: var(--ink-2); font-weight: 600; font-size: 12px; }
+  table.reco .pct { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .pill { display: inline-block; border-radius: 99px; padding: 1px 9px;
+          font-size: 11.5px; font-weight: 600; }
+  .pill.new { background: color-mix(in srgb, var(--s2) 18%, transparent); color: var(--ink-1); }
+  .pill.ok  { background: color-mix(in srgb, var(--other) 25%, transparent); color: var(--ink-2); }
+  details { margin-top: 14px; font-size: 13px; }
+  details table { border-collapse: collapse; }
+  details td, details th { padding: 3px 12px 3px 0; text-align: left;
+    font-variant-numeric: tabular-nums; }
+  .note { color: var(--ink-muted); font-size: 12px; margin-top: 8px; }
+</style>
+<div class="viz-root">
+  <h1>Photo gallery tag landscape</h1>
+  <p class="sub">AI-generated tags from <code>photo-gallery/data/ingest.sqlite</code>,
+     clustered by co-occurrence (normalized PMI &ge; 0.33, shared photos &ge; 15,
+     weighted label propagation). Generic process tags (&ldquo;photography&rdquo;,
+     &ldquo;natural light&rdquo;&hellip;) removed.</p>
+  <div class="tiles" id="tiles"></div>
+
+  <h2>Tag co-occurrence map</h2>
+  <p class="sub">Node size = photos carrying the tag &middot; color = theme
+     (grouped clusters) &middot; edges = tags that appear together far more than
+     chance. Hover any node for details.</p>
+  <div class="card" id="graphwrap">
+    <div class="legend" id="legend"></div>
+    <svg id="graph" viewBox="0 0 1000 760" role="img"
+         aria-label="Force-directed graph of tag co-occurrence clusters"></svg>
+    <div id="tip"></div>
+  </div>
+
+  <h2>Most common subjects</h2>
+  <p class="sub">Top 40 subject tags by share of the 27k-photo library.</p>
+  <div class="card"><div class="bars" id="bars"></div></div>
+
+  <h2>PhotoType gaps &rarr; recommendations for tags.json</h2>
+  <p class="sub">Clusters compared against the existing PhotoType list
+     (Animals, Architecture, Beach, BlackAndWhite, Cars, Clouds, Flowers,
+     Landscape, Leaves, Portrait, Selfie, Stars, Shadows, Storms, Street, Sunsets).</p>
+  <div class="card">
+    <table class="reco">
+      <thead><tr><th>Theme found in library</th><th class="pct">Coverage</th>
+        <th>Existing PhotoType?</th><th>Recommendation</th></tr></thead>
+      <tbody id="recobody"></tbody>
+    </table>
+    <p class="note">Coverage = photos carrying any of the cluster&rsquo;s top tags;
+       themes overlap, so columns don&rsquo;t sum to 100%.</p>
+  </div>
+
+  <details><summary>Full table: all 250 clustered tags</summary>
+    <table id="fulltable"><thead><tr><th>Tag</th><th>Photos</th><th>%</th>
+      <th>Theme</th></tr></thead><tbody></tbody></table>
+  </details>
+</div>
+<script>
+const DATA = /*__DATA__*/;
+
+// Theme = editorial grouping of raw clusters, slots assigned in fixed
+// palette order by coverage rank (dataviz: never cycle hues).
+const THEMES = [
+  {name:"Nature & landscape",   slot:1, clusters:[8,21,24,22,7]},
+  {name:"Sky, water & weather", slot:2, clusters:[4,5,13,25,16]},
+  {name:"People & portraits",   slot:3, clusters:[3,6]},
+  {name:"Travel & adventure",   slot:4, clusters:[10,18,20,17]},
+  {name:"Urban & street art",   slot:5, clusters:[0,26]},
+  {name:"Festivals & events",   slot:6, clusters:[2]},
+  {name:"Architecture & museums",slot:7, clusters:[1,23]},
+  {name:"Home, pets & food",    slot:8, clusters:[9,12]},
+];
+const cssVar = n => getComputedStyle(document.querySelector('.viz-root'))
+                     .getPropertyValue(n).trim();
+function themeOf(cluster){
+  for (const t of THEMES) if (t.clusters.includes(cluster)) return t;
+  return null;
+}
+function colorOf(cluster){
+  const t = themeOf(cluster);
+  return t ? cssVar('--s'+t.slot) : cssVar('--other');
+}
+
+// --- stat tiles ------------------------------------------------------------
+document.getElementById('tiles').innerHTML = [
+  [DATA.n_photos.toLocaleString(), 'photos'],
+  [DATA.n_distinct_tags.toLocaleString(), 'distinct tags'],
+  [DATA.top_tags.length, 'tags clustered'],
+  [DATA.clusters.length, 'clusters found'],
+].map(([v,k])=>`<div class="tile"><div class="v">${v}</div><div class="k">${k}</div></div>`).join('');
+
+// --- legend ----------------------------------------------------------------
+document.getElementById('legend').innerHTML =
+  THEMES.map(t=>`<span><i style="background:${cssVar('--s'+t.slot)}"></i>${t.name}</span>`).join('') +
+  `<span><i style="background:${cssVar('--other')}"></i>Other (styles, colors, B&amp;W, night)</span>`;
+
+// --- force layout (plain, deterministic) -------------------------------------
+const W=1000, H=760;
+const tags = DATA.top_tags;
+const nodeIx = Object.fromEntries(tags.map((t,i)=>[t.tag,i]));
+const edges = DATA.edges.map(e=>({a:nodeIx[e.a], b:nodeIx[e.b], w:e.w}));
+const maxCount = Math.max(...tags.map(t=>t.count));
+const R = tags.map(t=>3 + 23*Math.sqrt(t.count/maxCount));
+
+// Seed positions around each theme's centroid angle for fast convergence.
+let rng = 1234;
+const rand = ()=> (rng = (rng*48271)%2147483647) / 2147483647;
+const clusterAngle = {};
+DATA.clusters.forEach((c,i)=>{ clusterAngle[c.id] = 2*Math.PI*i/DATA.clusters.length; });
+const px = new Float64Array(tags.length), py = new Float64Array(tags.length);
+tags.forEach((t,i)=>{
+  const a = clusterAngle[t.cluster] ?? rand()*2*Math.PI;
+  px[i] = W/2 + Math.cos(a)*260 + (rand()-0.5)*120;
+  py[i] = H/2 + Math.sin(a)*200 + (rand()-0.5)*120;
+});
+for (let it=0; it<260; it++){
+  const T = 1 - it/260;
+  const fx = new Float64Array(tags.length), fy = new Float64Array(tags.length);
+  for (let i=0;i<tags.length;i++) for (let j=i+1;j<tags.length;j++){
+    let dx=px[i]-px[j], dy=py[i]-py[j];
+    let d2 = dx*dx+dy*dy || 0.01, d = Math.sqrt(d2);
+    const rep = 1400/(d2);
+    dx/=d; dy/=d;
+    fx[i]+=dx*rep; fy[i]+=dy*rep; fx[j]-=dx*rep; fy[j]-=dy*rep;
+  }
+  for (const e of edges){
+    let dx=px[e.b]-px[e.a], dy=py[e.b]-py[e.a];
+    const d = Math.sqrt(dx*dx+dy*dy)||0.01;
+    const want = 40 + 60*(1-e.w);
+    const k = 0.02*e.w*(d-want)/d;
+    fx[e.a]+=dx*k; fy[e.a]+=dy*k; fx[e.b]-=dx*k; fy[e.b]-=dy*k;
+  }
+  for (let i=0;i<tags.length;i++){
+    fx[i]+=(W/2-px[i])*0.004; fy[i]+=(H/2-py[i])*0.005;
+    px[i]+=Math.max(-9,Math.min(9,fx[i]))*T*2;
+    py[i]+=Math.max(-9,Math.min(9,fy[i]))*T*2;
+    px[i]=Math.max(20,Math.min(W-20,px[i]));
+    py[i]=Math.max(16,Math.min(H-16,py[i]));
+  }
+}
+
+// --- render SVG --------------------------------------------------------------
+const svg = document.getElementById('graph');
+const NS = 'http://www.w3.org/2000/svg';
+const eg = document.createElementNS(NS,'g');
+for (const e of edges){
+  const l = document.createElementNS(NS,'line');
+  l.setAttribute('x1',px[e.a]); l.setAttribute('y1',py[e.a]);
+  l.setAttribute('x2',px[e.b]); l.setAttribute('y2',py[e.b]);
+  l.setAttribute('stroke', cssVar('--baseline'));
+  l.setAttribute('stroke-opacity', 0.35*e.w+0.06);
+  l.setAttribute('stroke-width', e.w>0.5?1.4:0.7);
+  eg.appendChild(l);
+}
+svg.appendChild(eg);
+const ng = document.createElementNS(NS,'g');
+const labelSet = new Set(tags.slice(0,58).map(t=>t.tag));
+tags.forEach((t,i)=>{
+  const c = document.createElementNS(NS,'circle');
+  c.setAttribute('cx',px[i]); c.setAttribute('cy',py[i]); c.setAttribute('r',R[i]);
+  c.setAttribute('fill', colorOf(t.cluster));
+  c.setAttribute('stroke', cssVar('--surface-1'));
+  c.setAttribute('stroke-width', 2);
+  c.dataset.i = i;
+  ng.appendChild(c);
+});
+svg.appendChild(ng);
+const lg = document.createElementNS(NS,'g');
+tags.forEach((t,i)=>{
+  if (!labelSet.has(t.tag)) return;
+  const tx = document.createElementNS(NS,'text');
+  tx.setAttribute('x',px[i]); tx.setAttribute('y',py[i]-R[i]-3);
+  tx.setAttribute('text-anchor','middle');
+  tx.setAttribute('font-size', t.count>2000?12.5:10.5);
+  tx.setAttribute('fill', cssVar('--ink-1'));
+  tx.setAttribute('paint-order','stroke');
+  tx.setAttribute('stroke', cssVar('--surface-1'));
+  tx.setAttribute('stroke-width','3');
+  tx.textContent = t.tag;
+  lg.appendChild(tx);
+});
+svg.appendChild(lg);
+
+// --- hover tooltip -----------------------------------------------------------
+const tip = document.getElementById('tip');
+const wrap = document.getElementById('graphwrap');
+const coTop = {};   // tag -> strongest co-occurring tags
+for (const e of DATA.edges){
+  (coTop[e.a] ||= []).push([e.b,e.w]);
+  (coTop[e.b] ||= []).push([e.a,e.w]);
+}
+svg.addEventListener('mousemove', ev=>{
+  const el = ev.target.closest('circle');
+  if (!el){ tip.style.display='none'; return; }
+  const t = tags[+el.dataset.i];
+  const th = themeOf(t.cluster);
+  const near = (coTop[t.tag]||[]).sort((a,b)=>b[1]-a[1]).slice(0,5)
+               .map(x=>x[0]).join(', ');
+  tip.innerHTML = `<b>${t.tag}</b><br>
+    <span class="m">${t.count.toLocaleString()} photos &middot; ${t.pct}% of library</span><br>
+    <span class="m">Theme: ${th?th.name:'Other'}</span>` +
+    (near?`<br><span class="m">Seen with: ${near}</span>`:'');
+  const r = wrap.getBoundingClientRect();
+  tip.style.display='block';
+  tip.style.left = Math.min(ev.clientX-r.left+14, r.width-270)+'px';
+  tip.style.top  = (ev.clientY-r.top+14)+'px';
+});
+svg.addEventListener('mouseleave', ()=> tip.style.display='none');
+
+// --- bars --------------------------------------------------------------------
+const bars = document.getElementById('bars');
+const top40 = tags.slice(0,40);
+const maxPct = top40[0].pct;
+bars.innerHTML = top40.map(t=>`
+  <div class="lbl">${t.tag}</div>
+  <div class="track"><div class="fill" style="width:${100*t.pct/maxPct}%;
+       background:${colorOf(t.cluster)}"></div></div>
+  <div class="val">${t.count.toLocaleString()} &middot; ${t.pct}%</div>`).join('');
+
+// --- recommendations table -----------------------------------------------------
+const RECO = [
+  ["Forest & woodland (trees, forest, pine trees, woods)", 21.6, "—",
+   "new", "Add <b>Forest</b> — #forestphotography, #woodland; huge share, zero coverage"],
+  ["Mountains & wilderness (mountains, valley, alpine, peaks)", 37.1, "Landscape (generic)",
+   "new", "Add <b>Mountains</b> — #mountainphotography, #mountains, Bluesky #MountainMonday"],
+  ["Fog, mist & overcast mood", 15.7, "Clouds/Storms (partial)",
+   "new", "Add <b>Fog</b> — #fog, #mist, #moodygrams, #foggymorning"],
+  ["Water, lakes & reflections (water, river, lake, ocean, reflection)", 19.7, "Beach (partial)",
+   "new", "Add <b>Water</b> — #reflection, #lakelife, #riverphotography"],
+  ["Night & low light (non-astro)", 11.0, "Stars (astro only)",
+   "new", "Add <b>Night</b> — #nightphotography, #nightscape (Stars stays astro)"],
+  ["Snow & winter", 11.6, "—",
+   "new", "Add <b>Winter</b> — #winterphotography, #snow; Alaska/Canada trips will feed it"],
+  ["Dogs & pets", 11.5, "Animals (generic)",
+   "new", "Add <b>Dogs</b> — #dogsofinstagram, #dogphotography; distinct audience from wildlife"],
+  ["Hiking & adventure", 9.4, "—",
+   "new", "Add <b>Hiking</b> — #hiking, #trailrunning?, #optoutside, #hikingadventures"],
+  ["Desert & canyons", 6.8, "—",
+   "new", "Add <b>Desert</b> — #desertphotography, #canyon; pairs with Utah/AZ places"],
+  ["Food & dining", 7.4, "—",
+   "new", "Add <b>Food</b> — #foodphotography, #foodie — only if you want to post it"],
+  ["Camping & road trips", 7.1, "—",
+   "new", "Add <b>RoadTrip</b> — #roadtrip, #camplife, #vanlife-adjacent"],
+  ["Graffiti & street art (street art, graffiti, mural)", 8.0, "Street (partial)",
+   "new", "Add <b>StreetArt</b> — #streetart, #graffiti, #mural — distinct hubs from street photography"],
+  ["Wildlife (wildlife, animal, bird, wild)", 8.5, "Animals",
+   "ok", "Covered — consider renaming tags toward #wildlifephotography"],
+  ["Festivals & parades (celebration, parade, festival, costume)", 18.7, "SocialEvent entries",
+   "ok", "Covered by DayOfTheDead/Pride/etc. — add generic <b>Festival</b> only if posting others"],
+  ["People, candid & parties", 17.9, "Portrait/Selfie",
+   "ok", "Mostly personal snapshots — probably not for posting"],
+  ["Silhouettes", 4.5, "Sunsets (partial)",
+   "ok", "Small; #silhouette already common alongside sunsets"],
+  ["Museums & sculpture", 4.1, "—",
+   "ok", "Small share; skip unless it grows"],
+];
+document.getElementById('recobody').innerHTML = RECO.map(([t,p,e,cls,r])=>`
+  <tr><td>${t}</td><td class="pct">${p}%</td><td>${e}</td>
+      <td><span class="pill ${cls}">${cls==='new'?'ADD':'covered'}</span> ${r}</td></tr>`).join('');
+
+// --- full table ----------------------------------------------------------------
+document.querySelector('#fulltable tbody').innerHTML = tags.map(t=>{
+  const th = themeOf(t.cluster);
+  return `<tr><td>${t.tag}</td><td>${t.count.toLocaleString()}</td>
+          <td>${t.pct}%</td><td>${th?th.name:'Other'}</td></tr>`;
+}).join('');
+</script>
