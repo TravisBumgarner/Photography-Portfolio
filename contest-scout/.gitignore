@@ -1,0 +1,14 @@
+# Dev data: the local deadlines file, HTML reports and the run marker. In the
+# container these live in a volume mounted at /data (DATA_DIR). The live file
+# is deliberately unversioned — the copy in config/ is only a first-run seed.
+data/
+
+# Credentials, if you keep them in a file rather than the shell. The container
+# takes them from the environment and never reads this.
+config/.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/

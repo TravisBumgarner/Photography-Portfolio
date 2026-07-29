@@ -1,0 +1,21 @@
+# Context exclusions for contest-scout/Dockerfile.
+#
+# This file rather than a repo-root .dockerignore: the build context has to be
+# the repo root (the image bakes in .claude/skills/find-contests), but the rest
+# of the repo — the portfolio UI, the store, 400MB of git history — has nothing
+# to do with this image. BuildKit reads <dockerfile>.dockerignore in preference
+# to the context's, so these rules stay scoped to this one build.
+#
+# Deny everything, then allow exactly what the Dockerfile COPYs. An allowlist
+# means a new directory elsewhere in the repo can never quietly join the
+# context, and nothing outside these three paths can end up in a layer.
+*
+!contest-scout/scripts
+!contest-scout/config/contest-deadlines.md
+!.claude/skills/find-contests
+
+# Never shipped even from the allowed paths: bytecode is arch-specific and
+# credentials are not built into images (config comes from the environment).
+**/__pycache__
+**/*.pyc
+**/.env

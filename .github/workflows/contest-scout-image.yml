@@ -1,0 +1,76 @@
+name: contest-scout image
+
+# Publishes the contest-scout container to GHCR for the Pi's compose stack.
+#
+# Tags are prefixed `contest-scout-v` so image releases don't collide with any
+# other versioning in this repo. Push `contest-scout-v1.0.0` to cut a release
+# (`npm run release` in contest-scout/ does it); pushes to main refresh `edge`.
+#
+# `.claude/skills/find-contests/**` is a trigger path because that skill is
+# baked into the image — editing it changes what a sweep does, so it has to be
+# able to produce a new image.
+on:
+  push:
+    branches: [main]
+    tags: ["contest-scout-v*"]
+    paths:
+      - "contest-scout/**"
+      - ".claude/skills/find-contests/**"
+      - ".github/workflows/contest-scout-image.yml"
+  pull_request:
+    paths:
+      - "contest-scout/**"
+      - ".claude/skills/find-contests/**"
+      - ".github/workflows/contest-scout-image.yml"
+  workflow_dispatch:
+
+env:
+  IMAGE: ghcr.io/${{ github.repository_owner }}/contest-scout
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # The Pi is arm64 and these runners are amd64, so the build runs under
+      # emulation. `npm install -g` under QEMU is slow, but this publishes a
+      # handful of times a year and paid arm runners aren't worth it for that.
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+
+      # Skipped on pull_request: forks have no write access, and a PR should
+      # verify the image builds without publishing it.
+      - if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE }}
+          tags: |
+            type=match,pattern=contest-scout-v(.*),group=1
+            type=raw,value=edge,enable={{is_default_branch}}
+            type=raw,value=latest,enable=${{ startsWith(github.ref, 'refs/tags/contest-scout-v') }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          # Repo root, not contest-scout/: the image bakes in the skill from
+          # .claude/. contest-scout/Dockerfile.dockerignore trims the context
+          # back to the paths that are actually copied.
+          context: .
+          file: contest-scout/Dockerfile
+          platforms: linux/arm64
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
