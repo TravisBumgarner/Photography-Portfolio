@@ -1,0 +1,231 @@
+{
+  "_comment": [
+    "Seed for the `subreddits` table: which subreddits exist, what category",
+    "quick-selects they belong to, and the per-sub posting rules.",
+    "",
+    "This file is imported ONCE, when the table is empty (first run), and then",
+    "the database is the source of truth so in-app edits are never clobbered.",
+    "Re-import explicitly with POST /api/subreddits/import (which only adds",
+    "subs that aren't in the table yet).",
+    "",
+    "IMPORTANT: every `title_template` and rule below is a STARTING POINT, not",
+    "a verified fact. Subreddit rules change and moderators enforce unwritten",
+    "ones. Check each sub's sidebar/wiki before its first post and correct the",
+    "row in the app. Subs whose rules have been confirmed in-app should have",
+    "their `notes` updated to say so.",
+    "",
+    "Title template tokens are resolved from the photo's Lightroom metadata:",
+    "{title} {description} {location} {camera} {lens} {film_stock}",
+    "{date_taken} {width} {height} {dimensions}. A token with no value",
+    "collapses, and empty bracket/paren groups are dropped, so one template",
+    "works for photos with and without (say) a film stock.",
+    "",
+    "categories are matched to a photo automatically via keyword_prefixes,",
+    "which are Lightroom hierarchy prefixes under the cameracoffeewander root",
+    "(the same tree as config/tags.json)."
+  ],
+
+  "categories": [
+    {
+      "name": "Mexico",
+      "keyword_prefixes": [
+        "Place|Mexico",
+        "SocialEvent|DayOfTheDead",
+        "SocialEvent|MexicoCityFireworksFestival"
+      ]
+    },
+    {
+      "name": "Landscapes",
+      "keyword_prefixes": ["PhotoType|Landscape", "Place|NationalPark"]
+    },
+    {
+      "name": "Nightscapes",
+      "keyword_prefixes": ["PhotoType|Stars"]
+    },
+    {
+      "name": "Film",
+      "keyword_prefixes": [
+        "FilmType",
+        "Camera|PentaxK1000",
+        "Camera|YashicaC",
+        "Camera|OlympusPS",
+        "Camera|NikonSLR",
+        "Camera|UnknownFilmCamera"
+      ]
+    },
+    {
+      "name": "Wildlife",
+      "keyword_prefixes": ["PhotoType|Animals"]
+    },
+    {
+      "name": "Street",
+      "keyword_prefixes": ["PhotoType|Street", "PhotoType|Cars"]
+    },
+    {
+      "name": "Architecture",
+      "keyword_prefixes": ["PhotoType|Architecture"]
+    },
+    {
+      "name": "BlackAndWhite",
+      "keyword_prefixes": ["PhotoType|BlackAndWhite", "PhotoType|Shadows"]
+    },
+    {
+      "name": "Skies",
+      "keyword_prefixes": [
+        "PhotoType|Sunsets",
+        "PhotoType|Clouds",
+        "PhotoType|Storms"
+      ]
+    },
+    {
+      "name": "USA",
+      "keyword_prefixes": ["Place|USA"]
+    },
+    {
+      "name": "Canada",
+      "keyword_prefixes": ["Place|Canada"]
+    },
+    {
+      "name": "Iceland",
+      "keyword_prefixes": ["Place|Iceland"]
+    },
+    {
+      "name": "Aerial",
+      "keyword_prefixes": ["Camera|DJIMini3Pro"]
+    },
+    {
+      "name": "Portrait",
+      "keyword_prefixes": ["PhotoType|Portrait"]
+    },
+    {
+      "name": "General",
+      "keyword_prefixes": []
+    }
+  ],
+
+  "subreddits": [
+    {
+      "name": "itookapicture",
+      "categories": ["General"],
+      "title_template": "ITAP of {title}",
+      "notes": "UNVERIFIED. Titles conventionally start with 'ITAP of'. Check the current title rule before posting."
+    },
+    {
+      "name": "photographs",
+      "categories": ["General"],
+      "title_template": "{title} ({location})",
+      "notes": "UNVERIFIED. General photo sub."
+    },
+    {
+      "name": "EarthPorn",
+      "categories": ["Landscapes", "USA", "Canada", "Iceland", "Mexico"],
+      "title_template": "{title}, {location} [OC] [{dimensions}]",
+      "max_title_length": 300,
+      "min_interval_days": 1,
+      "notes": "UNVERIFIED. Convention is a descriptive title with the location, an [OC] tag for your own work, and the pixel resolution in brackets. Confirm the exact format and the OC/self-promo rules."
+    },
+    {
+      "name": "LandscapePhotography",
+      "categories": ["Landscapes"],
+      "title_template": "{title}, {location}",
+      "notes": "UNVERIFIED."
+    },
+    {
+      "name": "SkyPorn",
+      "categories": ["Skies"],
+      "title_template": "{title}, {location} [OC] [{dimensions}]",
+      "notes": "UNVERIFIED. Part of the same network as EarthPorn; expect the same title conventions."
+    },
+    {
+      "name": "astrophotography",
+      "categories": ["Nightscapes"],
+      "title_template": "{title} ({camera}, {film_stock})",
+      "comment_body": 1,
+      "notes": "UNVERIFIED, and the strictest on this list: acquisition/processing details are typically REQUIRED, usually as a comment. The first comment carries the gear line, but check what else is mandatory before posting."
+    },
+    {
+      "name": "nightphotography",
+      "categories": ["Nightscapes"],
+      "title_template": "{title}, {location}",
+      "notes": "UNVERIFIED."
+    },
+    {
+      "name": "analog",
+      "categories": ["Film"],
+      "title_template": "{title} ({camera}, {film_stock})",
+      "notes": "UNVERIFIED. Film only. Camera + film stock in the title is the norm; both tokens come from Lightroom keywords, not EXIF, since scans carry the scanner's EXIF."
+    },
+    {
+      "name": "analogcommunity",
+      "categories": ["Film"],
+      "title_template": "{title} ({camera}, {film_stock})",
+      "notes": "UNVERIFIED. Check whether photo posts are allowed or it is discussion-only."
+    },
+    {
+      "name": "filmphotography",
+      "categories": ["Film"],
+      "title_template": "{title} ({camera}, {film_stock})",
+      "notes": "UNVERIFIED."
+    },
+    {
+      "name": "wildlifephotography",
+      "categories": ["Wildlife"],
+      "title_template": "{title}, {location}",
+      "notes": "UNVERIFIED."
+    },
+    {
+      "name": "streetphotography",
+      "categories": ["Street"],
+      "title_template": "{title}, {location}",
+      "notes": "UNVERIFIED."
+    },
+    {
+      "name": "ArchitecturePorn",
+      "categories": ["Architecture"],
+      "title_template": "{title}, {location} [OC] [{dimensions}]",
+      "notes": "UNVERIFIED."
+    },
+    {
+      "name": "blackandwhite",
+      "categories": ["BlackAndWhite"],
+      "title_template": "{title}, {location}",
+      "notes": "UNVERIFIED. Confirm the sub name and whether it takes photo submissions."
+    },
+    {
+      "name": "portraits",
+      "categories": ["Portrait"],
+      "title_template": "{title}",
+      "notes": "UNVERIFIED. Many portrait subs require model consent statements."
+    },
+    {
+      "name": "dronephotography",
+      "categories": ["Aerial"],
+      "title_template": "{title}, {location} ({camera})",
+      "notes": "UNVERIFIED."
+    },
+    {
+      "name": "Mexico",
+      "categories": ["Mexico"],
+      "title_template": "{title}, {location}",
+      "notes": "UNVERIFIED. A country sub, not a photo sub: photo posts may be limited to certain days or flairs, and Spanish may be expected."
+    },
+    {
+      "name": "MexicoCity",
+      "categories": ["Mexico"],
+      "title_template": "{title}, {location}",
+      "notes": "UNVERIFIED. Confirm the sub name (r/MexicoCity vs r/CDMX) and whether photo posts are welcome."
+    },
+    {
+      "name": "nationalparks",
+      "categories": ["Landscapes", "USA"],
+      "title_template": "{title}, {location}",
+      "notes": "UNVERIFIED."
+    },
+    {
+      "name": "Iceland",
+      "categories": ["Iceland"],
+      "title_template": "{title}, {location}",
+      "notes": "UNVERIFIED. A country sub — check the photo-post and self-promo rules."
+    }
+  ]
+}

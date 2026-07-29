@@ -540,6 +540,180 @@ def _select_bluesky_defaults(pool: List[Dict], prefix: str) -> None:
             return
 
 
+# ---------------------------------------------------------------------------
+# Reddit titles
+#
+# Reddit takes a title, not a caption, and each subreddit wants it in its own
+# format — a location, a camera/film pair, the pixel dimensions. Rather than
+# hardcode those, each sub stores a template of {token}s (see subreddits.py)
+# that is filled in from the photo's own metadata.
+# ---------------------------------------------------------------------------
+
+# Hierarchy leaves that only classify their parent and would read as noise in a
+# title: "Utah|State" is the place "Utah".
+_PLACE_LEAF_MARKERS = {"state", "country", "province", "city", "region"}
+
+_TITLE_TOKEN_RE = re.compile(r"\{(\w+)\}")
+
+# A bracketed or parenthesized run, e.g. "[{dimensions}]" or "({camera}, {film_stock})".
+# Curly braces are token delimiters, never group delimiters, so they are allowed
+# freely inside. Not nested — titles don't nest brackets.
+_TITLE_GROUP_RE = re.compile(r"[\[(][^\[\]()]*[\])]")
+
+
+def _split_camel(name: str) -> str:
+    """``MexicoCity`` -> ``Mexico City``; leaves already-spaced names alone."""
+    return re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", name).strip()
+
+
+def _derive_location(keywords: List[str]) -> str:
+    """Best human-readable location from a photo's ``Place`` keywords.
+
+    Prefers the most specific place (the deepest hierarchy), drops the
+    classifying leaf ("Utah|State" -> "Utah"), and names national parks in full
+    ("NationalPark|Arches" -> "Arches National Park") since that is how a title
+    would refer to them.
+    """
+    best: List[str] = []
+    for keyword in keywords:
+        if TAG_ROOT not in keyword:
+            continue
+        parts = keyword.replace(f"{TAG_ROOT}|", "").split("|")
+        if not parts or parts[0] != "Place":
+            continue
+        trail = [p for p in parts[1:] if p.lower() not in _PLACE_LEAF_MARKERS]
+        if len(trail) > len(best):
+            best = trail
+    if not best:
+        return ""
+    if best[0] == "NationalPark" and len(best) > 1:
+        return f"{_split_camel(best[-1])} National Park"
+    return _split_camel(best[-1])
+
+
+def title_fields(image_path: str) -> Dict[str, str]:
+    """Collect the tokens a subreddit title template can interpolate.
+
+    Every value is a string ('' when the photo doesn't have it) so a template
+    referencing a token the photo lacks degrades instead of failing.
+
+    Raises the same ValueErrors as ``extract_captions`` when the photo has no
+    usable Lightroom metadata.
+    """
+    xmp = _read_xmp(image_path)
+    if xmp is None:
+        raise ValueError(
+            "No XMP metadata found — export from Lightroom with metadata included"
+        )
+    keywords = _xmp_list(xmp, "lr:hierarchicalSubject")
+    if not keywords:
+        raise ValueError("No Lightroom hierarchical keywords (lr:hierarchicalSubject)")
+
+    fields = _read_exif(image_path)
+    _apply_film_camera_tags(fields, keywords)
+
+    width = height = ""
+    try:
+        with Image.open(image_path) as im:
+            # The displayed orientation, which is what a [WxH] title means.
+            from PIL import ImageOps
+
+            oriented = ImageOps.exif_transpose(im)
+            width, height = str(oriented.size[0]), str(oriented.size[1])
+    except Exception:  # noqa: BLE001 - dimensions are optional in a title
+        pass
+
+    return {
+        "title": _xmp_text(xmp, "dc:title"),
+        "description": _xmp_text(xmp, "dc:description"),
+        "location": _derive_location(keywords),
+        "camera": fields.get("camera", ""),
+        "lens": fields.get("lens", ""),
+        "film_stock": fields.get("film_stock", ""),
+        "date_taken": fields.get("date_taken", ""),
+        "width": width,
+        "height": height,
+        "dimensions": f"{width}x{height}" if width and height else "",
+    }
+
+
+def render_title(template: str, fields: Dict[str, str], fallback: str = "") -> str:
+    """Fill a subreddit's title template from ``title_fields``.
+
+    Unknown tokens and tokens with no value collapse to nothing, then the
+    leftover punctuation is tidied: a bracket group whose contents all vanished
+    is removed, and stray separators are collapsed. That way one template
+    (``{title} ({camera}, {film_stock})``) reads correctly for a film photo, a
+    digital photo with no film stock, and a photo with neither.
+
+    An empty template (or one that renders to nothing) falls back to
+    ``fallback`` if given, else the photo's own title.
+    """
+    if not (template or "").strip():
+        return (fallback or fields.get("title", "")).strip()
+
+    def substitute(text: str) -> str:
+        return _TITLE_TOKEN_RE.sub(lambda m: fields.get(m.group(1), ""), text)
+
+    def render_group(match: "re.Match") -> str:
+        """Substitute inside one bracket group, or drop it entirely.
+
+        A group exists to present token values, so if it holds tokens and every
+        one of them is empty the whole group goes — including its literal glue.
+        That is what makes "[{width}x{height}]" disappear rather than leave a
+        stray "[x]". A group with no tokens at all (a literal "[OC]") is kept.
+        """
+        group = match.group(0)
+        tokens = _TITLE_TOKEN_RE.findall(group)
+        if tokens and not any(fields.get(name, "") for name in tokens):
+            return ""
+        return substitute(group)
+
+    rendered = substitute(_TITLE_GROUP_RE.sub(render_group, template))
+
+    # Tidy up what the missing values left behind, in order:
+    # a separator stranded before a surviving group or the end of the string
+    # ("Untitled, [OC]"), repeated separators from two adjacent empty tokens
+    # ("Fog, , Utah"), a separator hugging a bracket ("(, Portra 400)"), and
+    # finally doubled whitespace.
+    rendered = re.sub(r"[,;/|]+(\s*(?:[\[({]|$))", r"\1", rendered)
+    rendered = re.sub(r"([,;/|])(?:\s*[,;/|])+", r"\1", rendered)
+    rendered = re.sub(r"([\[({])\s*[,;/|]\s*", r"\1", rendered)
+    rendered = re.sub(r"\s*[,;/|]\s*(?=[\])}])", "", rendered)
+    rendered = re.sub(r"\s{2,}", " ", rendered)
+    rendered = rendered.strip().strip(",;/|-–— ").strip()
+
+    if not rendered:
+        return (fallback or fields.get("title", "")).strip()
+    return rendered
+
+
+def reddit_titles(
+    image_path: str, templates: Dict[str, str], limits: Optional[Dict[str, int]] = None
+) -> Dict[str, str]:
+    """Render a default title per subreddit for one photo.
+
+    Args:
+        templates: ``{subreddit: title_template}``.
+        limits: Optional ``{subreddit: max_title_length}``; a rendered title
+            over its sub's limit is truncated on a word boundary so the default
+            is always publishable. The user can edit it afterwards.
+
+    Returns ``{subreddit: title}``.
+    """
+    fields = title_fields(image_path)
+    limits = limits or {}
+    titles: Dict[str, str] = {}
+    for subreddit, template in templates.items():
+        title = render_title(template, fields)
+        limit = min(int(limits.get(subreddit) or 300), 300)
+        if len(title) > limit:
+            trimmed = title[:limit].rsplit(" ", 1)[0]
+            title = (trimmed or title[:limit]).rstrip(",;/|-–— ")
+        titles[subreddit] = title
+    return titles
+
+
 def keyword_paths(image_path: str) -> List[List[str]]:
     """Return each ``cameracoffeewander|...`` keyword on a photo as a list of
     hierarchy parts (root prefix stripped), e.g.

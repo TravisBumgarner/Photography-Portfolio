@@ -140,6 +140,13 @@ def _migrate_reddit_targets(conn: sqlite3.Connection) -> None:
                 f"ALTER TABLE {table} ADD COLUMN subreddit TEXT NOT NULL DEFAULT ''"
             )
 
+    # Category quick-selects arrived after the subreddits table itself.
+    if "categories" not in _table_columns(conn, "subreddits"):
+        conn.execute(
+            "ALTER TABLE subreddits ADD COLUMN categories TEXT NOT NULL "
+            "DEFAULT '[]'"
+        )
+
 
 def init_db() -> None:
     """Create the database tables if they do not already exist.
@@ -212,9 +219,22 @@ def init_db() -> None:
                 -- check. Enforced against publish_log at publish time.
                 min_interval_days INTEGER NOT NULL DEFAULT 0,
                 -- Default spacing applied when this sub is one of several on
-                -- the same photo (see the stagger logic in server.py).
+                -- the same photo (see the stagger logic in subreddits.py).
                 stagger_minutes INTEGER NOT NULL DEFAULT 30,
+                -- JSON array of category names ("Mexico", "Film", ...) driving
+                -- the quick-select chips. A sub can sit in several.
+                categories TEXT NOT NULL DEFAULT '[]',
                 notes TEXT NOT NULL DEFAULT '',
+                created_at TEXT NOT NULL
+            );
+
+            -- Category definitions for the quick-selects. keyword_prefixes are
+            -- Lightroom hierarchy prefixes (same tree as config/tags.json), so
+            -- a photo's own keywords decide which categories light up.
+            CREATE TABLE IF NOT EXISTS subreddit_categories (
+                id INTEGER PRIMARY KEY,
+                name TEXT NOT NULL UNIQUE COLLATE NOCASE,
+                keyword_prefixes TEXT NOT NULL DEFAULT '[]',
                 created_at TEXT NOT NULL
             );
 
