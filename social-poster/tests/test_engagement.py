@@ -72,6 +72,7 @@ def test_snapshot_records_instagram_metrics(tmp_path, monkeypatch):
             "target_id": target_id,
             "platform": "instagram",
             "username": "me",
+            "subreddit": None,
             "ok": True,
             "error": None,
         }

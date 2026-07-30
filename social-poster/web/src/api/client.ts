@@ -11,7 +11,10 @@ import type {
   IngestItem,
   LogEntry,
   Post,
+  RedditSuggestions,
   Settings,
+  SubredditCategory,
+  SubredditRules,
   TagCheckResult,
   TagPools,
   TaggingPreview,
@@ -79,9 +82,8 @@ export function getPosts(): Promise<Post[]> {
 export function createPost(input: CreatePostInput): Promise<Post> {
   const form = new FormData();
   form.append('image', input.image);
-  form.append('captions', JSON.stringify(input.captions));
   form.append('scheduled_at', input.scheduled_at);
-  form.append('account_ids', JSON.stringify(input.account_ids));
+  form.append('targets', JSON.stringify(input.targets));
   return request<Post>('/posts', {
     method: 'POST',
     body: form,
@@ -93,9 +95,8 @@ export function editPost(id: number, input: EditPostInput): Promise<Post> {
   if (input.image) {
     form.append('image', input.image);
   }
-  form.append('captions', JSON.stringify(input.captions));
   form.append('scheduled_at', input.scheduled_at);
-  form.append('account_ids', JSON.stringify(input.account_ids));
+  form.append('targets', JSON.stringify(input.targets));
   if (input.featured_by !== undefined) {
     form.append('featured_by', input.featured_by);
   }
@@ -165,14 +166,26 @@ export function uploadIngestImages(files: File[]): Promise<IngestItem[]> {
 export function updateIngestItem(
   id: number,
   captions: Captions,
-  tagPools?: TagPools
+  tagPools?: TagPools,
+  /** `{subreddit: title}`. The keys are the selection, so `{}` removes the
+   * photo from Reddit; omit entirely to leave the stored selection alone. */
+  titles?: Record<string, string>
 ): Promise<IngestItem> {
+  const body: {
+    captions: Captions;
+    tag_pools?: TagPools;
+    titles?: Record<string, string>;
+  } = { captions };
+  if (tagPools) {
+    body.tag_pools = tagPools;
+  }
+  if (titles) {
+    body.titles = titles;
+  }
   return request<IngestItem>(`/ingest/${id}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(
-      tagPools ? { captions, tag_pools: tagPools } : { captions }
-    ),
+    body: JSON.stringify(body),
   });
 }
 
@@ -211,6 +224,16 @@ export function generateCaptions(image: File): Promise<TaggingPreview> {
   });
 }
 
+/** Suggest subreddits for a photo and pre-render a title for each (no staging). */
+export function suggestSubreddits(image: File): Promise<RedditSuggestions> {
+  const form = new FormData();
+  form.append('image', image);
+  return request<RedditSuggestions>('/tagging/reddit', {
+    method: 'POST',
+    body: form,
+  });
+}
+
 /** Check a batch of photos for Lightroom keywords not yet registered in the
  * tag tree (no staging). */
 export function checkTags(files: File[]): Promise<TagCheckResult> {
@@ -221,6 +244,63 @@ export function checkTags(files: File[]): Promise<TagCheckResult> {
   return request<TagCheckResult>('/tagging/check', {
     method: 'POST',
     body: form,
+  });
+}
+
+// --- Subreddits ---------------------------------------------------------------
+
+export function getSubreddits(): Promise<SubredditRules[]> {
+  return request<SubredditRules[]>('/subreddits');
+}
+
+/** Create or update one sub's rules. Only the given fields are written. */
+export function saveSubreddit(
+  name: string,
+  input: Partial<SubredditRules>
+): Promise<SubredditRules> {
+  return request<SubredditRules>(`/subreddits/${encodeURIComponent(name)}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(input),
+  });
+}
+
+export function deleteSubreddit(name: string): Promise<void> {
+  return request<void>(`/subreddits/${encodeURIComponent(name)}`, {
+    method: 'DELETE',
+  });
+}
+
+/** Import config/subreddits.json, adding only what isn't stored yet. Safe to
+ * re-run: it never overwrites rules corrected in the app. */
+export function importSubreddits(): Promise<{
+  added: { subreddits: number; categories: number };
+  subreddits: SubredditRules[];
+}> {
+  return request('/subreddits/import', { method: 'POST' });
+}
+
+export function getSubredditCategories(): Promise<SubredditCategory[]> {
+  return request<SubredditCategory[]>('/subreddit-categories');
+}
+
+export function saveSubredditCategory(
+  name: string,
+  input: { keyword_prefixes: string[] }
+): Promise<SubredditCategory> {
+  return request<SubredditCategory>(
+    `/subreddit-categories/${encodeURIComponent(name)}`,
+    {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(input),
+    }
+  );
+}
+
+export function deleteSubredditCategory(name: string): Promise<void> {
+  return request<void>(`/subreddit-categories/${encodeURIComponent(name)}`, {
+    method: 'DELETE',
   });
 }
 

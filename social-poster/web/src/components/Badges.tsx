@@ -4,6 +4,7 @@ import { POST_STATUS_LABEL, postStatus } from '../utils/posts';
 const PLATFORM_LABEL: Record<Platform, string> = {
   instagram: 'IG',
   bluesky: 'BS',
+  reddit: 'RD',
 };
 
 export function PlatformBadge({ platform }: { platform: Platform }) {
@@ -31,12 +32,21 @@ export function StatusPill({ status }: { status: TargetStatus }) {
   );
 }
 
-/** One account row: handle + platform, with its status as a separate pill. */
+/** One destination row: where it goes + platform, with its status as a pill.
+ * A Reddit destination is named by its subreddit, not the account — several
+ * share one account and the sub is what distinguishes them. */
 export function AccountTarget({ target }: { target: Target }) {
   return (
     <div className="account-target">
       <span className="account-target-name">
-        @{target.username} <PlatformBadge platform={target.platform} />
+        {target.subreddit ? `r/${target.subreddit}` : `@${target.username}`}{' '}
+        <PlatformBadge platform={target.platform} />
+        {target.delay_minutes > 0 && (
+          <span className="muted" title="Staggered so the subs don't post at once">
+            {' '}
+            +{target.delay_minutes}m
+          </span>
+        )}
       </span>
       <span
         title={

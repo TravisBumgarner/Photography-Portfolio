@@ -474,6 +474,10 @@ body {
   background: #1185fe;
 }
 
+.platform-reddit {
+  background: #ff4500;
+}
+
 .status-badge {
   font-size: 11px;
   font-weight: 600;
@@ -1916,4 +1920,183 @@ textarea {
   .spinner {
     animation-duration: 1.5s;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Reddit destinations — subreddit picker, per-sub title, stagger offset.
+   Reddit is the one platform where a single photo goes to many destinations,
+   so it needs a list rather than the single caption box the others use.
+   --------------------------------------------------------------------------- */
+.reddit-targets {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.reddit-category-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.chip {
+  background: var(--bg-elev-2);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.chip:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.chip:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Selected: every sub in the category is currently chosen. */
+.chip--on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.chip--on .muted {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Matched this photo's own Lightroom keywords — a suggestion, not a selection. */
+.chip--suggested {
+  border-color: var(--amber);
+}
+
+.reddit-sub-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  max-height: 22rem;
+  overflow-y: auto;
+}
+
+.reddit-sub {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.4rem 0.55rem;
+  background: var(--bg-elev);
+}
+
+.reddit-sub--on {
+  border-color: var(--accent);
+  background: var(--bg-elev-2);
+}
+
+.reddit-sub-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: flex-end;
+  margin-top: 0.4rem;
+}
+
+.reddit-sub-fields .field {
+  flex: 1 1 14rem;
+  margin: 0;
+}
+
+.reddit-delay-field {
+  flex: 0 0 7rem;
+}
+
+.reddit-due {
+  flex: 0 0 auto;
+  padding-bottom: 0.4rem;
+  font-size: 0.8rem;
+}
+
+.reddit-sub-fields .field-error,
+.reddit-note {
+  flex: 1 1 100%;
+  font-size: 0.8rem;
+}
+
+.reddit-targets-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* The bulk-review grid gives each photo a narrow column. */
+.reddit-targets--compact .reddit-sub-list {
+  max-height: 14rem;
+}
+
+.reddit-targets--compact .reddit-sub-fields {
+  gap: 0.3rem;
+}
+
+.reddit-targets--compact .reddit-sub-fields .field {
+  flex: 1 1 100%;
+}
+
+.reddit-targets--compact .reddit-due {
+  padding-bottom: 0;
+}
+
+/* ---------- Subreddit rules panel ---------- */
+.subreddit-panel {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.subreddit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.subreddit-row {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elev);
+}
+
+.subreddit-row-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.5rem;
+}
+
+/* The category summary takes the slack so the buttons stay right-aligned. */
+.subreddit-row-head .muted {
+  flex: 1;
+  font-size: 0.8rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.subreddit-row-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem 0.6rem 0.7rem;
+  border-top: 1px solid var(--border);
+}
+
+.subreddit-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.subreddit-fields .field {
+  flex: 1 1 9rem;
+  margin: 0;
 }

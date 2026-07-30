@@ -131,6 +131,39 @@ All nested under the `cameracoffeewander` root; nothing existing was renamed.
 - [ ] Stills-only strategy: IG reach in 2026 skews heavily to Reels — out of
       social-poster's scope, but it caps expectations for static-photo growth.
 
+## Reddit (added July 2026)
+
+Reddit posting, per-subreddit rules and staggered multi-sub posting are built.
+What's left is verification that can only be done by reading each sub:
+
+- [ ] **Verify every seeded subreddit's rules.** Everything in
+      [config/subreddits.json](config/subreddits.json) is marked `UNVERIFIED` —
+      the sub names, title formats, flair requirements and posting intervals are
+      informed guesses, not checked facts. Read each sidebar/wiki, correct the
+      row in the Subreddits panel, and replace the `UNVERIFIED` note. Priority
+      order: the ones you'd actually post to first (r/analog, r/EarthPorn,
+      r/itookapicture, r/Mexico).
+- [ ] Confirm the ambiguous names: **r/MexicoCity vs r/CDMX**, and whether
+      `blackandwhite` is the right B&W sub for photo posts.
+- [ ] **r/astrophotography needs acquisition details** — check exactly what's
+      mandatory. The first comment currently carries the gear line; that may not
+      be enough.
+- [ ] **Flair ids.** Several photo subs require flair, and the id isn't
+      guessable — fetch each sub's flair list and paste the id into its row.
+      Targets for a flair-requiring sub are refused until one is set.
+- [ ] Decide the posting cadence per sub (`min_interval_days`). Most photo subs
+      cap how often one user may post; breaking it gets the post removed and the
+      account flagged. Currently only r/EarthPorn has a non-zero value (1 day),
+      which is a guess.
+- [ ] Reddit self-promotion ratios: several subs expect participation, not just
+      submissions. Not something the app can enforce — worth knowing before
+      posting to a dozen subs.
+- [ ] Use a Reddit account **without 2FA** for posting, or accept that the
+      script-app password flow breaks when the OTP expires.
+- [ ] Once a few weeks of posts exist, compare `engagement_snapshots` by
+      subreddit — the schema records the destination now, so "which subs are
+      worth it" becomes answerable rather than a guess.
+
 ## Process / recurring
 
 - [ ] Ilford **#fridayfavourites** rotates a weekly theme — check

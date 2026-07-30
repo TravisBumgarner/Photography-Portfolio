@@ -1,11 +1,19 @@
 #!/usr/bin/env python3
-"""Social Poster - publishing to Instagram and Bluesky.
+"""Social Poster - publishing to Instagram, Bluesky and Reddit.
 
 Instagram uses the **official** Instagram Graph API (Content Publishing), not
 the reverse-engineered private API — the latter gets accounts flagged/banned.
 Each Instagram account is authenticated with a long-lived access token plus its
 Instagram user ID (both generated in the Meta app dashboard under
 "Instagram → API setup with Instagram login").
+
+Reddit differs from the other two in a way that shapes the whole data model:
+one account posts to many subreddits, each with its own moderator-enforced
+title format, flair requirement and posting cadence. A Reddit submission also
+takes a *title*, not a caption, and an image submission is a link post that
+cannot carry body text — so the description goes in a first comment. The
+per-subreddit rules live in the ``subreddits`` table (see ``subreddits.py``);
+this module just executes what it is handed.
 
 The Graph API does not accept image bytes: it fetches the photo from a public
 HTTPS URL. The app already serves uploaded images at ``/images/<filename>``, so
@@ -40,6 +48,18 @@ CONTAINER_POLL_INTERVAL = 2  # seconds
 # Bluesky rejects uploaded image blobs larger than 2,000,000 bytes. We shrink
 # anything above this before upload (see ``_fit_bluesky_blob``).
 BLUESKY_MAX_BLOB_BYTES = 2_000_000
+
+# Reddit's hard cap on submission titles. Individual subreddits often impose a
+# shorter one, which lives in the per-subreddit rules.
+REDDIT_TITLE_LIMIT = 300
+
+# Reddit's image uploader accepts these extensions only. Anything else (notably
+# the .webp our uploads allow) is re-encoded to JPEG first.
+REDDIT_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif"}
+
+# Reddit requires a descriptive, uniquely-identifying User-Agent and throttles
+# or blocks generic ones. ``{username}`` is filled in per account.
+REDDIT_USER_AGENT = "python:social-poster:1.0 (by /u/{username})"
 
 
 def validate_instagram_image(image_path: str) -> None:
@@ -303,6 +323,185 @@ def post_bluesky(creds: Dict, image_path: str, caption: str) -> Optional[str]:
     return getattr(record, "uri", None)
 
 
+# ---------------------------------------------------------------------------
+# Reddit
+# ---------------------------------------------------------------------------
+def _reddit_client(creds: Dict):
+    """Build an authenticated PRAW client from stored credentials.
+
+    Uses the "script" app flow (client id/secret plus the owning account's
+    username/password), which is what Reddit intends for a tool posting to its
+    own author's account. If the account has 2FA enabled the password field
+    must be ``password:otp`` — a one-time code expires, so 2FA accounts
+    effectively need app-specific handling; that limitation is surfaced as a
+    login error rather than hidden.
+
+    ``ratelimit_seconds`` lets PRAW wait out Reddit's short per-account posting
+    throttle instead of raising, which matters when several subreddits are
+    published in the same tick.
+    """
+    import praw
+
+    return praw.Reddit(
+        client_id=creds["client_id"],
+        client_secret=creds["client_secret"],
+        username=creds["username"],
+        password=creds["password"],
+        user_agent=REDDIT_USER_AGENT.format(username=creds["username"]),
+        ratelimit_seconds=600,
+        check_for_updates=False,
+    )
+
+
+def _reddit_error_message(exc: Exception) -> str:
+    """Turn a PRAW exception into a short message prefixed with 'Reddit'."""
+    text = str(exc).strip() or exc.__class__.__name__
+    return f"Reddit: {text}"
+
+
+def _fit_reddit_image(image_path: str) -> str:
+    """Return a path to an image Reddit's uploader will accept.
+
+    Reddit takes jpg/png/gif only. Uploads in another format (we allow .webp)
+    are re-encoded to a JPEG in a temp file and that path is returned instead;
+    an already-acceptable file is returned untouched. The temp file is left for
+    the OS to reap — it is a few hundred KB, once per publish.
+    """
+    if Path(image_path).suffix.lower() in REDDIT_IMAGE_EXTENSIONS:
+        return image_path
+
+    import tempfile
+
+    from PIL import Image
+
+    with Image.open(image_path) as im:
+        converted = im.convert("RGB")
+        handle = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
+        handle.close()
+        converted.save(handle.name, format="JPEG", quality=92, optimize=True)
+    return handle.name
+
+
+def validate_reddit_title(title: str, limit: int = REDDIT_TITLE_LIMIT) -> None:
+    """Raise ``ValueError`` if a Reddit title is empty or too long.
+
+    Checked before submitting because Reddit rejects the whole submission on a
+    bad title, and a subreddit's own limit is often shorter than Reddit's 300.
+    """
+    if not title.strip():
+        raise ValueError("Reddit posts need a title.")
+    effective = min(limit, REDDIT_TITLE_LIMIT)
+    if len(title) > effective:
+        raise ValueError(
+            f"Title is {len(title)} characters; this subreddit allows "
+            f"{effective}. Shorten it and try again."
+        )
+
+
+def post_reddit(
+    creds: Dict,
+    image_path: str,
+    title: str,
+    subreddit: str,
+    flair_id: Optional[str] = None,
+    body: str = "",
+) -> Optional[str]:
+    """Submit a single image post to one subreddit.
+
+    Args:
+        creds: ``{"client_id", "client_secret", "username", "password"}``.
+        image_path: Path to the image file on disk.
+        title: The submission title (already rendered from the sub's template).
+        subreddit: Bare subreddit name, no ``r/`` prefix.
+        flair_id: Flair template id to apply, when the sub uses/requires one.
+        body: Description text. An image submission is a link post and cannot
+            hold body text, so this is posted as a first comment when present.
+
+    Returns the submission's id (used later to fetch engagement).
+
+    A failure to add the first comment is deliberately swallowed: the photo is
+    already live at that point, and raising would mark the target failed and
+    invite a retry that double-posts the image.
+    """
+    validate_reddit_title(title)
+
+    reddit = _reddit_client(creds)
+    upload_path = _fit_reddit_image(image_path)
+    try:
+        submission = reddit.subreddit(subreddit).submit_image(
+            title=title,
+            image_path=upload_path,
+            flair_id=flair_id or None,
+            timeout=30,
+        )
+    except Exception as exc:
+        # PRAW confirms an image submission over a websocket, which fails on
+        # flaky networks *after* the upload has already gone through. Reporting
+        # that as a failure would mark the target for retry and double-post the
+        # photo, so look for the submission before believing the error.
+        submission = _recover_reddit_submission(reddit, subreddit, title)
+        if submission is None:
+            raise RuntimeError(_reddit_error_message(exc)) from exc
+        print(
+            f"publisher: reddit r/{subreddit} submit reported an error but the "
+            f"post exists ({submission.id}); treating it as published"
+        )
+
+    if body.strip():
+        try:
+            submission.reply(body)
+        except Exception as exc:  # noqa: BLE001 - the post itself already went live
+            print(
+                f"publisher: reddit r/{subreddit} posted but the first comment "
+                f"failed: {exc}"
+            )
+
+    return getattr(submission, "id", None)
+
+
+def _recover_reddit_submission(reddit, subreddit: str, title: str):
+    """Find a just-created submission by subreddit + exact title, or None.
+
+    Only used to tell "the submit really failed" apart from "the submit worked
+    but PRAW could not confirm it". Scans just the account's newest handful of
+    submissions, so a false match would need an identical title in the same
+    subreddit moments earlier.
+    """
+    try:
+        recent = reddit.user.me().submissions.new(limit=10)
+        for submission in recent:
+            same_sub = str(submission.subreddit).lower() == subreddit.lower()
+            if same_sub and submission.title == title:
+                return submission
+    except Exception:  # noqa: BLE001 - recovery is best-effort by definition
+        return None
+    return None
+
+
+def _fetch_reddit_profile(creds: Dict) -> Dict:
+    """Verify Reddit credentials by fetching the authenticated user.
+
+    Reddit has no follower count for a normal account, and karma is not a post
+    count, so both normalized counters stay ``None`` rather than carrying a
+    number that means something else.
+    """
+    reddit = _reddit_client(creds)
+    try:
+        me = reddit.user.me()
+    except Exception as exc:
+        raise RuntimeError(_reddit_error_message(exc)) from exc
+    if me is None:
+        raise RuntimeError("Reddit: credentials did not authenticate a user.")
+    icon = getattr(me, "icon_img", None) or None
+    return {
+        "username": str(me.name),
+        "display_name": None,
+        "avatar_url": icon,
+        "follower_count": None,
+        "post_count": None,
+    }
+
+
 def _fetch_instagram_profile(creds: Dict) -> Dict:
     """Fetch an Instagram account's profile via the Graph API.
 
@@ -351,6 +550,8 @@ def login_and_fetch_profile(platform: str, creds: Dict) -> Dict:
     """
     if platform == "instagram":
         return _fetch_instagram_profile(creds)
+    if platform == "reddit":
+        return _fetch_reddit_profile(creds)
     if platform == "bluesky":
         _client, profile = _bluesky_login(creds)
         return {
@@ -373,31 +574,74 @@ def _dry_run_enabled() -> bool:
     return os.environ.get("DRY_RUN", "").strip() == "1"
 
 
-def post(platform: str, creds: Dict, image_path: str, caption: str) -> Optional[str]:
+KNOWN_PLATFORMS = ("instagram", "bluesky", "reddit")
+
+
+def post(
+    platform: str,
+    creds: Dict,
+    image_path: str,
+    caption: str,
+    options: Optional[Dict] = None,
+) -> Optional[str]:
     """Dispatch a post to the correct platform implementation.
 
     Args:
-        platform: ``"instagram"`` or ``"bluesky"``.
+        platform: One of ``KNOWN_PLATFORMS``.
         creds: Platform-specific credentials dict.
         image_path: Path to the image file on disk.
-        caption: Caption/text for the post.
+        caption: Caption/text for the post. On Reddit this is the description,
+            which becomes a first comment rather than the submission body.
+        options: Per-target extras the platform needs beyond a caption. Reddit
+            reads ``subreddit`` (required), ``title`` (required), ``flair_id``
+            and ``comment_body``; the other platforms ignore it.
 
     Returns the platform's id for the published item (Instagram media id /
-    Bluesky at:// URI), or ``None`` in DRY_RUN.
+    Bluesky at:// URI / Reddit submission id), or ``None`` in DRY_RUN.
 
     Raises:
-        ValueError: If ``platform`` is not a known platform.
+        ValueError: If ``platform`` is not a known platform, or a Reddit target
+            is missing its subreddit/title.
     """
-    if platform not in ("instagram", "bluesky"):
+    if platform not in KNOWN_PLATFORMS:
         raise ValueError(f"Unknown platform: {platform}")
 
+    options = options or {}
+
+    if platform == "reddit":
+        subreddit = str(options.get("subreddit") or "").strip()
+        title = str(options.get("title") or "").strip()
+        if not subreddit:
+            raise ValueError("Reddit targets need a subreddit.")
+        validate_reddit_title(title)
+
     if _dry_run_enabled():
+        where = platform
+        if platform == "reddit":
+            where = f"reddit r/{options.get('subreddit')}"
+            print(
+                f"publisher: [DRY_RUN] would post to {where}: "
+                f"{Path(image_path).name} — title "
+                f"{str(options.get('title'))[:80]!r}"
+            )
+            return None
         print(
-            f"publisher: [DRY_RUN] would post to {platform}: "
+            f"publisher: [DRY_RUN] would post to {where}: "
             f"{Path(image_path).name} — {caption[:60]!r}"
         )
         return None
 
     if platform == "instagram":
         return post_instagram(creds, image_path, caption)
+    if platform == "reddit":
+        return post_reddit(
+            creds,
+            image_path,
+            title=str(options.get("title") or "").strip(),
+            subreddit=str(options.get("subreddit") or "").strip(),
+            flair_id=options.get("flair_id"),
+            # An image submission can't hold body text, so the description is
+            # only posted at all when the sub's rules allow the first comment.
+            body=caption if options.get("comment_body", True) else "",
+        )
     return post_bluesky(creds, image_path, caption)

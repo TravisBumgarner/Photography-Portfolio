@@ -10,9 +10,15 @@ import {
 } from '../hooks/useIngest';
 import { usePosts } from '../hooks/usePosts';
 import { useSettings, useUpdateSettings } from '../hooks/useSettings';
+import { useSubreddits } from '../hooks/useSubreddits';
 import { WeeklyScheduleModal } from './WeeklyScheduleModal';
 import { TagPillEditor } from './TagPillEditor';
 import { ImageCropModal } from './ImageCropModal';
+import { RedditTargets } from './RedditTargets';
+import {
+  redditSelectionIsValid,
+  type RedditSelection,
+} from '../utils/reddit';
 import {
   dateToDatetimeLocal,
   formatDateTime,
@@ -33,9 +39,10 @@ import type {
 const PLATFORM_LABEL: Record<Platform, string> = {
   instagram: 'Instagram',
   bluesky: 'Bluesky',
+  reddit: 'Reddit',
 };
 
-const ALL_PLATFORMS: Platform[] = ['instagram', 'bluesky'];
+const ALL_PLATFORMS: Platform[] = ['instagram', 'bluesky', 'reddit'];
 
 // Remembers the last-checked target accounts across sessions.
 const ACCOUNTS_STORAGE_KEY = 'social-poster:bulk-account-ids';
@@ -74,6 +81,7 @@ export function BulkAddModal({ onClose }: { onClose: () => void }) {
   const { data: settings } = useSettings();
   const { data: posts } = usePosts();
   const { data: items = [], isLoading: itemsLoading } = useIngestItems();
+  const { data: subredditRules } = useSubreddits();
   const updateSettings = useUpdateSettings();
   const upload = useUploadIngestImages();
   const updateItem = useUpdateIngestItem();
@@ -185,15 +193,57 @@ export function BulkAddModal({ onClose }: { onClose: () => void }) {
   const captionsFor = (item: IngestItem): Captions =>
     captionsFrom(item, poolsForItem(item));
 
-  // Persist the current captions (+ pools) so a closed modal keeps review work.
-  const commit = (item: IngestItem, pools: TagPools) => {
+  // Per-item Reddit selections the user has changed this session; falls back to
+  // whatever the item already had stored. Kept per item because the right subs
+  // differ photo to photo — a film shot and a landscape don't share them.
+  const [redditEdits, setRedditEdits] = useState<
+    Record<number, RedditSelection>
+  >({});
+
+  const redditFor = (item: IngestItem): RedditSelection => {
+    const edited = redditEdits[item.id];
+    if (edited) {
+      return edited;
+    }
+    const stored: RedditSelection = {};
+    for (const [name, title] of Object.entries(item.titles ?? {})) {
+      stored[name] = { title };
+    }
+    return stored;
+  };
+
+  /** `{subreddit: title}` — the shape the API takes, where keys are the
+   * selection. Empty when this photo isn't going to Reddit. */
+  const titlesFor = (item: IngestItem): Record<string, string> => {
+    const selection = redditFor(item);
+    return Object.fromEntries(
+      Object.entries(selection).map(([name, choice]) => [name, choice.title])
+    );
+  };
+
+  // Persist the current captions (+ pools + Reddit picks) so a closed modal
+  // keeps review work.
+  const commit = (
+    item: IngestItem,
+    pools: TagPools,
+    reddit?: RedditSelection
+  ) => {
+    const selection = reddit ?? redditFor(item);
     updateItem.mutate({
       id: item.id,
       captions: { ...item.captions, ...captionsFrom(item, pools) },
       tagPools: { ...item.tag_pools, ...pools },
+      titles: Object.fromEntries(
+        Object.entries(selection).map(([name, choice]) => [name, choice.title])
+      ),
     });
   };
   const persistCaption = (item: IngestItem) => commit(item, poolsForItem(item));
+
+  const setRedditSelection = (item: IngestItem, next: RedditSelection) => {
+    setRedditEdits((prev) => ({ ...prev, [item.id]: next }));
+    commit(item, poolsForItem(item), next);
+  };
 
   // Prefix keystrokes update local state only (persist on blur); a pill reorder
   // is a discrete action, so it updates state and persists immediately.
@@ -292,11 +342,26 @@ export function BulkAddModal({ onClose }: { onClose: () => void }) {
   );
 
   const igSelected = selectedPlatforms.includes('instagram');
+  const redditSelected = selectedPlatforms.includes('reddit');
   // Items that would fail Instagram's aspect rule until cropped. Only matters
   // when an Instagram account is targeted.
   const uncroppedItems = useMemo(
     () => (igSelected ? items.filter((i) => i.needs_ig_crop) : []),
     [igSelected, items]
+  );
+
+  // Photos whose chosen subs have a missing/over-long title. The server rejects
+  // the whole batch for one of these, so block approval and name them instead.
+  const badRedditItems = useMemo(
+    () =>
+      redditSelected
+        ? items.filter(
+            (item) => !redditSelectionIsValid(redditFor(item), subredditRules)
+          )
+        : [],
+    // redditFor closes over redditEdits, which is the value that actually changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [redditSelected, items, redditEdits, subredditRules]
   );
 
   const anyPending = items.some((i) => i.tag_status === 'pending');
@@ -311,6 +376,7 @@ export function BulkAddModal({ onClose }: { onClose: () => void }) {
     slots.length === items.length &&
     !anyPending &&
     uncroppedItems.length === 0 &&
+    badRedditItems.length === 0 &&
     !approve.isPending;
 
   const onApprove = () => {
@@ -321,6 +387,7 @@ export function BulkAddModal({ onClose }: { onClose: () => void }) {
           id: item.id,
           scheduled_at: toApiISO(slots[index]),
           captions: captionsFor(item),
+          titles: titlesFor(item),
         })),
       },
       { onSuccess: () => onClose() }
@@ -630,7 +697,9 @@ export function BulkAddModal({ onClose }: { onClose: () => void }) {
                       return (
                         <div key={platform} className="field">
                           <span className="field-label">
-                            {PLATFORM_LABEL[platform]} caption
+                            {platform === 'reddit'
+                              ? 'Reddit description'
+                              : `${PLATFORM_LABEL[platform]} caption`}
                           </span>
                           {pool ? (
                             <>
@@ -673,6 +742,22 @@ export function BulkAddModal({ onClose }: { onClose: () => void }) {
                         </div>
                       );
                     })}
+                  {item.tag_status !== 'pending' && redditSelected && (
+                    <div className="field">
+                      <span className="field-label">
+                        Subreddits{' '}
+                        <span className="muted">
+                          {Object.keys(redditFor(item)).length || 'none'} selected
+                        </span>
+                      </span>
+                      <RedditTargets
+                        compact
+                        value={redditFor(item)}
+                        onChange={(next) => setRedditSelection(item, next)}
+                        suggestions={item.reddit_suggestions}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -713,6 +798,17 @@ export function BulkAddModal({ onClose }: { onClose: () => void }) {
               Instagram before scheduling.
             </span>
           )}
+          {!approve.isError &&
+            !anyPending &&
+            uncroppedItems.length === 0 &&
+            badRedditItems.length > 0 && (
+              <span className="state-error">
+                {badRedditItems.length} photo
+                {badRedditItems.length === 1 ? '' : 's'} have a subreddit with a
+                missing or too-long title — approval is all-or-nothing, so fix
+                those first.
+              </span>
+            )}
         </div>
 
         <div className="modal-actions">

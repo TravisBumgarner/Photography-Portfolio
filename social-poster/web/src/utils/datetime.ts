@@ -71,6 +71,24 @@ export function parseTimeInput(text: string): string | null {
   return `${pad(hours)}:${pad(minutes)}`;
 }
 
+/**
+ * Add minutes to an API UTC ISO string, returning the same format.
+ * Used for a Reddit destination's stagger offset from its post's scheduled time.
+ */
+export function addMinutesToApiISO(iso: string, minutes: number): string {
+  return toApiISO(new Date(new Date(iso).getTime() + minutes * 60_000));
+}
+
+/** An API ISO timestamp as a short local date+time, e.g. "Aug 1, 10:36 AM". */
+export function formatApiISOShort(iso: string): string {
+  return new Date(iso).toLocaleString(undefined, {
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  });
+}
+
 /** Day key (`YYYY-MM-DD`) in local time for grouping posts onto calendar cells. */
 export function localDayKey(date: Date): string {
   const y = date.getFullYear();

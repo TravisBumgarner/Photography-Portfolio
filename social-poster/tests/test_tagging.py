@@ -498,3 +498,185 @@ def test_real_tags_json_is_valid():
     tree = json.loads(tagging.TAGS_PATH.read_text())
     assert set(tree.keys()) >= {"Camera", "Place", "PhotoType"}
     walk(tree)
+
+
+# ---------------------------------------------------------------------------
+# Reddit titles
+#
+# Reddit takes a title, not a caption, and each subreddit wants its own format.
+# The templates must degrade cleanly, because the same template meets film
+# photos, digital photos, and photos with barely any metadata.
+# ---------------------------------------------------------------------------
+_FILM_FIELDS = {
+    "title": "Morning Fog",
+    "description": "A foggy morning",
+    "location": "Arches National Park",
+    "camera": "Pentax K1000",
+    "lens": "",
+    "film_stock": "Kodak Portra 400",
+    "date_taken": "July 2026",
+    "width": "4000",
+    "height": "3000",
+    "dimensions": "4000x3000",
+}
+
+
+def _fields(**overrides):
+    merged = dict(_FILM_FIELDS)
+    merged.update(overrides)
+    return merged
+
+
+def test_render_title_fills_every_token():
+    assert (
+        tagging.render_title("{title} ({camera}, {film_stock})", _FILM_FIELDS)
+        == "Morning Fog (Pentax K1000, Kodak Portra 400)"
+    )
+    assert (
+        tagging.render_title("{title}, {location} [OC] [{dimensions}]", _FILM_FIELDS)
+        == "Morning Fog, Arches National Park [OC] [4000x3000]"
+    )
+
+
+def test_render_title_drops_a_group_whose_tokens_are_all_empty():
+    # A digital photo has no film stock: one template must still read correctly.
+    assert (
+        tagging.render_title(
+            "{title} ({camera}, {film_stock})", _fields(film_stock="")
+        )
+        == "Morning Fog (Pentax K1000)"
+    )
+    assert (
+        tagging.render_title(
+            "{title} ({camera}, {film_stock})", _fields(camera="", film_stock="")
+        )
+        == "Morning Fog"
+    )
+
+
+def test_render_title_drops_literal_glue_inside_an_empty_group():
+    # "[{width}x{height}]" must vanish entirely rather than leave "[x]".
+    assert (
+        tagging.render_title(
+            "{title} [{width}x{height}]", _fields(width="", height="", dimensions="")
+        )
+        == "Morning Fog"
+    )
+
+
+def test_render_title_keeps_a_group_that_has_no_tokens():
+    # "[OC]" is a literal marker, not a token group.
+    assert (
+        tagging.render_title(
+            "{title}, {location} [OC] [{dimensions}]",
+            _fields(location="", dimensions=""),
+        )
+        == "Morning Fog [OC]"
+    )
+
+
+def test_render_title_tidies_separators_left_by_a_missing_token():
+    assert (
+        tagging.render_title("{title}, {location}, {camera}", _fields(location=""))
+        == "Morning Fog, Pentax K1000"
+    )
+    assert (
+        tagging.render_title("{title} - {location}", _fields(location=""))
+        == "Morning Fog"
+    )
+
+
+def test_render_title_handles_unknown_tokens_and_empty_templates():
+    assert tagging.render_title("{title} {nope}", _FILM_FIELDS) == "Morning Fog"
+    assert tagging.render_title("", _FILM_FIELDS) == "Morning Fog"
+
+
+def test_render_title_falls_back_when_it_renders_to_nothing():
+    # Better the photo's own title than an empty submission title.
+    assert tagging.render_title("{location}", _fields(location="")) == "Morning Fog"
+    assert (
+        tagging.render_title("{location}", _fields(location=""), fallback="Untitled")
+        == "Untitled"
+    )
+
+
+def test_derive_location_prefers_the_most_specific_place():
+    root = tagging.TAG_ROOT
+    kw = [f"{root}|Place|Mexico|Country", f"{root}|Place|Mexico|MexicoCity"]
+    assert tagging._derive_location(kw) == "Mexico City"
+
+
+def test_derive_location_drops_the_classifying_leaf():
+    root = tagging.TAG_ROOT
+    assert tagging._derive_location([f"{root}|Place|USA|Utah|State"]) == "Utah"
+
+
+def test_derive_location_names_national_parks_in_full():
+    root = tagging.TAG_ROOT
+    assert (
+        tagging._derive_location([f"{root}|Place|NationalPark|WrangellStElias"])
+        == "Wrangell St Elias National Park"
+    )
+
+
+def test_derive_location_is_empty_without_a_place_keyword():
+    root = tagging.TAG_ROOT
+    assert tagging._derive_location([f"{root}|PhotoType|Landscape"]) == ""
+
+
+def test_title_fields_reads_metadata_and_real_dimensions(tmp_path):
+    photo = tmp_path / "photo.jpg"
+    _write_photo(
+        photo,
+        ["cameracoffeewander|Camera|NikonZ5", "cameracoffeewander|Place|USA|Utah|State"],
+    )
+
+    fields = tagging.title_fields(str(photo))
+
+    assert fields["title"] == "Golden Gate"
+    assert fields["camera"] == "Nikon Z5"
+    assert fields["location"] == "Utah"
+    # The fixture is 8x8; a [WxH] title has to report the real pixels.
+    assert fields["dimensions"] == "8x8"
+    assert fields["width"] == "8" and fields["height"] == "8"
+
+
+def test_title_fields_requires_metadata(tmp_path):
+    photo = tmp_path / "bare.jpg"
+    Image.new("RGB", (8, 8), "gray").save(photo)
+    with pytest.raises(ValueError, match="No XMP metadata"):
+        tagging.title_fields(str(photo))
+
+
+def test_reddit_titles_renders_per_subreddit(tmp_path):
+    photo = tmp_path / "photo.jpg"
+    _write_photo(photo, ["cameracoffeewander|Place|USA|Utah|State"])
+
+    titles = tagging.reddit_titles(
+        str(photo),
+        {
+            "EarthPorn": "{title}, {location} [OC] [{dimensions}]",
+            "itookapicture": "ITAP of {title}",
+        },
+    )
+
+    assert titles["EarthPorn"] == "Golden Gate, Utah [OC] [8x8]"
+    assert titles["itookapicture"] == "ITAP of Golden Gate"
+
+
+def test_reddit_titles_truncates_to_a_subs_limit_on_a_word_boundary(tmp_path):
+    photo = tmp_path / "photo.jpg"
+    _write_photo(
+        photo,
+        ["cameracoffeewander|Place|USA|Utah|State"],
+        title="Alpha Bravo Charlie Delta Echo",
+    )
+
+    titles = tagging.reddit_titles(
+        str(photo), {"strictsub": "{title}"}, limits={"strictsub": 20}
+    )
+
+    title = titles["strictsub"]
+    assert len(title) <= 20
+    # Cut between words, not mid-word, and never left with dangling punctuation.
+    assert title == "Alpha Bravo Charlie"

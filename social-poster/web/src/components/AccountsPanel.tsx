@@ -13,43 +13,44 @@ interface AccountsPanelProps {
   onClose: () => void;
 }
 
+/** The credential fields each platform requires, mirroring REQUIRED_CREDS on
+ * the server. Drives validation, the submit button, and the reset. */
+const REQUIRED_FIELDS = {
+  instagram: ['ig_user_id', 'access_token'],
+  bluesky: ['handle', 'app_password'],
+  reddit: ['client_id', 'client_secret', 'username', 'password'],
+} as const;
+
+const FIELD_LABEL: Record<string, string> = {
+  ig_user_id: 'Instagram user ID',
+  access_token: 'Access token',
+  handle: 'Handle',
+  app_password: 'App password',
+  client_id: 'Client ID',
+  client_secret: 'Client secret',
+  username: 'Reddit username',
+  password: 'Reddit password',
+};
+
 const schema = z
   .object({
-    platform: z.enum(['instagram', 'bluesky']),
+    platform: z.enum(['instagram', 'bluesky', 'reddit']),
     ig_user_id: z.string().optional(),
     access_token: z.string().optional(),
     handle: z.string().optional(),
     app_password: z.string().optional(),
+    client_id: z.string().optional(),
+    client_secret: z.string().optional(),
+    username: z.string().optional(),
+    password: z.string().optional(),
   })
   .superRefine((value, ctx) => {
-    if (value.platform === 'instagram') {
-      if (!value.ig_user_id) {
+    for (const field of REQUIRED_FIELDS[value.platform]) {
+      if (!value[field]) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          path: ['ig_user_id'],
-          message: 'Instagram user ID is required.',
-        });
-      }
-      if (!value.access_token) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ['access_token'],
-          message: 'Access token is required.',
-        });
-      }
-    } else {
-      if (!value.handle) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ['handle'],
-          message: 'Handle is required.',
-        });
-      }
-      if (!value.app_password) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          path: ['app_password'],
-          message: 'App password is required.',
+          path: [field],
+          message: `${FIELD_LABEL[field]} is required.`,
         });
       }
     }
@@ -57,19 +58,23 @@ const schema = z
 
 type FormValues = z.infer<typeof schema>;
 
+const EMPTY_CREDS = {
+  ig_user_id: '',
+  access_token: '',
+  handle: '',
+  app_password: '',
+  client_id: '',
+  client_secret: '',
+  username: '',
+  password: '',
+};
+
 function buildInput(values: FormValues): CreateAccountInput {
-  if (values.platform === 'instagram') {
-    return {
-      platform: 'instagram',
-      ig_user_id: values.ig_user_id,
-      access_token: values.access_token,
-    };
+  const input: CreateAccountInput = { platform: values.platform };
+  for (const field of REQUIRED_FIELDS[values.platform]) {
+    input[field] = values[field];
   }
-  return {
-    platform: 'bluesky',
-    handle: values.handle,
-    app_password: values.app_password,
-  };
+  return input;
 }
 
 export function AccountsPanel({ onClose }: AccountsPanelProps) {
@@ -85,13 +90,7 @@ export function AccountsPanel({ onClose }: AccountsPanelProps) {
     formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      platform: 'instagram',
-      ig_user_id: '',
-      access_token: '',
-      handle: '',
-      app_password: '',
-    },
+    defaultValues: { platform: 'instagram', ...EMPTY_CREDS },
   });
 
   const values = watch();
@@ -99,10 +98,9 @@ export function AccountsPanel({ onClose }: AccountsPanelProps) {
 
   // Are all required credential fields for the selected platform filled in?
   // Drives the Log in button's disabled state so empty submits are blocked.
-  const hasRequiredCreds =
-    platform === 'instagram'
-      ? Boolean(values.ig_user_id?.trim() && values.access_token?.trim())
-      : Boolean(values.handle?.trim() && values.app_password?.trim());
+  const hasRequiredCreds = REQUIRED_FIELDS[platform].every((field) =>
+    values[field]?.trim()
+  );
 
   // Switching platform keeps whatever the user typed (react-hook-form retains
   // unmounted field values), but clear the stale login receipt/error from a
@@ -115,14 +113,7 @@ export function AccountsPanel({ onClose }: AccountsPanelProps) {
 
   const onSubmit = handleSubmit((values) => {
     createAccount.mutate(buildInput(values), {
-      onSuccess: () =>
-        reset({
-          platform: values.platform,
-          ig_user_id: '',
-          access_token: '',
-          handle: '',
-          app_password: '',
-        }),
+      onSuccess: () => reset({ platform: values.platform, ...EMPTY_CREDS }),
     });
   });
 
@@ -198,6 +189,7 @@ export function AccountsPanel({ onClose }: AccountsPanelProps) {
             <select {...register('platform')}>
               <option value="instagram">Instagram</option>
               <option value="bluesky">Bluesky</option>
+              <option value="reddit">Reddit</option>
             </select>
           </label>
 
@@ -273,6 +265,61 @@ export function AccountsPanel({ onClose }: AccountsPanelProps) {
             </>
           )}
 
+          {platform === 'reddit' && (
+            <>
+              <label className="field">
+                <span className="field-label">Client ID</span>
+                <input type="text" autoComplete="off" {...register('client_id')} />
+                {errors.client_id && (
+                  <span className="field-error">{errors.client_id.message}</span>
+                )}
+              </label>
+              <label className="field">
+                <span className="field-label">Client secret</span>
+                <input
+                  type="password"
+                  autoComplete="new-password"
+                  {...register('client_secret')}
+                />
+                <span className="field-help">
+                  Register a <strong>script</strong> app at{' '}
+                  <strong>reddit.com/prefs/apps</strong> to get these. The
+                  account below must be the one that owns the app.
+                </span>
+                {errors.client_secret && (
+                  <span className="field-error">
+                    {errors.client_secret.message}
+                  </span>
+                )}
+              </label>
+              <label className="field">
+                <span className="field-label">Reddit username</span>
+                <input type="text" autoComplete="off" {...register('username')} />
+                {errors.username && (
+                  <span className="field-error">{errors.username.message}</span>
+                )}
+              </label>
+              <label className="field">
+                <span className="field-label">Reddit password</span>
+                <input
+                  type="password"
+                  autoComplete="new-password"
+                  {...register('password')}
+                />
+                <span className="field-help">
+                  A script app signs in with the account's own password. If the
+                  account has 2FA on, append the current code as{' '}
+                  <strong>password:123456</strong> — but that code expires, so
+                  posting will stop working; a 2FA-free posting account is the
+                  practical option.
+                </span>
+                {errors.password && (
+                  <span className="field-error">{errors.password.message}</span>
+                )}
+              </label>
+            </>
+          )}
+
           {/* Always-present slot so an error appearing doesn't shift layout. */}
           <div className="form-error-slot">
             {createAccount.isError && (
@@ -296,10 +343,16 @@ export function AccountsPanel({ onClose }: AccountsPanelProps) {
                   ✓ Logged in as @{added.username}
                   {added.display_name ? ` (${added.display_name})` : ''}
                 </div>
-                <div className="muted">
-                  {(added.follower_count ?? 0).toLocaleString()} followers ·{' '}
-                  {(added.post_count ?? 0).toLocaleString()} posts
-                </div>
+                {/* Reddit exposes neither for a normal account, and showing
+                    "0 followers" would read as a real zero. */}
+                {added.follower_count != null || added.post_count != null ? (
+                  <div className="muted">
+                    {(added.follower_count ?? 0).toLocaleString()} followers ·{' '}
+                    {(added.post_count ?? 0).toLocaleString()} posts
+                  </div>
+                ) : (
+                  <div className="muted">credentials verified</div>
+                )}
               </div>
             </div>
           )}

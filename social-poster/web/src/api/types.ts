@@ -1,4 +1,4 @@
-export type Platform = 'instagram' | 'bluesky';
+export type Platform = 'instagram' | 'bluesky' | 'reddit';
 
 export type TargetStatus = 'scheduled' | 'posted' | 'failed';
 
@@ -26,23 +26,95 @@ export interface Engagement {
 }
 
 export interface Target {
-  /** The post_target row id — the unit of a photo×account record. */
+  /** The post_target row id — the unit of a photo×destination record. On
+   * Reddit a destination is one subreddit, so one account can hold several. */
   id: number;
   account_id: number;
   platform: Platform;
   username: string;
+  /** On Reddit this is the description, posted as a first comment (an image
+   * submission is a link post and can't carry body text). */
   caption: string;
+  /** Bare subreddit name for Reddit destinations; null on every other platform. */
+  subreddit: string | null;
+  /** Reddit submission title, rendered from the sub's template then editable. */
+  title: string;
+  flair_id: string | null;
+  /** Offset in minutes from the post's scheduled_at. Reddit destinations are
+   * spread out because simultaneous multi-sub submission reads as spam. */
+  delay_minutes: number;
+  /** scheduled_at + delay_minutes — when this destination actually goes out. */
+  due_at: string | null;
   status: TargetStatus;
   error: string | null;
   posted_at: string | null;
-  /** Platform id of the published item (IG media id / Bluesky at:// URI);
-   * null before publish or for posts published before ids were captured. */
+  /** Platform id of the published item (IG media id / Bluesky at:// URI /
+   * Reddit submission id); null before publish or for posts published before
+   * ids were captured. */
   remote_id: string | null;
   engagement: Engagement | null;
 }
 
-/** Per-platform captions, e.g. `{ instagram: '…', bluesky: '…' }`. */
+/** Per-platform captions, e.g. `{ instagram: '…', bluesky: '…' }`. Lossy for
+ * Reddit, where several destinations share the platform — anything
+ * per-destination must read `Post.targets`. */
 export type Captions = Partial<Record<Platform, string>>;
+
+/** One destination to create or keep on a post. Reddit needs one entry per
+ * subreddit; omit `delay_minutes` to let the server assign the stagger. */
+export interface TargetInput {
+  account_id: number;
+  caption: string;
+  subreddit?: string;
+  title?: string;
+  flair_id?: string | null;
+  delay_minutes?: number;
+}
+
+/** Per-subreddit posting rules. Moderators enforce these, so a target that
+ * breaks one is refused at schedule time rather than failing at publish. */
+export interface SubredditRules {
+  id: number | null;
+  /** Bare name, no `r/` prefix. */
+  name: string;
+  /** Category quick-selects this sub belongs to. */
+  categories: string[];
+  /** Title template with `{token}` placeholders — `{title}`, `{location}`,
+   * `{camera}`, `{film_stock}`, `{dimensions}`, … Empty means "use the photo
+   * title as-is". */
+  title_template: string;
+  flair_id: string | null;
+  flair_text: string | null;
+  requires_flair: boolean;
+  max_title_length: number;
+  allow_tags: boolean;
+  /** Whether the description may be posted as a first comment. */
+  comment_body: boolean;
+  /** Minimum days between our posts here; 0 disables the check. */
+  min_interval_days: number;
+  /** Default spacing when this sub is one of several on a photo. */
+  stagger_minutes: number;
+  notes: string;
+}
+
+/** A category quick-select: picking it selects every sub in `subreddits`.
+ * `keyword_prefixes` are Lightroom hierarchy prefixes, so a photo's own
+ * keywords decide which categories are suggested for it. */
+export interface SubredditCategory {
+  id: number;
+  name: string;
+  keyword_prefixes: string[];
+  subreddits: string[];
+}
+
+/** Subreddits suggested for a photo, with a title pre-rendered for every
+ * configured sub (not just the suggested ones) so picking any is instant. */
+export interface RedditSuggestions {
+  categories: string[];
+  subreddits: string[];
+  titles: Record<string, string>;
+  error?: string | null;
+}
 
 export interface Post {
   id: number;
@@ -55,6 +127,9 @@ export interface Post {
   /** Free-text log of feature-hub pickups (e.g. "@moodygrams 2026-07-12"). */
   featured_by: string;
   targets: Target[];
+  /** Only on the send-now response: destinations still waiting on their
+   * stagger offset, which a later publisher tick will send. */
+  staggered_pending?: number;
 }
 
 /** One row of the append-only publish audit log. */
@@ -76,21 +151,27 @@ export interface CreateAccountInput {
   access_token?: string;
   handle?: string;
   app_password?: string;
+  /** Reddit "script" app credentials (reddit.com/prefs/apps) plus the owning
+   * account's own login. */
+  client_id?: string;
+  client_secret?: string;
+  username?: string;
+  password?: string;
 }
 
 export interface CreatePostInput {
   image: File;
-  captions: Captions;
   scheduled_at: string;
-  account_ids: number[];
+  /** One entry per destination. Required for Reddit, which needs a subreddit
+   * and title per entry. */
+  targets: TargetInput[];
 }
 
 /** Full edit of an existing post. Image is optional (omit to keep current). */
 export interface EditPostInput {
   image?: File;
-  captions: Captions;
   scheduled_at: string;
-  account_ids: number[];
+  targets: TargetInput[];
   featured_by?: string;
 }
 
@@ -105,6 +186,7 @@ export interface EngagementSnapshotResult {
   target_id: number;
   platform: Platform;
   username: string;
+  subreddit: string | null;
   ok: boolean;
   error: string | null;
 }
@@ -171,6 +253,12 @@ export interface IngestItem {
   captions: Captions;
   /** Structured tag pools for the draggable pill editor. */
   tag_pools: TagPools;
+  /** `{subreddit: title}` — the keys ARE this photo's Reddit selection, so an
+   * empty object means it isn't going to Reddit. */
+  titles: Record<string, string>;
+  /** Subs proposed from this photo's own keywords, with titles pre-rendered.
+   * A proposal, not a selection. Empty when tagging found no usable metadata. */
+  reddit_suggestions: Partial<RedditSuggestions>;
   tag_status: IngestTagStatus;
   tag_error: string | null;
   created_at: string;
@@ -186,7 +274,13 @@ export interface CropRect {
 
 export interface ApproveIngestInput {
   account_ids: number[];
-  items: { id: number; scheduled_at: string; captions: Captions }[];
+  items: {
+    id: number;
+    scheduled_at: string;
+    captions: Captions;
+    /** `{subreddit: title}` for this photo; omit to use its stored selection. */
+    titles?: Record<string, string>;
+  }[];
 }
 
 /** Result of running the tagging script on a photo. `error` is set (and

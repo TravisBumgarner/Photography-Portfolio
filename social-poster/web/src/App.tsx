@@ -7,6 +7,7 @@ import { BulkAddModal } from './components/BulkAddModal';
 import { TagCheckerModal } from './components/TagCheckerModal';
 import { AccountsPanel } from './components/AccountsPanel';
 import { SettingsPanel } from './components/SettingsPanel';
+import { SubredditRulesPanel } from './components/SubredditRulesPanel';
 import type { Post } from './api/types';
 
 const tabClass = ({ isActive }: { isActive: boolean }) =>
@@ -18,6 +19,7 @@ export default function App() {
   const [editingPost, setEditingPost] = useState<Post | null>(null);
   const [showAccounts, setShowAccounts] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showSubreddits, setShowSubreddits] = useState(false);
   const [showBulkAdd, setShowBulkAdd] = useState(false);
   const [showTagChecker, setShowTagChecker] = useState(false);
 
@@ -54,6 +56,13 @@ export default function App() {
             title="Settings"
           >
             ⚙
+          </button>
+          <button
+            type="button"
+            className="btn btn-ghost"
+            onClick={() => setShowSubreddits(true)}
+          >
+            Subreddits
           </button>
           <button
             type="button"
@@ -120,6 +129,9 @@ export default function App() {
       )}
       {showSettings && (
         <SettingsPanel onClose={() => setShowSettings(false)} />
+      )}
+      {showSubreddits && (
+        <SubredditRulesPanel onClose={() => setShowSubreddits(false)} />
       )}
     </div>
   );

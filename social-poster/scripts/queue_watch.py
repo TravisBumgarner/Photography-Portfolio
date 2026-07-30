@@ -42,7 +42,10 @@ _DEPTH_SQL = """
     SELECT a.id AS account_id,
            a.platform AS platform,
            a.username AS username,
-           COUNT(pt.id) AS remaining,
+           -- Distinct posts, not targets: a Reddit account sends one photo to
+           -- several subreddits, and the queue depth this alert is about is
+           -- "how many photos are left to post", not how many submissions.
+           COUNT(DISTINCT pt.post_id) AS remaining,
            MAX(p.scheduled_at) AS last_scheduled,
            -- "Has this account ever been used?" — either it still has targets
            -- of some status, or the audit log remembers a publish attempt.
